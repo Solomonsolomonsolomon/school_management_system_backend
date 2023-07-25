@@ -14,46 +14,10 @@ async function connectDB() {
       console.log(`ERR!!! database not connected~${err.message}`);
     });
 }
-let teacherSchema = new Schema({
-  firstname: String,
-  lastname: String,
-  username: String,
-  password: String,
-  maxQualifications: String,
-  formTeacher: String,
-  subject: [
-    {
-      class: String,
-      subject: [String],
-    },
-  ],
-});
-let studentSchema = new Schema({
-  firstname: String,
-  lastname: String,
-  username: String,
-  password: String,
-  class: String,
-  promoted: Boolean,
-  subjects: [String],
-  achievments: [String],
-});
-let adminSchema = new Schema({
-  firstname: String,
-  lastname: String,
-  username:String,
-  password: String,
-});
-let resultSchema = new Schema({
-  session: String,
-  term: Number,
-  position: Number,
-  average: Number,
-});
+import { Teacher } from "./models/models/staff/Teacher";
+import { Admin } from "./models/models/staff/Admin";
+import { Student } from "./models/models/academic/Student";
 
-let Teacher = model("Teacher", teacherSchema);
-let Student = model("Student", studentSchema);
-let Admin = model("Admin", adminSchema);
-let Result = model("Result", resultSchema);
-export { Teacher, Student, Admin, Result };
+//schemas
+export { Teacher, Admin, Student };
 export default connectDB;

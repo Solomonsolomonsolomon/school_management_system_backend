@@ -5,7 +5,8 @@
   "main": "server.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon app"
+    "dev": "nodemon app",
+    "build:css": "tailwind build view/index.css -o view/style.css &&nodemon app"
   },
   "dependencies": {
     "@types/amqplib": "^0.10.1",

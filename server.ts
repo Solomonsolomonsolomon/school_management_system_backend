@@ -7,5 +7,6 @@ const app: Application = express();
 app.set("view engine", "ejs").set("views", "view");
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "view")));
+app.use(express.static(path.join(__dirname)));
 app.use(express.urlencoded({ extended: true }));
 export default app;
