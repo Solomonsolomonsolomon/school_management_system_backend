@@ -1,9 +1,11 @@
 require("dotenv").config();
 import express, { Application } from "express";
 import database from "./model/database";
-
+import path from "path";
 database();
 const app: Application = express();
+app.set("view engine", "ejs").set("views", "view");
 app.use(express.json());
+app.use(express.static(path.join(__dirname, "view")));
 app.use(express.urlencoded({ extended: true }));
 export default app;

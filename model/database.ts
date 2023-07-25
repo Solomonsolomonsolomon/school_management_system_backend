@@ -41,6 +41,7 @@ let studentSchema = new Schema({
 let adminSchema = new Schema({
   firstname: String,
   lastname: String,
+  username:String,
   password: String,
 });
 let resultSchema = new Schema({
