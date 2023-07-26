@@ -1,5 +1,26 @@
-import mongoose from "mongoose";
-const studentSchema = new mongoose.Schema(
+import mongoose, { Schema, Document, Types, model, Model } from "mongoose";
+interface IStudent extends Document {
+  name: string;
+  email: string;
+  password: string;
+  studentId: string;
+  role: string;
+  classLevels: Types.ObjectId[];
+  currentClassLevel: string;
+  academicYear: Types.ObjectId;
+  dateAdmitted: Date;
+  examResults: Types.ObjectId[];
+  program: Types.ObjectId;
+  isPromotedToLevel200: boolean;
+  isPromotedToLevel300: boolean;
+  isPromotedToLevel400: boolean;
+  isGraduated: boolean;
+  isWithdrawn: boolean;
+  isSuspended: boolean;
+  prefectName: string;
+  yearGraduated: String;
+}
+const studentSchema: Schema = new mongoose.Schema<IStudent>(
   {
     name: {
       type: String,
@@ -23,7 +44,7 @@ const studentSchema = new mongoose.Schema(
           Date.now().toString().slice(2, 4) +
           this.name
             .split(" ")
-            .map((name) => name[0])
+            .map((name: string) => name[0])
             .join("")
             .toUpperCase()
         );
@@ -31,7 +52,7 @@ const studentSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      default: "student",
+      default: "student", 
     },
     //Classes are from level 1 to 6
     //keep track of the class level the student is in
@@ -118,6 +139,6 @@ const studentSchema = new mongoose.Schema(
 );
 
 //model
-const Student = mongoose.model("Student", studentSchema);
+const Student = model<IStudent>("Student", studentSchema);
 
 export { Student };

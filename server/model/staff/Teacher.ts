@@ -17,22 +17,22 @@ const teacherSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
-    teacherId: {
-      type: String,
-      required: true,
-      default: function () {
-        return (
-          "TEA" +
-          Math.floor(100 + Math.random() * 900) +
-          Date.now().toString().slice(2, 4) +
-          this.name
-            .split(" ")
-            .map((name) => name[0])
-            .join("")
-            .toUpperCase()
-        );
-      },
-    },
+    // teacherId: {
+    //   type: String,
+    //   required: true,
+    //   default: function () {
+    //     return (
+    //       "TEA" +
+    //       Math.floor(100 + Math.random() * 900) +
+    //       Date.now().toString().slice(2, 4) +
+    //       this.name
+    //         .split(" ")
+    //         .map((name: any) => name[0])
+    //         .join("")
+    //         .toUpperCase()
+    //     );
+    //   },
+    // },
     //if witdrawn, the teacher will not be able to login
     isWitdrawn: {
       type: Boolean,

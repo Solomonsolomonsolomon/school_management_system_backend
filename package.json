@@ -1,0 +1,26 @@
+{
+  "name": "sms_demo",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "frontend": "cd client && npm run dev",
+    "server": "cd server && npm run dev",
+    "both": "concurrently \"npm run frontend\" \"npm run server\"  "
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Solomonsolomonsolomon/school_management_system_backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Solomonsolomonsolomon/school_management_system_backend/issues"
+  },
+  "homepage": "https://github.com/Solomonsolomonsolomon/school_management_system_backend#readme",
+  "dependencies": {
+    "concurrently": "^8.2.0"
+  }
+}

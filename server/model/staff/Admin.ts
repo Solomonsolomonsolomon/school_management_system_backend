@@ -80,7 +80,7 @@ adminSchema.pre("save", async function (next) {
 });
 
 // Verify Password
-adminSchema.methods.verifiedPassword = async function (enteredPassword) {
+adminSchema.methods.verifiedPassword = async function (enteredPassword:string) {
 return await bcrypt.compare(enteredPassword, this.password)
 }
 

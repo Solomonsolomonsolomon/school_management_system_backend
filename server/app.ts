@@ -7,8 +7,9 @@ const port: string | number = process.env.PORT || 2020;
 app.use("/auth", signIn);
 app.get("/", (req, res) => {
   res.render("login");
-});    
+});        
 app.get('/login')
 server.listen(port, () => {
   console.log(`server listening on port ${port}`);
 });
+   
