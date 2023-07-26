@@ -14,9 +14,9 @@ async function connectDB() {
       console.log(`ERR!!! database not connected~${err.message}`);
     });
 }
-import { Teacher } from "./models/models/staff/Teacher";
-import { Admin } from "./models/models/staff/Admin";
-import { Student } from "./models/models/academic/Student";
+import { Teacher } from "./staff/Teacher";
+import { Admin } from "./staff/Admin";
+import { Student } from "./academic/Student";
 
 //schemas
 export { Teacher, Admin, Student };
