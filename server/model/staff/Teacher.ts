@@ -1,5 +1,26 @@
-import mongoose from "mongoose";
-const teacherSchema = new mongoose.Schema(
+import mongoose, { Schema, Document, model } from "mongoose";
+
+interface ITeacher {
+  name: string;
+  email: string;
+  password: string;
+  dateEmployed?: Date;
+  teacherId?: string;
+  formTeacher?: string;
+  isWithdrawn?: boolean;
+  isSuspended?: boolean;
+  role?: string;
+  subject?: Schema.Types.ObjectId;
+  applicationStatus?: "pending" | "approved" | "rejected";
+  program?: string;
+  classLevel?: string;
+  academicYear?: string;
+  examsCreated?: Schema.Types.ObjectId[];
+  createdBy?: Schema.Types.ObjectId;
+  academicTerm?: string;
+}
+
+const teacherSchema = new Schema<ITeacher>(
   {
     name: {
       type: String,
@@ -17,24 +38,27 @@ const teacherSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
-    // teacherId: {
-    //   type: String,
-    //   required: true,
-    //   default: function () {
-    //     return (
-    //       "TEA" +
-    //       Math.floor(100 + Math.random() * 900) +
-    //       Date.now().toString().slice(2, 4) +
-    //       this.name
-    //         .split(" ")
-    //         .map((name: any) => name[0])
-    //         .join("")
-    //         .toUpperCase()
-    //     );
-    //   },
-    // },
+    teacherId: {
+      type: String,
+      required: true,
+      default: function (this: ITeacher) {
+        return (
+          "TEA" +
+          Math.floor(100 + Math.random() * 900) +
+          Date.now().toString().slice(2, 4) +
+          this.name
+            .split(" ")
+            .map((name: any) => name[0])
+            .join("")
+            .toUpperCase()
+        );
+      },
+    },
+    formTeacher: {
+      type: String,
+    },
     //if witdrawn, the teacher will not be able to login
-    isWitdrawn: {
+    isWithdrawn: {
       type: Boolean,
       default: false,
     },
@@ -89,6 +113,6 @@ const teacherSchema = new mongoose.Schema(
 );
 
 //model
-const Teacher = mongoose.model("Teacher", teacherSchema);
+const Teacher = mongoose.model<ITeacher>("Teacher", teacherSchema);
 
-export { Teacher };
+export { Teacher, ITeacher };

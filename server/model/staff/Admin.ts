@@ -1,7 +1,21 @@
 import bcrypt from "bcrypt";
 
-import mongoose from "mongoose";
-const adminSchema = new mongoose.Schema(
+import mongoose, { model, Schema, Document, Types } from "mongoose";
+
+interface IAdmin extends Document {
+  name: string;
+  email: string;
+  password: string;
+  role: string;
+  academicTerms: Types.ObjectId[];
+  programs: Types.ObjectId[];
+  yearGroups: Types.ObjectId[];
+  academicYears: Types.ObjectId[];
+  classLevels: Types.ObjectId[];
+  teachers: Types.ObjectId[];
+  students: Types.ObjectId[];
+}
+const adminSchema = new Schema<IAdmin>(
   {
     name: {
       type: String,
@@ -69,7 +83,7 @@ const adminSchema = new mongoose.Schema(
 
 //Hash password
 adminSchema.pre("save", async function (next) {
-  if (!this.isModified('password')) {
+  if (!this.isModified("password")) {
     next();
   }
   //Salt
@@ -80,11 +94,13 @@ adminSchema.pre("save", async function (next) {
 });
 
 // Verify Password
-adminSchema.methods.verifiedPassword = async function (enteredPassword:string) {
-return await bcrypt.compare(enteredPassword, this.password)
-}
+adminSchema.methods.verifiedPassword = async function (
+  enteredPassword: string
+) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
 
 //model
-const Admin = mongoose.model("Admin", adminSchema);
+const Admin = model<IAdmin>("Admin", adminSchema);
 
-export {Admin}
+export { Admin };

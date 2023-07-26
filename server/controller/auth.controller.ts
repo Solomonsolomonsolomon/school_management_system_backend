@@ -1,21 +1,9 @@
 import bcrypt from "bcrypt";
 import jwt, { Secret } from "jsonwebtoken";
 import { Admin, Student, Teacher } from "./../model/database";
-import { Request, Response } from "express";
-import { Document, Models, model } from "mongoose";
+import { NextFunction, Request, Response } from "express";
 
-
-
-
-export async function signUp(req:Request,res:Response) {
-    
-}
-
-
-
-
-
-
+export async function signUp(req: Request, res: Response) {}
 export async function signIn(req: Request, res: Response) {
   const { username, password, role } = req.body;
   let roles = ["student", "admin", "teacher"];
