@@ -14,10 +14,11 @@ async function connectDB() {
       console.log(`ERR!!! database not connected~${err.message}`);
     });
 }
-import { Teacher } from "./staff/Teacher";
+import { Teacher, ITeacher } from "./staff/Teacher";
 import { Admin } from "./staff/Admin";
-import { Student } from "./academic/Student";
+import { Student, IStudent } from "./academic/Student";
 
 //schemas
 export { Teacher, Admin, Student };
+export { ITeacher, IStudent };
 export default connectDB;
