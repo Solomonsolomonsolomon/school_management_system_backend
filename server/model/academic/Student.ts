@@ -3,22 +3,22 @@ interface IStudent extends Document {
   name: string;
   email: string;
   password: string;
-  studentId: string;
+  studentId?: string;
   role: string;
-  classLevels: Types.ObjectId[];
-  currentClassLevel: string;
-  academicYear: Types.ObjectId;
-  dateAdmitted: Date;
-  examResults: Types.ObjectId[];
-  program: Types.ObjectId;
-  isPromotedToLevel200: boolean;
-  isPromotedToLevel300: boolean;
-  isPromotedToLevel400: boolean;
-  isGraduated: boolean;
-  isWithdrawn: boolean;
-  isSuspended: boolean;
-  prefectName: string;
-  yearGraduated: String;
+  classLevels?: Types.ObjectId[];
+  currentClassLevel?: string;
+  academicYear?: Types.ObjectId;
+  dateAdmitted?: Date;
+  examResults?: Types.ObjectId[];
+  program?: Types.ObjectId;
+  isPromotedToLevel200?: boolean;
+  isPromotedToLevel300?: boolean;
+  isPromotedToLevel400?: boolean;
+  isGraduated?: boolean;
+  isWithdrawn?: boolean;
+  isSuspended?: boolean;
+  prefectName?: string;
+  yearGraduated?: String;
 }
 const studentSchema: Schema = new mongoose.Schema<IStudent>(
   {
@@ -37,7 +37,7 @@ const studentSchema: Schema = new mongoose.Schema<IStudent>(
     studentId: {
       type: String,
       required: true,
-      default: function () {
+      default: function (this: IStudent) {
         return (
           "STU" +
           Math.floor(100 + Math.random() * 900) +
@@ -52,7 +52,7 @@ const studentSchema: Schema = new mongoose.Schema<IStudent>(
     },
     role: {
       type: String,
-      default: "student", 
+      default: "student",
     },
     //Classes are from level 1 to 6
     //keep track of the class level the student is in
@@ -64,8 +64,10 @@ const studentSchema: Schema = new mongoose.Schema<IStudent>(
     ],
     currentClassLevel: {
       type: String,
-      default: function () {
-        return this.classLevels[this.classLevels.length - 1];
+      default: function (this: IStudent) {
+        return this.classLevels
+          ? this.classLevels[this.classLevels.length - 1]
+          : "";
       },
     },
     academicYear: {
@@ -141,4 +143,4 @@ const studentSchema: Schema = new mongoose.Schema<IStudent>(
 //model
 const Student = model<IStudent>("Student", studentSchema);
 
-export { Student };
+export { Student, IStudent };
