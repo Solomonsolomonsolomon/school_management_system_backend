@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import mongoose, { Schema, Document, Types, model, Model } from "mongoose";
 interface IStudent extends Document {
   name: string;
@@ -5,6 +6,7 @@ interface IStudent extends Document {
   password: string;
   studentId?: string;
   role: string;
+  accessToken?: string;
   classLevels?: Types.ObjectId[];
   currentClassLevel?: string;
   academicYear?: Types.ObjectId;
@@ -53,6 +55,10 @@ const studentSchema: Schema = new mongoose.Schema<IStudent>(
     role: {
       type: String,
       default: "student",
+    },
+    accessToken: {
+      type: String,
+      default: "",
     },
     //Classes are from level 1 to 6
     //keep track of the class level the student is in
@@ -140,6 +146,24 @@ const studentSchema: Schema = new mongoose.Schema<IStudent>(
   }
 );
 
+//Hash password
+studentSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
+    next();
+  }
+  //Salt
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+
+  next();
+});
+
+// Verify Password
+studentSchema.methods.verifiedPassword = async function (
+  enteredPassword: string
+) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
 //model
 const Student = model<IStudent>("Student", studentSchema);
 
