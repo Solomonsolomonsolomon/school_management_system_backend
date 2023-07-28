@@ -1,8 +1,9 @@
 import mongoose, { Schema, Document, model } from "mongoose";
-
+import bcrypt from "bcrypt";
 interface ITeacher {
   name: string;
   email: string;
+  accessToken?: string;
   password: string;
   dateEmployed?: Date;
   teacherId?: string;
@@ -25,6 +26,10 @@ const teacherSchema = new Schema<ITeacher>(
     name: {
       type: String,
       required: true,
+    },
+    accessToken: {
+      type: String,
+      default: "",
     },
     email: {
       type: String,
@@ -57,7 +62,7 @@ const teacherSchema = new Schema<ITeacher>(
     formTeacher: {
       type: String,
     },
-    //if witdrawn, the teacher will not be able to login
+    //if withdrawn, the teacher will not be able to login
     isWithdrawn: {
       type: Boolean,
       default: false,
@@ -111,6 +116,25 @@ const teacherSchema = new Schema<ITeacher>(
     timestamps: true,
   }
 );
+
+//Hash password
+teacherSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
+    next();
+  }
+  //Salt
+  const salt = await bcrypt.genSalt(10);
+  this.password = await bcrypt.hash(this.password, salt);
+
+  next();
+});
+
+// Verify Password
+teacherSchema.methods.verifiedPassword = async function (
+  enteredPassword: string
+) {
+  return await bcrypt.compare(enteredPassword, this.password);
+};
 
 //model
 const Teacher = mongoose.model<ITeacher>("Teacher", teacherSchema);
