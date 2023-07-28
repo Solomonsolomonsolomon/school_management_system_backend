@@ -7,6 +7,7 @@ interface IAdmin extends Document {
   email: string;
   password: string;
   role: string;
+  accessToken: string;
   academicTerms: Types.ObjectId[];
   programs: Types.ObjectId[];
   yearGroups: Types.ObjectId[];
@@ -32,6 +33,10 @@ const adminSchema = new Schema<IAdmin>(
     role: {
       type: String,
       default: "admin",
+    },
+    accessToken: {
+      type: String,
+      default: "",
     },
     academicTerms: [
       {
