@@ -2,8 +2,8 @@ import mongoose, { MongooseError, Schema, model } from "mongoose";
 
 async function connectDB() {
   let connectionString: string =
-    typeof process.env.LOCAL_MONGO_URI == "string"
-      ? process.env.LOCAL_MONGO_URI
+    typeof process.env.MONGO_URI == "string"
+      ? process.env.MONGO_URI
       : "";
   mongoose
     .connect(connectionString)
