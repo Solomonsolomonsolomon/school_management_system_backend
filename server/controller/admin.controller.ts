@@ -215,3 +215,63 @@ export async function deleteTeacher(
     });
   }
 }
+
+export async function getAllAdmin(req: Request, res: Response) {
+  try {
+    await Admin.find({}).then((admins) => {
+      if (admins.length < 1) throw new Error("No admin found");
+      res.status(200).json({
+        status: 200,
+        msg: "all admins fetched successfully",
+        admins,
+      });
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      status: 500,
+      msg: "internal server error.its not your fault",
+      error,
+      err: error.message,
+    });
+  }
+}
+
+export async function getAllStudents(req: Request, res: Response) {
+  try {
+    await Student.find({}).then((student) => {
+      if (student.length < 1) throw new Error("No student found");
+      res.status(200).json({
+        status: 200,
+        msg: "all students fetched successfully",
+        student,
+      });
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      status: 500,
+      msg: "internal server error.its not your fault",
+      error,
+      err: error.message,
+    });
+  }
+}
+
+export async function getAllTeachers(req: Request, res: Response) {
+  try {
+    await Teacher.find({}).then((teacher) => {
+      if (teacher.length < 1) throw new Error("No teacher found");
+      res.status(200).json({
+        status: 200,
+        msg: "all teachers fetched successfully",
+        teacher,
+      });
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      status: 500,
+      msg: "internal server error.its not your fault",
+      error,
+      err: error.message,
+    });
+  }
+}
