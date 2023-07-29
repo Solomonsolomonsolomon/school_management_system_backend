@@ -20,7 +20,7 @@ adminRouter.delete("/admin/delete/admin/:id", deleteAdmin);
 adminRouter.delete("/admin/delete/teacher/:teacherId", deleteTeacher);
 adminRouter.delete("/admin/delete/student/:studentId", deleteStudent);
 //# getting users
-adminRouter.get("/admin/get/admin", addAdmin);
-adminRouter.get("/admin/get/student", addStudent);
-adminRouter.get("/admin/get/teacher", addTeacher);
+adminRouter.get("/admin/get/admin", getAllAdmin);
+adminRouter.get("/admin/get/student", getAllStudents);
+adminRouter.get("/admin/get/teacher", getAllTeachers);
 export default adminRouter;
