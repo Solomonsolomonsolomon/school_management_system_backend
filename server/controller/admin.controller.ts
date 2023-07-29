@@ -58,11 +58,7 @@ export async function addTeacher(
           throw new Error("This particular teacher already registered");
         } else {
           await new Teacher<ITeacher>({
-            email,
-            name,
-            password,
-            dateEmployed,
-            formTeacher,
+            ...req.body,
           })
             .save()
             .then((teacher) => {
@@ -101,9 +97,7 @@ export async function addStudent(
           throw new Error("This particular student already registered");
         } else {
           await new Student({
-            email,
-            name,
-            password,
+            ...req.body,
           })
             .save()
             .then((student) => {
