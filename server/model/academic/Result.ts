@@ -14,3 +14,6 @@ let resultSchema = new Schema({
     default: "failed",
   },
 });
+
+const Result = model("Result", resultSchema);
+export { Result };

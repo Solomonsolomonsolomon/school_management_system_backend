@@ -10,28 +10,11 @@ export async function signIn(req: Request, res: Response) {
     if (!email || !password || !role) {
       throw new Error("enter email and password");
     }
-    switch (index) {
-      case 0:
-        user = await Student.findOne({ email });
-        break;
-      case 1:
-        user = await Admin.findOne({ email });
-        break;
-      case 2:
-        user = await Teacher.findOne({ email });
-        break;
-      default:
-        break;
-    }
-
-    if (user == null) {
-      throw new Error("invalid login credentials");
-    }
-
-    if (user) {
-      if (!(await user.verifiedPassword(password))) {
-        throw new Error("incorrect credentials");
-      } else {
+    let Model: any =
+      index == 0 ? Student : index == 1 ? Admin : index == 2 ? Teacher : Admin;
+    await Model.findOne({ email }).then(async (user: any) => {
+      if (!user) throw new Error("invalid credentials");
+      if (await user.verifiedPassword(password)) {
         let ACCESS_TOKEN_SECRET: any = process.env.ACCESS_TOKEN_SECRET;
         let accessToken = await jwt.sign(
           { name: user.name },
@@ -50,8 +33,10 @@ export async function signIn(req: Request, res: Response) {
             status: 200,
           });
         });
+      } else {
+        throw new Error("invalid credentials");
       }
-    }
+    });
   } catch (error: any) {
     // Handle the error appropriately
     res.status(401).json({
@@ -107,5 +92,3 @@ export async function signOut(req: Request, res: Response, next: NextFunction) {
     });
   }
 }
-
-
