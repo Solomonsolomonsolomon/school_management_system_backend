@@ -13,30 +13,34 @@ export async function addGrades(req: Request, res: Response) {
         term,
         grades: [req.body],
       });
-
       const grade = await newGradesObject.save();
-
       res.status(201).json({
         status: 201,
         msg: "Added grade successfully",
         grade,
       });
     } else {
-      let subjectIndex = gradesObjectExists.grades.findIndex((grades) => {
-        return grades.subjectId === subjectId;
+      let subjectIndex = await gradesObjectExists.grades.findIndex((grades) => {
+        console.log(grades.subjectId, subjectId);
+        return grades.subjectId == subjectId;
       });
+      console.log(subjectIndex);
       if (subjectIndex !== -1) {
-        Object.assign(gradesObjectExists.grades[subjectId], {
+        Object.assign(gradesObjectExists.grades[subjectIndex], {
           ...req.body,
         });
-        return await gradesObjectExists.save();
+        return await gradesObjectExists.save().then((e) => {
+          res.status(201).json({
+            status: 201,
+            msg: "Added grade successfully",
+            grade: gradesObjectExists,
+          });
+        });
       }
       gradesObjectExists.grades.push(req.body);
 
-      // Save the updated gradesObject to the database
       await gradesObjectExists.save();
 
-      // Send the response with the updated gradesObject
       res.status(201).json({
         status: 201,
         msg: "Added grade successfully",
@@ -44,7 +48,6 @@ export async function addGrades(req: Request, res: Response) {
       });
     }
   } catch (error: any) {
-    // Handle any errors that occur during the process
     res.status(400).json({
       status: 400,
       msg: "Failed to add grade",
