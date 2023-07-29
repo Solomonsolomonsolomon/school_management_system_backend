@@ -4,7 +4,7 @@ export async function addSubject(req: Request, res: Response) {
   try {
     const { subjectName, className, teacherId } = req.body;
     await Subject.find({ className, subjectName }).then((subject) => {
-      if (!subject) {
+      if (subject.length < 1) {
         new Subject({
           subjectName,
           className,
@@ -12,7 +12,7 @@ export async function addSubject(req: Request, res: Response) {
         })
           .save()
           .then((subject) => {
-            res.json(201).json({
+            res.status(201).json({
               status: 201,
               msg: "added subject successfully",
               subject,

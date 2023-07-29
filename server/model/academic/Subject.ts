@@ -45,11 +45,11 @@ const subjectSchema = new Schema({
     ref: "Teacher",
   },
   academicYear: {
-    type: "string",
+    type: String,
     default: () => {
       let date = new Date();
       //september begins new academic year
-      date.getMonth() < 8
+      return date.getMonth() < 8
         ? `${date.getFullYear() - 1}/${date.getFullYear()}`
         : `${date.getFullYear()}/${date.getFullYear() + 1}`;
     },
