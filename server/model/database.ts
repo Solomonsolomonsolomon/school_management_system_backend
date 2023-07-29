@@ -17,8 +17,9 @@ async function connectDB() {
 import { Teacher, ITeacher } from "./staff/Teacher";
 import { Admin } from "./staff/Admin";
 import { Student, IStudent } from "./academic/Student";
+import { Grades } from "./academic/grades";
 
 //schemas
-export { Teacher, Admin, Student };
+export { Teacher, Admin, Student, Grades };
 export { ITeacher, IStudent };
 export default connectDB;

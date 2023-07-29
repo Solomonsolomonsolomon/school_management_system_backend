@@ -6,6 +6,7 @@ interface IStudent extends Document {
   password: string;
   studentId?: string;
   role: string;
+  status?: "string";
   accessToken?: string;
   classLevels?: Types.ObjectId[];
   currentClassLevel?: string;
@@ -55,6 +56,18 @@ const studentSchema: Schema = new mongoose.Schema<IStudent>(
     role: {
       type: String,
       default: "student",
+    },
+    status: {
+      type: String,
+      emum: [
+        "active",
+        "suspended",
+        "repeated",
+        "expelled",
+        "withdrawn",
+        "promoted",
+      ],
+      default: "active",
     },
     accessToken: {
       type: String,
