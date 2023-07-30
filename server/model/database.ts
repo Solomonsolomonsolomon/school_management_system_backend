@@ -13,6 +13,7 @@ async function connectDB() {
     .catch((err: MongooseError) => {
       console.log(`ERR!!! database not connected~${err.message}`);
     });
+  
 }
 import { Teacher, ITeacher } from "./staff/Teacher";
 import { Admin } from "./staff/Admin";
