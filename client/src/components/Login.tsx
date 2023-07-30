@@ -1,14 +1,15 @@
-import {useRef, useState, useEffect, useContext} from 'react'
-import { Link } from 'react-router-dom';
-import AuthContext from '../context/AuthProvider';
+import {useRef, useState} from 'react'
+import { useNavigate, Link, useLocation, redirect} from 'react-router-dom';
 import axios from '../api/axios';
 
 const LOGIN_URL = '/auth'
 
 function Login() {
-    const {setAuth} = useContext(AuthContext)
+    const navigate = useNavigate()
+    const location = useLocation()
+    const from = location.state?.from.pathname || '/'
+
     const emailRef = useRef<HTMLInputElement>(null);
-    const passwordRef = useRef<HTMLInputElement>(null);
     const roleRef = useRef<HTMLSelectElement>(null);
     const errRef = useRef<HTMLParagraphElement>(null);
 
@@ -16,10 +17,11 @@ function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
-    const [loading, setLoading] = useState(false);
+    // const [loading, setLoading] = useState(false);
  
     const Auth = async (e) => {
         e.preventDefault();
+
         try {
             const res = await axios.post(`${LOGIN_URL}/signin`, 
             JSON.stringify({
@@ -32,21 +34,24 @@ function Login() {
             }
             )
             console.log(res.data)
-            if(res.data.status == 200) {
+            console.log(from)
+            if(res.data.status === 200) {
                 const accessToken = res.data.accessToken
-                setAuth({email, password, role, accessToken})
-                // setTimeout(()=> {
-                //     setLoading(true);
-                // }, 1000)
-                setError('Successful Sign In')
+                console.log(accessToken)    
+                localStorage.setItem('accessToken', accessToken)
+                localStorage.setItem('user', JSON.stringify(res.data.user))
+                navigate(from)
+                console.log(accessToken)
+
             }
 
             setEmail("")
             setPassword("")
             setRole("")
         } catch(err) {
+            // console.log(err.response)
              if (err.response.status === 401) {
-                setError("Invalid Credentials")
+                setError("email or password is incorrect")
             } else if (err.response.status === 500) {
                 setError("Server Error")
             } else if (err.response.status === 400) {
@@ -60,14 +65,13 @@ function Login() {
        
 
     }
-
     
     return (
-        <div className=" w-full bg-slate-200 h-screen m-0 pt-[5%]">
+        <div className=" w-full bg-slate-200 h-screen m-0 pt-[20%] md:pt-[5%] lg:pt-[5%]">
         <header>
-                <h1 className="text-4xl text-center mb-10">School Management Portal</h1>
+                <h1 className=" text-3xl md:text-4xl lg:text-4xl text-center mb-10">School Management Portal</h1>
             </header>
-            <div className="container bg-white w-[40%] flex flex-col m-auto rounded-2xl shadow-white p-10 ">
+            <div className="container bg-white lg:w-[40%] w-[90%] md:w-[60%] flex flex-col m-auto rounded-2xl shadow-white p-5 md:p-10 lg:p-10 ">
                 <h1 className="text-2xl text-center">Login To Your Account</h1>
                 <div className="m-auto mt-10 sm:w-[90%] w-[80%]">
                     <p className={error ? "text-red-700 text-center block": "none"} ref={errRef} aria-live='assertive'>{error}</p>
@@ -89,7 +93,7 @@ function Login() {
                             placeholder="Enter Staff Portal" 
                             required
                             ref={emailRef} 
-                            className='w-100% bg-slate-200 p-3 text-xl'
+                            className='w-100% bg-slate-200 p-3 text-xl rounded-xl'
                             autoComplete='on'
                             value={email}
                             onChange={(e)=> setEmail(e.target.value)}
@@ -101,17 +105,11 @@ function Login() {
                              required  
                              onChange={(e)=> setPassword(e.target.value)}
                              value={password}
-                             className='w-100% bg-slate-200 p-3 text-xl'/>
+                             className='w-100% bg-slate-200 p-3 text-xl rounded-xl'/>
                         </section>
                         <a href="#" className='text-xl text-right text-blue-700 underline'>Forgot Passsword?</a>
                         <button className="block w-full bg-blue-700 p-3 text-white text-xl" >
-                            <>
-                            {
-                                loading ? <span className="animate-spin"><i className="fas fa-spinner fa-spin"></i></span>
-                                : <span>Login</span>
-                            }
-                            </>
-                   
+                                <span>Login</span>
                              </button>
                     </form>
                 </div>
