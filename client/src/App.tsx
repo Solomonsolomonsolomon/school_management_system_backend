@@ -8,17 +8,17 @@ import "./index.css";
 function App() {
   return (
     <>
+
       <AuthProvider>
         <BrowserRouter>
-          <div className="App">
+          <div className="App"> 
             <Routes>
-                <Route  path="/" element={<Login/>} />
-                <Route path="/Admin" element={<Admin/>} />
+              <Route path="/" element={<Login />} />
+              <Route path="/Admin" element={<Admin />} />
             </Routes>
           </div>
         </BrowserRouter>
       </AuthProvider>
-
     </>
   );
 }
