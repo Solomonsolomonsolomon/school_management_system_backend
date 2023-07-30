@@ -23,8 +23,8 @@ export async function signIn(req: Request, res: Response) {
             expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
           }
         );
-        user.accessToken = accessToken;
-        user.save().then(() => {
+       user.accessToken = accessToken;
+        await user.save().then(() => {
           res.status(200).json({
             msg: "successful signin",
             accessToken,

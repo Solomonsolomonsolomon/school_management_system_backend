@@ -8,13 +8,13 @@ interface IAdmin extends Document {
   password: string;
   role: string;
   accessToken: string;
-  academicTerms: Types.ObjectId[];
-  programs: Types.ObjectId[];
-  yearGroups: Types.ObjectId[];
-  academicYears: Types.ObjectId[];
-  classLevels: Types.ObjectId[];
-  teachers: Types.ObjectId[];
-  students: Types.ObjectId[];
+ // academicTerms?: Types.ObjectId[];
+  programs?: Types.ObjectId[];
+  yearGroups?: Types.ObjectId[];
+  academicYears?: Types.ObjectId[];
+  classLevels?: Types.ObjectId[];
+  teachers?: Types.ObjectId[];
+  students?: Types.ObjectId[];
 }
 const adminSchema = new Schema<IAdmin>(
   {
@@ -38,12 +38,6 @@ const adminSchema = new Schema<IAdmin>(
       type: String,
       default: "",
     },
-    academicTerms: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "AcademicTerm",
-      },
-    ],
     programs: [
       {
         type: mongoose.Schema.Types.ObjectId,
