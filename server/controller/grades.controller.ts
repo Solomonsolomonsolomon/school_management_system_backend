@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { Grades } from "../model/database";
+import { Grades, Student, Subject } from "../model/database";
 import { Types } from "mongoose";
 export async function addGrades(req: Request, res: Response) {
   try {
@@ -7,6 +7,10 @@ export async function addGrades(req: Request, res: Response) {
     const { studentId } = req.params;
     const studentID = new Types.ObjectId(studentId);
     const subjectID = new Types.ObjectId(subjectId);
+    let isValidStudentId = await Student.findOne({ _id: studentID });
+    let isValidSubjectId = await Subject.findOne({ _id: subjectID });
+    if (!isValidStudentId || !isValidSubjectId)
+      throw new Error("enter valid student ID");
     let gradesObjectExists = await Grades.findOne({ studentId, year, term });
     if (!gradesObjectExists) {
       const newGradesObject = new Grades({

@@ -19,8 +19,8 @@ import { Admin } from "./staff/Admin";
 import { Student, IStudent } from "./academic/Student";
 import { Grades } from "./academic/grades";
 import { Result } from "./academic/Result";
-
+import { Subject } from "./academic/Subject";
 //schemas
-export { Teacher, Admin, Student, Grades, Result };
+export { Teacher, Admin, Student, Grades, Result, Subject };
 export { ITeacher, IStudent };
 export default connectDB;
