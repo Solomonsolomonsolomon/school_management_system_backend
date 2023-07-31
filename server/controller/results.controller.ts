@@ -34,6 +34,8 @@ export async function calcResult(groupedData: Dictionary<any>) {
 
 export async function genResult(req: Request, res: Response) {
   try {
+    let term = req.query.term;
+    let year = req.query.year;
     let gradesPipeline = await Grades.aggregate([
       {
         $lookup: {
@@ -52,6 +54,11 @@ export async function genResult(req: Request, res: Response) {
           localField: "grades.subjectId",
           foreignField: "_id",
           as: "subjectId",
+        },
+      },
+      {
+        $match: {
+          $and: [{ term }, { year }],
         },
       },
     ]).exec();
