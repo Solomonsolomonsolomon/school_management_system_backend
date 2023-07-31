@@ -5,10 +5,6 @@ let resultSchema = new Schema({
     type: Types.ObjectId,
     required: true,
   },
-  term: {
-    type: Number,
-    enum: [1, 2, 3],
-  },
   average: {
     type: Number,
   },

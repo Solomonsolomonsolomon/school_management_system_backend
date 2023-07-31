@@ -3,12 +3,36 @@ import { Request, Response } from "express";
 import _, { Dictionary } from "lodash";
 
 export async function calcResult(groupedData: Dictionary<any>) {
-  for (let student in groupedData) {
-    console.log(student[groupedData]);
+  for (const className in groupedData) {
+    const students = groupedData[className];
+    for (const student of students) {
+      const totalMarks = _.sumBy(student.grades, "total");
+      const averageMarks = totalMarks / student.grades.length;
+      let overallGrade = "";
+      if (averageMarks >= 75) {
+        overallGrade = "A";
+      } else if (averageMarks >= 60) {
+        overallGrade = "B";
+      } else if (averageMarks >= 50) {
+        overallGrade = "C";
+      } else if (averageMarks >= 40) {
+        overallGrade = "D";
+      } else {
+        overallGrade = "F";
+      }
+      student.totalMarks = totalMarks;
+      student.averageMarks = averageMarks;
+      student.overallGrade = overallGrade;
+    }
+    students.sort((a: any, b: any) => b.totalMarks - a.totalMarks);
+    for (let i = 0; i < students.length; i++) {
+      students[i].position = i + 1;
+    }
   }
+  return groupedData;
 }
+
 export async function genResult(req: Request, res: Response) {
-  const { className } = req.params;
   try {
     let gradesPipeline = await Grades.aggregate([
       {
@@ -20,35 +44,24 @@ export async function genResult(req: Request, res: Response) {
         },
       },
       {
+        $unwind: "$studentId",
+      },
+      {
         $lookup: {
           from: "subjects",
-          localField: "grades[subjectId]",
+          localField: "grades.subjectId",
           foreignField: "_id",
           as: "subjectId",
         },
       },
-    ])
-      .exec()
-      .then(async (result: any) => {
-        // let groupedData;
-        // for (let i in result) {
-        //   let classname = `${result[i].studentId[0].currentClassLevel}${result[i].studentId[0].currentClassArm}`;
+    ]).exec();
 
-        //   groupedData = result.reduce((result: any, item: any) => {
-        //     const { studentId, ...rest } = item;
-        //     if (!result[classname]) {
-        //       result[classname] = [];
-        //     }
-        //     result[classname].push(rest);
-        //     return result;
-        //   }, {});
-        // }
-        let groupedData = _.groupBy(result, (student) => {
-          return `${student.studentId[0].currentClassLevel}${student.studentId[0].currentClassArm}`;
-        });
-        calcResult(groupedData);
-        res.json(groupedData);
-      });
+    let groupedData = _.groupBy(gradesPipeline, (student) => {
+      return `${student.studentId.currentClassLevel}${student.studentId.currentClassArm}`;
+    });
+
+    let results = await calcResult(groupedData);
+    res.json(results);
   } catch (error: any) {
     res.status(400).json({
       error,
