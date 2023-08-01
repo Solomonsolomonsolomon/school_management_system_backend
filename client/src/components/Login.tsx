@@ -1,5 +1,5 @@
-import {useRef, useState} from 'react'
-import { useNavigate, Link, useLocation, redirect} from 'react-router-dom';
+import {useRef, useState,useEffect } from 'react'
+import { useNavigate, useLocation, redirect } from 'react-router-dom';
 import axios from '../api/axios';
 
 const LOGIN_URL = '/auth'
@@ -18,6 +18,22 @@ function Login() {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     // const [loading, setLoading] = useState(false);
+    useEffect(()=> {
+        const accessToken = localStorage.getItem('accessToken')
+         const getUserData = (user) => {
+            const data = sessionStorage.getItem(user);
+            if (!data) {
+            return {};
+            }
+            return JSON.parse(data);
+        }; 
+        const user = getUserData("user");
+        if(accessToken !== null) {
+            navigate(`/${user.role}`)
+        } else {
+            return
+        }
+    },[])
  
     const Auth = async (e) => {
         e.preventDefault();
@@ -39,7 +55,7 @@ function Login() {
                 const accessToken = res.data.accessToken
                 console.log(accessToken)    
                 localStorage.setItem('accessToken', accessToken)
-                localStorage.setItem('user', JSON.stringify(res.data.user))
+                sessionStorage.setItem('user', JSON.stringify(res.data.user))
                 navigate(from)
                 console.log(accessToken)
 
