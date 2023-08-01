@@ -1,6 +1,28 @@
-import mongoose, { Schema, Types, model } from "mongoose";
-
-let resultSchema = new Schema({
+import mongoose, { Schema, Types, model, Document } from "mongoose";
+interface IResultGrades extends Document {
+  CA1?: number;
+  CA2?: number;
+  examScore?: number;
+  total?: number;
+  subjectId?: Types.ObjectId;
+  letterGrade: string;
+  _id?: Types.ObjectId;
+}
+interface IResult extends Document {
+  name: string;
+  studentId: string;
+  id?: Types.ObjectId;
+  totalScore?: number;
+  position?: number;
+  year?: string;
+  term?: number;
+  class?: string;
+  average?: number;
+  overallGrade?: string;
+  grades?: IResultGrades;
+  status: string;
+}
+let resultSchema = new Schema<IResult>({
   name: {
     type: String,
     required: true,
@@ -22,19 +44,31 @@ let resultSchema = new Schema({
   class: {
     type: String,
   },
+  year: {
+    type: String,
+  },
+  term: {
+    type: Number,
+  },
   average: {
     type: Number,
   },
-  grades: [
-    {
-      type: String,
-    },
-  ],
+  grades: [{}],
+  overallGrade: {
+    type: String,
+  },
   status: {
     type: String,
     enum: ["failed", "passed"],
     default: "failed",
   },
+});
+resultSchema.pre("save", async function (this: IResult, next) {
+    console.log('hitting')
+  this.overallGrade == "F"
+    ? (this.status = "failed")
+    : (this.status = "passed");
+  next();
 });
 const Result = model("Result", resultSchema);
 export { Result };

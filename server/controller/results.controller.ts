@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import _, { Dictionary } from "lodash";
 
 export async function calcResult(groupedData: Dictionary<any>) {
-  let bulkPushOperations = [];
+  let bulkPushOperations: any = [];
   for (const className in groupedData) {
     const students = groupedData[className];
     for (const student of students) {
@@ -32,17 +32,32 @@ export async function calcResult(groupedData: Dictionary<any>) {
         name: students[i].studentId.name,
         studentId: students[i].studentId.studentId,
         id: students[i].studentId._id,
-     
         totalScore: students[i].totalMarks,
+        year: students[i].year,
+        term: students[i].term,
         position: students[i].position,
         class: `${students[i].studentId.currentClassLevel}${students[i].studentId.currentClassArm}`,
         overallGrade: students[i].overallGrade,
         average: students[i].averageMarks,
         grades: students[i].grades,
+        status: students[i].overallGrade == "F" ? "failed" : "passed",
       };
-      console.log(resultMetaData);
+      console.log(students.studentId);
+      bulkPushOperations.push({
+        updateOne: {
+          filter: {
+            id: students[i].studentId._id,
+            term: students[i].term,
+            year: students[i].year,
+          },
+          update: { $set: resultMetaData },
+          upsert: true,
+        },
+      });
     }
   }
+
+  await Result.bulkWrite(bulkPushOperations);
   return groupedData;
 }
 export async function saveResult(student: any, term: number, year: string) {
@@ -92,9 +107,13 @@ export async function genResult(req: Request, res: Response) {
     });
 
     let results = await calcResult(groupedData);
-    res.status(201).json(results);
+    res.status(201).json({
+      status: 201,
+      msg: "results generated successfully",
+    });
   } catch (error: any) {
     res.status(400).json({
+      status: 400,
       error,
       err: error.message,
     });
