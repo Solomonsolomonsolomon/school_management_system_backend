@@ -23,7 +23,7 @@ export default async function verifyJWT(
     if (authHeaders) {
       let Authorization = authHeaders.split(" ");
       await Admin.find({ academicTerms: Authorization[1].trim() }).then((e) => {
-        console.log("mmm", e);
+      //  console.log("mmm", e);
       });
       let user: any = await Model.findOne({ accessToken: Authorization[1] });
       console.log(Authorization, user);

@@ -1,3 +1,20 @@
+<<<<<<< HEAD
+import axios from "../api/axios";
+import React, { useContext, useRef, useState } from "react";
+import AuthContext from "../context/AuthProvider";
+import { Link } from "react-router-dom";
+
+let Admin = () => {
+  return (
+    <div className="container grid  ">
+      <main>
+        <h1>Admin</h1>
+      </main>
+    </div>
+  );
+};
+export default Admin;
+=======
 import axios from '../api/axios'
 import React, {useContext, useEffect, useRef, useState} from 'react'
 import AuthContext from '../context/AuthProvider'
@@ -51,3 +68,4 @@ import Navbar from './Navbar'
 }
 
 export default Admin
+>>>>>>> 168aba8a14e75a2fd3e9a52f0e55d8e2fff69e95
