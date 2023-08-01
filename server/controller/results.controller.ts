@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import _, { Dictionary } from "lodash";
 
 export async function calcResult(groupedData: Dictionary<any>) {
+  let bulkPushOperations = [];
   for (const className in groupedData) {
     const students = groupedData[className];
     for (const student of students) {
@@ -27,15 +28,38 @@ export async function calcResult(groupedData: Dictionary<any>) {
     students.sort((a: any, b: any) => b.totalMarks - a.totalMarks);
     for (let i = 0; i < students.length; i++) {
       students[i].position = i + 1;
+      let resultMetaData = {
+        name: students[i].studentId.name,
+        studentId: students[i].studentId.studentId,
+        id: students[i].studentId._id,
+     
+        totalScore: students[i].totalMarks,
+        position: students[i].position,
+        class: `${students[i].studentId.currentClassLevel}${students[i].studentId.currentClassArm}`,
+        overallGrade: students[i].overallGrade,
+        average: students[i].averageMarks,
+        grades: students[i].grades,
+      };
+      console.log(resultMetaData);
     }
   }
   return groupedData;
 }
-
+export async function saveResult(student: any, term: number, year: string) {
+  try {
+    await Result.findOne({ student, term, year }).then((resultInstance) => {
+      if (!resultInstance) throw new Error("hi");
+      //im trying to replace result details if it already exists and i want to use bulk write so that i will use only one db call please help me
+    });
+  } catch (error) {
+    throw error;
+  }
+}
 export async function genResult(req: Request, res: Response) {
   try {
     let term = req.query.term;
     let year = req.query.year;
+
     let gradesPipeline = await Grades.aggregate([
       {
         $lookup: {
@@ -63,12 +87,12 @@ export async function genResult(req: Request, res: Response) {
       },
     ]).exec();
 
-    let groupedData = _.groupBy(gradesPipeline, (student) => {
+    let groupedData = _.groupBy(gradesPipeline, (student: any) => {
       return `${student.studentId.currentClassLevel}${student.studentId.currentClassArm}`;
     });
 
     let results = await calcResult(groupedData);
-    res.json(results);
+    res.status(201).json(results);
   } catch (error: any) {
     res.status(400).json({
       error,
