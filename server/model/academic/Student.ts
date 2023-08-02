@@ -5,6 +5,8 @@ interface IStudent extends Document {
   email: string;
   password: string;
   studentId?: string;
+  gender: string;
+  age?: string;
   role: string;
   status?: "string";
   accessToken?: string;
@@ -55,6 +57,14 @@ const studentSchema: Schema = new mongoose.Schema<IStudent>(
             .toUpperCase()
         );
       },
+    },
+    gender: {
+      required: true,
+      type: String,
+      enum: ["M", "F"],
+    },
+    age: {
+      type: Number,
     },
     role: {
       type: String,
