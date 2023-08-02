@@ -1,6 +1,7 @@
 import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons'
 import { faGear } from '@fortawesome/free-solid-svg-icons'
+import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Profile = () => {
@@ -54,6 +55,7 @@ const Profile = () => {
                     </li>
                     <li>
                         <button  className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" onClick={logout}>
+                        <FontAwesomeIcon icon={faArrowRightFromBracket} />
                             Logout
                         </button>
                     </li>
