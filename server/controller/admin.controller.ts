@@ -284,8 +284,8 @@ export async function getGenderDivide(req: Request, res: Response) {
     let noOfFemales: number = females.length;
     res.status(200).json({
       status: 200,
-      msg: `female to male ratio is ${1}:${
-        noOfMales / noOfFemales
+      msg: `female to male ratio is ${
+        noOfFemales || noOfMales == 0 ? 0 : `1:${noOfMales / noOfFemales}`
       }.please note that this ratio might not be 100% accurate..please ensure you do your own calculation `,
       noOfFemales,
       noOfMales,
