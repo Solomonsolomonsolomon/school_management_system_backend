@@ -6,6 +6,6 @@ export async function getManagedStudents(req: Request, res:Response){
        try {
         await Teacher.findOne({})
        } catch (error) {
-        
+          
        }
 };

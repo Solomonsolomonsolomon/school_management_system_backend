@@ -9,7 +9,7 @@ import Navbar from './Navbar'
 // import React, { useContext, useEffect, useRef, useState} from 'react'
 // import AuthContext from '../context/AuthProvider'
 // import { Link } from 'react-router-dom';
-import Navbar from './Admin/Navbar'
+//import Navbar from './Admin/Navbar'
 import Profile from './Admin/Profile';
 import SubAdmin from './Admin/SubAdmin';
 // const GET_URL = '/admin'
