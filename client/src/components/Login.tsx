@@ -17,23 +17,26 @@ function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
-    // const [loading, setLoading] = useState(false);
     useEffect(()=> {
         const accessToken = localStorage.getItem('accessToken')
+
          const getUserData = (user) => {
             const data = sessionStorage.getItem(user);
+            console.log(data)
             if (!data) {
             return {};
             }
             return JSON.parse(data);
         }; 
-        const user = getUserData("user");
-        if(accessToken !== null) {
-            navigate(`/${user.role}`)
+      
+        const userData = getUserData('user')
+        console.log(userData)
+        if(accessToken !== null && userData.role !== undefined) {
+            navigate(`/${userData.role}`, {replace: true})
         } else {
             return
         }
-    },[])
+    })
  
     const Auth = async (e) => {
         e.preventDefault();
@@ -56,9 +59,8 @@ function Login() {
                 console.log(accessToken)    
                 localStorage.setItem('accessToken', accessToken)
                 sessionStorage.setItem('user', JSON.stringify(res.data.user))
-                navigate(from)
+                navigate(`/${role}`, {replace: true})
                 console.log(accessToken)
-
             }
 
             setEmail("")
@@ -66,7 +68,7 @@ function Login() {
             setRole("")
         } catch(err) {
             // console.log(err.response)
-             if (err.response.status === 401) {
+             if (err.response.status == 401) {
                 setError("email or password is incorrect")
             } else if (err.response.status === 500) {
                 setError("Server Error")
