@@ -6,9 +6,12 @@ interface IStudent extends Document {
   password: string;
   studentId?: string;
   role: string;
+  status?: "string";
   accessToken?: string;
   classLevels?: Types.ObjectId[];
   currentClassLevel?: string;
+  isPromoted?: boolean;
+  currentClassArm?: string;
   academicYear?: Types.ObjectId;
   dateAdmitted?: Date;
   examResults?: Types.ObjectId[];
@@ -31,6 +34,7 @@ const studentSchema: Schema = new mongoose.Schema<IStudent>(
     email: {
       type: String,
       required: true,
+      unique: true,
     },
     password: {
       type: String,
@@ -56,6 +60,18 @@ const studentSchema: Schema = new mongoose.Schema<IStudent>(
       type: String,
       default: "student",
     },
+    status: {
+      type: String,
+      emum: [
+        "active",
+        "suspended",
+        "repeated",
+        "expelled",
+        "withdrawn",
+        "promoted",
+      ],
+      default: "active",
+    },
     accessToken: {
       type: String,
       default: "",
@@ -76,9 +92,17 @@ const studentSchema: Schema = new mongoose.Schema<IStudent>(
           : "";
       },
     },
+    currentClassArm: {
+      type: String,
+      default: "A",
+    },
     academicYear: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "AcademicYear",
+    },
+    isPromoted: {
+      type: Boolean,
+      default: false,
     },
     dateAdmitted: {
       type: Date,
@@ -157,7 +181,39 @@ studentSchema.pre("save", async function (next) {
 
   next();
 });
-
+studentSchema.pre("save", async function (next) {
+  let classes = [
+    "NUR1",
+    "NUR2",
+    "NUR3",
+    "PRY1",
+    "PRY2",
+    "PRY3",
+    "PRY4",
+    "PRY5",
+    "PRY6",
+    "JSS1",
+    "JSS2",
+    "JSS3",
+    "SS1",
+    "SS2",
+    "SS3",
+  ];
+  if (
+    this.isModified("currentClassLevel") ||
+    this.isModified("classLevel") ||
+    this.isModified("isPromoted")
+  ) {
+    if (this.isPromoted) {
+      const currentIndex = classes.indexOf(this.currentClassLevel);
+      if (currentIndex !== -1 && currentIndex < classes.length - 1) {
+        this.currentClassLevel = classes[currentIndex + 1];
+      }
+    } else {
+      this.currentClassLevel;
+    }
+  }
+});
 // Verify Password
 studentSchema.methods.verifiedPassword = async function (
   enteredPassword: string
