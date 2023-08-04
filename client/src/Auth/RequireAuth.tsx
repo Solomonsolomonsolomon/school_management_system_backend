@@ -3,13 +3,16 @@ import {useLocation, Navigate, Outlet} from 'react-router-dom';
 
 const RequireAuth = () => {
     const location = useLocation()
+    console.log(location)
     const user = sessionStorage.getItem('user')
     const accessToken = localStorage.getItem('accessToken')
+    const isAuthenticated = accessToken !== null && user !== null && user.role !== null;
+    console.log(user)
 
     return (
-        accessToken !== null && user.role !== null
-        ? <Outlet /> 
-        : <Navigate to={'/login'} state={{ from: location }} replace />
+        isAuthenticated ? <Outlet /> 
+        : <Navigate to={`/login?from=${location.pathname}`} state={{ from: location.pathname }} replace />
+       
     )
 }
 
