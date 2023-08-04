@@ -1,5 +1,5 @@
-import {useRef, useState} from 'react'
-import { useNavigate, Link, useLocation, redirect} from 'react-router-dom';
+import {useRef, useState,useEffect } from 'react'
+import { useNavigate, useLocation, redirect } from 'react-router-dom';
 import axios from '../api/axios';
 
 const LOGIN_URL = '/auth'
@@ -17,7 +17,26 @@ function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
-    // const [loading, setLoading] = useState(false);
+    useEffect(()=> {
+        const accessToken = localStorage.getItem('accessToken')
+
+         const getUserData = (user) => {
+            const data = sessionStorage.getItem(user);
+            console.log(data)
+            if (!data) {
+            return {};
+            }
+            return JSON.parse(data);
+        }; 
+      
+        const userData = getUserData('user')
+        console.log(userData)
+        if(accessToken !== null && userData.role !== undefined) {
+            navigate(`/${userData.role}`, {replace: true})
+        } else {
+            return
+        }
+    })
  
     const Auth = async (e) => {
         e.preventDefault();
@@ -39,10 +58,9 @@ function Login() {
                 const accessToken = res.data.accessToken
                 console.log(accessToken)    
                 localStorage.setItem('accessToken', accessToken)
-                localStorage.setItem('user', JSON.stringify(res.data.user))
-                navigate(from)
+                sessionStorage.setItem('user', JSON.stringify(res.data.user))
+                navigate(`/${role}`, {replace: true})
                 console.log(accessToken)
-
             }
 
             setEmail("")
@@ -50,7 +68,7 @@ function Login() {
             setRole("")
         } catch(err) {
             // console.log(err.response)
-             if (err.response.status === 401) {
+             if (err.response.status == 401) {
                 setError("email or password is incorrect")
             } else if (err.response.status === 500) {
                 setError("Server Error")

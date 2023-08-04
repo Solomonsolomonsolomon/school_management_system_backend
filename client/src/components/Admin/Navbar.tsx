@@ -7,7 +7,7 @@ import { faMessage } from '@fortawesome/free-solid-svg-icons'
 
 const Navbar = ()=> {
     return (
-        <nav className="bg-slate-50 shadow-lg h-screen py-5 sticky">
+        <nav className="bg-slate-50 shadow-lg h-screen py-5 relative fixed">
             <h1 className="text-center text-3xl font-bold">SMS|ADMIN</h1>
             <section className='my-10'>
             <ul className='grid gap-10'>
