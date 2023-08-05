@@ -230,6 +230,10 @@ studentSchema.methods.verifiedPassword = async function (
 ) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
+//setting virtual className
+studentSchema.virtual("className").get(function (this: IStudent) {
+  return `${this.currentClassLevel}${this.currentClassArm}`;
+});
 //model
 const Student = model<IStudent>("Student", studentSchema);
 

@@ -5,7 +5,7 @@ import Profile from './Admin/Profile';
 import SubAdmin from './Admin/SubAdmin';
 
 
-
+   
 const GET_URL = '/admin'
 
  const  Admin = ()=> {

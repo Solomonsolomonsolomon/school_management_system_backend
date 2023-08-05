@@ -8,6 +8,9 @@ export async function getManagedStudents(req: Request, res: Response) {
     let formTeacher: string = teacher?.formTeacher
       ? teacher.formTeacher
       : "notAFormTeacher";
-    console.log(formTeacher);
-  } catch (error) {}
+    let student=await Student.find({className:formTeacher})
+    res.json(student)
+  } catch (error) {
+    console.log(error);
+  }
 }
