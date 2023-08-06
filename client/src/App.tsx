@@ -13,19 +13,6 @@ import "./index.css";
 function App() {
   return (
     <>
-<<<<<<< HEAD
-
-      <AuthProvider>
-        <BrowserRouter>
-          <div className="App"> 
-            <Routes>
-              <Route path="/" element={<Login />} />
-              <Route path="/Admin" element={<Admin />} />
-            </Routes>
-          </div>
-        </BrowserRouter>
-      </AuthProvider>
-=======
       <Routes>
         <Route path='/' element={<Layout />}>
           {/* public routes */ }
@@ -47,7 +34,6 @@ function App() {
         </Route>
 
       </Routes>
->>>>>>> 168aba8a14e75a2fd3e9a52f0e55d8e2fff69e95
     </>
   );
 }

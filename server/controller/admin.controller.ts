@@ -275,3 +275,28 @@ export async function getAllTeachers(req: Request, res: Response) {
     });
   }
 }
+
+export async function getGenderDivide(req: Request, res: Response) {
+  try {
+    let males = await Student.find({ gender: "M" });
+    let females = await Student.find({ gender: "F" });
+    let noOfMales: number = males.length;
+    let noOfFemales: number = females.length;
+    res.status(200).json({
+      status: 200,
+      msg: `female to male ratio is ${
+        noOfFemales || noOfMales == 0 ? 0 : `1:${noOfMales / noOfFemales}`
+      }.please note that this ratio might not be 100% accurate..please ensure you do your own calculation `,
+      noOfFemales,
+      noOfMales,
+      totalStudents: noOfFemales + noOfMales,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      status: 500,
+      msg: "internal server error!..an error occured but its not your fault",
+      err: error.message,
+      error,
+    });
+  }
+}
