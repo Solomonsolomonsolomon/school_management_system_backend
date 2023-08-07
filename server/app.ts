@@ -6,7 +6,7 @@ import apiv1 from "./routes/versions/v1";
 import path from "path";
 const server = createServer(app);
 const port: string | number = process.env.PORT || 2020;
-
+import { ErrorHandler } from "./middleware/globalErrorHandler";
 //version 1 of api
 app.get("/", (req, res) => {
   res.json({
@@ -19,7 +19,7 @@ app.get("/frontend", (req, res) => {
   res.sendFile(path.join(__dirname, "..", "clients", "dist", "index.html"));
 });
 app.use("/v1", apiv1);
-
+app.use(ErrorHandler)
 server.listen(port, () => {
   console.log(`server listening on port ${port}`);
 });
