@@ -26,6 +26,8 @@ interface IStudent extends Document {
   isSuspended?: boolean;
   prefectName?: string;
   yearGraduated?: String;
+  // virtuals
+  className?: string;
 }
 const studentSchema: Schema = new mongoose.Schema<IStudent>(
   {

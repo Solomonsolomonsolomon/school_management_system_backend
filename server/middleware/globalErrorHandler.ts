@@ -16,6 +16,7 @@ export async function ErrorHandler(
   res: express.Response,
   next: express.NextFunction
 ) {
+  console.log("hit");
   console.error(`Error occured:${err.message}`);
   res.status(err?.status || 500).json({
     status: err?.status || 500,
