@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import { Teacher, Student } from "../model/database";
 import asyncErrorHandler from "../middleware/globalErrorHandler";
 console.log(asyncErrorHandler);
-
 export async function getManagedStudents(
   req: Request,
   res: Response,
@@ -17,7 +16,8 @@ export async function getManagedStudents(
   let student = await Student.find({}).then((students) => {
     for (let theStudent of students) {
       theStudent.className == formTeacher ? formStudents.push(theStudent) : "";
-    }
+      console.log(theStudent);
+    }  
   });
   res.json({
     formStudents,
