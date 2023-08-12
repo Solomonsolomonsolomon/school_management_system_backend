@@ -19,6 +19,7 @@ interface ITeacher {
   examsCreated?: Schema.Types.ObjectId[];
   createdBy?: Schema.Types.ObjectId;
   academicTerm?: string;
+  performanceSheet?: string;
 }
 
 const teacherSchema = new Schema<ITeacher>(
@@ -111,7 +112,9 @@ const teacherSchema = new Schema<ITeacher>(
     academicTerm: {
       type: String,
     },
+    performanceSheet: String,
   },
+  
   {
     timestamps: true,
   }

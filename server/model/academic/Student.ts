@@ -5,6 +5,8 @@ interface IStudent extends Document {
   email: string;
   password: string;
   studentId?: string;
+  gender: string;
+  age?: string;
   role: string;
   status?: "string";
   accessToken?: string;
@@ -24,6 +26,8 @@ interface IStudent extends Document {
   isSuspended?: boolean;
   prefectName?: string;
   yearGraduated?: String;
+  // virtuals
+  className?: string;
 }
 const studentSchema: Schema = new mongoose.Schema<IStudent>(
   {
@@ -55,6 +59,14 @@ const studentSchema: Schema = new mongoose.Schema<IStudent>(
             .toUpperCase()
         );
       },
+    },
+    gender: {
+      required: true,
+      type: String,
+      enum: ["M", "F"],
+    },
+    age: {
+      type: Number,
     },
     role: {
       type: String,
@@ -220,6 +232,10 @@ studentSchema.methods.verifiedPassword = async function (
 ) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
+//setting virtual className
+studentSchema.virtual("className").get(function (this: IStudent) {
+  return `${this.currentClassLevel}${this.currentClassArm}`;
+});
 //model
 const Student = model<IStudent>("Student", studentSchema);
 

@@ -1,7 +1,6 @@
 import { Result, Grades } from "../model/database";
 import { Request, Response } from "express";
 import _, { Dictionary } from "lodash";
-
 export async function calcResult(groupedData: Dictionary<any>) {
   let bulkPushOperations: any = [];
   for (const className in groupedData) {
@@ -42,7 +41,7 @@ export async function calcResult(groupedData: Dictionary<any>) {
         grades: students[i].grades,
         status: students[i].overallGrade == "F" ? "failed" : "passed",
       };
-      console.log(students.studentId);
+     
       bulkPushOperations.push({
         updateOne: {
           filter: {

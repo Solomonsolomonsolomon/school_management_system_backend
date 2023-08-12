@@ -9,6 +9,7 @@ import {
   getAllAdmin,
   getAllStudents,
   getAllTeachers,
+  getGenderDivide,
 } from "../../controller/admin.controller";
 const adminRouter: Router = Router();
 //#adding users
@@ -23,4 +24,6 @@ adminRouter.delete("/admin/delete/student/:studentId", deleteStudent);
 adminRouter.get("/admin/get/admin", getAllAdmin);
 adminRouter.get("/admin/get/student", getAllStudents);
 adminRouter.get("/admin/get/teacher", getAllTeachers);
+//#
+adminRouter.get("/admin/gender/divide", getGenderDivide);
 export default adminRouter;
