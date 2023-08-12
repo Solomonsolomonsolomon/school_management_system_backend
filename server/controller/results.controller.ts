@@ -41,7 +41,7 @@ export async function calcResult(groupedData: Dictionary<any>) {
         grades: students[i].grades,
         status: students[i].overallGrade == "F" ? "failed" : "passed",
       };
-      console.log(students.studentId);
+     
       bulkPushOperations.push({
         updateOne: {
           filter: {

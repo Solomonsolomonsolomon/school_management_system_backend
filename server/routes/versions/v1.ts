@@ -7,6 +7,7 @@ import gradeRoutes from "./../grades/grades.routes";
 import subjectRoutes from "./../subject/subject.routes";
 import resultRoutes from "../results/results.routes";
 import teacherRoutes from "./../teacher/teacher.routes";
+import { ErrorHandler } from "../../middleware/globalErrorHandler";
 
 v1.use(authRoutes);
 v1.use(gradeRoutes);
@@ -14,5 +15,6 @@ v1.use(subjectRoutes);
 v1.use(resultRoutes);
 v1.use(teacherRoutes);
 v1.use(adminRoutes);
+
 
 export default v1;

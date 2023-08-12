@@ -12,11 +12,11 @@ const ClassLevelSchema = new Schema(
     description: {
       type: String,
     },
-    createdBy: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Admin",
-      required: true,
-    },
+    // createdBy: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "Admin",
+    //   required: true,
+    // },
     //students will be added to the class level when they are registered
     students: [
       {
@@ -44,3 +44,10 @@ const ClassLevelSchema = new Schema(
 const ClassLevel = mongoose.model("ClassLevel", ClassLevelSchema);
 
 module.exports = ClassLevel;
+let test = {
+  name: "app",
+  app: {
+    stack: "up",
+  },
+};
+
