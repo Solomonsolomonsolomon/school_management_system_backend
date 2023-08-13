@@ -1,8 +1,13 @@
-import mongoose from "mongoose";
+import mongoose, { Schema, Types, model } from "mongoose";
 
-const { Schema } = mongoose;
-
-const academicTermSchema = new Schema(
+interface ITerm {
+  name: string;
+  description?: string;
+  duration: string;
+  isCurrent: boolean;
+  createdBy: Types.ObjectId;
+}
+const academicTermSchema = new Schema<ITerm>(
   {
     name: {
       type: String,
@@ -10,12 +15,16 @@ const academicTermSchema = new Schema(
     },
     description: {
       type: String,
-      required: true,
     },
     duration: {
       type: String,
       required: true,
       default: "3 months",
+    },
+    isCurrent: {
+      type: Boolean,
+      default: false,
+      required: true,
     },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
@@ -26,6 +35,5 @@ const academicTermSchema = new Schema(
   { timestamps: true }
 );
 
-const AcademicTerm = mongoose.model("AcademicTerm", academicTermSchema);
-
-module.exports = AcademicTerm;
+const AcademicTerm = model<ITerm>("AcademicTerm", academicTermSchema);
+export { AcademicTerm };
