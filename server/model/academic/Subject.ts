@@ -39,21 +39,27 @@ const subjectSchema = new Schema({
   subjectName: {
     type: String,
     required: true,
+    unique: true,
   },
   teacherId: {
     type: Types.ObjectId,
     ref: "Teacher",
+    
   },
   academicYear: {
-    type: String,
-    default: () => {
-      let date = new Date();
-      //september begins new academic year
-      return date.getMonth() < 8
-        ? `${date.getFullYear() - 1}/${date.getFullYear()}`
-        : `${date.getFullYear()}/${date.getFullYear() + 1}`;
-    },
+    type: Schema.Types.ObjectId,
+    ref: "AcademicYear",
   },
+  // academicYear: {
+  //   type: String,
+  //   default: () => {
+  //     let date = new Date();
+  //     //september begins new academic year
+  //     return date.getMonth() < 8
+  //       ? `${date.getFullYear() - 1}/${date.getFullYear()}`
+  //       : `${date.getFullYear()}/${date.getFullYear() + 1}`;
+  //   },
+  // },
   className: {
     type: String,
   },

@@ -18,8 +18,8 @@ export async function ErrorHandler(
 ) {
   console.log("hit");
   console.error(`Error occured:${err.message}`);
-  res.status(err?.status || 500).json({
-    status: err?.status || 500,
+  res.status(err?.statusCode || 500).json({
+    status: err?.statusCode || 500,
     msg: err?.message || "internal server error",
     error: err,
   });
