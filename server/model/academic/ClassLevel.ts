@@ -5,6 +5,7 @@ const { Schema } = mongoose;
 const ClassLevelSchema = new Schema(
   {
     //Primary 1
+    //PRY1,PRY2,PRY3,JSS1,JSS2,SSS1,SSS2,NUR1,PRE1,
     name: {
       type: String,
       required: true,
@@ -43,11 +44,4 @@ const ClassLevelSchema = new Schema(
 
 const ClassLevel = mongoose.model("ClassLevel", ClassLevelSchema);
 
-module.exports = ClassLevel;
-let test = {
-  name: "app",
-  app: {
-    stack: "up",
-  },
-};
-
+export { ClassLevel };
