@@ -17,7 +17,7 @@ async function connectDB() {
 import { Teacher, ITeacher } from "./staff/Teacher";
 import { Admin } from "./staff/Admin";
 import { Student, IStudent } from "./academic/Student";
-import { Grades } from "./academic/grades";
+import { Grades } from "./academic/Grades";
 import { Result } from "./academic/Result";
 import { Subject } from "./academic/Subject";
 import { AcademicTerm } from "./academic/AcademicTerm";
