@@ -1,4 +1,4 @@
-import mongoose, { MongooseError } from "mongoose";
+import mongoose, { MongooseError, Types } from "mongoose";
 import { Subject } from "../model/academic/Subject";
 import { Response, Request, NextFunction } from "express";
 import { setErrorStatusCode } from "../middleware/decorators";
@@ -60,11 +60,12 @@ class SubjectController {
       className,
       teacherId,
     });
-    await newSubject.save();
-    res.json(201).json({
-      status: 201,
-      msg: "added subject successfully",
-      subject: newSubject,
+    await newSubject.save().then((e) => {
+      res.status(201).json({
+        status: 201,
+        msg: "added subject successfully",
+        subject: newSubject,
+      });
     });
   }
   @setErrorStatusCode(400)
@@ -74,7 +75,9 @@ class SubjectController {
     next: NextFunction
   ): Promise<any> {
     let id = req.body.id;
-    let original = await Subject.findOneAndRemove({ _id: id });
+    let _id = await new Types.ObjectId(id);
+    console.log(_id)
+    let original = await Subject.findOne({ _id });
     if (!original) throw new Error("Subject not found");
     Object.assign(original, req.body);
     await original.save().then((edited) => {
