@@ -1,4 +1,6 @@
 import { Router } from "express";
+import AcademicTermController from "../../controller/academicterm.controller";
+let term = new AcademicTermController();
 import {
   addAdmin,
   addTeacher,
@@ -11,7 +13,11 @@ import {
   getAllTeachers,
   getGenderDivide,
 } from "../../controller/admin.controller";
+const { addATerm, deleteTerm, setCurrentTerm, getAllTerms } = term;
+import asyncErrorHandler from "../../middleware/globalErrorHandler";
+import { get } from "lodash";
 const adminRouter: Router = Router();
+
 //#adding users
 adminRouter.post("/admin/add/admin", addAdmin);
 adminRouter.post("/admin/add/teacher", addTeacher);
@@ -24,6 +30,13 @@ adminRouter.delete("/admin/delete/student/:studentId", deleteStudent);
 adminRouter.get("/admin/get/admin", getAllAdmin);
 adminRouter.get("/admin/get/student", getAllStudents);
 adminRouter.get("/admin/get/teacher", getAllTeachers);
-//#
+//#gender ratio
 adminRouter.get("/admin/gender/divide", getGenderDivide);
+//#term
+adminRouter.get("/admin/term/get/all", asyncErrorHandler(getAllTerms));
+adminRouter.post("/admin/term/add", asyncErrorHandler(addATerm));
+adminRouter.post("/admin/term/:id/set/current",asyncErrorHandler(setCurrentTerm));
+adminRouter.delete("/admin/term/:id/delete", asyncErrorHandler(deleteTerm));
+//# year
+
 export default adminRouter;
