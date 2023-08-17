@@ -5,13 +5,14 @@ const academicYearSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
+      unique: true,
     },
     fromYear: {
-      type: Date,
+      type: String,
       required: true,
     },
     toYear: {
-      type: Date,
+      type: String,
       required: true,
     },
     isCurrent: {
@@ -21,6 +22,10 @@ const academicYearSchema = new mongoose.Schema(
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Admin",
+    },
+    createdByBot: {
+      type: Boolean,
+      default: false,
       required: true,
     },
     students: [

@@ -2,7 +2,7 @@ import app from "./server";
 import cron from "node-cron";
 import global from "./global";
 import express from "express";
-import { Admin, Student, Teacher } from "./model/database";
+import { Admin, Student, Teacher, AcademicYear } from "./model/database";
 import { createServer } from "http";
 import apiv1 from "./routes/versions/v1";
 import path from "path";
@@ -15,19 +15,7 @@ app.get("/", (req: express.Request, res) => {
     status: "success",
     msg: "test end point hit",
   });
-});  
-runEveryMinute();
-function runEveryMinute() {
-  cron.schedule(
-    "* * * * *",
-    () => {
-      console.log("running");
-    },
-    {
-      scheduled: true,
-    }
-  );
-}
+});
 app.get("/frontend", (req, res) => {
   app.use(express.static(path.join(__dirname, "..", "clients", "dist")));
   res.sendFile(path.join(__dirname, "..", "clients", "dist", "index.html"));

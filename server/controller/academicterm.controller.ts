@@ -78,5 +78,16 @@ class AcademicTermController {
       res.status(200).json({ status: "2xx", msg: "term deleted successfully" });
     }
   }
+  public async getCurrentTerm(req: express.Request, res: express.Response) {
+    await AcademicTerm.findOne({ isCurrent: true }).then((currentTerm) => {
+      if (!currentTerm)
+        throw new CustomError({}, "no current term set,set new term", 404);
+      res.status(200).json({
+        status: 200,
+        message: "current term found",
+        currentTerm,
+      });
+    });
+  }
 }
 export default AcademicTermController;
