@@ -1,8 +1,12 @@
 import express, { Router } from "express";
+const adminRouter: Router = Router();
+import asyncErrorHandler from "../../middleware/globalErrorHandler";
 import AcademicTermController from "../../controller/academicterm.controller";
 import AcademicYearController from "../../controller/academicyear.controller";
+import ClassLevelController from "../../controller/classLevel.controller";
 let term = new AcademicTermController();
 let year = new AcademicYearController();
+let classLevel = new ClassLevelController();
 import {
   addAdmin,
   addTeacher,
@@ -25,11 +29,7 @@ const {
   deleteYear,
   setCurrentYear,
 } = year;
-import asyncErrorHandler from "../../middleware/globalErrorHandler";
-import { get } from "lodash";
-
-const adminRouter: Router = Router();
-
+const { createClassLevel, deleteClassLevel, getAllClassLevels } = classLevel;
 //#adding users
 adminRouter.post("/admin/add/admin", addAdmin);
 adminRouter.post("/admin/add/teacher", addTeacher);
@@ -60,7 +60,7 @@ adminRouter.get("/admin/term/get/current", asyncErrorHandler(getCurrentTerm));
 
 //# year
 adminRouter.post("/admin/year/add", asyncErrorHandler(addAcademicYear));
-addYearAutomatically(); //automatically add Year runs every first of september
+addYearAutomatically(); //automatically adds Year first of september
 adminRouter.get("/admin/year/get/all", asyncErrorHandler(getAllYears));
 adminRouter.get("/admin/year/get/current", asyncErrorHandler(getCurrentYear));
 adminRouter.delete("/admin/year/:id/delete", asyncErrorHandler(deleteYear));
@@ -69,4 +69,11 @@ adminRouter.post(
   asyncErrorHandler(setCurrentYear)
 );
 
+//#classLevel
+adminRouter.get("/admin/class/get/all", asyncErrorHandler(getAllClassLevels));
+adminRouter.post("/admin/class/new", asyncErrorHandler(createClassLevel));
+adminRouter.delete(
+  "/admin/class/:id/delete",
+  asyncErrorHandler(deleteClassLevel)
+);
 export default adminRouter;

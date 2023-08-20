@@ -1,7 +1,14 @@
 import mongoose from "mongoose";
 
 const { Schema } = mongoose;
-
+interface IClassLevel {
+  name: string;
+  description?: string;
+  createdBy: mongoose.Types.ObjectId;
+  students?: mongoose.Types.ObjectId[];
+  subjects?: mongoose.Types.ObjectId[];
+  teachers?: mongoose.Types.ObjectId[];
+}
 const ClassLevelSchema = new Schema(
   {
     //Primary 1
@@ -42,6 +49,9 @@ const ClassLevelSchema = new Schema(
   { timestamps: true }
 );
 
-const ClassLevel = mongoose.model("ClassLevel", ClassLevelSchema);
+const ClassLevel = mongoose.model<IClassLevel>(
+  "ClassLevel",
+  ClassLevelSchema
+);
 
 export { ClassLevel };

@@ -98,6 +98,7 @@ export async function addStudent(
         } else {
           await new Student({
             ...req.body,
+           // currentClassLevel: req.body.currentClassLevel.toUpperCase(),
           })
             .save()
             .then((student) => {
@@ -249,7 +250,7 @@ export async function getAllStudents(req: Request, res: Response) {
   } catch (error: any) {
     res.status(500).json({
       status: 500,
-      msg: "internal server error.its not your fault",
+      msg: "AN ERROR OCCURED!!it might not be your fault",
       error,
       err: error.message,
     });
@@ -278,18 +279,20 @@ export async function getAllTeachers(req: Request, res: Response) {
 
 export async function getGenderDivide(req: Request, res: Response) {
   try {
-    let males = await Student.find({ gender: "M" });
-    let females = await Student.find({ gender: "F" });
-    let noOfMales: number = males.length;
-    let noOfFemales: number = females.length;
+    let totalStudents = await Student.find({});
+    let males = 0;
+    let females = 0;
+    totalStudents.forEach((student: any) => {
+      student.gender == "M" ? (males += 1) : (females += 1);
+    });
     res.status(200).json({
       status: 200,
-      msg: `female to male ratio is ${
-        noOfFemales || noOfMales == 0 ? 0 : `1:${noOfMales / noOfFemales}`
-      }.please note that this ratio might not be 100% accurate..please ensure you do your own calculation `,
-      noOfFemales,
-      noOfMales,
-      totalStudents: noOfFemales + noOfMales,
+      msg: `female to male ratio is ${females / females}to${
+        males / females
+      } .please note that this may be inaccurate,perform your own calculation`,
+      females,
+      males,
+      totalStudents: totalStudents.length,
     });
   } catch (error: any) {
     res.status(500).json({
