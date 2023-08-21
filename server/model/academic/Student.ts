@@ -1,8 +1,13 @@
 import bcrypt from "bcrypt";
 import mongoose, { Schema, Document, Types, model, Model } from "mongoose";
+import { AcademicTerm } from "./AcademicTerm";
+import { AcademicYear } from "./AcademicYear";
+import { CustomError } from "../../middleware/decorators";
+
 interface IStudent extends Document {
   name: string;
   email: string;
+  picture?: string;
   password: string;
   studentId?: string;
   gender: string;
@@ -15,6 +20,7 @@ interface IStudent extends Document {
   isPromoted?: boolean;
   currentClassArm?: string;
   academicYear?: Types.ObjectId;
+  currentAcademicTerm: Types.ObjectId;
   dateAdmitted?: Date;
   examResults?: Types.ObjectId[];
   program?: Types.ObjectId;
@@ -39,6 +45,10 @@ const studentSchema: Schema = new mongoose.Schema<IStudent>(
       type: String,
       required: true,
       unique: true,
+    },
+    picture: {
+      type: String,
+      default: "thisshouldbeabase64string",
     },
     password: {
       type: String,
@@ -112,6 +122,10 @@ const studentSchema: Schema = new mongoose.Schema<IStudent>(
       type: mongoose.Schema.Types.ObjectId,
       ref: "AcademicYear",
     },
+    currentAcademicTerm: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "AcademicTerm",
+    },
     isPromoted: {
       type: Boolean,
       default: false,
@@ -127,7 +141,6 @@ const studentSchema: Schema = new mongoose.Schema<IStudent>(
         ref: "ExamResult",
       },
     ],
-
     program: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Program",
@@ -193,6 +206,22 @@ studentSchema.pre("save", async function (next) {
 
   next();
 });
+//add current term and current year
+studentSchema.pre("save", async function (next) {
+  let currentTerm = await AcademicTerm.findOne({ isCurrent: true });
+  let currentYear = await AcademicYear.findOne({ isCurrent: true });
+  if (!currentYear || !currentTerm)
+    throw new CustomError(
+      {},
+      "Either current year or current term not set",
+      400
+    );
+  this.academicYear = currentYear;
+  this.currentAcademicTerm = currentTerm;
+  next();
+});
+
+//get back to this
 studentSchema.pre("save", async function (next) {
   let classes = [
     "NUR1",

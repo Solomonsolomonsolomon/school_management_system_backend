@@ -1,7 +1,7 @@
 import mongoose, { MongooseError, Types } from "mongoose";
 import { Subject } from "../model/academic/Subject";
 import { Response, Request, NextFunction } from "express";
-import { setErrorStatusCode } from "../middleware/decorators";
+import { CustomError, setErrorStatusCode } from "../middleware/decorators";
 import { Student } from "../model/database";
 import { set } from "lodash";
 //setErrorStatusCode is a decorator that sets the status Code on error
@@ -39,10 +39,20 @@ import { set } from "lodash";
 
 class SubjectController {
   /**
+   * getAllSubjects
    * addSubjects
    * editSubjects
    * deleteSubjects
    */
+
+  public async getAllSubjects(req: Request, res: Response) {
+    let allSubjects = await Subject.find({});
+    if (!allSubjects.length)
+      throw new CustomError({}, "no subjects found", 404);
+    res
+      .status(200)
+      .json({ status: 200, msg: "all students found", subjects: allSubjects });
+  }
   @setErrorStatusCode(400)
   public async addSubjects(
     req: Request,

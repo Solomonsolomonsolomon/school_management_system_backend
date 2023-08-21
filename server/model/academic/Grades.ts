@@ -11,8 +11,8 @@ interface INestedgrades extends Document {
 }
 interface IGrades extends Document {
   studentId: Types.ObjectId;
-  year: string;
-  term: string;
+  year: Types.ObjectId;
+  term: Types.ObjectId;
   grades: INestedgrades[];
 }
 let gradesSchema = new Schema<IGrades>({
@@ -22,11 +22,10 @@ let gradesSchema = new Schema<IGrades>({
     ref: "Student",
   },
   year: {
-    type: String,
+    type: Schema.Types.ObjectId,
   },
   term: {
-    type: String,
-    enum: [1, 2, 3],
+    term: Schema.Types.ObjectId,
   },
   grades: [
     {
