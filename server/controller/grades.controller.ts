@@ -20,10 +20,10 @@ export async function addGrades(req: Request, res: Response) {
     let isValidStudentId = !!(await Student.countDocuments({ _id: studentID }));
     let isValidSubjectId = !!(await Subject.countDocuments({ _id: subjectID }));
 
-    if (!currentYear || !currentTerm)
-      throw new CustomError({}, "either year or term not valid", 400);
-    if (!isValidStudentId || !isValidSubjectId)
-      throw new Error("enter valid  ID's");
+    if (!currentYear) throw new Error(" year entered not valid");
+    if (!currentTerm) throw new Error("term entered not valid");
+    if (!isValidStudentId) throw new Error("enter valid studentId");
+    if (!isValidSubjectId) throw new Error("enter valid subjectId");
     let gradesObjectExists = await Grades.findOne({ studentId, year, term });
 
     //if grade object doesnt exist

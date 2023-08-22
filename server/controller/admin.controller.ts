@@ -97,7 +97,7 @@ export async function addStudent(
   res: Response,
   next: NextFunction
 ) {
-  let { name, email, currentClassLevel } = req.body;
+  let { name, email, currentClassLevel, currentClassArm } = req.body;
   let isStudentAlreadyRegistered = !!(await Student.countDocuments({
     name,
     email,
@@ -105,7 +105,7 @@ export async function addStudent(
   if (isStudentAlreadyRegistered)
     throw new CustomError({}, "student already registered", 403);
   let isClassAvailable = !!(await ClassLevel.countDocuments({
-    name: currentClassLevel,
+    name: `${currentClassLevel}${currentClassArm}`,
   }));
   if (!isClassAvailable)
     throw new CustomError(
@@ -122,7 +122,6 @@ export async function addStudent(
     msg: "registered student successfully",
   });
 }
-
 
 export async function deleteAdmin(
   req: Request,
