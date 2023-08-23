@@ -1,7 +1,14 @@
 import mongoose from "mongoose";
 
 const { Schema } = mongoose;
-
+interface IClassLevel {
+  name: string;
+  description?: string;
+  createdBy: mongoose.Types.ObjectId;
+  students?: mongoose.Types.ObjectId[];
+  subjects?: mongoose.Types.ObjectId[];
+  teachers?: mongoose.Types.ObjectId[];
+}
 const ClassLevelSchema = new Schema(
   {
     //Primary 1
@@ -13,11 +20,11 @@ const ClassLevelSchema = new Schema(
     description: {
       type: String,
     },
-    // createdBy: {
-    //   type: mongoose.Schema.Types.ObjectId,
-    //   ref: "Admin",
-    //   required: true,
-    // },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Admin",
+      required: true,
+    },
     //students will be added to the class level when they are registered
     students: [
       {
@@ -42,6 +49,9 @@ const ClassLevelSchema = new Schema(
   { timestamps: true }
 );
 
-const ClassLevel = mongoose.model("ClassLevel", ClassLevelSchema);
+const ClassLevel = mongoose.model<IClassLevel>(
+  "ClassLevel",
+  ClassLevelSchema
+);
 
 export { ClassLevel };

@@ -23,8 +23,8 @@ export async function signIn(req: Request, res: Response) {
             expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
           }
         );
-       user.accessToken = accessToken;
-        await user.save().then(() => {
+        user.accessToken = accessToken;
+        await user.save().then(async () => {
           res.status(200).json({
             msg: "successful signin",
             accessToken,
@@ -76,7 +76,7 @@ export async function signOut(req: Request, res: Response, next: NextFunction) {
       throw new Error("invalid user");
     }
     user.accessToken = "";
-    user.save().then(() => {
+    await user.save().then(() => {
       res.json({
         status: 200,
         msg: "successful logout",

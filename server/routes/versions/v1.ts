@@ -11,10 +11,10 @@ import { ErrorHandler } from "../../middleware/globalErrorHandler";
 
 v1.use(authRoutes);
 v1.use(gradeRoutes);
-v1.use(subjectRoutes);
+v1.use(secured,subjectRoutes);
 v1.use(resultRoutes);
 v1.use(teacherRoutes);
-v1.use(adminRoutes);
+v1.use(secured,adminRoutes);
 
 
 export default v1;

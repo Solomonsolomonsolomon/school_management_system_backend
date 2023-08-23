@@ -26,7 +26,6 @@ let gradesSchema = new Schema<IGrades>({
   },
   term: {
     type: String,
-    enum: [1, 2, 3],
   },
   grades: [
     {

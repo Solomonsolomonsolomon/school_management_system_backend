@@ -23,15 +23,15 @@ export default async function verifyJWT(
     if (authHeaders) {
       let Authorization = authHeaders.split(" ");
       await Admin.find({ academicTerms: Authorization[1].trim() }).then((e) => {
-      //  console.log("mmm", e);
+        //  console.log("mmm", e);
       });
       let user: any = await Model.findOne({ accessToken: Authorization[1] });
-      console.log(Authorization, user);
       if (Authorization[0].toLowerCase() === "bearer" && user) {
         let token = Authorization[1];
         let ACCESS_TOKEN_SECRET: any = process.env.ACCESS_TOKEN_SECRET;
         jwt.verify(token, ACCESS_TOKEN_SECRET, (err: any, decoded: any) => {
           if (err) throw err;
+          req.user = user;
           next();
         });
       } else {

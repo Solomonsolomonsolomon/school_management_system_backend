@@ -1,6 +1,14 @@
 import bcrypt from "bcrypt";
 import jwt, { Secret } from "jsonwebtoken";
-import { Admin, Student, Teacher, ITeacher } from "./../model/database";
+import { CustomError } from "../middleware/decorators";
+import {
+  Admin,
+  Student,
+  Teacher,
+  ITeacher,
+  ClassLevel,
+  AcademicTerm,
+} from "./../model/database";
 import { NextFunction, Request, Response } from "express";
 
 export async function addAdmin(
@@ -89,38 +97,30 @@ export async function addStudent(
   res: Response,
   next: NextFunction
 ) {
-  try {
-    let { name, email, password, role } = req.body;
-    await Student.findOne({ name, email }).then(
-      async (alreadyRegistered: object | null) => {
-        if (alreadyRegistered) {
-          throw new Error("This particular student already registered");
-        } else {
-          await new Student({
-            ...req.body,
-          })
-            .save()
-            .then((student) => {
-              res.json({
-                msg: "student added successfully",
-                status: 200,
-                student,
-              });
-            })
-            .catch((err) => {
-              throw err;
-            });
-        }
-      }
+  let { name, email, currentClassLevel, currentClassArm } = req.body;
+  let isStudentAlreadyRegistered = !!(await Student.countDocuments({
+    name,
+    email,
+  }));
+  if (isStudentAlreadyRegistered)
+    throw new CustomError({}, "student already registered", 403);
+  let isClassAvailable = !!(await ClassLevel.countDocuments({
+    name: `${currentClassLevel}${currentClassArm}`,
+  }));
+  if (!isClassAvailable)
+    throw new CustomError(
+      {},
+      "the class you selected is not available.please register and try again",
+      404
     );
-  } catch (error: any) {
-    res.status(400).json({
-      status: 400,
-      error,
-      err: error.message,
-      msg: "failed to add student",
-    });
-  }
+  let newStudent = new Student({
+    ...req.body,
+  });
+  await newStudent.save();
+  res.status(201).json({
+    status: 201,
+    msg: "registered student successfully",
+  });
 }
 
 export async function deleteAdmin(
@@ -249,7 +249,7 @@ export async function getAllStudents(req: Request, res: Response) {
   } catch (error: any) {
     res.status(500).json({
       status: 500,
-      msg: "internal server error.its not your fault",
+      msg: "AN ERROR OCCURED!!it might not be your fault",
       error,
       err: error.message,
     });
@@ -278,18 +278,20 @@ export async function getAllTeachers(req: Request, res: Response) {
 
 export async function getGenderDivide(req: Request, res: Response) {
   try {
-    let males = await Student.find({ gender: "M" });
-    let females = await Student.find({ gender: "F" });
-    let noOfMales: number = males.length;
-    let noOfFemales: number = females.length;
+    let totalStudents = await Student.find({});
+    let males = 0;
+    let females = 0;
+    totalStudents.forEach((student: any) => {
+      student.gender == "M" ? (males += 1) : (females += 1);
+    });
     res.status(200).json({
       status: 200,
-      msg: `female to male ratio is ${
-        noOfFemales || noOfMales == 0 ? 0 : `1:${noOfMales / noOfFemales}`
-      }.please note that this ratio might not be 100% accurate..please ensure you do your own calculation `,
-      noOfFemales,
-      noOfMales,
-      totalStudents: noOfFemales + noOfMales,
+      msg: `female to male ratio is ${females / females}to${
+        males / females
+      } .please note that this may be inaccurate,perform your own calculation`,
+      females,
+      males,
+      totalStudents: totalStudents.length,
     });
   } catch (error: any) {
     res.status(500).json({
