@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Profile = () => {
 
-    const getUserData = (user) => {
+    const getUserData = (user:any) => {
         const data = sessionStorage.getItem(user);
         if (!data) {
           return {};
@@ -18,9 +18,9 @@ const Profile = () => {
 
 
     const logout=()=> {
-        localStorage.removeItem('accessToken')
+        sessionStorage.removeItem('accessToken')
         sessionStorage.removeItem('user')
-        window.location.reload()
+        location.href='/'
     }
 
     const toggle = () => {
@@ -31,7 +31,7 @@ const Profile = () => {
     }
 
     return (
-        <section className="bg-sky-300 shadow-lg w-full p-5 ">
+        <section className="bg-sky-300 shadow-lg  p-5 w-[100%] border border-black">
             <div className=" flex justify-end gap-2 cursor-pointer" onClick={toggle}>
                 <section>
                 <h1 className="text-xl text-white font-bold">{user.name}</h1>
@@ -39,7 +39,7 @@ const Profile = () => {
                 </section>
                 <FontAwesomeIcon icon={faUser} size='2xl' className='mt-3 text-white'/>
             </div>  
-            <div id="profile" className='absolute hidden transition-opacity duration-500 top-20 left-[85%] p-5 shadow-lg w-[15%] z-20 '>
+            <div id="profile" className='absolute hidden transition-opacity duration-500  left-[60%] p-5 shadow-lg w-[25%] z-20 bg-black'>
                 <ul className='grid gap-3  justify-center m-0 p-0'>
                     <li>
                         <FontAwesomeIcon icon={faUser}  className='mt-3 mr-2 text-sky-300'/>   

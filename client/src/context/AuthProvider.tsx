@@ -9,8 +9,10 @@ const AuthContext = createContext<AuthContextType>({
     auth: {},
     setAuth: () => {},
 });
-
-export const AuthProvider: React.FC = ({ children }) => {
+interface AuthProviderProps{
+    children:React.ReactNode
+}
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [auth, setAuth] = useState({});
     return (
         <AuthContext.Provider value={{ auth, setAuth }}>

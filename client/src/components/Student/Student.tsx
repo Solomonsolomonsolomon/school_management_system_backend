@@ -1,8 +1,11 @@
+import Profile from "../Admin/Profile"
 
 function Student() {
     return (
-        <div>
+        <div> 
+            <Profile/>
             <p>student Dashboard</p>
+            
         </div>
     )
 }
