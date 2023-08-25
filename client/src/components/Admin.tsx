@@ -1,25 +1,33 @@
-
-import axios from '../api/axios'
-import Navbar from './Admin/Navbar'
-import Profile from './Admin/Profile';
-import SubAdmin from './Admin/SubAdmin';
-
-
-   
-const GET_URL = '/admin'
-
- const  Admin = ()=> {
-    return (
-        <div className='grid md:grid-cols-[25%_75%] lg:grid-cols-[20%_80%] w-screen '>
-        <Navbar/>
-        <main className='container'>
-            <Profile />
-            <SubAdmin />
-        </main>
-        </div> 
-
-    ) 
+import axios from "../api/axios";
+import Navbar from "./Admin/Navbar";
+import Profile from "./Admin/Profile";
+import SubAdmin from "./Admin/SubAdmin";
+import React from "react";
+import AddStudent from "./Admin/AddStudent";
+const GET_URL = "/admin";
+interface IComponents {
+  subadmin: React.FC;
+  profile?: string;
 }
+let components: any = {
+  subadmin: SubAdmin,
+  addstudent: AddStudent,
+};
+const Admin = () => {
+  let [view, setView] = React.useState("subadmin");
 
-export default Admin
+  let Selected = components[view];
+  console.log(Selected)
 
+  return (
+    <div className="grid md:grid-cols-[25%_75%] lg:grid-cols-[20%_80%] w-screen ">
+      <Navbar setView={setView} />
+      <main className="container">
+        <Profile />
+        <Selected />
+      </main>
+    </div>
+  );
+};
+
+export default Admin;

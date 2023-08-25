@@ -13,3 +13,4 @@ app.use(express.static(path.join(__dirname, "view")));
 app.use(express.static(path.join(__dirname)));
 app.use(express.urlencoded({ extended: true }));
 export default app;
+    

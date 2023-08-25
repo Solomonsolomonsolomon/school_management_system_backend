@@ -6,16 +6,68 @@ import { faMoneyBill1 } from "@fortawesome/free-solid-svg-icons";
 import EarningChart from "./charts/EarningChart";
 import ExpenseChart from "./charts/ExpenseChart";
 // import { useNavigate , useLocation} from 'react-router-dom'
-import { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 // import AuthContext from '../context/AuthProvider'
 // import { Link } from 'react-router-dom';
-// import axios from '../../api/axios'
+import axios from "../../api/axios";
 
-// const POST_URL = '/admin'
-const SubAdmin = () => {
-  const [error, setError] = useState("");
+
+const POST_URL = "/admin";
+const SubAdmin:React.FC = () => {
+   
+  const [isLoading, setIsLoading] = useState(false);
+  const noOfStudents = useRef<HTMLParagraphElement>(null);
+  const teachersCount = useRef<HTMLParagraphElement>(null);
+  useEffect(() => {
+    let controller = new AbortController();
+    inner();
+    async function inner() {
+      try {
+        let genderDivideResponse = await axios.get(
+          `${POST_URL}/gender/divide`,
+          {
+            signal: controller.signal,
+          }
+        );
+        let number = genderDivideResponse?.data;
+        let studentsNumber = noOfStudents.current;
+        studentsNumber
+          ? (studentsNumber.textContent = number?.totalStudents)
+          : "";
+        console.log(number);
+      } catch (error: any) {
+        console.error(error);
+        noOfStudents.current ? (noOfStudents.current.textContent = "xxx") : "";
+      }
+    }
+    return () => {
+      controller.abort();
+    };
+  }, []);
+  useEffect(() => {
+    let controller1 = new AbortController();
+    getTeachersNumber();
+    async function getTeachersNumber() {
+      try {
+        let teachersNumber = await axios.get(`${POST_URL}/get/count/teachers`, {
+          signal: controller1.signal,
+        });
+        let count = teachersCount?.current;
+        count ? (count.textContent = teachersNumber.data.noOfTeachers) : "";
+      } catch (error) {
+        console.error(error);
+        teachersCount.current
+          ? (teachersCount.current.textContent = "xxx")
+          : "";
+      }
+    }
+
+    return () => {
+      controller1.abort();
+    };
+  });
+  
   const errRef = useRef<HTMLParagraphElement>(null);
-
   const getUserData = (user: any) => {
     const data = sessionStorage.getItem(user);
     if (!data) {
@@ -23,16 +75,15 @@ const SubAdmin = () => {
     }
     return JSON.parse(data);
   };
-
   const user = getUserData("user");
 
   return (
     <div className="lg:p-20 md:p-10 sm:p-1 bg-gray-200 grid gap-10 w-[99%] ">
+        
       <h1 className="text-2xl font-bold">Admin Dashboard</h1>
       <section className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10 h-auto   ">
         <div className="bg-white p-10 shadow-lg flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
-
-            <div className="flex border"></div>
+          <div className="flex border"></div>
           <section className="bg-green-100 p-5 rounded-full">
             <FontAwesomeIcon
               icon={faChildren}
@@ -42,7 +93,9 @@ const SubAdmin = () => {
           </section>
           <section className="mt-3">
             <h2 className="text-l text-slate-400">Students</h2>
-            <p className="text-lg font-semibold">100000</p>
+            <p className="text-lg font-semibold" ref={noOfStudents}>
+              100000
+            </p>
           </section>
         </div>
         <div className="bg-white p-10 shadow-lg flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
@@ -55,7 +108,9 @@ const SubAdmin = () => {
           </section>
           <section className="mt-3">
             <h2 className="text-xl text-slate-400">Teachers</h2>
-            <p className="text-lg font-semibold">2000</p>
+            <p className="text-lg font-semibold" ref={teachersCount}>
+              2000
+            </p>
           </section>
         </div>
         <div className="bg-white p-10 shadow-lg flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
@@ -96,7 +151,7 @@ const SubAdmin = () => {
         <br></br>
         <div className="bg-white p-5 grid grid-rows-[5%_95%] gap-5">
           <h2>Expenses</h2>
-          <div >
+          <div>
             <ExpenseChart />
           </div>
         </div>

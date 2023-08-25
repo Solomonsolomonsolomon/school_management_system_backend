@@ -302,3 +302,11 @@ export async function getGenderDivide(req: Request, res: Response) {
     });
   }
 }
+export async function countTeachers(req: Request, res: Response) {
+  let noOfTeachers = await Teacher.countDocuments({});
+  res.status(200).json({
+    status: 200,
+    msg: "teachers number found",
+    noOfTeachers,
+  });
+}

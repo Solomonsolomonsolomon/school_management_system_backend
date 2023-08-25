@@ -12,31 +12,39 @@ import "./index.css";
 import jwtDecode from "jwt-decode";
 
 let role: string = "";
-function isLoggedIn() {
+function isLoggedIn(userRole: string = "") {
   try {
     let accessToken: string = sessionStorage.getItem("accessToken") || "";
-    jwtDecode(accessToken);
+    let c: any = jwtDecode(accessToken);
+    if (Date.now() >= c.exp * 1000) throw new Error("");
     role = sessionStorage.getItem("role") || "";
+    if (userRole !== "" && userRole !== role) throw new Error("failed");
     return true;
   } catch (error) {
     return false;
   }
 }
 
-console.log(isLoggedIn());
 function App() {
   return (
     <div className="h-[100%]">
       <Routes>
         <Route path="/" element={<Login />}></Route>
+        <Route path="/login" element={<Login />}></Route>
         <Route
           path="/admin/dashboard"
-          element={isLoggedIn() ? <Admin /> : <Login />}
+          element={isLoggedIn("admin") ? <Admin /> : <Login />}
         ></Route>
         <Route
           path="/student/dashboard"
-          element={isLoggedIn() ? <Student /> : <Login />}
+          element={isLoggedIn("student") ? <Student /> : <Login />}
         ></Route>
+        <Route
+          path="/teacher/dashboard"
+          element={isLoggedIn("teacher") ? <Teacher /> : <Login />}
+        ></Route>
+        {/* catch all */}
+        <Route path="*" element={<Login />}></Route>
       </Routes>
       {/* <Routes>
         <Route path='/' element={<Layout />}>

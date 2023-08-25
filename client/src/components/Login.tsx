@@ -1,11 +1,10 @@
 import React, { useRef } from "react";
 
 import { useNavigate, useLocation, redirect } from "react-router-dom";
-import axios from "../api/axios";
+import axios, { AxiosLoginInstance } from "../api/axios";
 import { SyntheticEventData } from "react-dom/test-utils";
 const LOGIN_URL = "/auth";
 import { isLoggedIn } from "../App";
-
 import { faIgloo } from "@fortawesome/free-solid-svg-icons";
 export default function Login() {
   interface IDetails {
@@ -16,7 +15,8 @@ export default function Login() {
   let [details, setDetails] = React.useState<IDetails>({});
   let [clicked, setClicked] = React.useState(0); //clicked is chained to login button
   let msgRef = useRef<HTMLParagraphElement>(null);
-
+  let Navigate = useNavigate();
+  let location = useLocation();
   function handleInput(
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) {
@@ -30,7 +30,7 @@ export default function Login() {
     login();
     async function login() {
       try {
-        let res = await axios.post(
+        let res = await AxiosLoginInstance.post(
           `${LOGIN_URL}/signin`,
           JSON.stringify({ ...details }),
           {
@@ -46,9 +46,15 @@ export default function Login() {
         sessionStorage.setItem("role", details.role || "");
         sessionStorage.setItem("user", JSON.stringify(userData));
         msgRef.current ? (msgRef.current.textContent = "") : "";
-        location.href = `/${details.role}/dashboard`;
+
+        Navigate(`/${details.role}/dashboard/`, {
+          replace: true,
+          state: location.pathname,
+        });
+        let path = location.pathname;
+        if (path !== "/" && path !== "/login") window.location.reload();
+        //location.href = `/${details.role}/dashboard`;
       } catch (error) {
-        console.error("error", error);
         //go back to select on fail
         setDetails((prev) => {
           return { ...prev, role: "" };
@@ -61,15 +67,27 @@ export default function Login() {
     return () => {
       controller.abort();
     };
-  }, [clicked]);
+  }, [clicked, isLoggedIn()]);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     console.log(details);
   }
+  //if already logged in navigate
   if (isLoggedIn()) {
     let role: string = sessionStorage.getItem("role") || "";
-    if (role !== "") location.href = `/${role}/dashboard`;
+    if (role !== "") {
+      React.useEffect(() => {
+        Navigate(`/${role}/dashboard`, {
+          replace: true,
+          state: location.pathname,
+        });
+      }, []);
+    }
+  } else {
+    React.useEffect(() => {
+      console.log("trying to prevent,render more hooks");
+    }, []);
   }
   return (
     <div className="grid h-[100%] border border-black">

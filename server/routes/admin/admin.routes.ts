@@ -18,6 +18,7 @@ import {
   getAllStudents,
   getAllTeachers,
   getGenderDivide,
+  countTeachers,
 } from "../../controller/admin.controller";
 const { addATerm, deleteTerm, setCurrentTerm, getAllTerms, getCurrentTerm } =
   term;
@@ -47,7 +48,8 @@ adminRouter.get("/admin/get/teacher", getAllTeachers);
 
 //#gender ratio
 adminRouter.get("/admin/gender/divide", getGenderDivide);
-
+//#no of teachers
+adminRouter.get("/admin/get/count/teachers", asyncErrorHandler(countTeachers));
 //#term
 adminRouter.get("/admin/term/get/all", asyncErrorHandler(getAllTerms));
 adminRouter.post("/admin/term/add", asyncErrorHandler(addATerm));

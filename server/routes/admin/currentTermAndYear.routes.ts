@@ -1,0 +1,10 @@
+import AcademicTermController from "../../controller/academicterm.controller";
+import AcademicYearController from "../../controller/academicyear.controller";
+import { Router } from "express";
+import asyncErrorHandler from "../../middleware/globalErrorHandler";
+const router: Router = Router();
+let term = new AcademicTermController();
+let year = new AcademicYearController();
+router.get("/term/get/current", asyncErrorHandler(term.getCurrentTerm));
+router.get("/year/get/current", asyncErrorHandler(year.getCurrentYear));
+export default router;
