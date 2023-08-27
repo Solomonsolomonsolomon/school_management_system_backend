@@ -2,7 +2,12 @@ import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGaugeHigh } from "@fortawesome/free-solid-svg-icons";
 import { faChalkboardUser } from "@fortawesome/free-solid-svg-icons";
-import { faGraduationCap, faAdd } from "@fortawesome/free-solid-svg-icons";
+import {
+  faGraduationCap,
+  faAdd,
+  faUserPlus,
+  faUserFriends
+} from "@fortawesome/free-solid-svg-icons";
 import { faMessage } from "@fortawesome/free-solid-svg-icons";
 import AddStudent from "./AddStudent";
 import React from "react";
@@ -41,10 +46,21 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
             onClick={() => {
               setComponent("addstudent");
             }}
-            className="cursor-pointer hover:shadow-lg hover:transition"
+            className="cursor-pointer hover:shadow-lg hover:transition mr-10 hover:bg-slate-300 p-5 py-1"
           >
-            <FontAwesomeIcon icon={faAdd} size="xl" />
+            <FontAwesomeIcon icon={faUserPlus} size="xl" />
+
             <span className="text-slate-700 mr-2">add students</span>
+          </li>
+          <li
+            onClick={() => {
+              setComponent("allstudents");
+            }}
+            className="cursor-pointer hover:shadow-lg hover:transition mr-10 hover:bg-slate-300 p-5 py-1"
+          >
+            <FontAwesomeIcon icon={faUserFriends} size="xl" />
+
+            <span className="text-slate-700 mr-2">all students</span>
           </li>
           <li className="cursor-pointer hover:shadow-lg hover:transition hover:bg-slate-300 p-5">
             <NavLink to="/admin/teacher">

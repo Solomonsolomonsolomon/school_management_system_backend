@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import Login from "./components/Login";
@@ -9,6 +10,7 @@ import Student from "./components/Student/Student";
 import Teacher from "./components/Teacher/Teacher";
 import RequireAuth from "./Auth/RequireAuth";
 import "./index.css";
+import axios from "./api/axios";
 import jwtDecode from "jwt-decode";
 
 let role: string = "";
@@ -26,6 +28,7 @@ function isLoggedIn(userRole: string = "") {
 }
 
 function App() {
+ 
   return (
     <div className="h-[100%]">
       <Routes>

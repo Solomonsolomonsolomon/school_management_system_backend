@@ -22,39 +22,39 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
-    try {
-      console.log("hit");
-      config.headers = config.headers || {};
-      let accessToken: string = sessionStorage.getItem("accessToken") || "";
-      let role: string = sessionStorage.getItem("role") || "";
-      if (!accessToken || !role) console.log("token error");
-      //throw new customAxiosError("login and get token and role", 404);
-      config.headers["Authorization"] = `Bearer ${accessToken}`;
-      config.headers["role"] = role;
-      config.headers["Content-Type"] = "application/json";
-      return config;
-    } catch (error) {
-      console.error(error);
-      throw error;
+    const accessToken = sessionStorage.getItem("accessToken") || "";
+    const role = sessionStorage.getItem("role") || "";
+
+    if (!accessToken || !role) {
+      console.log("Token error or missing");
+      // You might want to handle this case based on your application logic
     }
+
+    config.headers["Authorization"] = `Bearer ${accessToken}`;
+    config.headers["role"] = role;
+
+    return config;
   },
   (error: any) => {
-    if (error?.statusCode == 404) location.href = "/login";
-    console.log(error?.message);
+    return Promise.reject(error);
   }
 );
 instance.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    return response;
+  },
   (error: AxiosError) => {
-    console.log("here an err occured");
-    if (error.response?.status == 401) {
-      console.log("hit here thats why");
+    if (error.response?.status === 401) {
+      console.log("Unauthorized error");
       sessionStorage.removeItem("role");
       sessionStorage.removeItem("accessToken");
       location.href = "/";
     }
+
+    return Promise.reject(error);
   }
 );
+
 export const AxiosLoginInstance = axios.create({
   baseURL: baseURL,
   timeout: 1000,

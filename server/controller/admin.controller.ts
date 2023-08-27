@@ -238,18 +238,20 @@ export async function getAllAdmin(req: Request, res: Response) {
 
 export async function getAllStudents(req: Request, res: Response) {
   try {
-    await Student.find({}).then((student) => {
-      if (student.length < 1) throw new Error("No student found");
-      res.status(200).json({
-        status: 200,
-        msg: "all students fetched successfully",
-        student,
+    await Student.find({})
+      .sort({ name: 1 })
+      .then((student) => {
+        if (student.length < 1) throw new Error("No student found");
+        res.status(200).json({
+          status: 200,
+          msg: "all students fetched successfully",
+          student,
+        });
       });
-    });
   } catch (error: any) {
     res.status(500).json({
       status: 500,
-      msg: "AN ERROR OCCURED!!it might not be your fault",
+      msg: error.message,
       error,
       err: error.message,
     });
