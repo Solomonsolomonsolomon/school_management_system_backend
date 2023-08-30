@@ -16,7 +16,7 @@ import axios, {
 let baseURL = "http://localhost:2020/v1";
 const instance = axios.create({
   baseURL: baseURL,
-  timeout: 2000,
+  timeout: 5000,
   headers: { "X-Custom-Header": "foobar" },
 });
 

@@ -7,12 +7,15 @@ import {
   faEdit,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
+import { tobase64 } from "./AddStudent";
 const postUrl = "/admin";
 function AllStudents() {
-  const [students, setStudents] = useState([]);
+  const [students, setStudents] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-  let [studentId, setStudentId] = useState("");
+  const [studentId, setStudentId] = useState("");
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editingStudent, setEditingStudent] = useState<any>(null);
   let errRef = React.useRef<HTMLParagraphElement>(null);
   console.log(studentId);
   useEffect(() => {
@@ -20,12 +23,14 @@ function AllStudents() {
 
     async function fetchStudents() {
       try {
+        setLoading(true);
         const studentResponse = await axios.get(`/admin/get/student`, {
           signal: controller.signal,
         });
 
         setStudents(studentResponse?.data?.student);
         errRef.current ? (errRef.current.textContent = "") : "";
+
         setLoading(false);
       } catch (error: any) {
         console.log(error);
@@ -57,13 +62,196 @@ function AllStudents() {
     );
   });
 
-  if (loading) return <Loading />;
+  if (loading) {
+    return <Loading />;
+  }
 
   async function clickDeleteButton() {}
-  return (
-    <div className="w-[90%]">
-      <h1>ALL STUDENTS</h1>
+  const openEditModal = (student: any) => {
+    setEditingStudent(student);
+    setIsEditModalOpen(true);
+  };
 
+  // Function to close the edit modal
+  const closeEditModal = () => {
+    setIsEditModalOpen(false);
+    setEditingStudent(null);
+  };
+  const editStudent = (student: any) => {
+    editTheStudent();
+    async function editTheStudent() {
+      try {
+        let editStudent = await axios.put(
+          `${postUrl}/edit/student/${student.studentId}`,
+          student
+        );
+        errRef.current
+          ? (errRef.current.textContent = editStudent.data?.msg)
+          : "";
+        const updatedStudents = students.map((eachStudent) => {
+          if (eachStudent.studentId === editingStudent.studentId) {
+            eachStudent = editingStudent;
+          }
+          return eachStudent;
+        });
+
+        setStudents(updatedStudents);
+      } catch (error: any) {
+        console.log(error);
+        errRef.current
+          ? (errRef.current.textContent = error?.response?.data?.msg)
+          : "";
+      }
+    }
+  };
+  return (
+    <div className="w-[200px]sm:w-[400px] lg:w-[100%] md:w-[100%] w-[350px]">
+      {/* Edit Modal */}
+      {isEditModalOpen && editingStudent && (
+        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">
+          <div className="bg-white p-4 rounded-md shadow-md">
+            <h2 className="text-lg font-semibold mb-4">Edit Student</h2>
+            {/* Here you can render the form for editing student data */}
+            <div>
+              <p>Edit student data here</p>
+              {/* Example fields: */}
+              <input
+                type="text"
+                placeholder="Name"
+                value={editingStudent.name}
+                onChange={(e) =>
+                  setEditingStudent({
+                    ...editingStudent,
+                    name: e.target.value,
+                  })
+                }
+                className="w-full p-2 border rounded"
+              />
+              <input
+                type="text"
+                placeholder="Email"
+                value={editingStudent.email}
+                onChange={(e) =>
+                  setEditingStudent({
+                    ...editingStudent,
+                    email: e.target.value,
+                  })
+                }
+                className="w-full p-2 border rounded"
+              />
+              <input
+                type="file"
+                name="picture"
+                id=""
+                onChange={async (e) => {
+                  console.log(e.target.files?.length);
+                  if (e.target.files?.length) {
+                    if (e.target.files[0].type.startsWith("image")) {
+                      let picture = await tobase64(e.target.files[0]);
+                      setEditingStudent({
+                        ...editingStudent,
+                        picture,
+                      });
+                    }
+                  }
+                }}
+              />
+              {/*gender */}
+              <select
+                name="gender"
+                id=""
+                onChange={(e) => {
+                  setEditingStudent({
+                    ...editingStudent,
+                    gender: e.target.value,
+                  });
+                }}
+              >
+                <option value="M">Male</option>
+                <option value="F">Female</option>
+              </select>
+              {/* current class Level */}
+              <select
+                className="border rounded border-gray-400"
+                onChange={(e) => {
+                  setEditingStudent({
+                    ...editingStudent,
+                    currentClassLevel: e.target.value,
+                  });
+                }}
+              >
+                <option value="NUR1">NUR1</option>
+                <option value="NUR2">NUR2</option>
+                <option value="NUR3">NUR3</option>
+                <option value="PRY1">PRY1</option>
+                <option value="PRY2">PRY2</option>
+                <option value="PRY3">PRY3</option>
+                <option value="PRY4">PRY4</option>
+                <option value="PRY5">PRY5</option>
+                <option value="PRY6">PRY6</option>
+                <option value="JSS1">JSS1</option>
+                <option value="JSS2">JSS2</option>
+                <option value="JSS3">JSS3</option>
+                <option value="SSS1">SSS1</option>
+                <option value="SSS2">SSS2</option>
+                <option value="SSS3">SSS3</option>
+              </select>
+              {/*current class Arm*/}{" "}
+              <select
+                className="border rounded border-gray-400"
+                onChange={(e) => {
+                  setEditingStudent({
+                    ...editingStudent,
+                    currentClassArm: e.target.value,
+                  });
+                }}
+              >
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+                <option value="E">E</option>
+                <option value="F">F</option>
+                <option value="G">G</option>
+                <option value="H">H</option>
+                <option value="I">I</option>
+                <option value="J">J</option>
+                <option value="K">K</option>
+                <option value="L">L</option>
+                <option value="M">M</option>
+                <option value="N">N</option>
+                <option value="O">O</option>
+                <option value="P">P</option>
+              </select>
+              {/* Add more input fields for other data */}
+            </div>
+            <div className="mt-4 flex justify-end">
+              <button
+                className="px-4 py-2 bg-blue-500 text-white rounded"
+                onClick={() => {
+                  // Here you can implement the update logic
+                  editStudent(editingStudent);
+                  console.log("Update student data:", editingStudent);
+                  closeEditModal();
+                }}
+              >
+                Update
+              </button>
+              <button
+                className="px-4 py-2 ml-2 bg-gray-300 text-gray-700 rounded"
+                onClick={closeEditModal}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      <h1>ALL STUDENTS</h1>
+      <p>
+        here you can view all students,search for particular student or
+        groups,edit or delete
+      </p>
       <div className="flex flex-col border p-10 ">
         {/* Search bar */}
         <input
@@ -87,6 +275,9 @@ function AllStudents() {
                   Email
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  StudentId
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                   Gender
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
@@ -98,7 +289,7 @@ function AllStudents() {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-              {filteredStudents.map((student: any, index) => (
+              {filteredStudents.map((student: any, index: number) => (
                 <tr key={index}>
                   <td className="py-3 pl-4">
                     <div className="flex items-center h-5">
@@ -110,6 +301,9 @@ function AllStudents() {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
                     {student.email}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+                    {student.studentId}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
                     {student.gender === "M" ? "MALE" : "FEMALE"}
@@ -135,8 +329,9 @@ function AllStudents() {
                               : "";
                             // Refresh the list of students after deletion
                             const updatedStudents = students.filter(
-                              (s:any) => s.studentId !== student.studentId
+                              (s: any) => s.studentId !== student.studentId
                             );
+                            console.log(updatedStudents);
                             setStudents(updatedStudents);
                           } catch (error: any) {
                             console.log(error);
@@ -146,16 +341,23 @@ function AllStudents() {
                               : "";
                           }
                         }
-                        if(confirmable){
-                          deleteIt()
-                        }else{
-                          console.log('user cancelled delete')
+                        if (confirmable) {
+                          deleteIt();
+                        } else {
+                          console.log("user cancelled delete");
                         }
                       }}
-                  
                     >
                       Delete
                     </a>
+                  </td>
+                  <td
+                    className="text-blue-500"
+                    onClick={(e) => {
+                      openEditModal(student);
+                    }}
+                  >
+                    Edit
                   </td>
                 </tr>
               ))}

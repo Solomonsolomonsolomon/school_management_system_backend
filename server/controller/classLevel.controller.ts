@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import { ClassLevel, Student } from "../model/database";
 import { CustomError } from "../middleware/decorators";
+import { name } from "ejs";
 class ClassLevelController {
   /**
    * getAllClassLevels
@@ -10,13 +11,41 @@ class ClassLevelController {
    */
 
   public async getAllClassLevels(req: express.Request, res: express.Response) {
-    await ClassLevel.find({}).then((classes) => {
+    await ClassLevel.find({}).then(async (classes) => {
       if (classes.length < 1)
         throw new CustomError({}, " no classes found", 404);
+      let classthing = ClassLevel.aggregate([
+        {
+          $lookup: {
+            from: "students",
+            localField: "name",
+            foreignField: "className",
+            as: "student",
+          },
+        },
+        {
+          $lookup: {
+            from: "teachers",
+            localField: "formTeacherId", // Replace with your field name for form teacher reference
+            foreignField: "_id",
+            as: "formTeacher",
+          },
+        },
+        {
+          $project: {
+            name: "$name",
+            numberOfStudents: { $size: "$student" },
+            formTeacher: { $arrayElemAt: ["$formTeacher.name", 0] },
+          },
+        },
+      ]);
+
+      let result = await classthing.exec();
+      
       res.status(200).json({
         status: 200,
         msg: "all classes",
-        classes,
+        classes: result,
       });
     });
   }
@@ -33,6 +62,7 @@ class ClassLevelController {
     res.status(201).json({
       status: 201,
       msg: "class level added successfully",
+      newClassLevel,
     });
   }
   public async deleteClassLevel(req: express.Request, res: express.Response) {
@@ -42,7 +72,7 @@ class ClassLevelController {
     const classLevelToDelete = await ClassLevel.findById(id);
     if (!classLevelToDelete) throw new CustomError({}, "class not found", 404);
     const classHasStudents: boolean = !!(await Student.countDocuments({
-      currentClassLevel: classLevelToDelete?.name,
+      className: classLevelToDelete?.name,
     }));
     if (classHasStudents)
       throw new CustomError(
@@ -52,10 +82,9 @@ class ClassLevelController {
       );
     await classLevelToDelete.deleteOne();
     res.status(200).json({
-      status: 200,    
+      status: 200,
       msg: "deleted successfully",
     });
   }
 }
 export default ClassLevelController;
-   

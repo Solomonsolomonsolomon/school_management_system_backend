@@ -312,3 +312,24 @@ export async function countTeachers(req: Request, res: Response) {
     noOfTeachers,
   });
 }
+export async function editStudent(req: Request, res: Response) {
+  const { studentId } = req.params;
+  const { currentClassLevel, currentClassArm } = req.body;
+  let student = await Student.findOne({ studentId });
+
+  if (!student) throw new CustomError({}, "student not found", 404);
+  let name = `${currentClassLevel}${currentClassArm}`;
+  let isValidClass = !!(await ClassLevel.countDocuments({
+    name,
+  }));
+  console.log(name, req.body);
+  if (!isValidClass)
+    throw new CustomError({}, "enter existing class Level", 404);
+  let newStudentDetails = req.body;
+  Object.assign(student, newStudentDetails);
+  await student.save();
+  res.status(200).json({
+    status: 200,
+    msg: "edited successfully",
+  });
+}

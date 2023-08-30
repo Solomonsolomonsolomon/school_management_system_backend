@@ -19,7 +19,9 @@ import {
   getAllTeachers,
   getGenderDivide,
   countTeachers,
+  editStudent,
 } from "../../controller/admin.controller";
+import e from "express";
 const { addATerm, deleteTerm, setCurrentTerm, getAllTerms, getCurrentTerm } =
   term;
 const {
@@ -45,7 +47,11 @@ adminRouter.delete("/admin/delete/student/:studentId", deleteStudent);
 adminRouter.get("/admin/get/admin", getAllAdmin);
 adminRouter.get("/admin/get/student", getAllStudents);
 adminRouter.get("/admin/get/teacher", getAllTeachers);
-
+//#editing users
+adminRouter.put(
+  "/admin/edit/student/:studentId",
+  asyncErrorHandler(editStudent)
+);
 //#gender ratio
 adminRouter.get("/admin/gender/divide", getGenderDivide);
 //#no of teachers

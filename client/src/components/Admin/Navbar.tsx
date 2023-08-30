@@ -1,12 +1,13 @@
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGaugeHigh } from "@fortawesome/free-solid-svg-icons";
+import { faGaugeHigh, faStopwatch } from "@fortawesome/free-solid-svg-icons";
 import { faChalkboardUser } from "@fortawesome/free-solid-svg-icons";
 import {
   faGraduationCap,
   faAdd,
   faUserPlus,
-  faUserFriends
+  faUserFriends,
+  faSchoolCircleCheck
 } from "@fortawesome/free-solid-svg-icons";
 import { faMessage } from "@fortawesome/free-solid-svg-icons";
 import AddStudent from "./AddStudent";
@@ -29,19 +30,23 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
             }}
             className="cursor-pointer hover:shadow-lg hover:transition hover:bg-slate-300 p-5"
           >
-            <NavLink to="/admin/">
-              <FontAwesomeIcon icon={faGaugeHigh} size="2xl" className="mr-2" />
+            <div
+              onClick={() => {
+                setComponent("subadmin");
+              }}
+            >
+              <FontAwesomeIcon icon={faGaugeHigh} size="xl" className="mr-2" />
               <span className="text-slate-700">Dashboard</span>
-            </NavLink>
+            </div>
           </li>
-          <li className="mr-10">
+          {/* <li className="mr-10">
             <FontAwesomeIcon
               icon={faGraduationCap}
               size="2xl"
               className="mr-2"
             />
             <span className="text-slate-700">Students</span>
-          </li>
+          </li> */}
           <li
             onClick={() => {
               setComponent("addstudent");
@@ -61,6 +66,36 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
             <FontAwesomeIcon icon={faUserFriends} size="xl" />
 
             <span className="text-slate-700 mr-2">all students</span>
+          </li>
+          <li
+            onClick={() => {
+              setComponent("classlevel");
+            }}
+            className="cursor-pointer hover:shadow-lg hover:transition mr-10 hover:bg-slate-300 p-5 py-1"
+          >
+            <FontAwesomeIcon icon={faSchoolCircleCheck} size="xl" />
+
+            <span className="text-slate-700 mr-2">class level</span>
+          </li>
+          <li
+            onClick={() => {
+              setComponent("addteacher");
+            }}
+            className="cursor-pointer hover:shadow-lg hover:transition mr-10 hover:bg-slate-300 p-5 py-1"
+          >
+            <FontAwesomeIcon icon={faUserPlus} size="xl" />
+
+            <span className="text-slate-700 mr-2">Add Teacher</span>
+          </li>
+          <li
+            onClick={() => {
+              setComponent("yearandterm");
+            }}
+            className="cursor-pointer hover:shadow-lg hover:transition mr-10 hover:bg-slate-300 p-5 py-1"
+          >
+            <FontAwesomeIcon icon={faStopwatch} size="xl" />
+
+            <span className="text-slate-700 mr-2">Year and Term</span>
           </li>
           <li className="cursor-pointer hover:shadow-lg hover:transition hover:bg-slate-300 p-5">
             <NavLink to="/admin/teacher">
