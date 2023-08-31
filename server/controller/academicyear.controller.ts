@@ -129,18 +129,32 @@ class AcademicYearController {
   }
   public async setCurrentYear(req: express.Request, res: express.Response) {
     let { id } = req.params;
-    let year = await AcademicYear.findOne({ _id: id });
-    console.log(id);
-    if (!year) throw new CustomError({}, "year not found", 404);
-    this.makeCurrent(year);
-    console.log(year);
-    await year.save().then((current: any) =>
-      res.status(200).json({
-        status: 200,
-        msg: "set current",
-        current,
+    let _id = await new mongoose.Types.ObjectId(id);
+
+    let previous = await AcademicYear.findOne({ isCurrent: true });
+    if (previous) {
+      previous.isCurrent = false;
+      await previous.save().catch((err:any) => {
+        throw new CustomError(err, err.message, 400);
+      });
+    }
+
+    let current = await AcademicYear.findOne({ _id });
+    if(!current)throw new CustomError({},"year not found",404)
+    current!.isCurrent = true;
+    current!.updatedBy = req.user?._id;
+    await current!
+      .save()
+      .then((current:any) => {
+        res.status(200).json({
+          status: 200,
+          msg: "current set",
+          current,
+        });
       })
-    );
+      .catch((err:any) => {
+        throw new CustomError({}, err.message, 400);
+      });
   }
 }
 

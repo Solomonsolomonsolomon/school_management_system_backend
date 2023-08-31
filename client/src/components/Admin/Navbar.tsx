@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGaugeHigh, faStopwatch } from "@fortawesome/free-solid-svg-icons";
+import { faAddressBook, faBook, faGaugeHigh, faStopwatch } from "@fortawesome/free-solid-svg-icons";
 import { faChalkboardUser } from "@fortawesome/free-solid-svg-icons";
 import {
   faGraduationCap,
@@ -24,6 +24,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
       <h1 className="text-center text-3xl font-bold">SMS|ADMIN</h1>
       <section className="my-2">
         <ul className="grid gap-0">
+          {/* dashboard */}
           <li
             onClick={() => {
               setComponent("subadmin");
@@ -47,6 +48,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
             />
             <span className="text-slate-700">Students</span>
           </li> */}
+          {/* add students */}
           <li
             onClick={() => {
               setComponent("addstudent");
@@ -57,6 +59,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
 
             <span className="text-slate-700 mr-2">add students</span>
           </li>
+          {/* all students */}
           <li
             onClick={() => {
               setComponent("allstudents");
@@ -67,6 +70,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
 
             <span className="text-slate-700 mr-2">all students</span>
           </li>
+          {/* class level */}
           <li
             onClick={() => {
               setComponent("classlevel");
@@ -77,6 +81,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
 
             <span className="text-slate-700 mr-2">class level</span>
           </li>
+          {/* add teacher */}
           <li
             onClick={() => {
               setComponent("addteacher");
@@ -87,6 +92,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
 
             <span className="text-slate-700 mr-2">Add Teacher</span>
           </li>
+          {/* year and term */}
           <li
             onClick={() => {
               setComponent("yearandterm");
@@ -96,6 +102,17 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
             <FontAwesomeIcon icon={faStopwatch} size="xl" />
 
             <span className="text-slate-700 mr-2">Year and Term</span>
+          </li>
+          {/* subjects */}
+          <li
+            onClick={() => {
+              setComponent("subjects");
+            }}
+            className="cursor-pointer hover:shadow-lg hover:transition mr-10 hover:bg-slate-300 p-5 py-1"
+          >
+            <FontAwesomeIcon icon={faBook} size="xl" />
+
+            <span className="text-slate-700 mr-2">subjects</span>
           </li>
           <li className="cursor-pointer hover:shadow-lg hover:transition hover:bg-slate-300 p-5">
             <NavLink to="/admin/teacher">

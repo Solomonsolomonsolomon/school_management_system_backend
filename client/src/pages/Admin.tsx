@@ -1,14 +1,14 @@
 import axios from "../api/axios";
-import Navbar from "./Admin/Navbar";
-import Profile from "./Admin/Profile";
-import SubAdmin from "./Admin/SubAdmin";
+import Navbar from "../components/Admin/Navbar";
+import Profile from "../components/Admin/Profile";
+import SubAdmin from "../components/Admin/SubAdmin";
 import React from "react";
-import AddStudent from "./Admin/AddStudent";
-import AllStudents from "./Admin/AllStudents";
-import AddTeacher from "./Admin/AddTeacher";
-
-import ClassLevel from "./ClassLevel";
-import YearAndTerm from "./Admin/YearAndTerm";
+import AddStudent from "../components/Admin/AddStudent";
+import AllStudents from "../components/Admin/AllStudents";
+import AddTeacher from "../components/Admin/AddTeacher";
+import Subjects from "../components/Admin/Subjects";
+import ClassLevel from "../components/ClassLevel";
+import YearAndTerm from "../components/Admin/YearAndTerm";
 const GET_URL = "/admin";
 interface IComponents {
   subadmin: React.FC;
@@ -21,6 +21,7 @@ let components: any = {
   classlevel: ClassLevel,
   addteacher: AddTeacher,
   yearandterm: YearAndTerm,
+  subjects: Subjects,
 };
 const Admin = () => {
   let [view, setView] = React.useState("subadmin");

@@ -30,7 +30,14 @@ const YearAndTerm: React.FC = () => {
       addTermRef.current
         ? (addTermRef.current.textContent = "please wait...")
         : "";
-      const res = await axios.post(`${postUrl}/year/add`, data);
+        const res = await axios.post(`${postUrl}/year/add`, data);
+    //update UI
+    let updateOnYearAddition=years.map((year)=>{
+        year.isCurrent=false;
+        return year;
+    })
+    setYears([...updateOnYearAddition,res.data?.year])
+
       addYearRef.current
         ? (addYearRef.current.textContent = res.data?.msg)
         : "";
@@ -56,6 +63,8 @@ const YearAndTerm: React.FC = () => {
         ? (addTermRef.current.textContent = res.data?.msg)
         : "";
       console.log(res);
+     
+        setTerms([...terms, res.data?.term]);
       reset(); // Reset the form
     } catch (error: any) {
       addTermRef.current
@@ -73,7 +82,15 @@ const YearAndTerm: React.FC = () => {
       setLoading(true);
       const res = await axios.post(`${postUrl}/year/${yearId}/set/current`);
       console.log(res);
+
       // Implement logic to update UI or refetch years data
+      const refreshAfterSettingYear = years.map((year) => {
+        if (year.isCurrent == true) year.isCurrent = false;
+        if (year._id === yearId) year.isCurrent = true;
+
+        return year;
+      });
+      setYears(refreshAfterSettingYear);
     } catch (error: any) {
       console.log(error);
     } finally {
@@ -87,6 +104,13 @@ const YearAndTerm: React.FC = () => {
       const res = await axios.post(`${postUrl}/term/${termId}/set/current`);
       console.log(res);
       // Implement logic to update UI or refetch terms data
+      const refreshAfterSettingTerm = terms.map((term) => {
+        if (term.isCurrent == true) term.isCurrent = false;
+        if (term._id === termId) term.isCurrent = true;
+
+        return term;
+      });
+      setYears(refreshAfterSettingTerm);
     } catch (error: any) {
       console.log(error);
     } finally {
@@ -105,6 +129,10 @@ const YearAndTerm: React.FC = () => {
         const res = await axios.delete(`${postUrl}/year/${yearId}/delete`);
         console.log(res);
         // Implement logic to update UI or refetch years data
+        let updateOnDeleteYear = years.filter((year) => {
+          return year._id != yearId;
+        });
+        setYears(updateOnDeleteYear);
       } catch (error: any) {
         console.log(error);
       } finally {
@@ -124,6 +152,10 @@ const YearAndTerm: React.FC = () => {
         const res = await axios.delete(`${postUrl}/term/${termId}/delete`);
         console.log(res);
         // Implement logic to update UI or refetch terms data
+        let updateOnDeleteTerm = terms.filter((term) => {
+          return term._id != termId;
+        });
+        setTerms(updateOnDeleteTerm);
       } catch (error: any) {
         console.log(error);
       } finally {
@@ -278,6 +310,9 @@ const YearAndTerm: React.FC = () => {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                   Term Name
                 </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  Current Term
+                </th>
                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
                   Actions
                 </th>
@@ -288,6 +323,7 @@ const YearAndTerm: React.FC = () => {
                 <tr key={index}>
                   {/* ... Your terms table cells ... */}
                   <td>{term.name}</td>
+                  <td>{`${term.isCurrent}`}</td>
 
                   <td
                     className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-blue-500 hover:text-blue-700 cursor-pointer"

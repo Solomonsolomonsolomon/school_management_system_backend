@@ -3,10 +3,10 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import Login from "./components/Login";
-import Admin from "./components/Admin";
+import Admin from "./pages/Admin";
 import AdminStudent from "./components/Admin/Students";
 import AdminTeacher from "./components/Admin/Teachers";
-import Student from "./components/Student/Student";
+import Student from "./pages/Student";
 import Teacher from "./components/Teacher/Teacher";
 import RequireAuth from "./Auth/RequireAuth";
 import "./index.css";
@@ -28,7 +28,6 @@ function isLoggedIn(userRole: string = "") {
 }
 
 function App() {
- 
   return (
     <div className="h-[100%]">
       <Routes>
