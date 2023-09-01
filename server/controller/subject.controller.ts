@@ -1,11 +1,10 @@
-import mongoose, { MongooseError } from "mongoose";
+import mongoose, { MongooseError, Types } from "mongoose";
 import { Subject } from "../model/academic/Subject";
 import { Response, Request, NextFunction } from "express";
-import { setErrorStatusCode } from "../middleware/decorators";
+import { CustomError, setErrorStatusCode } from "../middleware/decorators";
 import { Student } from "../model/database";
-
+import { set } from "lodash";
 //setErrorStatusCode is a decorator that sets the status Code on error
-
 // export async function addSubject(req: Request, res: Response) {
 //   try {
 //     const { subjectName, className, teacherId } = req.body;
@@ -40,10 +39,20 @@ import { Student } from "../model/database";
 
 class SubjectController {
   /**
+   * getAllSubjects
    * addSubjects
    * editSubjects
+   * deleteSubjects
    */
 
+  public async getAllSubjects(req: Request, res: Response) {
+    let allSubjects = await Subject.find({});
+    if (!allSubjects.length)
+      throw new CustomError({}, "no subjects found", 404);
+    res
+      .status(200)
+      .json({ status: 200, msg: "all students found", subjects: allSubjects });
+  }
   @setErrorStatusCode(400)
   public async addSubjects(
     req: Request,
@@ -51,7 +60,8 @@ class SubjectController {
     next: NextFunction
   ): Promise<any> {
     const { subjectName, className, teacherId } = req.body;
-    let subjectExists = await Subject.findOne({ subjectName });
+    let name = `${className.toUpperCase()}_${subjectName.toUpperCase()}`;
+    let subjectExists = await Subject.findOne({ name });
     if (subjectExists)
       throw new Error("Subject already exists,to alter, edit subject");
     //
@@ -60,11 +70,12 @@ class SubjectController {
       className,
       teacherId,
     });
-    await newSubject.save();
-    res.json(201).json({
-      status: 201,
-      msg: "added subject successfully",
-      subject: newSubject,
+    await newSubject.save().then((e) => {
+      res.status(201).json({
+        status: "201",
+        msg: "added subject successfully",
+        subject: newSubject,
+      });
     });
   }
   @setErrorStatusCode(400)
@@ -73,8 +84,9 @@ class SubjectController {
     res: Response,
     next: NextFunction
   ): Promise<any> {
-    let id = req.body.id;
-    let original = await Subject.findOneAndRemove({ _id: id });
+    let { id } = req.params;
+    let _id = await new Types.ObjectId(id);
+    let original = await Subject.findOne({ _id });
     if (!original) throw new Error("Subject not found");
     Object.assign(original, req.body);
     await original.save().then((edited) => {
@@ -84,6 +96,22 @@ class SubjectController {
         edited,
       });
     });
+  }
+  @setErrorStatusCode(400)
+  public async deleteSubjects(req: Request, res: Response) {
+    let { id } = req.params;
+    let _id = new Types.ObjectId(id);
+    await Subject.findOneAndRemove({ _id })
+      .then((e) => {
+        if (!e) throw new Error("Subject not found");
+        res.status(200).json({
+          status: 200,
+          msg: "subject deleted successfully",
+        });
+      })
+      .catch((err) => {
+        throw err;
+      });
   }
 }
 export default SubjectController;

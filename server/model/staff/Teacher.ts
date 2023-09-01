@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document, model } from "mongoose";
+import mongoose, { Schema, Document, model, Types } from "mongoose";
 import bcrypt from "bcrypt";
 interface ITeacher {
   name: string;
@@ -7,7 +7,7 @@ interface ITeacher {
   password: string;
   dateEmployed?: Date;
   teacherId?: string;
-  formTeacher?: string;
+  formTeacher?: Types.ObjectId;
   isWithdrawn?: boolean;
   isSuspended?: boolean;
   role?: string;
@@ -61,7 +61,7 @@ const teacherSchema = new Schema<ITeacher>(
       },
     },
     formTeacher: {
-      type: String,
+      type: Schema.Types.ObjectId,
     },
     //if withdrawn, the teacher will not be able to login
     isWithdrawn: {
@@ -114,7 +114,7 @@ const teacherSchema = new Schema<ITeacher>(
     },
     performanceSheet: String,
   },
-  
+
   {
     timestamps: true,
   }

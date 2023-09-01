@@ -1,7 +1,13 @@
 import mongoose, { Types } from "mongoose";
 
 const { Schema } = mongoose;
-
+interface ISubject {
+  name?: string;
+  subjectName: string;
+  className: string;
+  academicYear?: Types.ObjectId;
+  teacherId?: Types.ObjectId;
+}
 // const subjectSchema = new Schema(
 //   {
 //     name: {
@@ -36,6 +42,9 @@ const { Schema } = mongoose;
 //   { timestamps: true }
 // );
 const subjectSchema = new Schema({
+  name: {
+    type: String,
+  },
   subjectName: {
     type: String,
     required: true,
@@ -44,7 +53,6 @@ const subjectSchema = new Schema({
   teacherId: {
     type: Types.ObjectId,
     ref: "Teacher",
-    
   },
   academicYear: {
     type: Schema.Types.ObjectId,
@@ -62,7 +70,12 @@ const subjectSchema = new Schema({
   // },
   className: {
     type: String,
+    required: true,
   },
+});
+
+subjectSchema.pre("save", function (this: ISubject) {
+  this.name = `${this.className.toUpperCase()}_${this.subjectName.toUpperCase()}`;
 });
 const Subject = mongoose.model("Subject", subjectSchema);
 

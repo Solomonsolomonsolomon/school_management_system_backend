@@ -59,12 +59,12 @@ export const data = {
       backgroundColor: 'rgb(255, 99, 132)',
       tension: 0.4,
     }
-  ],
+  ], 
 };
 
 export default function EarningChart() {
   return <Line options={options} data={data} 
    style={{ 
-    width:750,
-    height:400 }}/>;
+    width:window.innerWidth/1.5,
+    height:window.innerWidth/1.6 }}/>;
 }

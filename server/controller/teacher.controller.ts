@@ -10,16 +10,7 @@ export async function getManagedStudents(
   const { _id } = req.params;
   let formStudents: any = [];
   let teacher = await Teacher.findOne({ _id });
-  let formTeacher: string = teacher?.formTeacher
+  let formTeacher: object | null = teacher?.formTeacher
     ? teacher.formTeacher
-    : "notAFormTeacher";
-  let student = await Student.find({}).then((students) => {
-    for (let theStudent of students) {
-      theStudent.className == formTeacher ? formStudents.push(theStudent) : "";
-      console.log(theStudent);
-    }  
-  });
-  res.json({
-    formStudents,
-  });
+    : null;
 }
