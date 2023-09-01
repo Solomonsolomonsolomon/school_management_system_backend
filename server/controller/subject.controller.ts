@@ -46,12 +46,25 @@ class SubjectController {
    */
 
   public async getAllSubjects(req: Request, res: Response) {
-    let allSubjects = await Subject.find({});
-    if (!allSubjects.length)
-      throw new CustomError({}, "no subjects found", 404);
-    res
-      .status(200)
-      .json({ status: 200, msg: "all students found", subjects: allSubjects });
+    //   let allSubjects = await Subject.find({});
+    //   if (!allSubjects.length)
+    //     throw new CustomError({}, "no subjects found", 404);
+    //   res
+    //     .status(200)
+    //     .json({ status: 200, msg: "all students found", subjects: allSubjects });
+    let subjectsRawForm = await Subject.find({});
+    let sorted = subjectsRawForm.reduce<any>((prev, curr) => {
+      if (!prev[curr.className]) {
+        prev[curr.className] = [];
+      }
+      prev[curr.className].push(curr);
+      return prev;
+    }, {});
+    res.status(200).json({
+      status: 200,
+      msg: "fetched successfully",
+      subjects: sorted,
+    });
   }
   @setErrorStatusCode(400)
   public async addSubjects(
@@ -59,24 +72,51 @@ class SubjectController {
     res: Response,
     next: NextFunction
   ): Promise<any> {
-    const { subjectName, className, teacherId } = req.body;
-    let name = `${className.toUpperCase()}_${subjectName.toUpperCase()}`;
-    let subjectExists = await Subject.findOne({ name });
-    if (subjectExists)
-      throw new Error("Subject already exists,to alter, edit subject");
-    //
-    let newSubject = new Subject({
-      subjectName,
-      className,
-      teacherId,
-    });
-    await newSubject.save().then((e) => {
-      res.status(201).json({
-        status: "201",
-        msg: "added subject successfully",
-        subject: newSubject,
+    const bulkPush: any[] = [];
+    const { subject, className, teacherId } = req.body;
+    for (let i of className) {
+      bulkPush.push({
+        updateOne: {
+          filter: {
+            name: `${i.toUpperCase()}_${subject.toUpperCase()}`,
+          },
+          update: {
+            $set: {
+              name: `${i.toUpperCase()}_${subject.toUpperCase()}`,
+              className: i,
+              subject,
+              teacherId: teacherId || null,
+            },
+          },
+          upsert: true,
+        },
       });
-    });
+    }
+    let status = (await Subject.bulkWrite(bulkPush)).isOk();
+    if (status) {
+      return res
+        .status(201)
+        .json({ status: 200, msg: "added subject successfully" });
+    } else {
+      throw new CustomError({}, "possible error in addition", 400);
+    }
+    //   let name = `${className.toUpperCase()}_${subjectName.toUpperCase()}`;
+    //   let subjectExists = await Subject.findOne({ name });
+    //   if (subjectExists)
+    //     throw new Error("Subject already exists,to alter, edit subject");
+    //   //
+    //   let newSubject = new Subject({
+    //     subjectName,
+    //     className,
+    //     teacherId,
+    //   });
+    //   await newSubject.save().then((e) => {
+    //     res.status(201).json({
+    //       status: "201",
+    //       msg: "added subject successfully",
+    //       subject: newSubject,
+    //     });
+    //   });
   }
   @setErrorStatusCode(400)
   public async editSubjects(

@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document, model, Types } from "mongoose";
-import bcrypt from "bcrypt";
+import bcrypt from "bcrypt";    
 interface ITeacher {
   name: string;
   email: string;
@@ -11,7 +11,7 @@ interface ITeacher {
   isWithdrawn?: boolean;
   isSuspended?: boolean;
   role?: string;
-  subject?: Schema.Types.ObjectId;
+  subjects?: Schema.Types.ObjectId[];
   applicationStatus?: "pending" | "approved" | "rejected";
   program?: string;
   classLevel?: string;
@@ -77,11 +77,11 @@ const teacherSchema = new Schema<ITeacher>(
       type: String,
       default: "teacher",
     },
-    subject: {
+    subjects:[ {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Subject",
       // required: true,
-    },
+    }],
     applicationStatus: {
       type: String,
       enum: ["pending", "approved", "rejected"],

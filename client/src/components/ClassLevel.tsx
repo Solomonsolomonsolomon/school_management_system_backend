@@ -38,7 +38,7 @@ const ClassLevel: React.FC = () => {
     currentClassArm: string;
   }
   const onSubmit: SubmitHandler<any> = (data: any) => {
-    
+
     let name = `${data.currentClassLevel}${data.currentClassArm}`;
     submitAddClassForm();
 
@@ -125,7 +125,7 @@ const ClassLevel: React.FC = () => {
         {/* Search bar */}
         <input
           type="text"
-          placeholder="Search for theClasss..."
+          placeholder="Search for theClass..."
           value={searchQuery}
           onChange={(e) => {
             setSearchQuery(e.target.value);

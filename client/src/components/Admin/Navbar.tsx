@@ -20,7 +20,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
     setView(component);
   }
   return (
-    <nav className="bg-slate-50 shadow-lg h-screen py-1 relative fixed">
+    <nav className="bg-slate-50 shadow-lg h-screen py-1 relative overflow-y-auto">
       <h1 className="text-center text-3xl font-bold">SMS|ADMIN</h1>
       <section className="my-2">
         <ul className="grid gap-0">
@@ -112,7 +112,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
           >
             <FontAwesomeIcon icon={faBook} size="xl" />
 
-            <span className="text-slate-700 mr-2">subjects</span>
+            <span className="text-slate-700 mr-2"> Subjects</span>
           </li>
           <li className="cursor-pointer hover:shadow-lg hover:transition hover:bg-slate-300 p-5">
             <NavLink to="/admin/teacher">

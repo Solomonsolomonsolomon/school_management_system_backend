@@ -64,10 +64,11 @@ const AddStudent = () => {
             },
           }
         );
-        console.log(addStudent);
+
         msgRef.current
           ? (msgRef.current.textContent = addStudent?.data?.msg)
           : "";
+          reset()
       } catch (error: any) {
         console.log(error);
 

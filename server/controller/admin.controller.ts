@@ -322,11 +322,13 @@ export async function editStudent(req: Request, res: Response) {
   let isValidClass = !!(await ClassLevel.countDocuments({
     name,
   }));
-  console.log(name, req.body);
+
   if (!isValidClass)
     throw new CustomError({}, "enter existing class Level", 404);
   let newStudentDetails = req.body;
+  let currrentVersion = student.__v;
   Object.assign(student, newStudentDetails);
+  student.__v = currrentVersion;
   await student.save();
   res.status(200).json({
     status: 200,
