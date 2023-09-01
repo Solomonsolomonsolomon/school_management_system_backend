@@ -98,6 +98,9 @@ const studentSchema: Schema = new mongoose.Schema<IStudent>(
       type: String,
       default: "",
     },
+    className: {
+      type: String,
+    },
     //Classes are from level 1 to 6
     //keep track of the class level the student is in
     classLevels: [
@@ -192,6 +195,7 @@ const studentSchema: Schema = new mongoose.Schema<IStudent>(
   },
   {
     timestamps: true,
+    virtuals: true,
   }
 );
 
@@ -262,8 +266,15 @@ studentSchema.methods.verifiedPassword = async function (
   return await bcrypt.compare(enteredPassword, this.password);
 };
 //setting virtual className
-studentSchema.virtual("className").get(function (this: IStudent) {
-  return `${this.currentClassLevel}${this.currentClassArm}`;
+// studentSchema.virtual("className").get(function (this: IStudent) {
+//   return `${this.currentClassLevel}${this.currentClassArm}`;
+// });
+
+
+
+//currentClass
+studentSchema.pre("save", async function (next) {
+  this.className = `${this.currentClassLevel}${this.currentClassArm}`;
 });
 //model
 const Student = model<IStudent>("Student", studentSchema);

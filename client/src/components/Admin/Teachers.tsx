@@ -1,11 +1,10 @@
-
+import Profile from "./Profile";
 const Teachers = () => {
+  return (
+    <div>
+      <Profile />
+    </div>
+  );
+};
 
-    return (
-        <div>
-            10
-        </div>
-    )
-}
-
-export default Teachers
+export default Teachers;

@@ -238,18 +238,20 @@ export async function getAllAdmin(req: Request, res: Response) {
 
 export async function getAllStudents(req: Request, res: Response) {
   try {
-    await Student.find({}).then((student) => {
-      if (student.length < 1) throw new Error("No student found");
-      res.status(200).json({
-        status: 200,
-        msg: "all students fetched successfully",
-        student,
+    await Student.find({})
+      .sort({ name: 1 })
+      .then((student) => {
+        if (student.length < 1) throw new Error("No student found");
+        res.status(200).json({
+          status: 200,
+          msg: "all students fetched successfully",
+          student,
+        });
       });
-    });
   } catch (error: any) {
     res.status(500).json({
       status: 500,
-      msg: "AN ERROR OCCURED!!it might not be your fault",
+      msg: error.message,
       error,
       err: error.message,
     });
@@ -301,4 +303,33 @@ export async function getGenderDivide(req: Request, res: Response) {
       error,
     });
   }
+}
+export async function countTeachers(req: Request, res: Response) {
+  let noOfTeachers = await Teacher.countDocuments({});
+  res.status(200).json({
+    status: 200,
+    msg: "teachers number found",
+    noOfTeachers,
+  });
+}
+export async function editStudent(req: Request, res: Response) {
+  const { studentId } = req.params;
+  const { currentClassLevel, currentClassArm } = req.body;
+  let student = await Student.findOne({ studentId });
+
+  if (!student) throw new CustomError({}, "student not found", 404);
+  let name = `${currentClassLevel}${currentClassArm}`;
+  let isValidClass = !!(await ClassLevel.countDocuments({
+    name,
+  }));
+  console.log(name, req.body);
+  if (!isValidClass)
+    throw new CustomError({}, "enter existing class Level", 404);
+  let newStudentDetails = req.body;
+  Object.assign(student, newStudentDetails);
+  await student.save();
+  res.status(200).json({
+    status: 200,
+    msg: "edited successfully",
+  });
 }
