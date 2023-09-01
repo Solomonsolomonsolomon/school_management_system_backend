@@ -94,10 +94,10 @@ const AddSubject: React.FC = () => {
             required
             className="placeholder:text-center border border-black rounded"
           >
-            {classes.map((classLevel) => {
+            {classes.map((classLevel,index) => {
               return (
                 <>
-                  <option value={classLevel.name}>{classLevel.name}</option>
+                  <option key={index} value={classLevel.name}>{classLevel.name}</option>
                 </>
               );
             })}

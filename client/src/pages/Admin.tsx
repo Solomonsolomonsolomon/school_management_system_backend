@@ -29,7 +29,7 @@ const Admin = () => {
   let Selected = components[view];
 
   return (
-    <div className="grid md:grid-cols-[25%_75%] lg:grid-cols-[20%_80%] w-full overflow-y-hidden ">
+    <div id="adminpage" className="grid md:grid-cols-[25%_75%] lg:grid-cols-[20%_80%] w-full overflow-y-hidden ">
       <Navbar setView={setView} />
       <main className="container">
         <section className="overflow-y-auto h-[100vh]">
