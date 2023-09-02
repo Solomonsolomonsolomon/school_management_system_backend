@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import ReactDOM from "react-dom";
 import axios from "./../../api/axios";
 import Modal from "react-modal";
 import Loading from "../Loading";
+import { faCheck, faClose } from "@fortawesome/free-solid-svg-icons";
+
 const customStyles = {
   content: {
     top: "50%",
@@ -26,6 +29,7 @@ interface State {
   msg: string;
   classData: any[];
   subjectsData: any;
+  subjectsColors?: any;
 }
 function reducer(state: State, action: Action) {
   switch (action.type) {
@@ -44,14 +48,27 @@ function reducer(state: State, action: Action) {
         classData: action.payload,
         msg: action.msg,
       };
-    case "saveSubject": {
+    case "saveSubject":
       return {
         ...state,
         loading: false,
         msg: action.msg,
         subjectData: action.payload,
       };
-    }
+    case "toggleColor":
+      const subjectId = action.payload;
+      const currentColor = state.subjectsColors
+        ? state.subjectsColors[subjectId] || false
+        : false;
+      return {
+        ...state,
+        subjectsColors: {
+          ...state.subjectsColors,
+          [subjectId]: !currentColor,
+        },
+      };
+    case "saveSubjects":
+      return { ...state };
     default:
       return state;
   }
@@ -61,6 +78,7 @@ let initialState: State = {
   loading: true,
   msg: "",
   subjectsData: {},
+  subjectsColors: {},
 };
 const AddTeacher: React.FC = () => {
   const {
@@ -75,16 +93,20 @@ const AddTeacher: React.FC = () => {
     reducer,
     initialState
   );
+  let [query, setQuery] = useState<string>("");
   let [dataObj, setDataObj] = useState<any>([]);
   let [classData, setClassData] = useState<any[]>([]);
-  let [subjectData, setSubjectData] = useState<any>({});
-
+  let [subjectData, setSubjectData] = useState<any[]>([]);
+  let [isModalSubmitted, setModalSubmitted] = useState<boolean>(false);
+  let [selectedSubjects, setSelectedSubjects] = useState<any[]>([]);
+  let focusRef = React.useRef<HTMLInputElement>(null);
+  let colorRef = React.useRef<HTMLParagraphElement>(null);
   let baseUrl = "/admin";
   let url2 = "/subject";
-  
+
   React.useEffect(() => {
     let controller = new AbortController();
-    //  classLevels();
+    classLevels();
     async function classLevels() {
       try {
         dispatch({ type: "startLoading" });
@@ -112,15 +134,15 @@ const AddTeacher: React.FC = () => {
     getSubjects();
     async function getSubjects() {
       dispatch({ type: "startLoading" });
-      let res = await axios.get(`${url2}/get/all`, {
+      let res = await axios.get(`${url2}/get/all/json`, {
         signal: controller.signal,
       });
- 
+
       dispatch({
         type: "msg",
         msg: res.data?.msg || "successful",
       });
-      setSubjectData(res.data?.subjects)
+      setSubjectData(res.data?.asJson);
     }
     return () => {
       controller.abort();
@@ -142,20 +164,51 @@ const AddTeacher: React.FC = () => {
     subtitle.style.color = "#f00";
   }
 
-  const onSubmitSubjects: SubmitHandler<any> = async (data) => {
+  const onSubmitSubjects = async () => {
     // Handle the submission of subjects offered here
-    console.log("Subjects data:", data);
 
-    // Close the modal after submission
+    setModalSubmitted(true);
     setIsModalOpen(false);
+    let subjects: any[] = [];
+    const toArray = Object.entries(state.subjectsColors);
+    toArray
+      .filter((subjects) => {
+        return subjects[1] == true;
+      })
+      .forEach((subject, i) => {
+        subjects.push(subject[0]);
+      });
+    setSelectedSubjects(subjects);
   };
+  const filtered = subjectData.filter((data, index) => {
+    console.log(data.className, query);
+    return data.name
+      .toUpperCase()
+      .split(" ")
+      .join("")
+      .split("_")
+      .join("")
+      .includes(query.toUpperCase().split(" ").join(""));
+  });
+  function handleFinalRegister() {
+let theData= [...dataObj]
+  console.log(theData)
+  }
+
   if (state.loading) return <Loading />;
   return (
     <>
       <p className="text-center font-bold"> {state.msg} </p>
       <div className="grid px-4 justify-items-center">
         <form
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={
+            isModalSubmitted
+              ? (e) => {
+                  e.preventDefault();
+                  handleFinalRegister();
+                }
+              : handleSubmit(onSubmit)
+          }
           className="grid justify-items justify-between border border-gray-300 p-3 gap-4 w-fit items-center place-content-between"
         >
           <div className="form-group grid ">
@@ -233,7 +286,7 @@ const AddTeacher: React.FC = () => {
             type="submit"
             className="btn btn-primary p-4 text-white bg-gray-600 rounded"
           >
-            Add Teacher
+            {isModalSubmitted ? "Register" : "Proceed"}
           </button>
         </form>
       </div>
@@ -245,64 +298,66 @@ const AddTeacher: React.FC = () => {
         style={customStyles}
         contentLabel="Example Modal"
       >
-        <h2 ref={(_subtitle) => (subtitle = _subtitle)}>
-          Enter subject(s) taught
+        <h2
+          ref={(_subtitle) => (subtitle = _subtitle)}
+          className="text-center font-bold"
+        >
+          Click subject(s) taught
         </h2>
-        <input type="search"  />
-        {Object.entries(subjectData).map((keys,index,arr:any[]) => {
-          return (
-            <>
-              <>
-                <div className="overflow-x-auto" key={index+keys[0]}>
-                  <table className="divide-y divide-gray-200 dark:divide-gray-700 overflow-x-auto border">
-                    <thead className="bg-gray-50 dark:bg-gray-700">
-                      {/* table head */}
-                      <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                          {arr[index][0]}
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-                      {arr[index][1]
-                        ? arr[index][1].map(
-                            (subject: any, i: number, array: any[]) => {
-                              return (
-                                <>
-                                  {" "}
-                                  <tr key={subject._id}>
-                                    <div className="flex items-center justify-between h-5">
-                                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
-                                        {subject.subject}
-                                      </td>
-                                    </div>
+        <p className="text-center text-blue-500">blue means selected</p>
+        <div className="h-[150px]">
+          <input
+            type="search"
+            className="border rounded-none"
+            value={query}
+            onChange={(e) => {
+              setQuery(e.target.value);
+              focusRef.current ? focusRef.current.focus() : "";
+            }}
+            placeholder="search subjects..."
+            ref={focusRef}
+          />
 
-                                    <td
-                                      className="px-6  py-1 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200 "
-                                      onClick={(e) => {
-                                console.log('kkk')
-                                      }}
-                                    >
-                                      <a className="text-blue-600">Add</a>
-                                    </td>
-                                  </tr>
-                                </>
-                              );
-                            }
-                          )
-                        : ""}
-                    </tbody>
-                  </table>
+          {filtered.map((subject, index) => {
+            return (
+              <React.Fragment key={index}>
+                <div>
+                  <p
+                    ref={colorRef}
+                    key={subject.name}
+                    onClick={(e) => {
+                      dispatch({ type: "toggleColor", payload: subject._id });
+                    }}
+                    className={`${
+                      state.subjectsColors[subject._id]
+                        ? "text-blue-800"
+                        : "text-black"
+                    }`}
+                  >
+                    {" "}
+                    {subject.name}
+                  </p>
                 </div>
-              </>
-            </>
-          );
-        })}
-        <form>
-          <input />
-        </form>
+              </React.Fragment>
+            );
+          })}
+          <form>
+            <input />
+          </form>
+        </div>
 
-        <button onClick={closeModal}>close</button>
+        <button
+          onClick={closeModal}
+          className="z-[1000] top-0 left-0 absolute  bg-red-950 p-2  text-white rounded"
+        >
+          <FontAwesomeIcon icon={faClose} size="sm"></FontAwesomeIcon>
+        </button>
+        <button
+          className="z-[1000] top-0 right-0 absolute  bg-green-500 p-2  text-white rounded"
+          onClick={onSubmitSubjects}
+        >
+          <FontAwesomeIcon icon={faCheck} size="sm"></FontAwesomeIcon>
+        </button>
       </Modal>
     </>
   );

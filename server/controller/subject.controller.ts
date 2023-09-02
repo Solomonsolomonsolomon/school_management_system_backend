@@ -153,5 +153,13 @@ class SubjectController {
         throw err;
       });
   }
+  public async getAllSubjectsAsJson(req: Request, res: Response) {
+    let all = await Subject.find({});
+    if (!all) throw new CustomError({}, "no subject found", 404);
+    res.status(200).json({
+      status: 200,
+      asJson: all,
+    });
+  }
 }
 export default SubjectController;
