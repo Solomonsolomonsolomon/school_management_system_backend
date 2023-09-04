@@ -20,16 +20,16 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
     setView(component);
   }
   return (
-    <nav className="bg-slate-50 shadow-lg h-screen py-1 relative fixed">
+    <nav className="bg-slate-50 shadow-lg h-screen py-1 relative overflow-y-auto">
       <h1 className="text-center text-3xl font-bold">SMS|ADMIN</h1>
       <section className="my-2">
-        <ul className="grid gap-0">
+        <ul className="grid gap-4">
           {/* dashboard */}
           <li
             onClick={() => {
               setComponent("subadmin");
             }}
-            className="cursor-pointer hover:shadow-lg hover:transition hover:bg-slate-300 p-5"
+            className="cursor-pointer hover:shadow-lg hover:transition hover:bg-slate-300 px-5"
           >
             <div
               onClick={() => {
@@ -92,6 +92,17 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
 
             <span className="text-slate-700 mr-2">Add Teacher</span>
           </li>
+          {/* all teachers */}
+          <li
+            onClick={() => {
+              setComponent("allteachers");
+            }}
+            className="cursor-pointer hover:shadow-lg hover:transition mr-10 hover:bg-slate-300 p-5 py-1"
+          >
+            <FontAwesomeIcon icon={faUserFriends} size="xl" />
+
+            <span className="text-slate-700 mr-2">All Teachers</span>
+          </li>
           {/* year and term */}
           <li
             onClick={() => {
@@ -112,7 +123,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
           >
             <FontAwesomeIcon icon={faBook} size="xl" />
 
-            <span className="text-slate-700 mr-2">subjects</span>
+            <span className="text-slate-700 mr-2"> Subjects</span>
           </li>
           <li className="cursor-pointer hover:shadow-lg hover:transition hover:bg-slate-300 p-5">
             <NavLink to="/admin/teacher">

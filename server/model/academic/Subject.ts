@@ -3,7 +3,7 @@ import mongoose, { Types } from "mongoose";
 const { Schema } = mongoose;
 interface ISubject {
   name?: string;
-  subjectName: string;
+  subject: string;
   className: string;
   academicYear?: Types.ObjectId;
   teacherId?: Types.ObjectId;
@@ -40,43 +40,65 @@ interface ISubject {
 
 //   },
 //   { timestamps: true }
-// );
-const subjectSchema = new Schema({
+// // );
+// const subjectSchema = new Schema({
+//   name: {
+//     type: String,
+//   },
+//   // subjectName: {
+//   //   type: String,
+//   //
+//   //
+//   // },
+//   subject: {
+//     type: String,
+//   },
+//   teacherId: {
+//     type: Types.ObjectId,
+//     ref: "Teacher",
+//   },
+//   academicYear: {
+//     type: Schema.Types.ObjectId,
+//     ref: "AcademicYear",
+//   },
+//   // academicYear: {
+//   //   type: String,
+//   //   default: () => {
+//   //     let date = new Date();
+//   //     //september begins new academic year
+//   //     return date.getMonth() < 8
+//   //       ? `${date.getFullYear() - 1}/${date.getFullYear()}`
+//   //       : `${date.getFullYear()}/${date.getFullYear() + 1}`;
+//   //   },
+//   // },
+//   className: {
+//     type: String,
+//     required: true,
+//   },
+// });
+const SubjectSchema = new mongoose.Schema<ISubject>({
   name: {
     type: String,
-  },
-  subjectName: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  teacherId: {
-    type: Types.ObjectId,
-    ref: "Teacher",
+    unique:true
   },
   academicYear: {
-    type: Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: "AcademicYear",
   },
-  // academicYear: {
-  //   type: String,
-  //   default: () => {
-  //     let date = new Date();
-  //     //september begins new academic year
-  //     return date.getMonth() < 8
-  //       ? `${date.getFullYear() - 1}/${date.getFullYear()}`
-  //       : `${date.getFullYear()}/${date.getFullYear() + 1}`;
-  //   },
-  // },
   className: {
     type: String,
-    required: true,
+  },
+  subject: {
+    type: String,
+  },
+  teacherId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Teacher",
   },
 });
-
-subjectSchema.pre("save", function (this: ISubject) {
-  this.name = `${this.className.toUpperCase()}_${this.subjectName.toUpperCase()}`;
+SubjectSchema.pre("save", function (this: ISubject) {
+  this.name = `${this.className.toUpperCase()}_${this.subject.toUpperCase()}`;
 });
-const Subject = mongoose.model("Subject", subjectSchema);
-
+const Subject = mongoose.model("Subject", SubjectSchema);
+Subject.syncIndexes();
 export { Subject };

@@ -6,6 +6,7 @@ import React from "react";
 import AddStudent from "../components/Admin/AddStudent";
 import AllStudents from "../components/Admin/AllStudents";
 import AddTeacher from "../components/Admin/AddTeacher";
+import AllTeachers from "../components/Admin/AllTeachers";
 import Subjects from "../components/Admin/Subjects";
 import ClassLevel from "../components/ClassLevel";
 import YearAndTerm from "../components/Admin/YearAndTerm";
@@ -20,6 +21,7 @@ let components: any = {
   allstudents: AllStudents,
   classlevel: ClassLevel,
   addteacher: AddTeacher,
+  allteachers:AllTeachers,
   yearandterm: YearAndTerm,
   subjects: Subjects,
 };
@@ -29,11 +31,13 @@ const Admin = () => {
   let Selected = components[view];
 
   return (
-    <div className="grid md:grid-cols-[25%_75%] lg:grid-cols-[20%_80%] w-full ">
+    <div id="adminpage" className="grid md:grid-cols-[25%_75%] lg:grid-cols-[20%_80%] w-full overflow-y-hidden ">
       <Navbar setView={setView} />
       <main className="container">
-        <Profile />
-        <Selected />
+        <section className="overflow-y-auto h-[100vh]">
+          <Profile />
+          <Selected />
+        </section>
       </main>
     </div>
   );

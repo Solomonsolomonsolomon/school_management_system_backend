@@ -7,7 +7,7 @@ import Admin from "./pages/Admin";
 import AdminStudent from "./components/Admin/Students";
 import AdminTeacher from "./components/Admin/Teachers";
 import Student from "./pages/Student";
-import Teacher from "./components/Teacher/Teacher";
+import Teacher from "./pages/Teacher";
 import RequireAuth from "./Auth/RequireAuth";
 import "./index.css";
 import axios from "./api/axios";

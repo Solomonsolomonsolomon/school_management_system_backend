@@ -54,13 +54,14 @@ export default function Login() {
         let path = location.pathname;
         if (path !== "/" && path !== "/login") window.location.reload();
         //location.href = `/${details.role}/dashboard`;
-      } catch (error) {
+      } catch (error: any) {
         //go back to select on fail
         setDetails((prev) => {
           return { ...prev, role: "" };
         });
         msgRef.current && clicked
-          ? (msgRef.current.textContent = "incorrect credentials")
+          ? (msgRef.current.textContent =
+              error.response?.data?.msg || error.message)
           : "";
       }
     }
