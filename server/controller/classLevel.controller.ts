@@ -11,7 +11,7 @@ class ClassLevelController {
    */
 
   public async getAllClassLevels(req: express.Request, res: express.Response) {
-    await ClassLevel.find({}).then(async (classes) => {
+    await ClassLevel.find({}).sort({name:1}).then(async (classes) => {
       if (classes.length < 1)
         throw new CustomError({}, " no classes found", 404);
       let classthing = ClassLevel.aggregate([
@@ -44,7 +44,7 @@ class ClassLevelController {
       
       res.status(200).json({
         status: 200,
-        msg: "all classes",
+        msg: "success",
         classes: result,
       });
     });
@@ -86,5 +86,6 @@ class ClassLevelController {
       msg: "deleted successfully",
     });
   }
+
 }
 export default ClassLevelController;

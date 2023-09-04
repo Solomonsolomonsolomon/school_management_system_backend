@@ -7,11 +7,11 @@ interface ITeacher {
   password: string;
   dateEmployed?: Date;
   teacherId?: string;
-  formTeacher?: Types.ObjectId;
+  formTeacher?: string;
   isWithdrawn?: boolean;
   isSuspended?: boolean;
   role?: string;
-  subject?: Schema.Types.ObjectId;
+  subjects?: Schema.Types.ObjectId[];
   applicationStatus?: "pending" | "approved" | "rejected";
   program?: string;
   classLevel?: string;
@@ -61,7 +61,7 @@ const teacherSchema = new Schema<ITeacher>(
       },
     },
     formTeacher: {
-      type: Schema.Types.ObjectId,
+      type: String,
     },
     //if withdrawn, the teacher will not be able to login
     isWithdrawn: {
@@ -77,11 +77,13 @@ const teacherSchema = new Schema<ITeacher>(
       type: String,
       default: "teacher",
     },
-    subject: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Subject",
-      // required: true,
-    },
+    subjects: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Subject",
+        // required: true,
+      },
+    ],
     applicationStatus: {
       type: String,
       enum: ["pending", "approved", "rejected"],

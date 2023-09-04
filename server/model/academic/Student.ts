@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import mongoose, { Schema, Document, Types, model, Model } from "mongoose";
 import { AcademicTerm } from "./AcademicTerm";
 import { AcademicYear } from "./AcademicYear";
+import { Subject } from "./Subject";
 import { CustomError } from "../../middleware/decorators";
 
 interface IStudent extends Document {
@@ -32,6 +33,7 @@ interface IStudent extends Document {
   isSuspended?: boolean;
   prefectName?: string;
   yearGraduated?: String;
+  subjects?: Types.ObjectId[];
   // virtuals
   className?: string;
 }
@@ -192,6 +194,10 @@ const studentSchema: Schema = new mongoose.Schema<IStudent>(
     yearGraduated: {
       type: String,
     },
+    subjects: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Subject",
+    }],
   },
   {
     timestamps: true,
@@ -227,37 +233,38 @@ studentSchema.pre("save", async function (next) {
 
 //get back to this
 studentSchema.pre("save", async function (next) {
-  let classes = [
-    "NUR1",
-    "NUR2",
-    "NUR3",
-    "PRY1",
-    "PRY2",
-    "PRY3",
-    "PRY4",
-    "PRY5",
-    "PRY6",
-    "JSS1",
-    "JSS2",
-    "JSS3",
-    "SS1",
-    "SS2",
-    "SS3",
-  ];
-  if (
-    this.isModified("currentClassLevel") ||
-    this.isModified("classLevel") ||
-    this.isModified("isPromoted")
-  ) {
-    if (this.isPromoted) {
-      const currentIndex = classes.indexOf(this.currentClassLevel);
-      if (currentIndex !== -1 && currentIndex < classes.length - 1) {
-        this.currentClassLevel = classes[currentIndex + 1];
-      }
-    } else {
-      this.currentClassLevel;
-    }
-  }
+  console.log('hi')
+  // let classes = [
+  //   "NUR1",
+  //   "NUR2",
+  //   "NUR3",
+  //   "PRY1",
+  //   "PRY2",
+  //   "PRY3",
+  //   "PRY4",
+  //   "PRY5",
+  //   "PRY6",
+  //   "JSS1",
+  //   "JSS2",
+  //   "JSS3",
+  //   "SS1",
+  //   "SS2",
+  //   "SS3",
+  // ];
+  // if (
+  //   this.isModified("currentClassLevel") ||
+  //   this.isModified("classLevel") ||
+  //   this.isModified("isPromoted")
+  // ) {
+  //   if (this.isPromoted) {
+  //     const currentIndex = classes.indexOf(this.currentClassLevel);
+  //     if (currentIndex !== -1 && currentIndex < classes.length - 1) {
+  //       this.currentClassLevel = classes[currentIndex + 1];
+  //     }
+  //   } else {
+  //     this.currentClassLevel;
+  //   }
+  // }
 });
 // Verify Password
 studentSchema.methods.verifiedPassword = async function (
@@ -270,13 +277,18 @@ studentSchema.methods.verifiedPassword = async function (
 //   return `${this.currentClassLevel}${this.currentClassArm}`;
 // });
 
-
-
 //currentClass
 studentSchema.pre("save", async function (next) {
   this.className = `${this.currentClassLevel}${this.currentClassArm}`;
 });
+//add subjects
+studentSchema.pre("save", async function (next) {
+  let subjectsOffered:any[] = await Subject.find({ className: this.className });
+  console.log(this.className);
+  console.log(`efdsvvvsvv,${subjectsOffered},sjdkjksj`)
+  this.subjects = subjectsOffered;
+});
 //model
 const Student = model<IStudent>("Student", studentSchema);
-
+Student.syncIndexes();
 export { Student, IStudent };
