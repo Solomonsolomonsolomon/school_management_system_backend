@@ -119,7 +119,7 @@ const AddTeacher: React.FC<{
   let [classData, setClassData] = useState<any[]>([]);
   let [subjectData, setSubjectData] = useState<any[]>([]);
   let [isModalSubmitted, setModalSubmitted] = useState<boolean>(false);
-  let [selectedSubjects, setSelectedSubjects] = useState<any[]>([]);
+  let [selectedSubjects, setSelectedSubjects] = useState<string[]>([]);
   let focusRef = React.useRef<HTMLInputElement>(null);
   let checkboxRef = React.useRef<HTMLDivElement>(null);
 
@@ -205,16 +205,16 @@ const AddTeacher: React.FC<{
 
     setModalSubmitted(true);
     setIsModalOpen(false);
-    let subjects: any[] = [];
-    const toArray = Object.entries(state.subjectsColors);
-    toArray
-      .filter((subjects) => {
-        return subjects[1] == true;
-      })
-      .forEach((subject, i) => {
-        subjects.push(subject[0]);
-      });
-    setSelectedSubjects(subjects);
+    // let subjects: any[] = [];
+    // const toArray = Object.entries(state.subjectsColors);
+    // toArray
+    //   .filter((subjects) => {
+    //     return subjects[1] == true;
+    //   })
+    //   .forEach((subject, i) => {
+    //     subjects.push(subject[0]);
+    //   });
+    // setSelectedSubjects(subjects);
     setQuery("");
     //am
   };
@@ -227,6 +227,19 @@ const AddTeacher: React.FC<{
       .join("")
       .includes(query.toUpperCase().split(" ").join(""));
   });
+
+  const handleCheckboxClick = (subjectId: string) => {
+    if (selectedSubjects.includes(subjectId)) {
+      // Deselect the subject
+      setSelectedSubjects((prevSelected) =>
+        prevSelected.filter((id) => id !== subjectId)
+      );
+    } else {
+      // Select the subject
+      setSelectedSubjects((prevSelected) => [...prevSelected, subjectId]);
+    }
+  };
+
   async function handleFinalRegister() {
     try {
       dispatch({ type: "startLoading" });
@@ -378,7 +391,6 @@ const AddTeacher: React.FC<{
           Select subject(s) taught
         </h2>
 
-        
         <div className="h-[150px]">
           <input
             type="search"
@@ -396,7 +408,13 @@ const AddTeacher: React.FC<{
               return (
                 <React.Fragment key={index}>
                   <div className="font-blue flex gap-1">
-                    <input type="checkbox" name="index" id=""onClick={()=>console.log(subject.name)} value={subject._id} />
+                    <input
+                      type="checkbox"
+                      name="index"
+                      id=""
+                      onClick={() => handleCheckboxClick(subject._id)}
+                      value={subject._id}
+                    />
                     <span
                       key={subject.name}
                       className={`${

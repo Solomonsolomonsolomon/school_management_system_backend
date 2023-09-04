@@ -37,32 +37,68 @@ const AllTeachers: React.FC = () => {
     reducer,
     initialState
   );
-  React.useEffect(() => {
-    allTeachers();
-    let controller=new AbortController();
-    async function allTeachers() {
+
+  function handleDelete(studentId: string) {
+    async function deleteTeacher() {
       try {
         dispatch({ type: "startLoading" });
-        let res = await axios.get(`${baseUrl}/get/teacher`,{
-            signal:controller.signal
-        });
-        console.log(res.data?.teacher);
+        let res = await axios.delete(`${baseUrl}/delete/teacher/${studentId}`);
+
+        let updateUIOnDeletion = state.teachers.filter(
+          (teacher) => teacher.teacherId !== studentId
+        );
         dispatch({
           type: "msg+saveTeacher",
-          msg: res.data?.msg || "teachers fetched successfully",
-          payload: res.data?.teacher,
+          msg: res.data?.msg || "successfully deleted",
+          payload: updateUIOnDeletion,
         });
       } catch (error: any) {
         dispatch({
           type: "msg",
-          msg: error.response?.data || error?.message || "error in fetching",
+          msg: error?.response?.data?.err || "failed to delete",
         });
       }
+    }
+    let confirmable = window.confirm(
+      "please note that this action is permanent,do you want to continue"
+    );
+    if (confirmable) {
+      deleteTeacher();
+    }
+  }
+  React.useEffect(() => {
+    let controller = new AbortController();
+
+    async function allTeachers() {
+      dispatch({ type: "startLoading" });
+
+      try {
+        let res = await axios.get(`${baseUrl}/get/teacher`, {
+          signal: controller.signal,
+        });
+        console.log(res.data?.teacher);
+        
+          dispatch({
+            type: "msg+saveTeacher",
+            msg: res.data?.msg || "teachers fetched successfully",
+            payload: res.data?.teacher,
+          });
     
+      } catch (error: any) {
+        if (error.name == "AbortError" || error.name == "CanceledError") return;
+        dispatch({
+          type: "msg",
+          msg:
+            error.response?.data || error?.message == "canceled"
+              ? "loading........."
+              : error?.message || "error in fetching",
+        });
+      }
     }
-    return ()=>{
-    controller.abort()
-    }
+    allTeachers();
+    return () => {
+      controller.abort();
+    };
   }, []);
   if (state.loading) return <Loading />;
   return (
@@ -106,7 +142,7 @@ const AllTeachers: React.FC = () => {
                           {teacher.teacherId}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
-                          {teacher.formTeacher||"nil"}
+                          {teacher.formTeacher || "nil"}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
                           {[
@@ -117,7 +153,7 @@ const AllTeachers: React.FC = () => {
                             ),
                           ]
                             .join(",")
-                            .toLowerCase()||"nil"}
+                            .toLowerCase() || "nil"}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
                           {teacher.dateEmployed || "nil"}
@@ -125,16 +161,13 @@ const AllTeachers: React.FC = () => {
 
                         <td
                           className="px-6  py-1 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200 "
-                          //   onClick={(e) => {
-                          //     handleSubjectDeletion(subject._id);
-                          //   }}
+                          onClick={(e) => {
+                            handleDelete(teacher.teacherId);
+                          }}
                         >
                           <a className="text-blue-600">Delete</a>
                         </td>
-                        <td
-                          className="px-6  py-1 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200 "
-                         
-                        >
+                        <td className="px-6  py-1 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200 ">
                           <a className="text-blue-600">Edit</a>
                         </td>
                       </tr>
