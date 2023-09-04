@@ -29,7 +29,7 @@ const YearAndTerm: React.FC = () => {
     try {
       addTermRef.current
         ? (addTermRef.current.textContent = "please wait...")
-        : "";
+        : "....";
         const res = await axios.post(`${postUrl}/year/add`, data);
     //update UI
     let updateOnYearAddition=years.map((year)=>{
@@ -207,11 +207,13 @@ const YearAndTerm: React.FC = () => {
 
   return (
     <>
-      <h1>Year and Term</h1>
+      <h1 className="font-bold text-center">Year and Term</h1>
 
       {/* Year Form */}
       <h1 className="text-[20px] text-center">Add Year</h1>
-      <p ref={addYearRef}>...</p>
+      <p ref={addYearRef} className="font-bold text-center">
+        ...
+      </p>
       <div className="flex justify-center">
         <form
           onSubmit={handleYearSubmit(handleYearFormSubmit)}
@@ -237,7 +239,9 @@ const YearAndTerm: React.FC = () => {
 
       {/* Term Form */}
       <h1 className="text-[20px] text-center">Add Term</h1>
-      <p ref={addTermRef}>...</p>
+      <p ref={addTermRef} className="font-bold text-center">
+        ...
+      </p>
       <div className="flex justify-center">
         <form
           onSubmit={handleTermSubmit(handleTermFormSubmit)}
@@ -254,93 +258,95 @@ const YearAndTerm: React.FC = () => {
             Add Term
           </button>
         </form>
-      </div>
+      </div >
 
       {/* Display List of Years */}
-      <div className="w-[200px]sm:w-[400px] lg:w-[100%] md:w-[100%] w-[350px]">
-        <div className="w-[200px] sm:w-[400px] lg:w-[100%] md:w-[100%] w-[350px] h-[400px] overflow-y-auto">
-          <h1>List of Years</h1>
-          <table className="divide-y divide-gray-200 dark:divide-gray-700 overflow-x-auto border">
-            <thead className="bg-gray-50 dark:bg-gray-700">
-              <tr>
-                {/* <th className="py-3 px-4 pr-0">Checkbox input</th> */}
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                  Year Name
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                  IS CURRENT
-                </th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-              {years.map((year: any, index: number) => (
-                <tr key={index}>
-                  <td>{year.name}</td>
-                  <td>{`${year.isCurrent}`}</td>
-                  {/* ... Your years table cells ... */}
-
-                  <td
-                    className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-blue-500 hover:text-blue-700 cursor-pointer"
-                    onClick={() => handleSetCurrentYear(year._id)}
-                  >
-                    Set Current
-                  </td>
-                  <td
-                    className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-blue-500 hover:text-blue-700 cursor-pointer"
-                    onClick={() => handleDeleteYear(year._id)}
-                  >
-                    Delete
-                  </td>
+      <div className="grid justify-items- border justify-center my-3">
+        <div className="w-[200px]sm:w-[400px] lg:w-[100%] md:w-[100%] w-[350px]">
+          <div className="w-[200px] sm:w-[400px] lg:w-[100%] md:w-[100%] w-[350px] h-[400px] overflow-y-auto">
+            <h1 className="font-bold text-center">List of Years</h1>
+            <table className="divide-y divide-gray-200 dark:divide-gray-700 overflow-x-auto border">
+              <thead className="bg-gray-50 dark:bg-gray-700">
+                <tr>
+                  {/* <th className="py-3 px-4 pr-0">Checkbox input</th> */}
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    Year Name
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    IS CURRENT
+                  </th>
+                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
+                    Actions
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                {years.map((year: any, index: number) => (
+                  <tr key={index}>
+                    <td>{year.name}</td>
+                    <td>{`${year.isCurrent}`}</td>
+                    {/* ... Your years table cells ... */}
 
-        {/* Display List of Terms */}
-        <div className="w-[200px] sm:w-[400px] lg:w-[100%] md:w-[100%] w-[350px] h-[400px] overflow-y-auto">
-          <h1>List of Terms</h1>
-          <table className="divide-y divide-gray-200 dark:divide-gray-700 overflow-x-auto border">
-            <thead className="bg-gray-50 dark:bg-gray-700">
-              <tr>
-                {/* ... Your terms table headers ... */}
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                  Term Name
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                  Current Term
-                </th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-              {terms.map((term: any, index: number) => (
-                <tr key={index}>
-                  {/* ... Your terms table cells ... */}
-                  <td>{term.name}</td>
-                  <td>{`${term.isCurrent}`}</td>
+                    <td
+                      className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-blue-500 hover:text-blue-700 cursor-pointer"
+                      onClick={() => handleSetCurrentYear(year._id)}
+                    >
+                      Set Current
+                    </td>
+                    <td
+                      className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-blue-500 hover:text-blue-700 cursor-pointer"
+                      onClick={() => handleDeleteYear(year._id)}
+                    >
+                      Delete
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
-                  <td
-                    className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-blue-500 hover:text-blue-700 cursor-pointer"
-                    onClick={() => handleSetCurrentTerm(term._id)}
-                  >
-                    Set Current
-                  </td>
-                  <td
-                    className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-blue-500 hover:text-blue-700 cursor-pointer"
-                    onClick={() => handleDeleteTerm(term._id)}
-                  >
-                    Delete
-                  </td>
+          {/* Display List of Terms */}
+          <div className="w-[200px] sm:w-[400px] lg:w-[100%] md:w-[100%] w-[350px] h-[400px] overflow-y-auto">
+            <h1 className="text-center font-bold">List of Terms</h1>
+            <table className="divide-y divide-gray-200 dark:divide-gray-700 overflow-x-auto border">
+              <thead className="bg-gray-50 dark:bg-gray-700">
+                <tr>
+                  {/* ... Your terms table headers ... */}
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    Term Name
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    Current Term
+                  </th>
+                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
+                    Actions
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                {terms.map((term: any, index: number) => (
+                  <tr key={index}>
+                    {/* ... Your terms table cells ... */}
+                    <td>{term.name}</td>
+                    <td>{`${term.isCurrent}`}</td>
+
+                    <td
+                      className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-blue-500 hover:text-blue-700 cursor-pointer"
+                      onClick={() => handleSetCurrentTerm(term._id)}
+                    >
+                      Set Current
+                    </td>
+                    <td
+                      className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-blue-500 hover:text-blue-700 cursor-pointer"
+                      onClick={() => handleDeleteTerm(term._id)}
+                    >
+                      Delete
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </>

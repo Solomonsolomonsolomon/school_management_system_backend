@@ -35,7 +35,7 @@ const {
 const { createClassLevel, deleteClassLevel, getAllClassLevels } = classLevel;
 //#adding users
 adminRouter.post("/admin/add/admin", addAdmin);
-adminRouter.post("/admin/add/teacher", addTeacher);
+adminRouter.post("/admin/add/teacher", asyncErrorHandler(addTeacher));
 adminRouter.post("/admin/add/student", asyncErrorHandler(addStudent));
 
 //# removing users

@@ -76,37 +76,41 @@ const AddSubject: React.FC = () => {
       <p className="text-center font-bold">{state.msg}</p>
       <div className="w-[200px]sm:w-[400px] lg:w-[100%] md:w-[100%] w-[350px]">
         <h1 className="text-center">SUBJECTS</h1>
-        <form
-          onSubmit={handleSubmit(handleFormSubmit)}
-          className="border grid justify-items-center p-4 border-gray-500 placeholder:text-center gap-3 rounded"
-        >
-          <input
-            type="text"
-            {...register("subject")}
-            required
-            placeholder="subject name"
-            className="placeholder:text-center border border-black rounded"
-          />
-          <label>select class.you can select more than one</label>
-          <select
-            multiple
-            {...register("className")}
-            required
-            className="placeholder:text-center border border-black rounded"
+        <div className="grid gap-2 justify-items-center">
+          <form
+            onSubmit={handleSubmit(handleFormSubmit)}
+            className="border grid justify-items-center p-4 border-gray-500 placeholder:text-center gap-3 rounded w-fit"
           >
-            {classes.map((classLevel,index) => {
-              return (
-                <>
-                  <option key={index} value={classLevel.name}>{classLevel.name}</option>
-                </>
-              );
-            })}
-          </select>
+            <input
+              type="text"
+              {...register("subject")}
+              required
+              placeholder="subject name"
+              className="placeholder:text-center border border-black rounded"
+            />
+            <label className="text-center font-bold">select class.you can select more than one</label>
+            <select
+              multiple
+              {...register("className")}
+              required
+              className="placeholder:text-center border border-black rounded"
+            >
+              {classes.map((classLevel, index) => {
+                return (
+                  <>
+                    <option key={index} value={classLevel.name}>
+                      {classLevel.name}
+                    </option>
+                  </>
+                );
+              })}
+            </select>
 
-          <button className="border bg-gray-600 p-3 text-white">
-            ADD SUBJECT
-          </button>
-        </form>
+            <button className="border bg-gray-600 p-3 text-white rounded ">
+              ADD SUBJECT
+            </button>
+          </form>
+        </div>
       </div>
     </>
   );

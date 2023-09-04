@@ -60,7 +60,7 @@ export async function addTeacher(
 ) {
   try {
     let { name, email, password, role, dateEmployed, formTeacher } = req.body;
-    await Teacher.findOne({ name, email }).then(
+    await Teacher.findOne({ email }).then(
       async (alreadyRegistered: object | null) => {
         if (alreadyRegistered) {
           throw new Error("This particular teacher already registered");
@@ -260,14 +260,17 @@ export async function getAllStudents(req: Request, res: Response) {
 
 export async function getAllTeachers(req: Request, res: Response) {
   try {
-    await Teacher.find({}).then((teacher) => {
-      if (teacher.length < 1) throw new Error("No teacher found");
-      res.status(200).json({
-        status: 200,
-        msg: "all teachers fetched successfully",
-        teacher,
+    await Teacher.find({})
+      .populate("subjects")
+      
+      .then((teacher) => {
+        if (teacher.length < 1) throw new Error("No teacher found");
+        res.status(200).json({
+          status: 200,
+          msg: "all teachers fetched successfully",
+          teacher,
+        });
       });
-    });
   } catch (error: any) {
     res.status(500).json({
       status: 500,

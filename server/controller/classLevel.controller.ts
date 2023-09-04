@@ -44,7 +44,7 @@ class ClassLevelController {
       
       res.status(200).json({
         status: 200,
-        msg: "all classes",
+        msg: "success",
         classes: result,
       });
     });

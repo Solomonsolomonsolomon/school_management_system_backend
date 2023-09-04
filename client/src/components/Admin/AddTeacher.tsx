@@ -67,6 +67,17 @@ function reducer(state: State, action: Action) {
           [subjectId]: !currentColor,
         },
       };
+    case "resetSelectedSubjects": {
+      let subjectId = action.payload;
+      return {
+        ...state,
+        loading: false,
+        subjectsColors: {
+          ...state.subjectsColors,
+          [subjectId]: false,
+        },
+      };
+    }
     case "saveSubjects":
       return { ...state };
     default:
@@ -80,7 +91,17 @@ let initialState: State = {
   subjectsData: {},
   subjectsColors: {},
 };
-const AddTeacher: React.FC = () => {
+const TeacherAddition: React.FC = () => {
+  let ref = React.useRef<HTMLDivElement | null>(null);
+  return (
+    <>
+      <AddTeacher CheckBoxDivRef={ref} />
+    </>
+  );
+};
+const AddTeacher: React.FC<{
+  CheckBoxDivRef: React.RefObject<HTMLDivElement>;
+}> = ({ CheckBoxDivRef }) => {
   const {
     handleSubmit,
     register,
@@ -94,16 +115,17 @@ const AddTeacher: React.FC = () => {
     initialState
   );
   let [query, setQuery] = useState<string>("");
-  let [dataObj, setDataObj] = useState<any>([]);
+  let [dataObj, setDataObj] = useState<any>({});
   let [classData, setClassData] = useState<any[]>([]);
   let [subjectData, setSubjectData] = useState<any[]>([]);
   let [isModalSubmitted, setModalSubmitted] = useState<boolean>(false);
   let [selectedSubjects, setSelectedSubjects] = useState<any[]>([]);
   let focusRef = React.useRef<HTMLInputElement>(null);
-  let colorRef = React.useRef<HTMLParagraphElement>(null);
+  let checkboxRef = React.useRef<HTMLDivElement>(null);
+
   let baseUrl = "/admin";
   let url2 = "/subject";
-
+  //fetching classes
   React.useEffect(() => {
     let controller = new AbortController();
     classLevels();
@@ -129,6 +151,7 @@ const AddTeacher: React.FC = () => {
       controller.abort();
     };
   }, []);
+  //fetching subjects
   React.useEffect(() => {
     let controller = new AbortController();
     getSubjects();
@@ -148,22 +171,35 @@ const AddTeacher: React.FC = () => {
       controller.abort();
     };
   }, []);
+  //handle checkboxes
+  React.useEffect(() => {
+    if (CheckBoxDivRef.current) {
+      let allCheckedboxes: any[] = [];
+      CheckBoxDivRef.current
+        .querySelectorAll<HTMLInputElement>('input[type="checkbox"]')
+        .forEach((box) => {
+          if (box.checked === true) {
+            allCheckedboxes.push(box.value);
+          }
+        });
+      setSelectedSubjects(allCheckedboxes);
+    }
+  }, [isModalSubmitted]);
   const onSubmit: SubmitHandler<any> = async (data) => {
     // Handle the form submission here, e.g., send data to the server
-    console.log("Teacher data:", data);
-    setDataObj([...dataObj, data]);
+    setDataObj({ ...dataObj, ...data });
     reset();
     setIsModalOpen(true);
   };
   const closeModal = () => {
+    dispatch({ type: "toggleColor", payload: {} });
+    setQuery("");
     setIsModalOpen(false);
   };
-
   function afterOpenModal() {
     // references are now sync'd and can be accessed.
     subtitle.style.color = "#f00";
   }
-
   const onSubmitSubjects = async () => {
     // Handle the submission of subjects offered here
 
@@ -179,9 +215,10 @@ const AddTeacher: React.FC = () => {
         subjects.push(subject[0]);
       });
     setSelectedSubjects(subjects);
+    setQuery("");
+    //am
   };
   const filtered = subjectData.filter((data, index) => {
-    console.log(data.className, query);
     return data.name
       .toUpperCase()
       .split(" ")
@@ -190,16 +227,32 @@ const AddTeacher: React.FC = () => {
       .join("")
       .includes(query.toUpperCase().split(" ").join(""));
   });
-  function handleFinalRegister() {
-let theData= [...dataObj]
-  console.log(theData)
+  async function handleFinalRegister() {
+    try {
+      dispatch({ type: "startLoading" });
+      let theData = { ...dataObj, subjects: selectedSubjects };
+      let res = await axios.post(`${baseUrl}/add/teacher`, theData);
+      console.log(res.data.msg);
+      dispatch({
+        type: "msg",
+        msg: res?.data?.msg || "teacher added successfully",
+      });
+    } catch (error: any) {
+      console.log(error);
+      dispatch({
+        type: "msg",
+        msg: error.response?.data?.err || error.message,
+      });
+    } finally {
+      setModalSubmitted(false);
+    }
   }
 
   if (state.loading) return <Loading />;
   return (
     <>
       <p className="text-center font-bold"> {state.msg} </p>
-      <div className="grid px-4 justify-items-center">
+      <div className="grid px-4 justify-items-center" ref={checkboxRef}>
         <form
           onSubmit={
             isModalSubmitted
@@ -216,7 +269,11 @@ let theData= [...dataObj]
             <input
               type="text"
               id="name"
-              className="form-control border rounded p-2 border-gray-300"
+              className={`${
+                !isModalSubmitted
+                  ? "form-control border rounded p-2 border-gray-300"
+                  : "hidden"
+              }`}
               {...register("name", { required: true })}
               placeholder="Full Name"
             />
@@ -230,7 +287,11 @@ let theData= [...dataObj]
             <input
               type="email"
               id="email"
-              className="form-control border rounded p-2 border-gray-300"
+              className={`${
+                !isModalSubmitted
+                  ? "form-control border rounded p-2 border-gray-300"
+                  : "hidden"
+              }`}
               {...register("email", { required: true, pattern: /^\S+@\S+$/i })}
               placeholder="Email Address"
             />
@@ -244,7 +305,11 @@ let theData= [...dataObj]
             <input
               type="password"
               id="password"
-              className="form-control border rounded p-2 border-gray-300"
+              className={`${
+                !isModalSubmitted
+                  ? "form-control border rounded p-2 border-gray-300"
+                  : "hidden"
+              }`}
               {...register("password", { required: true })}
               placeholder="Password"
             />
@@ -258,7 +323,11 @@ let theData= [...dataObj]
             <input
               type="date"
               id="dateEmployed"
-              className="form-control border rounded p-2 border-gray-300"
+              className={`${
+                !isModalSubmitted
+                  ? "form-control border rounded p-2 border-gray-300"
+                  : "hidden"
+              }`}
               {...register("dateEmployed")}
             />
           </div>
@@ -267,7 +336,11 @@ let theData= [...dataObj]
             <label htmlFor="formTeacher">Form Teacher</label>
             <select
               id="formTeacher"
-              className="form-control"
+              className={`${
+                !isModalSubmitted
+                  ? "form-control border rounded p-2 border-gray-300"
+                  : "hidden"
+              }`}
               {...register("formTeacher")}
             >
               <option value="">not a form teacher</option>
@@ -300,11 +373,12 @@ let theData= [...dataObj]
       >
         <h2
           ref={(_subtitle) => (subtitle = _subtitle)}
-          className="text-center font-bold"
+          className="text-center font-middle"
         >
-          Click subject(s) taught
+          Select subject(s) taught
         </h2>
-        <p className="text-center text-blue-500">blue means selected</p>
+
+        
         <div className="h-[150px]">
           <input
             type="search"
@@ -317,30 +391,27 @@ let theData= [...dataObj]
             placeholder="search subjects..."
             ref={focusRef}
           />
-
-          {filtered.map((subject, index) => {
-            return (
-              <React.Fragment key={index}>
-                <div>
-                  <p
-                    ref={colorRef}
-                    key={subject.name}
-                    onClick={(e) => {
-                      dispatch({ type: "toggleColor", payload: subject._id });
-                    }}
-                    className={`${
-                      state.subjectsColors[subject._id]
-                        ? "text-blue-800"
-                        : "text-black"
-                    }`}
-                  >
-                    {" "}
-                    {subject.name}
-                  </p>
-                </div>
-              </React.Fragment>
-            );
-          })}
+          <div ref={CheckBoxDivRef} className="grid gap-3">
+            {filtered.map((subject, index) => {
+              return (
+                <React.Fragment key={index}>
+                  <div className="font-blue flex gap-1">
+                    <input type="checkbox" name="index" id=""onClick={()=>console.log(subject.name)} value={subject._id} />
+                    <span
+                      key={subject.name}
+                      className={`${
+                        state.subjectsColors[subject._id]
+                          ? "text-blue-800"
+                          : "text-black"
+                      }`}
+                    >
+                      {subject.name}
+                    </span>
+                  </div>
+                </React.Fragment>
+              );
+            })}
+          </div>
           <form>
             <input />
           </form>
@@ -363,4 +434,4 @@ let theData= [...dataObj]
   );
 };
 
-export default AddTeacher;
+export default TeacherAddition;

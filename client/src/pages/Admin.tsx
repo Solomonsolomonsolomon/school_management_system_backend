@@ -6,6 +6,7 @@ import React from "react";
 import AddStudent from "../components/Admin/AddStudent";
 import AllStudents from "../components/Admin/AllStudents";
 import AddTeacher from "../components/Admin/AddTeacher";
+import AllTeachers from "../components/Admin/AllTeachers";
 import Subjects from "../components/Admin/Subjects";
 import ClassLevel from "../components/ClassLevel";
 import YearAndTerm from "../components/Admin/YearAndTerm";
@@ -20,6 +21,7 @@ let components: any = {
   allstudents: AllStudents,
   classlevel: ClassLevel,
   addteacher: AddTeacher,
+  allteachers:AllTeachers,
   yearandterm: YearAndTerm,
   subjects: Subjects,
 };

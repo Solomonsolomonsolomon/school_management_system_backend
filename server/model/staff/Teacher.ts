@@ -1,5 +1,5 @@
 import mongoose, { Schema, Document, model, Types } from "mongoose";
-import bcrypt from "bcrypt";    
+import bcrypt from "bcrypt";
 interface ITeacher {
   name: string;
   email: string;
@@ -7,7 +7,7 @@ interface ITeacher {
   password: string;
   dateEmployed?: Date;
   teacherId?: string;
-  formTeacher?: Types.ObjectId;
+  formTeacher?: string;
   isWithdrawn?: boolean;
   isSuspended?: boolean;
   role?: string;
@@ -61,7 +61,7 @@ const teacherSchema = new Schema<ITeacher>(
       },
     },
     formTeacher: {
-      type: Schema.Types.ObjectId,
+      type: String,
     },
     //if withdrawn, the teacher will not be able to login
     isWithdrawn: {
@@ -77,11 +77,13 @@ const teacherSchema = new Schema<ITeacher>(
       type: String,
       default: "teacher",
     },
-    subjects:[ {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Subject",
-      // required: true,
-    }],
+    subjects: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Subject",
+        // required: true,
+      },
+    ],
     applicationStatus: {
       type: String,
       enum: ["pending", "approved", "rejected"],
