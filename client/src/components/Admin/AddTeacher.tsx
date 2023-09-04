@@ -172,19 +172,6 @@ const AddTeacher: React.FC<{
     };
   }, []);
   //handle checkboxes
-  React.useEffect(() => {
-    if (CheckBoxDivRef.current) {
-      let allCheckedboxes: any[] = [];
-      CheckBoxDivRef.current
-        .querySelectorAll<HTMLInputElement>('input[type="checkbox"]')
-        .forEach((box) => {
-          if (box.checked === true) {
-            allCheckedboxes.push(box.value);
-          }
-        });
-      setSelectedSubjects(allCheckedboxes);
-    }
-  }, [isModalSubmitted]);
   const onSubmit: SubmitHandler<any> = async (data) => {
     // Handle the form submission here, e.g., send data to the server
     setDataObj({ ...dataObj, ...data });
@@ -206,15 +193,7 @@ const AddTeacher: React.FC<{
     setModalSubmitted(true);
     setIsModalOpen(false);
     // let subjects: any[] = [];
-    // const toArray = Object.entries(state.subjectsColors);
-    // toArray
-    //   .filter((subjects) => {
-    //     return subjects[1] == true;
-    //   })
-    //   .forEach((subject, i) => {
-    //     subjects.push(subject[0]);
-    //   });
-    // setSelectedSubjects(subjects);
+
     setQuery("");
     //am
   };
@@ -228,24 +207,24 @@ const AddTeacher: React.FC<{
       .includes(query.toUpperCase().split(" ").join(""));
   });
 
-  const handleCheckboxClick = (subjectId: string) => {
+  const handleSubjectClick = (subjectId: string) => {
     if (selectedSubjects.includes(subjectId)) {
-      // Deselect the subject
-      setSelectedSubjects((prevSelected) =>
-        prevSelected.filter((id) => id !== subjectId)
+      setSelectedSubjects(
+        ...[selectedSubjects.filter((subject) => subject !== subjectId)]
       );
     } else {
-      // Select the subject
-      setSelectedSubjects((prevSelected) => [...prevSelected, subjectId]);
+      setSelectedSubjects([...selectedSubjects, subjectId]);
     }
+  
   };
 
   async function handleFinalRegister() {
     try {
       dispatch({ type: "startLoading" });
       let theData = { ...dataObj, subjects: selectedSubjects };
+
       let res = await axios.post(`${baseUrl}/add/teacher`, theData);
-      console.log(res.data.msg);
+      
       dispatch({
         type: "msg",
         msg: res?.data?.msg || "teacher added successfully",
@@ -408,17 +387,11 @@ const AddTeacher: React.FC<{
               return (
                 <React.Fragment key={index}>
                   <div className="font-blue flex gap-1">
-                    <input
-                      type="checkbox"
-                      name="index"
-                      id=""
-                      onClick={() => handleCheckboxClick(subject._id)}
-                      value={subject._id}
-                    />
                     <span
                       key={subject.name}
+                      onClick={(e) => handleSubjectClick(subject._id)}
                       className={`${
-                        state.subjectsColors[subject._id]
+                        selectedSubjects.includes(subject._id)
                           ? "text-blue-800"
                           : "text-black"
                       }`}
