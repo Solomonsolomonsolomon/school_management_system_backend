@@ -22,6 +22,8 @@ interface Iform {
   email: string;
   password: string;
   picture: any;
+  parent: string;
+  relationship: string;
   gender: string;
   currentClassLevel: string;
   currentClassArm: string;
@@ -68,7 +70,7 @@ const AddStudent = () => {
         msgRef.current
           ? (msgRef.current.textContent = addStudent?.data?.msg)
           : "";
-          reset()
+        reset();
       } catch (error: any) {
         console.log(error);
 
@@ -84,6 +86,15 @@ const AddStudent = () => {
   return (
     <>
       <h1 className="text-center text-[20px] font-bold">Add Students</h1>
+      <p
+        ref={msgRef}
+        className={`${
+          msgRef.current?.textContent !== "registered student successfully" &&
+          msgRef.current?.textContent !== "Required fields"
+            ? "text-red-500"
+            : "text-green-500"
+        } text-center w-[100%]`}
+      ></p>
       <div className="justify-items-center grid rounded">
         <div className="grid grid-cols-1 justify-center justify-items-center self-center place-content-center border bg-gray w-fit">
           <form
@@ -95,22 +106,23 @@ const AddStudent = () => {
               <p className="text-red-500 text-center">{imageError}</p>
             )}
 
-            <p
-              ref={msgRef}
-              className={`${
-                msgRef.current?.textContent !==
-                  "registered student successfully" &&
-                msgRef.current?.textContent !== "Required fields"
-                  ? "text-red-500"
-                  : "text-green-500"
-              } text-center w-[100%]`}
-            ></p>
-
             <label htmlFor=""> Full Name</label>
             <input
               className="border p-2 w-fit rounded border-gray-400 "
               type="text"
               {...register("name", { required: true })}
+            />
+            <label htmlFor=""> guardian</label>
+            <input
+              className="border p-2 w-fit rounded border-gray-400 "
+              type="text"
+              {...register("parent", { required: true })}
+            />
+            <label htmlFor=""> Relationship with WARD</label>
+            <input
+              className="border p-2 w-fit rounded border-gray-400 "
+              type="text"
+              {...register("relationship", { required: true })}
             />
 
             <label htmlFor="">Age</label>

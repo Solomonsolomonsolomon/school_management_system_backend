@@ -11,45 +11,54 @@ class ClassLevelController {
    */
 
   public async getAllClassLevels(req: express.Request, res: express.Response) {
-  
-    await ClassLevel.find({ school:req.user?.school })
+    await ClassLevel.find({ school: req.user?.school })
       .sort({ name: 1 })
       .then(async (classes) => {
         if (classes.length < 1)
           throw new CustomError({}, " no classes found", 404);
-        let classthing = ClassLevel.aggregate([
+        let classthing = await ClassLevel.aggregate([
+          // Match only the documents for the specific school (replace 'YourSchoolName' with the actual school name).
           {
-            $lookup: {
-              from: "students",
-              localField: "name",
-              foreignField: "className",
-              as: "student",
+            $match: {
+              school: req.user?.school,
             },
           },
+          // Group by class name and calculate the number of students in each class.
           {
-            $lookup: {
-              from: "teachers",
-              localField: "formTeacherId", // Replace with your field name for form teacher reference
-              foreignField: "_id",
-              as: "formTeacher",
+            $group: {
+              _id: "$name",
+              numberOfStudents: {
+                $sum: {
+                  $size: {
+                    $ifNull: ["$student", []],
+                  },
+                },
+              },
             },
           },
+          // Project to reshape the output.
           {
             $project: {
-              name: "$name",
-              numberOfStudents: { $size: "$student" },
-              formTeacher: { $arrayElemAt: ["$formTeacher.name", 0] },
+              name: "$_id",
+              numberOfStudents: 1,
+              _id: 0, // Exclude the "_id" field.
             },
           },
-        ]);
-
-        let result = await classthing.exec();
-
-        res.status(200).json({
-          status: 200,
-          msg: "success",
-          classes: result,
-        });
+        ])
+          .then((result) => {
+            res.status(200).json({
+              status: 200,
+              msg: "success",
+              classes: result,
+            });
+          })
+          .catch((error) => {
+            console.error(error);
+            res.status(500).json({
+              status: 500,
+              msg: "An error occurred",
+            });
+          });
       });
   }
   public async createClassLevel(req: express.Request, res: express.Response) {
@@ -61,14 +70,13 @@ class ClassLevelController {
     let newClassLevel = new ClassLevel({
       name,
       createdBy: req.user._id,
-      school
+      school,
     });
     await newClassLevel.save();
     res.status(201).json({
       status: 201,
       msg: "class level added successfully",
       newClassLevel,
-      
     });
   }
   public async deleteClassLevel(req: express.Request, res: express.Response) {

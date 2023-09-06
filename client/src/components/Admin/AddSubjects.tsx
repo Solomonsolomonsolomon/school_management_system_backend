@@ -22,6 +22,7 @@ const AddSubject: React.FC = () => {
   );
   const { register, reset, handleSubmit } = useForm();
   let [classes, setClasses] = React.useState<any[]>([]);
+  let [syncUi, setSyncUi] = useState<any>(null);
   let subjectUrl = "/subject";
   let baseUrl = "/admin";
   React.useEffect(() => {
@@ -43,11 +44,11 @@ const AddSubject: React.FC = () => {
         type: "msg",
         msg: "failed to get please contact the developer or try again later",
       });
-    } 
+    }
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [syncUi]);
 
   const handleFormSubmit: SubmitHandler<any> = (data) => {
     const call = async () => {
@@ -55,7 +56,9 @@ const AddSubject: React.FC = () => {
         dispatch({ type: "startLoading" });
         const res = await axios.post(`${subjectUrl}/add`, data);
         console.log(res);
+        setSyncUi(Date.now());
         dispatch({ type: "stopLoading" });
+
         dispatch({ type: "msg", msg: res.data?.msg });
       } catch (error: any) {
         dispatch({ type: "stopLoading" });
@@ -88,7 +91,9 @@ const AddSubject: React.FC = () => {
               placeholder="subject name"
               className="placeholder:text-center border border-black rounded"
             />
-            <label className="text-center font-bold">select class.you can select more than one</label>
+            <label className="text-center font-bold">
+              select class.you can select more than one
+            </label>
             <select
               multiple
               {...register("className")}
