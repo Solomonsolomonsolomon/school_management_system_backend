@@ -1,8 +1,17 @@
 import mongoose from "mongoose";
 
 const { Schema } = mongoose;
-
-const ProgramSchema = new Schema(
+interface IProgram {
+  name: string;
+  description: string;
+  duration: string;
+  code: string;
+  createdBy: mongoose.Types.ObjectId;
+  teachers: mongoose.Types.ObjectId[];
+  students: mongoose.Types.ObjectId[];
+  subjects: mongoose.Types.ObjectId[];
+}
+const ProgramSchema = new Schema<IProgram>(
   {
     name: {
       type: String,
@@ -21,11 +30,11 @@ const ProgramSchema = new Schema(
     //JGSPE
     code: {
       type: String,
-      default: function () {
+      default: function (this:IProgram) {
         return (
           this.name
             .split(" ")
-            .map(name => name[0])
+            .map((name) => name[0])
             .join("")
             .toUpperCase() +
           Math.floor(10 + Math.random() * 90) +

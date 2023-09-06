@@ -8,7 +8,9 @@ interface IAdmin extends Document {
   password: string;
   role: string;
   accessToken: string;
- // academicTerms?: Types.ObjectId[];
+  // academicTerms?: Types.ObjectId[];
+  school: string;
+  plan: string;
   programs?: Types.ObjectId[];
   yearGroups?: Types.ObjectId[];
   academicYears?: Types.ObjectId[];
@@ -33,6 +35,15 @@ const adminSchema = new Schema<IAdmin>(
     role: {
       type: String,
       default: "admin",
+    },
+    school: {
+      type: String,
+      required: true,
+    },
+    plan: {
+      type: String,
+      enum: ["basic", "standard", "advanced"],
+      default: "basic",
     },
     accessToken: {
       type: String,
@@ -101,5 +112,6 @@ adminSchema.methods.verifiedPassword = async function (
 
 //model
 const Admin = model<IAdmin>("Admin", adminSchema);
+Admin.syncIndexes();
 
 export { Admin };

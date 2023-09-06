@@ -1,4 +1,6 @@
-const mongoose = require("mongoose");
+
+
+import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
@@ -34,11 +36,7 @@ const examSchema = new Schema(
       default: 100,
     },
 
-    academicTerm: {
-      type: Schema.Types.ObjectId,
-      ref: "AcademicTerm",
-      required: true,
-    },
+  
     duration: {
       type: String,
       required: true,

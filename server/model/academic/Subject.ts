@@ -5,6 +5,8 @@ interface ISubject {
   name?: string;
   subject: string;
   className: string;
+  school: string;
+  plan: string;
   academicYear?: Types.ObjectId;
   teacherId?: Types.ObjectId;
 }
@@ -79,7 +81,7 @@ interface ISubject {
 const SubjectSchema = new mongoose.Schema<ISubject>({
   name: {
     type: String,
-    unique:true
+    unique: true,
   },
   academicYear: {
     type: mongoose.Schema.Types.ObjectId,
@@ -91,6 +93,14 @@ const SubjectSchema = new mongoose.Schema<ISubject>({
   subject: {
     type: String,
   },
+  school: {
+    type: String,
+  },
+  plan: {
+    type: String,
+    enum: ["basic", "standard", "advanced"],
+  },
+
   teacherId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Teacher",

@@ -14,7 +14,9 @@ interface IStudent extends Document {
   gender: string;
   age?: string;
   role: string;
-  status?: "string";
+  status?: string;
+  school: string;
+  plan: string;
   accessToken?: string;
   classLevels?: Types.ObjectId[];
   currentClassLevel?: string;
@@ -103,6 +105,13 @@ const studentSchema: Schema = new mongoose.Schema<IStudent>(
     className: {
       type: String,
     },
+    school: {
+      type: String,
+    },
+    plan: {
+      type: String,
+      enum: ["basic", "standard", "advanced"],
+    },
     //Classes are from level 1 to 6
     //keep track of the class level the student is in
     classLevels: [
@@ -111,6 +120,7 @@ const studentSchema: Schema = new mongoose.Schema<IStudent>(
         ref: "ClassLevel",
       },
     ],
+
     currentClassLevel: {
       type: String,
       default: function (this: IStudent) {
@@ -194,10 +204,12 @@ const studentSchema: Schema = new mongoose.Schema<IStudent>(
     yearGraduated: {
       type: String,
     },
-    subjects: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Subject",
-    }],
+    subjects: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Subject",
+      },
+    ],
   },
   {
     timestamps: true,
@@ -233,7 +245,7 @@ studentSchema.pre("save", async function (next) {
 
 //get back to this
 studentSchema.pre("save", async function (next) {
-  console.log('hi')
+  console.log("hi");
   // let classes = [
   //   "NUR1",
   //   "NUR2",
@@ -283,9 +295,11 @@ studentSchema.pre("save", async function (next) {
 });
 //add subjects
 studentSchema.pre("save", async function (next) {
-  let subjectsOffered:any[] = await Subject.find({ className: this.className });
+  let subjectsOffered: any[] = await Subject.find({
+    className: this.className,
+  });
   console.log(this.className);
-  console.log(`efdsvvvsvv,${subjectsOffered},sjdkjksj`)
+  console.log(`efdsvvvsvv,${subjectsOffered},sjdkjksj`);
   this.subjects = subjectsOffered;
 });
 //model

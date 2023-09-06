@@ -18,7 +18,8 @@ export async function addAdmin(
 ) {
   try {
     let { name, email, password, role } = req.body;
-    await Admin.findOne({ name, email }).then(
+    let school = req.body?.school || req.user?.school;
+    await Admin.findOne({ name, email, school }).then(
       async (alreadyRegistered: object | null) => {
         if (alreadyRegistered) {
           throw new Error("This particular admin already registered");
@@ -27,6 +28,7 @@ export async function addAdmin(
             name,
             email,
             password,
+            school,
             role,
           })
             .save()
@@ -98,14 +100,16 @@ export async function addStudent(
   next: NextFunction
 ) {
   let { name, email, currentClassLevel, currentClassArm } = req.body;
+  let school = req.user?.school;
   let isStudentAlreadyRegistered = !!(await Student.countDocuments({
     name,
-    email,
+    school,
   }));
   if (isStudentAlreadyRegistered)
     throw new CustomError({}, "student already registered", 403);
   let isClassAvailable = !!(await ClassLevel.countDocuments({
     name: `${currentClassLevel}${currentClassArm}`,
+    school
   }));
   if (!isClassAvailable)
     throw new CustomError(
@@ -115,6 +119,7 @@ export async function addStudent(
     );
   let newStudent = new Student({
     ...req.body,
+    school,
   });
   await newStudent.save();
   res.status(201).json({
@@ -238,7 +243,7 @@ export async function getAllAdmin(req: Request, res: Response) {
 
 export async function getAllStudents(req: Request, res: Response) {
   try {
-    await Student.find({})
+    await Student.find({ school: req.user?.school })
       .sort({ name: 1 })
       .then((student) => {
         if (student.length < 1) throw new Error("No student found");
@@ -262,8 +267,8 @@ export async function getAllTeachers(req: Request, res: Response) {
   try {
     await Teacher.find({})
       .populate("subjects")
-      
-      .then((teacher) => {
+
+      .then((teacher: any) => {
         if (teacher.length < 1) throw new Error("No teacher found");
         res.status(200).json({
           status: 200,
@@ -283,7 +288,7 @@ export async function getAllTeachers(req: Request, res: Response) {
 
 export async function getGenderDivide(req: Request, res: Response) {
   try {
-    let totalStudents = await Student.find({});
+    let totalStudents = await Student.find({ school: req.user?.school });
     let males = 0;
     let females = 0;
     totalStudents.forEach((student: any) => {
@@ -333,6 +338,23 @@ export async function editStudent(req: Request, res: Response) {
   Object.assign(student, newStudentDetails);
   student.__v = currrentVersion;
   await student.save();
+  res.status(200).json({
+    status: 200,
+    msg: "edited successfully",
+  });
+}
+
+export async function editTeacher(req: Request, res: Response) {
+  const { id } = req.params;
+  // const { email } = req.body;
+  let teacher = await Teacher.findOne({ _id: id });
+  if (!teacher) throw new CustomError({}, "teacher not found", 404);
+  //   throw new CustomError({}, "enter existing class Level", 404);
+  let newteacherDetails = req.body;
+  let currrentVersion = teacher.__v;
+  Object.assign(teacher, newteacherDetails);
+  teacher.__v = currrentVersion;
+  await teacher.save();
   res.status(200).json({
     status: 200,
     msg: "edited successfully",

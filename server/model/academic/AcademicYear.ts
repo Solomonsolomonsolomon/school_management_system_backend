@@ -15,6 +15,13 @@ const academicYearSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    school: {
+      type: "string",
+    },
+    plan: {
+      type: String,
+      enum: ["basic", "standard", "advanced"],
+    },
     isCurrent: {
       type: Boolean,
       default: false,
@@ -51,4 +58,5 @@ const academicYearSchema = new mongoose.Schema(
 
 //model
 const AcademicYear = mongoose.model("AcademicYear", academicYearSchema);
+AcademicYear.syncIndexes()
 export { AcademicYear };

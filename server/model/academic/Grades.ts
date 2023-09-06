@@ -6,6 +6,7 @@ interface INestedgrades extends Document {
   CA1?: number;
   CA2?: number;
   CA3?: number;
+
   examScore?: number;
   letterGrade?: string;
 }
@@ -13,6 +14,8 @@ interface IGrades extends Document {
   studentId: Types.ObjectId;
   year: string;
   term: string;
+  school: string;
+  plan: string;
   grades: INestedgrades[];
 }
 let gradesSchema = new Schema<IGrades>({
@@ -26,6 +29,13 @@ let gradesSchema = new Schema<IGrades>({
   },
   term: {
     type: String,
+  },
+  school: {
+    type: String,
+  },
+  plan: {
+    type: String,
+    enum: ["basic", "standard", "advanced"],
   },
   grades: [
     {
@@ -78,4 +88,5 @@ gradesSchema.pre("save", function (this: IGrades, next) {
   next();
 });
 let Grades = model("Grades", gradesSchema);
+Grades.syncIndexes()
 export { Grades };
