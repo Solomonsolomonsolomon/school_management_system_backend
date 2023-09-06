@@ -36,7 +36,7 @@ const academicTermSchema = new Schema<ITerm>(
     },
 
     school: {
-      type: "string",
+      type: String,
     },
     plan: {
       type: String,
@@ -51,5 +51,5 @@ const academicTermSchema = new Schema<ITerm>(
 );
 
 const AcademicTerm = model<ITerm>("AcademicTerm", academicTermSchema);
-AcademicTerm.syncIndexes()
+AcademicTerm.syncIndexes();
 export { AcademicTerm };

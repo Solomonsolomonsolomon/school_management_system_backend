@@ -11,11 +11,11 @@ import currentTermAndYear from "./../admin/currentTermAndYear.routes";
 import { ErrorHandler } from "../../middleware/globalErrorHandler";
 
 v1.use(authRoutes);
-v1.use(currentTermAndYear);
+v1.use(secured,currentTermAndYear);
 v1.use(gradeRoutes);
 v1.use(secured, subjectRoutes);
 v1.use(resultRoutes);
-v1.use(teacherRoutes);
+v1.use(secured,teacherRoutes);
 v1.use(secured, adminRoutes);
 
 export default v1;
