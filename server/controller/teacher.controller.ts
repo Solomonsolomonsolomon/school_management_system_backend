@@ -10,4 +10,5 @@ export async function getManagedStudents(
   const { _id } = req.params;
   let formStudents: any = [];
   let teacher = await Teacher.findOne({ _id });
+  
 }

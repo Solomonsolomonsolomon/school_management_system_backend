@@ -5,7 +5,7 @@ import { faBars, faClose } from "@fortawesome/free-solid-svg-icons";
 interface ProfileProps {
   setView: any;
 }
-const Sidebar:React.FC<ProfileProps> = ({setView}) => {
+const Sidebar: React.FC<ProfileProps> = ({ setView }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -27,7 +27,7 @@ const Sidebar:React.FC<ProfileProps> = ({setView}) => {
           onClick={toggleSidebar}
         >
           <i className={`fas ${isOpen ? "fa-times" : "fa-bars"} text-xl`}>
-            <FontAwesomeIcon icon={faClose}/>
+            <FontAwesomeIcon icon={faClose} />
           </i>
         </button>
         <div className="p-4">
@@ -41,12 +41,24 @@ const Sidebar:React.FC<ProfileProps> = ({setView}) => {
                 Dashboard
               </a>
             </li>
-            <li className="mb-2" onClick={()=>setView('addstudent')}>
+            <li
+              className="mb-2"
+              onClick={() => {
+                setView("addstudent");
+                setIsOpen(false);
+              }}
+            >
               <a className="block text-gray-300 hover:text-white">
                 Add Student
               </a>
             </li>
-            <li className="mb-2">
+            <li
+              className="mb-2"
+              onClick={() => {
+                setView("registerclass");
+                setIsOpen(false);
+              }}
+            >
               <a href="#" className="block text-gray-300 hover:text-white">
                 Register Class
               </a>
