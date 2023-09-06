@@ -39,6 +39,7 @@ const AddSubject: React.FC = () => {
         dispatch({ type: "msg", msg: "Add Subjects" });
       }
     } catch (error) {
+      
       console.log(error);
       dispatch({
         type: "msg",
