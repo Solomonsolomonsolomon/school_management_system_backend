@@ -19,7 +19,7 @@ export async function addAdmin(
   try {
     let { name, email, password, role } = req.body;
     let school = req.body?.school || req.user?.school;
-    await Admin.findOne({ name, email, school }).then(
+    await Admin.findOne({ name, school }).then(
       async (alreadyRegistered: object | null) => {
         if (alreadyRegistered) {
           throw new Error("This particular admin already registered");
@@ -61,14 +61,16 @@ export async function addTeacher(
   next: NextFunction
 ) {
   try {
+    let school = req.user?.school;
     let { name, email, password, role, dateEmployed, formTeacher } = req.body;
-    await Teacher.findOne({ email }).then(
+    await Teacher.findOne({ email, school }).then(
       async (alreadyRegistered: object | null) => {
         if (alreadyRegistered) {
           throw new Error("This particular teacher already registered");
         } else {
           await new Teacher<ITeacher>({
             ...req.body,
+            school,
           })
             .save()
             .then((teacher) => {
@@ -109,7 +111,7 @@ export async function addStudent(
     throw new CustomError({}, "student already registered", 403);
   let isClassAvailable = !!(await ClassLevel.countDocuments({
     name: `${currentClassLevel}${currentClassArm}`,
-    school
+    school,
   }));
   if (!isClassAvailable)
     throw new CustomError(
@@ -165,8 +167,9 @@ export async function deleteStudent(
   next: NextFunction
 ) {
   try {
+    let school = req.user?.school;
     const { studentId } = req.params;
-    await Student.findOneAndRemove({ studentId })
+    await Student.findOneAndRemove({ studentId, school })
       .then((user) => {
         if (!user) {
           throw new Error("Invalid studentId");
@@ -197,7 +200,8 @@ export async function deleteTeacher(
 ) {
   try {
     const { teacherId } = req.params;
-    await Teacher.findOneAndRemove({ teacherId })
+    let school = req.user?.school;
+    await Teacher.findOneAndRemove({ teacherId, school })
       .then((user) => {
         if (!user) {
           throw new Error("Invalid teacherId");
@@ -223,7 +227,8 @@ export async function deleteTeacher(
 
 export async function getAllAdmin(req: Request, res: Response) {
   try {
-    await Admin.find({}).then((admins) => {
+    let school = req.user?.school;
+    await Admin.find({ school }).then((admins) => {
       if (admins.length < 1) throw new Error("No admin found");
       res.status(200).json({
         status: 200,
@@ -265,9 +270,9 @@ export async function getAllStudents(req: Request, res: Response) {
 
 export async function getAllTeachers(req: Request, res: Response) {
   try {
-    await Teacher.find({})
+    let school = req?.user?.school;
+    await Teacher.find({ school })
       .populate("subjects")
-
       .then((teacher: any) => {
         if (teacher.length < 1) throw new Error("No teacher found");
         res.status(200).json({
@@ -313,7 +318,8 @@ export async function getGenderDivide(req: Request, res: Response) {
   }
 }
 export async function countTeachers(req: Request, res: Response) {
-  let noOfTeachers = await Teacher.countDocuments({});
+  let school = req?.user?.school;
+  let noOfTeachers = await Teacher.countDocuments({ school });
   res.status(200).json({
     status: 200,
     msg: "teachers number found",

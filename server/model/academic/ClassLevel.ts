@@ -21,7 +21,9 @@ const ClassLevelSchema = new Schema(
       type: String,
     },
     school: {
-      type: "string",
+      type: String,
+      required: true,
+      default: "",
     },
     plan: {
       type: String,
@@ -56,9 +58,6 @@ const ClassLevelSchema = new Schema(
   { timestamps: true }
 );
 
-const ClassLevel = mongoose.model<IClassLevel>(
-  "ClassLevel",
-  ClassLevelSchema
-);
-ClassLevel.syncIndexes()
+const ClassLevel = mongoose.model<IClassLevel>("ClassLevel", ClassLevelSchema);
+ClassLevel.syncIndexes();
 export { ClassLevel };

@@ -70,7 +70,7 @@ adminRouter.get("/admin/term/get/current", asyncErrorHandler(getCurrentTerm));
 
 //# year
 adminRouter.post("/admin/year/add", asyncErrorHandler(addAcademicYear));
-addYearAutomatically(); //automatically adds Year first of september
+//addYearAutomatically(); //automatically adds Year first of september
 adminRouter.get("/admin/year/get/all", asyncErrorHandler(getAllYears));
 adminRouter.get("/admin/year/get/current", asyncErrorHandler(getCurrentYear));
 adminRouter.delete("/admin/year/:id/delete", asyncErrorHandler(deleteYear));

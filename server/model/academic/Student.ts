@@ -11,9 +11,12 @@ interface IStudent extends Document {
   picture?: string;
   password: string;
   studentId?: string;
+  parent?: string;
+  relationship?: string;
   gender: string;
   age?: string;
   role: string;
+
   status?: string;
   school: string;
   plan: string;
@@ -73,6 +76,12 @@ const studentSchema: Schema = new mongoose.Schema<IStudent>(
             .toUpperCase()
         );
       },
+    },
+    parent: {
+      type: String,
+    },
+    relationship: {
+      type: String,
     },
     gender: {
       required: true,

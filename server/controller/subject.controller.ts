@@ -46,13 +46,15 @@ class SubjectController {
    */
 
   public async getAllSubjects(req: Request, res: Response) {
+    
     //   let allSubjects = await Subject.find({});
     //   if (!allSubjects.length)
     //     throw new CustomError({}, "no subjects found", 404);
     //   res
     //     .status(200)
     //     .json({ status: 200, msg: "all students found", subjects: allSubjects });
-    let subjectsRawForm = await Subject.find({});
+    let school=req.user?.school
+    let subjectsRawForm = await Subject.find({school});
     let sorted = subjectsRawForm.reduce<any>((prev, curr) => {
       if (!prev[curr.className]) {
         prev[curr.className] = [];
@@ -73,18 +75,21 @@ class SubjectController {
     next: NextFunction
   ): Promise<any> {
     const bulkPush: any[] = [];
+    let school=req.user?.school;
     const { subject, className, teacherId } = req.body;
     for (let i of className) {
       bulkPush.push({
         updateOne: {
           filter: {
             name: `${i.toUpperCase()}_${subject.toUpperCase()}`,
+            school
           },
           update: {
             $set: {
               name: `${i.toUpperCase()}_${subject.toUpperCase()}`,
               className: i,
               subject,
+              school,
               teacherId: teacherId || null,
             },
           },
@@ -154,7 +159,8 @@ class SubjectController {
       });
   }
   public async getAllSubjectsAsJson(req: Request, res: Response) {
-    let all = await Subject.find({});
+    let school=req.user?.school
+    let all = await Subject.find({school});
     if (!all) throw new CustomError({}, "no subject found", 404);
     res.status(200).json({
       status: 200,

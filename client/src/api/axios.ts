@@ -16,7 +16,7 @@ import axios, {
 let baseURL = "http://localhost:2020/v1";
 const instance = axios.create({
   baseURL: baseURL,
-  timeout: 5000,
+  timeout: 10000,
   headers: { "X-Custom-Header": "foobar" },
 });
 
@@ -57,7 +57,7 @@ instance.interceptors.response.use(
 
 export const AxiosLoginInstance = axios.create({
   baseURL: baseURL,
-  timeout: 1000,
+  timeout: 5000,
   headers: { "X-Custom-Header": "foobar", "Content-Type": "application/json" },
 });
 

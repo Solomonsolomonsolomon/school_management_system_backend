@@ -81,7 +81,6 @@ interface ISubject {
 const SubjectSchema = new mongoose.Schema<ISubject>({
   name: {
     type: String,
-    unique: true,
   },
   academicYear: {
     type: mongoose.Schema.Types.ObjectId,
@@ -108,7 +107,7 @@ const SubjectSchema = new mongoose.Schema<ISubject>({
 });
 SubjectSchema.pre("save", function (this: ISubject) {
   this.name = `${this.className.toUpperCase()}_${this.subject.toUpperCase()}`;
-});
+}); 
 const Subject = mongoose.model("Subject", SubjectSchema);
 Subject.syncIndexes();
 export { Subject };
