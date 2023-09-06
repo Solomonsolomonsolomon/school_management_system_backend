@@ -13,7 +13,6 @@ const academicTermSchema = new Schema<ITerm>(
   {
     name: {
       type: String,
-      required: true,
       unique: true,
     },
     description: {

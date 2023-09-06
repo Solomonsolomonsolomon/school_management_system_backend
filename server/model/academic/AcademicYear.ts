@@ -5,7 +5,6 @@ const academicYearSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
-      unique: true,
     },
     fromYear: {
       type: String,
@@ -16,7 +15,7 @@ const academicYearSchema = new mongoose.Schema(
       required: true,
     },
     school: {
-      type: "string",
+      type: String,
     },
     plan: {
       type: String,
@@ -58,5 +57,5 @@ const academicYearSchema = new mongoose.Schema(
 
 //model
 const AcademicYear = mongoose.model("AcademicYear", academicYearSchema);
-AcademicYear.syncIndexes()
+AcademicYear.syncIndexes();
 export { AcademicYear };

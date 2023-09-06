@@ -41,16 +41,14 @@ export default function Login() {
             signal: controller.signal,
             headers: {
               "Content-Type": "application/json",
-            },
+            }
           }
         );
-
         let userData = res.data.user;
         sessionStorage.setItem("accessToken", res.data?.accessToken);
         sessionStorage.setItem("role", details.role || "");
         sessionStorage.setItem("user", JSON.stringify(userData));
         msgRef.current ? (msgRef.current.textContent = "") : "";
-
         Navigate(`/${details.role}/dashboard/`, {
           replace: true,
           state: location.pathname,
@@ -60,6 +58,7 @@ export default function Login() {
         //location.href = `/${details.role}/dashboard`;
       } catch (error: any) {
         //go back to select on fail
+        console.log(error)
         setDetails((prev) => {
           return { ...prev, role: "" };
         });
