@@ -11,6 +11,8 @@ interface ITeacher {
   isWithdrawn?: boolean;
   isSuspended?: boolean;
   role?: string;
+  school: string;
+  plan: string;
   subjects?: Schema.Types.ObjectId[];
   applicationStatus?: "pending" | "approved" | "rejected";
   program?: string;
@@ -76,6 +78,13 @@ const teacherSchema = new Schema<ITeacher>(
     role: {
       type: String,
       default: "teacher",
+    },
+    school: {
+      type: String,
+    },
+    plan: {
+      type: String,
+      enum: ["basic", "standard", "advanced"],
     },
     subjects: [
       {
@@ -143,5 +152,5 @@ teacherSchema.methods.verifiedPassword = async function (
 
 //model
 const Teacher = mongoose.model<ITeacher>("Teacher", teacherSchema);
-
+Teacher.syncIndexes()
 export { Teacher, ITeacher };

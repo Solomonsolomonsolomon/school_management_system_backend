@@ -12,7 +12,11 @@ export default function Login() {
     password?: string;
     role?: string;
   }
-  let [details, setDetails] = React.useState<IDetails>({});
+  let [details, setDetails] = React.useState<IDetails>({
+    email: "",
+    password: "",
+    role: "",
+  });
   let [clicked, setClicked] = React.useState(0); //clicked is chained to login button
   let msgRef = useRef<HTMLParagraphElement>(null);
   let Navigate = useNavigate();
@@ -40,7 +44,7 @@ export default function Login() {
             },
           }
         );
-        console.log(res.data);
+
         let userData = res.data.user;
         sessionStorage.setItem("accessToken", res.data?.accessToken);
         sessionStorage.setItem("role", details.role || "");

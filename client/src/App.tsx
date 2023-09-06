@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
-import Login from "./components/Login";
+import Login from "./pages/Login";
 import Admin from "./pages/Admin";
 import AdminStudent from "./components/Admin/Students";
 import AdminTeacher from "./components/Admin/Teachers";

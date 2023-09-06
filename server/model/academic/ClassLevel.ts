@@ -20,6 +20,13 @@ const ClassLevelSchema = new Schema(
     description: {
       type: String,
     },
+    school: {
+      type: "string",
+    },
+    plan: {
+      type: String,
+      enum: ["basic", "standard", "advanced"],
+    },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Admin",
@@ -53,5 +60,5 @@ const ClassLevel = mongoose.model<IClassLevel>(
   "ClassLevel",
   ClassLevelSchema
 );
-
+ClassLevel.syncIndexes()
 export { ClassLevel };
