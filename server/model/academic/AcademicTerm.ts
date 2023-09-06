@@ -3,6 +3,8 @@ interface ITerm {
   name: string;
   description?: string;
   duration: string;
+  school: string;
+  plan: string;
   isCurrent: boolean;
   createdBy: Types.ObjectId;
   updatedBy?: Types.ObjectId;
@@ -32,6 +34,14 @@ const academicTermSchema = new Schema<ITerm>(
       ref: "Admin",
       required: true,
     },
+
+    school: {
+      type: "string",
+    },
+    plan: {
+      type: String,
+      enum: ["basic", "standard", "advanced"],
+    },
     updatedBy: {
       type: Schema.Types.ObjectId,
       ref: "Admin",
@@ -41,4 +51,5 @@ const academicTermSchema = new Schema<ITerm>(
 );
 
 const AcademicTerm = model<ITerm>("AcademicTerm", academicTermSchema);
+AcademicTerm.syncIndexes()
 export { AcademicTerm };

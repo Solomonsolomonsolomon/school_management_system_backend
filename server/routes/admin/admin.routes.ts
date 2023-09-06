@@ -20,6 +20,7 @@ import {
   getGenderDivide,
   countTeachers,
   editStudent,
+  editTeacher,
 } from "../../controller/admin.controller";
 import e from "express";
 const { addATerm, deleteTerm, setCurrentTerm, getAllTerms, getCurrentTerm } =
@@ -52,6 +53,7 @@ adminRouter.put(
   "/admin/edit/student/:studentId",
   asyncErrorHandler(editStudent)
 );
+adminRouter.put("/admin/edit/teacher/:id", asyncErrorHandler(editTeacher));
 //#gender ratio
 adminRouter.get("/admin/gender/divide", getGenderDivide);
 //#no of teachers

@@ -36,9 +36,9 @@ class AcademicTermController {
   }
   public async setCurrentTerm(req: express.Request, res: express.Response) {
     let { id } = req.params;
-    let _id = await new mongoose.Types.ObjectId(id);
-
-    let previous = await AcademicTerm.findOne({ isCurrent: true });
+    let _id = await new mongoose.Types.ObjectId(id); 
+    let school = req.user?.school;
+    let previous = await AcademicTerm.findOne({ isCurrent: true,school });
     if (previous) {
       previous.isCurrent = false;
       await previous.save().catch((err) => {
