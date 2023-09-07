@@ -82,7 +82,7 @@ export async function getStudentsTaught(req: Request, res: Response) {
   );
   console.log(Object.keys(groupedStudents))
   res.status(200).json({
-    msg: "successful",
+    msg: "Form Students",
     studentsTaught: groupedStudents,
   });
 }
