@@ -34,12 +34,11 @@ const AddSubject: React.FC = () => {
         let res = await axios.get(`${baseUrl}/class/get/all`, {
           signal: controller.signal,
         });
-      
+
         setClasses(res.data?.classes);
         dispatch({ type: "msg", msg: "Add Subjects" });
       }
     } catch (error) {
-      
       console.log(error);
       dispatch({
         type: "msg",
@@ -103,11 +102,9 @@ const AddSubject: React.FC = () => {
             >
               {classes.map((classLevel, index) => {
                 return (
-                  <>
-                    <option key={index} value={classLevel.name}>
-                      {classLevel.name}
-                    </option>
-                  </>
+                  <option key={index} value={classLevel.name}>
+                    {classLevel.name}
+                  </option>
                 );
               })}
             </select>
