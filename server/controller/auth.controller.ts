@@ -12,31 +12,33 @@ export async function signIn(req: Request, res: Response) {
     }
     let Model: any =
       index == 0 ? Student : index == 1 ? Admin : index == 2 ? Teacher : Admin;
-    await Model.findOne({ email }).then(async (user: any) => {
-      if (!user) throw new Error("invalid credentials");
-      if (await user.verifiedPassword(password)) {
-        let ACCESS_TOKEN_SECRET: any = process.env.ACCESS_TOKEN_SECRET;
-        let accessToken = await jwt.sign(
-          { name: user.name },
-          ACCESS_TOKEN_SECRET,
-          {
-            expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
-          }
-        );
-        user.accessToken = accessToken;
-        await user.save().then(async () => {
-          res.status(200).json({
-            msg: "successful signin",
-            accessToken,
-            accessTokenExpiry: process.env.ACCESS_TOKEN_EXPIRY,
-            user,
-            status: 200,
+    await Model.findOne({ email })
+      .select("name accessToken role password email _id ")
+      .then(async (user: any) => {
+        if (!user) throw new Error("invalid credentials");
+        if (await user.verifiedPassword(password)) {
+          let ACCESS_TOKEN_SECRET: any = process.env.ACCESS_TOKEN_SECRET;
+          let accessToken = await jwt.sign(
+            { name: user.name },
+            ACCESS_TOKEN_SECRET,
+            {
+              expiresIn: process.env.ACCESS_TOKEN_EXPIRY,
+            }
+          );
+          user.accessToken = accessToken;
+          await user.save().then(async () => {
+            res.status(200).json({
+              msg: "successful signin",
+              accessToken,
+              accessTokenExpiry: process.env.ACCESS_TOKEN_EXPIRY,
+              user,
+              status: 200,
+            });
           });
-        });
-      } else {
-        throw new Error("invalid credentials");
-      }
-    });
+        } else {
+          throw new Error("invalid credentials");
+        }
+      });
   } catch (error: any) {
     // Handle the error appropriately
     res.status(401).json({

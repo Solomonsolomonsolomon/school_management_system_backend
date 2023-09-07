@@ -7,11 +7,11 @@ import {
   response,
 } from "express";
 const teacherRouter: Router = Router();
-import { getManagedStudents } from "../../controller/teacher.controller";
+import { managedStudents } from "../../controller/teacher.controller";
 import asyncErrorHandler from "../../middleware/globalErrorHandler";
 teacherRouter.get(
   "/teacher/:_id/get/students",
-  asyncErrorHandler(getManagedStudents)
+  asyncErrorHandler(managedStudents)
 );
 
 export default teacherRouter;

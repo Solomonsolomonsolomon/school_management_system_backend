@@ -304,11 +304,13 @@ studentSchema.pre("save", async function (next) {
 });
 //add subjects
 studentSchema.pre("save", async function (next) {
+let school=this.school
+console.log(school,'from school')
   let subjectsOffered: any[] = await Subject.find({
     className: this.className,
+    school
   });
   console.log(this.className);
-  console.log(`efdsvvvsvv,${subjectsOffered},sjdkjksj`);
   this.subjects = subjectsOffered;
 });
 //model

@@ -1,13 +1,15 @@
 require("dotenv").config();
 import express, { Application } from "express";
 import database from "./model/database";
+import compression from "compression";
 import path from "path";
 import cors from "cors";
 database();
 const app: Application = express();
 app.set("view engine", "ejs").set("views", "view");
 app.use(cors());
-app.use(express.json({ limit: "25mb" }));
+app.use(compression());
+app.use(express.json({ limit: "20mb" }));
 //app.use(express.static(path.join(__dirname, "..", "clients", "dist")));
 app.use(express.static(path.join(__dirname, "view")));
 app.use(express.static(path.join(__dirname)));
