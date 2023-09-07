@@ -1,0 +1,25 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const v1 = (0, express_1.Router)();
+const verifyjwt_1 = __importDefault(require("./../../middleware/verifyjwt"));
+const admin_routes_1 = __importDefault(require("./../admin/admin.routes"));
+const auth_routes_1 = __importDefault(require("./../auth/auth.routes"));
+const grades_routes_1 = __importDefault(require("./../grades/grades.routes"));
+const subject_routes_1 = __importDefault(require("./../subject/subject.routes"));
+const results_routes_1 = __importDefault(require("../results/results.routes"));
+const teacher_routes_1 = __importDefault(require("./../teacher/teacher.routes"));
+const currentTermAndYear_routes_1 = __importDefault(require("./../admin/currentTermAndYear.routes"));
+const classLevel_routes_1 = __importDefault(require("./../admin/classLevel.routes"));
+v1.use(auth_routes_1.default);
+v1.use(verifyjwt_1.default, currentTermAndYear_routes_1.default);
+v1.use(verifyjwt_1.default, grades_routes_1.default);
+v1.use(verifyjwt_1.default, subject_routes_1.default);
+v1.use(results_routes_1.default);
+v1.use(verifyjwt_1.default, classLevel_routes_1.default);
+v1.use(verifyjwt_1.default, teacher_routes_1.default);
+v1.use(verifyjwt_1.default, admin_routes_1.default);
+exports.default = v1;
