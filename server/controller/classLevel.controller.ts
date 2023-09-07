@@ -11,54 +11,64 @@ class ClassLevelController {
    */
 
   public async getAllClassLevels(req: express.Request, res: express.Response) {
-    await ClassLevel.find({ school: req.user?.school })
-      .sort({ name: 1 })
-      .then(async (classes) => {
-        if (classes.length < 1)
-          throw new CustomError({}, " no classes found", 404);
-        let classthing = await ClassLevel.aggregate([
-          // Match only the documents for the specific school (replace 'YourSchoolName' with the actual school name).
-          {
-            $match: {
-              school: req.user?.school,
-            },
-          },
-          // Group by class name and calculate the number of students in each class.
-          {
-            $group: {
-              _id: "$name",
-              numberOfStudents: {
-                $sum: {
-                  $size: {
-                    $ifNull: ["$student", []],
-                  },
+    await ClassLevel.aggregate([
+      // Match only the documents for the specific school (replace 'YourSchoolName' with the actual school name).
+      {
+        $match: {
+          school: req.user?.school,
+        },
+      },
+      // Lookup students that belong to the current class and school.
+      {
+        $lookup: {
+          from: "students",
+          let: { className: "$name" },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $and: [
+                    { $eq: ["$className", "$$className"] }, // Match students with the same class name.
+                    { $eq: ["$school", req.user?.school] }, // Match students from the specific school.
+                  ],
                 },
               },
             },
+          ],
+          as: "students",
+        },
+      },
+      // Group by class name and calculate the number of students in each class.
+      {
+        $group: {
+          _id: "$name",
+          numberOfStudents: {
+            $sum: { $size: "$students" },
           },
-          // Project to reshape the output.
-          {
-            $project: {
-              name: "$_id",
-              numberOfStudents: 1,
-              _id: 0, // Exclude the "_id" field.
-            },
-          },
-        ])
-          .then((result) => {
-            res.status(200).json({
-              status: 200,
-              msg: "success",
-              classes: result,
-            });
-          })
-          .catch((error) => {
-            console.error(error);
-            res.status(500).json({
-              status: 500,
-              msg: "An error occurred",
-            });
-          });
+        },
+      },
+      // Project to reshape the output.
+      {
+        $project: {
+          name: "$_id",
+          numberOfStudents: 1,
+          _id: 0, // Exclude the "_id" field.
+        },
+      },
+    ])
+      .then((result) => {
+        res.status(200).json({
+          status: 200,
+          msg: "success",
+          classes: result,
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).json({
+          status: 500,
+          msg: "An error occurred",
+        });
       });
   }
   public async createClassLevel(req: express.Request, res: express.Response) {

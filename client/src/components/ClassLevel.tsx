@@ -6,7 +6,7 @@ const getUrl = "/admin";
 const ClassLevel: React.FC = () => {
   let [classes, setClasses] = React.useState<any[]>([]);
   let { register, handleSubmit } = useForm();
-  let [loading, isLoading] = React.useState<boolean>(true);
+  let [loading, isLoading] = React.useState<boolean>(false);
   let errRef = React.useRef<HTMLParagraphElement>(null);
   let AddRef = React.useRef<HTMLParagraphElement>(null);
   let [searchQuery, setSearchQuery] = React.useState<any>("");
@@ -21,6 +21,7 @@ const ClassLevel: React.FC = () => {
     
         res.data?.classes ? setClasses(res.data?.classes) : setClasses([]);
         isLoading(false);
+        console.log('here')
       } catch (error) {
         console.log(error);
         isLoading(false);

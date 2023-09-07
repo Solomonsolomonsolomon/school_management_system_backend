@@ -8,7 +8,6 @@ interface State {
   msg: any;
   data: any; // Update this type to match the actual shape of your data
 }
-
 interface Action {
   type: string;
   payload?: any;
@@ -51,6 +50,7 @@ const AllSubjects: React.FC = () => {
         console.log(className);
         console.log(state.data);
       } catch (error: any) {
+        if (error.name == "AbortError" || error.name == "CanceledError") return;
         dispatch({
           type: "msg",
           msg: error?.response?.data?.msg || error.message,
@@ -144,11 +144,10 @@ const AllSubjects: React.FC = () => {
                                       {subject.subject}
                                     </td>
                                   </div>
-                                  
+
                                   <td
                                     className="px-6  py-1 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200 "
                                     onClick={(e) => {
-                                     
                                       handleSubjectDeletion(subject._id);
                                     }}
                                   >

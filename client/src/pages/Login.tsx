@@ -94,15 +94,15 @@ export default function Login() {
     }, []);
   }
   return (
-    <div className="grid h-[100%] border border-black">
-      <h1 className="text-center text-[30px]">
+    <div className="grid h-[100%] ">
+      <h1 className="text-center text-[27px] font-bold italic">
         SOLACE School Management Systems.Login to continue
       </h1>
       <div className="sm:flex sm:flex-wrap grid grid-cols-1   border-black gap-0 justify-center align-top content-start ">
         <p ref={msgRef} className="w-[100%] text-center text-[red]"></p>
         <form
           onSubmit={handleSubmit}
-          className="border content-center place-content-center items-center justify-center py-[10%] grid gap-2 sm:w-[100%] md:w-[50%] lg:w-[40%] h-[auto]"
+          className="border content-center border-black rounded place-content-center items-center justify-center py-[10%] grid gap-2 sm:w-[100%] md:w-[50%] lg:w-[40%] h-[auto]"
         >
           <input
             type="text"
@@ -110,7 +110,7 @@ export default function Login() {
             name="email"
             value={details.email}
             onChange={handleInput}
-            className="border border-black rounded-3"
+            className="border p-1 border-black rounded"
           />
           <input
             type="password"
@@ -118,7 +118,7 @@ export default function Login() {
             name="password"
             value={details.password}
             onChange={handleInput}
-            className="border border-black"
+            className="border p-1 rounded border-black"
           />
           <select
             name="role"
@@ -136,7 +136,7 @@ export default function Login() {
             onClick={() => {
               setClicked(clicked + 1);
             }}
-            className="bg-green-300 text-white p-[10px] rounded-[2px]"
+            className="bg-gray-900  text-white p-[10px] rounded"
           >
             LOGIN
           </button>

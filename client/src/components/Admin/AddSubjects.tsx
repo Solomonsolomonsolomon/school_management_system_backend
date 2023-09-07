@@ -34,7 +34,7 @@ const AddSubject: React.FC = () => {
         let res = await axios.get(`${baseUrl}/class/get/all`, {
           signal: controller.signal,
         });
-        console.log(res);
+
         setClasses(res.data?.classes);
         dispatch({ type: "msg", msg: "Add Subjects" });
       }
@@ -92,7 +92,7 @@ const AddSubject: React.FC = () => {
               className="placeholder:text-center border border-black rounded"
             />
             <label className="text-center font-bold">
-              select class.you can select more than one
+              select class.you can select multiple
             </label>
             <select
               multiple
@@ -102,11 +102,9 @@ const AddSubject: React.FC = () => {
             >
               {classes.map((classLevel, index) => {
                 return (
-                  <>
-                    <option key={index} value={classLevel.name}>
-                      {classLevel.name}
-                    </option>
-                  </>
+                  <option key={index} value={classLevel.name}>
+                    {classLevel.name}
+                  </option>
                 );
               })}
             </select>

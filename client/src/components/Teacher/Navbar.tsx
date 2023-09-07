@@ -14,7 +14,7 @@ const Sidebar: React.FC<ProfileProps> = ({ setView }) => {
 
   return (
     <>
-      <button onClick={toggleSidebar} className="m-2 absolute top-0">
+      <button onClick={toggleSidebar} className="m-2 absolute top-4">
         <FontAwesomeIcon icon={faBars} size="2xl" />
       </button>
       <div
@@ -36,7 +36,13 @@ const Sidebar: React.FC<ProfileProps> = ({ setView }) => {
           </h2>
 
           <ul>
-            <li className="mb-2">
+            <li
+              className="mb-2"
+              onClick={() => {
+                setView("dashboard");
+                setIsOpen(false);
+              }}
+            >
               <a href="#" className="block text-gray-300 hover:text-white">
                 Dashboard
               </a>
