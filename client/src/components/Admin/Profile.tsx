@@ -3,7 +3,7 @@ import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { PropsWithChildren, ReactNode } from "react";
+import React, {  } from "react";
 import axios from "../../api/axios";
 import { useNavigate } from "react-router-dom";
 
@@ -39,7 +39,7 @@ const Profile = () => {
         signal: controller.signal,
       });
       let current = year.current;
-      console.log(currentYear?.data?.current?.name);
+    
       current
         ? (current.textContent = `current academic Year:${currentYear?.data?.current?.name}`)
         : "";
@@ -69,7 +69,6 @@ const Profile = () => {
   const toggle = () => {
     const profile = document.getElementById("profile");
     profile?.classList.toggle("hidden");
-    console.log(profile);
   };
 
   return (
@@ -85,7 +84,7 @@ const Profile = () => {
       </div>
       <div
         id="profile"
-        className="absolute hidden transition-opacity duration-500  left-[60%] p-5 shadow-lg w-[25%] z-20 bg-black"
+        className="absolute hidden transition-opacity duration-500  left-[60%] p-6 shadow-lg w-fit z-20 bg-gray-950"
       >
         <ul className="grid gap-3  justify-center m-0 p-0">
           <li>

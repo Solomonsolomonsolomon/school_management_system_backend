@@ -6,18 +6,17 @@ import { faMoneyBill1 } from "@fortawesome/free-solid-svg-icons";
 import EarningChart from "./charts/EarningChart";
 import ExpenseChart from "./charts/ExpenseChart";
 // import { useNavigate , useLocation} from 'react-router-dom'
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef} from "react";
 // import AuthContext from '../context/AuthProvider'
 // import { Link } from 'react-router-dom';
 import axios from "../../api/axios";
 
-
 const POST_URL = "/admin";
-const SubAdmin:React.FC = () => {
-   
-  const [isLoading, setIsLoading] = useState(false);
+const SubAdmin: React.FC = () => {
+ // const [isLoading, setIsLoading] = useState(false);
   const noOfStudents = useRef<HTMLParagraphElement>(null);
   const teachersCount = useRef<HTMLParagraphElement>(null);
+  let parentsCount = useRef<HTMLParagraphElement>(null);
   useEffect(() => {
     let controller = new AbortController();
     inner();
@@ -33,6 +32,9 @@ const SubAdmin:React.FC = () => {
         let studentsNumber = noOfStudents.current;
         studentsNumber
           ? (studentsNumber.textContent = number?.totalStudents)
+          : "";
+        parentsCount.current
+          ? (parentsCount.current.textContent = number?.totalStudents)
           : "";
         console.log(number);
       } catch (error: any) {
@@ -66,20 +68,13 @@ const SubAdmin:React.FC = () => {
       controller1.abort();
     };
   });
+
   
-  const errRef = useRef<HTMLParagraphElement>(null);
-  const getUserData = (user: any) => {
-    const data = sessionStorage.getItem(user);
-    if (!data) {
-      return {};
-    }
-    return JSON.parse(data);
-  };
-  const user = getUserData("user");
+ 
+
 
   return (
     <div className="lg:p-20 md:p-10 sm:p-1 bg-gray-200 grid gap-10 w-[99%] ">
-        
       <h1 className="text-2xl font-bold">Admin Dashboard</h1>
       <section className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10 h-auto   ">
         <div className="bg-white p-10 shadow-lg flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
@@ -123,7 +118,9 @@ const SubAdmin:React.FC = () => {
           </section>
           <section className="mt-3">
             <h2 className="text-xl text-slate-400 rounded">Parents</h2>
-            <p className="text-lg font-semibold">5000</p>
+            <p className="text-lg font-semibold" ref={parentsCount}>
+              xxx
+            </p>
           </section>
         </div>
         <div className="bg-white p-10 shadow-lg flex gap-5 rounded cursor-pointer transition ease-in delay-150  hover:-translate-y-3 duration-300 ">
@@ -141,7 +138,7 @@ const SubAdmin:React.FC = () => {
         </div>
       </section>
 
-      <section className="grid grid-cols-[60%_40%] grid-cols-2 gap-5 ">
+      <section className="grid  grid-cols-2 gap-5 ">
         <div className="bg-white p-5 grid grid-rows-[5%_95%] gap-5">
           <h2>Earnings</h2>
           <div className="w-[99%]">

@@ -6,7 +6,7 @@ const getUrl = "/admin";
 const ClassLevel: React.FC = () => {
   let [classes, setClasses] = React.useState<any[]>([]);
   let { register, handleSubmit } = useForm();
-  let [loading, isLoading] = React.useState<boolean>(true);
+  let [loading, isLoading] = React.useState<boolean>(false);
   let errRef = React.useRef<HTMLParagraphElement>(null);
   let AddRef = React.useRef<HTMLParagraphElement>(null);
   let [searchQuery, setSearchQuery] = React.useState<any>("");
@@ -21,6 +21,7 @@ const ClassLevel: React.FC = () => {
     
         res.data?.classes ? setClasses(res.data?.classes) : setClasses([]);
         isLoading(false);
+        console.log('here')
       } catch (error) {
         console.log(error);
         isLoading(false);
@@ -33,10 +34,7 @@ const ClassLevel: React.FC = () => {
   if (loading) {
     return <Loading />;
   }
-  interface IClassLevel {
-    currentClassLevel: string;
-    currentClassArm: string;
-  }
+
   const onSubmit: SubmitHandler<any> = (data: any) => {
 
     let name = `${data.currentClassLevel}${data.currentClassArm}`;
@@ -116,7 +114,7 @@ const ClassLevel: React.FC = () => {
           <option value="O">O</option>
           <option value="P">P</option>
         </select>
-        <button className="border p-3 border bg-gray-600 text-white rounded w-[200px]">
+        <button className=" p-3 border bg-gray-600 text-white rounded w-[200px]">
           ADD CLASS
         </button>
       </form>

@@ -1,23 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "../../api/axios";
 import Loading from "../Loading";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faDeleteLeft,
-  faEdit,
-  faTrash,
-} from "@fortawesome/free-solid-svg-icons";
 import { tobase64 } from "./AddStudent";
 const postUrl = "/admin";
 function AllStudents() {
   const [students, setStudents] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-  const [studentId, setStudentId] = useState("");
+
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editingStudent, setEditingStudent] = useState<any>(null);
   let errRef = React.useRef<HTMLParagraphElement>(null);
-  console.log(studentId);
+
   useEffect(() => {
     const controller = new AbortController();
 
@@ -66,7 +60,7 @@ function AllStudents() {
     return <Loading />;
   }
 
-  async function clickDeleteButton() {}
+
   const openEditModal = (student: any) => {
     setEditingStudent(student);
     setIsEditModalOpen(true);
@@ -353,7 +347,7 @@ function AllStudents() {
                   </td>
                   <td
                     className="text-blue-500"
-                    onClick={(e) => {
+                    onClick={() => {
                       openEditModal(student);
                     }}
                   >

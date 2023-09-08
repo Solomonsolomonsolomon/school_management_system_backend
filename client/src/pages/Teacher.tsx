@@ -2,13 +2,10 @@ import Profile from "../components/Admin/Profile";
 import Sidebar from "../components/Teacher/Navbar";
 import AddStudent from "../components/Admin/AddStudent";
 import React from "react";
-import Loading from "../components/Loading";
 import RegisterClass from "../components/Teacher/RegisterSubject";
-interface IComponents {
-  dashboard: React.FC;
-}
+import Dashboard from "../components/Teacher/Dashboard";
 let components: any = {
-  dashboard: Loading,
+  dashboard: Dashboard,
   addstudent: AddStudent,
   registerclass: RegisterClass,
 };

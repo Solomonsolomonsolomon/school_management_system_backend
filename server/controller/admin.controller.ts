@@ -366,3 +366,12 @@ export async function editTeacher(req: Request, res: Response) {
     msg: "edited successfully",
   });
 }
+export async function countParents(req:Request,res:Response){
+  let school=req.user?.school;
+   await Student.countDocuments({school}).then(e=>{
+    res.status(200).json({
+      msg:"parents number found",
+      parents:e
+    })
+   })
+}

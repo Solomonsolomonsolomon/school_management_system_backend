@@ -1,10 +1,37 @@
 import React from "react";
 import axios from "../../api/axios";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 const RegisterClass: React.FC = () => {
   const AddRef = React.useRef<HTMLParagraphElement>(null);
   const { handleSubmit, register } = useForm();
-  function onSubmit() {}
+  let baseUrl = "/class";
+  async function onSubmit(data: any) {
+    let name = `${data.currentClassLevel}${data.currentClassArm}`;
+    let controller = new AbortController();
+
+    try {
+      let res = await axios.post(
+        `${baseUrl}/new`,
+        { ...data, name },
+        {
+          signal: controller.signal,
+        }
+      );
+      AddRef.current
+        ? (AddRef.current.textContent = res.data?.msg || "successful")
+        : "";
+    } catch (error: any) {
+      if (error.name == "CanceledError" || error.name == "AbortError") return;
+      AddRef.current
+        ? (AddRef.current.textContent =
+            error?.response?.data?.msg || error.message || "failed to register")
+        : "";
+    }
+    return () => {
+      controller.abort();
+    };
+  }
+
   return (
     <>
       <div className="w-[200px]sm:w-[400px] lg:w-[100%] md:w-[100%] w-[350px]">
@@ -61,7 +88,7 @@ const RegisterClass: React.FC = () => {
               <option value="O">O</option>
               <option value="P">P</option>
             </select>
-            <button className="border p-3 border bg-gray-900 text-white rounded w-[200px]">
+            <button className=" p-3 border bg-gray-900 text-white rounded w-[200px]">
               ADD CLASS
             </button>
           </form>

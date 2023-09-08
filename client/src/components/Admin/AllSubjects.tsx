@@ -1,14 +1,12 @@
 import React from "react";
 import axios from "../../api/axios";
 import Loading from "../Loading";
-import { data } from "./charts/EarningChart";
 let baseUrl = "/subject";
 interface State {
   loading: boolean;
   msg: any;
   data: any; // Update this type to match the actual shape of your data
 }
-
 interface Action {
   type: string;
   payload?: any;
@@ -51,6 +49,7 @@ const AllSubjects: React.FC = () => {
         console.log(className);
         console.log(state.data);
       } catch (error: any) {
+        if (error.name == "AbortError" || error.name == "CanceledError") return;
         dispatch({
           type: "msg",
           msg: error?.response?.data?.msg || error.message,
@@ -134,7 +133,7 @@ const AllSubjects: React.FC = () => {
                   <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                     {arr[index][1]
                       ? arr[index][1].map(
-                          (subject: any, i: number, array: any[]) => {
+                          (subject: any) => {
                             return (
                               <>
                                 {" "}
@@ -144,11 +143,10 @@ const AllSubjects: React.FC = () => {
                                       {subject.subject}
                                     </td>
                                   </div>
-                                  
+
                                   <td
                                     className="px-6  py-1 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200 "
-                                    onClick={(e) => {
-                                     
+                                    onClick={() => {
                                       handleSubjectDeletion(subject._id);
                                     }}
                                   >

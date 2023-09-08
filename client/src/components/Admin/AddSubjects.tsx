@@ -1,8 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import Loading from "../Loading";
 import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "./../../api/axios";
-import ReactDOM from "react-dom";
 function reducer(state: any, action: any) {
   switch (action.type) {
     case "startLoading":
@@ -20,7 +19,7 @@ const AddSubject: React.FC = () => {
     reducer,
     initialState
   );
-  const { register, reset, handleSubmit } = useForm();
+  const { register,handleSubmit } = useForm();
   let [classes, setClasses] = React.useState<any[]>([]);
   let [syncUi, setSyncUi] = useState<any>(null);
   let subjectUrl = "/subject";
@@ -34,7 +33,7 @@ const AddSubject: React.FC = () => {
         let res = await axios.get(`${baseUrl}/class/get/all`, {
           signal: controller.signal,
         });
-        console.log(res);
+
         setClasses(res.data?.classes);
         dispatch({ type: "msg", msg: "Add Subjects" });
       }
@@ -92,7 +91,7 @@ const AddSubject: React.FC = () => {
               className="placeholder:text-center border border-black rounded"
             />
             <label className="text-center font-bold">
-              select class.you can select more than one
+              select class.you can select multiple
             </label>
             <select
               multiple
@@ -102,11 +101,9 @@ const AddSubject: React.FC = () => {
             >
               {classes.map((classLevel, index) => {
                 return (
-                  <>
-                    <option key={index} value={classLevel.name}>
-                      {classLevel.name}
-                    </option>
-                  </>
+                  <option key={index} value={classLevel.name}>
+                    {classLevel.name}
+                  </option>
                 );
               })}
             </select>

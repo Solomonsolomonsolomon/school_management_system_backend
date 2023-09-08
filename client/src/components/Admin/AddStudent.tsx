@@ -1,10 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
-import React, { useRef, useState } from "react";
-import Input from "../Input/Input";
+import { useRef, useState } from "react";
 import axios from "./../../api/axios";
-import { AxiosLoginInstance } from "../../api/axios";
-import { AxiosError } from "axios";
-import { prefix } from "@fortawesome/free-solid-svg-icons";
 
 export async function tobase64(blob: Blob) {
   return new Promise((resolve) => {
@@ -35,7 +31,7 @@ const AddStudent = () => {
   const msgRef = useRef<HTMLParagraphElement>(null);
   const [imageError, setImageError] = useState<string | null>(null);
 
-  const { register, handleSubmit, watch, reset } = useForm<Iform>();
+  const { register, handleSubmit, reset } = useForm<Iform>();
 
   const onsubmit: SubmitHandler<Iform> = async (data: Iform, e) => {
     e?.preventDefault();

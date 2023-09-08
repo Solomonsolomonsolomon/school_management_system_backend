@@ -1,4 +1,3 @@
-import axios from "../api/axios";
 import Navbar from "../components/Admin/Navbar";
 import Profile from "../components/Admin/Profile";
 import SubAdmin from "../components/Admin/SubAdmin";
@@ -10,11 +9,7 @@ import AllTeachers from "../components/Admin/AllTeachers";
 import Subjects from "../components/Admin/Subjects";
 import ClassLevel from "../components/ClassLevel";
 import YearAndTerm from "../components/Admin/YearAndTerm";
-const GET_URL = "/admin";
-interface IComponents {
-  subadmin: React.FC;
-  profile?: string;
-}
+//const GET_URL = "/admin";
 let components: any = {
   subadmin: SubAdmin,
   addstudent: AddStudent,

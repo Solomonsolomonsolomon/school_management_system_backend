@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ReactDOM from "react-dom";
+
 import axios from "./../../api/axios";
 import Modal from "react-modal";
 import Loading from "../Loading";
@@ -109,6 +109,7 @@ const AddTeacher: React.FC<{
     formState: { errors },
   } = useForm();
   let subtitle: any;
+  console.log("reading subtitle", subtitle);
   const [isModalOpen, setIsModalOpen] = useState(false);
   let [state, dispatch] = React.useReducer<React.Reducer<any, Action>>(
     reducer,
@@ -183,10 +184,6 @@ const AddTeacher: React.FC<{
     setQuery("");
     setIsModalOpen(false);
   };
-  function afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    subtitle.style.color = "#f00";
-  }
   const onSubmitSubjects = async () => {
     // Handle the submission of subjects offered here
 
@@ -197,7 +194,7 @@ const AddTeacher: React.FC<{
     setQuery("");
     //am
   };
-  const filtered = subjectData.filter((data, index) => {
+  const filtered = subjectData.filter((data) => {
     return data.name
       .toUpperCase()
       .split(" ")
@@ -215,7 +212,6 @@ const AddTeacher: React.FC<{
     } else {
       setSelectedSubjects([...selectedSubjects, subjectId]);
     }
-  
   };
 
   async function handleFinalRegister() {
@@ -224,7 +220,7 @@ const AddTeacher: React.FC<{
       let theData = { ...dataObj, subjects: selectedSubjects };
 
       let res = await axios.post(`${baseUrl}/add/teacher`, theData);
-      
+
       dispatch({
         type: "msg",
         msg: res?.data?.msg || "teacher added successfully",
@@ -389,7 +385,7 @@ const AddTeacher: React.FC<{
                   <div className="font-blue flex gap-1">
                     <span
                       key={subject.name}
-                      onClick={(e) => handleSubjectClick(subject._id)}
+                      onClick={() => handleSubjectClick(subject._id)}
                       className={`${
                         selectedSubjects.includes(subject._id)
                           ? "text-blue-800"
