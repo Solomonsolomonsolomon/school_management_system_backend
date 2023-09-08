@@ -39,14 +39,14 @@ export default function Login() {
             signal: controller.signal,
             headers: {
               "Content-Type": "application/json",
-            }
+            },
           }
         );
         let userData = res.data.user;
         sessionStorage.setItem("accessToken", res.data?.accessToken);
         sessionStorage.setItem("role", details.role || "");
         sessionStorage.setItem("user", JSON.stringify(userData));
-        msgRef.current ? (msgRef.current.textContent = "") : "";
+        msgRef.current ? (msgRef.current.textContent = "successful_login") : "";
         Navigate(`/${details.role}/dashboard/`, {
           replace: true,
           state: location.pathname,
@@ -56,7 +56,8 @@ export default function Login() {
         //location.href = `/${details.role}/dashboard`;
       } catch (error: any) {
         //go back to select on fail
-        console.log(error)
+        if(error.name=="AbortError"||error.name=='CanceledError')return;
+        console.log(error);
         setDetails((prev) => {
           return { ...prev, role: "" };
         });
@@ -97,7 +98,14 @@ export default function Login() {
         SOLACE School Management Systems.Login to continue
       </h1>
       <div className="sm:flex sm:flex-wrap grid grid-cols-1   border-black gap-0 justify-center align-top content-start ">
-        <p ref={msgRef} className="w-[100%] text-center text-[red]"></p>
+        <p
+          ref={msgRef}
+          className={`w-[100%] text-center ${
+            msgRef.current?.textContent === "successful_login"
+              ? "text-green-800"
+              : "text-[red]"
+          }`}
+        ></p>
         <form
           onSubmit={handleSubmit}
           className="border content-center border-black rounded place-content-center items-center justify-center py-[10%] grid gap-2 sm:w-[100%] md:w-[50%] lg:w-[40%] h-[auto]"

@@ -74,11 +74,11 @@ const SubAdmin: React.FC = () => {
 
 
   return (
-    <div className="lg:p-20 md:p-10 sm:p-1 bg-gray-200 grid gap-10 w-[99%] ">
-      <h1 className="text-2xl font-bold">Admin Dashboard</h1>
-      <section className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10 h-auto   ">
-        <div className="bg-white p-10 shadow-lg flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
-          <div className="flex border"></div>
+    <div className="lg:p-10 md:p-2 sm:p-1 bg-white border-slate-200 shadow-2xl box-border grid gap-10 w-[99%] ">
+      <h1 className="text-xl text-gray-900 font-bold box-border shadow-black text-center  border-t-2 border-b-2 p-1 border-gray-900">Admin Dashboard</h1>
+      <section className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-2 h-auto   ">
+        <div className="bg-white p-10 shadow-xl border  box-content flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
+          <div className="flex border "></div>
           <section className="bg-green-100 p-5 rounded-full">
             <FontAwesomeIcon
               icon={faChildren}
@@ -93,7 +93,7 @@ const SubAdmin: React.FC = () => {
             </p>
           </section>
         </div>
-        <div className="bg-white p-10 shadow-lg flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
+        <div className="bg-white p-10 shadow-lg border box-border flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
           <section className="bg-sky-100 p-5 px-7 rounded-full">
             <FontAwesomeIcon
               icon={faUserTie}
@@ -108,7 +108,7 @@ const SubAdmin: React.FC = () => {
             </p>
           </section>
         </div>
-        <div className="bg-white p-10 shadow-lg flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
+        <div className="bg-white p-10 shadow-2xl box-content flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
           <section className="bg-orange-100 p-5 rounded-full">
             <FontAwesomeIcon
               icon={faUserGroup}

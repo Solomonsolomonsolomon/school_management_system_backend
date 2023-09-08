@@ -1,12 +1,16 @@
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBook, faGaugeHigh, faStopwatch } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBook,
+  faGaugeHigh,
+  faStopwatch,
+} from "@fortawesome/free-solid-svg-icons";
 import { faChalkboardUser } from "@fortawesome/free-solid-svg-icons";
 import {
   faAdd,
   faUserPlus,
   faUserFriends,
-  faSchoolCircleCheck
+  faSchoolCircleCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import React from "react";
 interface ProfileProps {
@@ -17,8 +21,8 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
     setView(component);
   }
   return (
-    <nav className="bg-slate-50 shadow-lg h-screen py-1 relative overflow-y-auto">
-      <h1 className="text-center text-3xl font-bold">SMS|ADMIN</h1>
+    <nav className="bg-white shadow-2xl h-screen py-1 relative overflow-y-auto">
+      <h1 className="text-center text-3xl font-mono">ADMIN</h1>
       <section className="my-2">
         <ul className="grid gap-4">
           {/* dashboard */}
@@ -33,8 +37,8 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
                 setComponent("subadmin");
               }}
             >
-              <FontAwesomeIcon icon={faGaugeHigh} size="xl" className="mr-2" />
-              <span className="text-slate-700">Dashboard</span>
+              <FontAwesomeIcon icon={faGaugeHigh} size="lg" className="mr-2" />
+              <span className="text-slate-700 text-md">Dashboard</span>
             </div>
           </li>
           {/* <li className="mr-10">
@@ -52,9 +56,9 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
             }}
             className="cursor-pointer hover:shadow-lg hover:transition mr-10 hover:bg-slate-300 p-5 py-1"
           >
-            <FontAwesomeIcon icon={faUserPlus} size="xl" />
+            <FontAwesomeIcon icon={faUserPlus} size="lg" />
 
-            <span className="text-slate-700 mr-2">add students</span>
+            <span className="text-slate-700 mr-2 text-md">Add student</span>
           </li>
           {/* all students */}
           <li
@@ -63,7 +67,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
             }}
             className="cursor-pointer hover:shadow-lg hover:transition mr-10 hover:bg-slate-300 p-5 py-1"
           >
-            <FontAwesomeIcon icon={faUserFriends} size="xl" />
+            <FontAwesomeIcon icon={faUserFriends} size="lg" />
 
             <span className="text-slate-700 mr-2">all students</span>
           </li>
@@ -74,7 +78,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
             }}
             className="cursor-pointer hover:shadow-lg hover:transition mr-10 hover:bg-slate-300 p-5 py-1"
           >
-            <FontAwesomeIcon icon={faSchoolCircleCheck} size="xl" />
+            <FontAwesomeIcon icon={faSchoolCircleCheck} size="lg" />
 
             <span className="text-slate-700 mr-2">class level</span>
           </li>
@@ -85,7 +89,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
             }}
             className="cursor-pointer hover:shadow-lg hover:transition mr-10 hover:bg-slate-300 p-5 py-1"
           >
-            <FontAwesomeIcon icon={faUserPlus} size="xl" />
+            <FontAwesomeIcon icon={faUserPlus} size="lg" />
 
             <span className="text-slate-700 mr-2">Add Teacher</span>
           </li>
@@ -96,7 +100,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
             }}
             className="cursor-pointer hover:shadow-lg hover:transition mr-10 hover:bg-slate-300 p-5 py-1"
           >
-            <FontAwesomeIcon icon={faUserFriends} size="xl" />
+            <FontAwesomeIcon icon={faUserFriends} size="lg" />
 
             <span className="text-slate-700 mr-2">All Teachers</span>
           </li>
@@ -107,7 +111,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
             }}
             className="cursor-pointer hover:shadow-lg hover:transition mr-10 hover:bg-slate-300 p-5 py-1"
           >
-            <FontAwesomeIcon icon={faStopwatch} size="xl" />
+            <FontAwesomeIcon icon={faStopwatch} size="lg" />
 
             <span className="text-slate-700 mr-2">Year and Term</span>
           </li>
@@ -118,7 +122,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
             }}
             className="cursor-pointer hover:shadow-lg hover:transition mr-10 hover:bg-slate-300 p-5 py-1"
           >
-            <FontAwesomeIcon icon={faBook} size="xl" />
+            <FontAwesomeIcon icon={faBook} size="lg" />
 
             <span className="text-slate-700 mr-2"> Subjects</span>
           </li>

@@ -65,7 +65,7 @@ class ClassLevelController {
                     $project: {
                         name: "$_id",
                         numberOfStudents: 1,
-                        _id: 0, // Exclude the "_id" field.
+                        _id: 1, // Exclude the "_id" field.
                     },
                 },
             ])
@@ -107,15 +107,18 @@ class ClassLevelController {
         });
     }
     deleteClassLevel(req, res) {
+        var _a;
         return __awaiter(this, void 0, void 0, function* () {
             let { id } = req.params;
-            if (!(yield mongoose_1.default.isValidObjectId(id)))
-                throw new decorators_1.CustomError({}, "enter valid id", 400);
-            const classLevelToDelete = yield database_1.ClassLevel.findById(id);
+            let school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
+            console.log(id);
+            let _id = new mongoose_1.default.Types.ObjectId(id);
+            const classLevelToDelete = yield database_1.ClassLevel.findById(_id);
             if (!classLevelToDelete)
                 throw new decorators_1.CustomError({}, "class not found", 404);
             const classHasStudents = !!(yield database_1.Student.countDocuments({
                 className: classLevelToDelete === null || classLevelToDelete === void 0 ? void 0 : classLevelToDelete.name,
+                school,
             }));
             if (classHasStudents)
                 throw new decorators_1.CustomError({}, "cannot delete class.Students are associated with this class level", 400);

@@ -72,13 +72,17 @@ const Profile = () => {
   };
 
   return (
-    <section className="bg-grey shadow-lg  p-5 w-[100%] border rounded">
+    <section className="bg-white border-b-2  border-gray-500   p-5 pt-2 w-[100%] border rounded">
       <div className=" flex justify-end gap-2 cursor-pointer" onClick={toggle}>
         <section>
-          <h1 className="text-xl text-gray-900 ">{user.name}</h1>
-          <p className="text-sm text-gray-500">{user.role}</p>
-          <p className="text-gray-500" ref={term}>current Term:not set</p>
-          <p ref={year}>current Academic Year:not set</p>
+          <h1 className="text-sm text-gray-900 ">{user.name}</h1>
+          <p className="text-sm font-bold text-gray-900">{user.role}</p>
+          
+          <h1 className="text-sm text-gray-900 italic">{user.school}</h1>
+          <p className="text-gray-900 text-sm" ref={term}>
+            current Term:not set
+          </p>
+          <p ref={year} className="text-sm">current Academic Year:not set</p>
         </section>
         <FontAwesomeIcon icon={faUser} size="2xl" className="mt-3 text-blue" />
       </div>
