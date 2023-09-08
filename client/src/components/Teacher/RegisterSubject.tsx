@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "../../api/axios";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 const RegisterClass: React.FC = () => {
   const AddRef = React.useRef<HTMLParagraphElement>(null);
   const { handleSubmit, register } = useForm();
@@ -88,7 +88,7 @@ const RegisterClass: React.FC = () => {
               <option value="O">O</option>
               <option value="P">P</option>
             </select>
-            <button className="border p-3 border bg-gray-900 text-white rounded w-[200px]">
+            <button className=" p-3 border bg-gray-900 text-white rounded w-[200px]">
               ADD CLASS
             </button>
           </form>

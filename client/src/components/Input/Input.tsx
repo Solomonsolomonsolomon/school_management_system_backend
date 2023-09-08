@@ -1,4 +1,4 @@
-import { UseFormRegister, useForm, Path } from "react-hook-form";
+import { UseFormRegister, Path } from "react-hook-form";
 
 interface Iinput {
   type?: string;
@@ -6,7 +6,7 @@ interface Iinput {
   label?: Path<any>;
   required?: boolean;
 }
-const Input: React.FC<Iinput> = (props, { register }: Iinput) => {
+const Input: React.FC<Iinput> = (props, {}: Iinput) => {
   return (
     <>
       <input {...props} />

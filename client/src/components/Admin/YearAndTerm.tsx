@@ -16,14 +16,7 @@ const YearAndTerm: React.FC = () => {
   const addYearRef = useRef<HTMLParagraphElement>(null);
   const addTermRef = useRef<HTMLParagraphElement>(null);
   const postUrl = "/admin";
-  interface IYear {
-    fromYear: string;
-    toYear: string;
-  }
 
-  interface ITerm {
-    name: string;
-  }
 
   const handleYearFormSubmit: SubmitHandler<any> = async (data: any) => {
     try {

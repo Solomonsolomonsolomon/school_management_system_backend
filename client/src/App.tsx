@@ -1,16 +1,9 @@
-import { useState, useEffect } from "react";
-import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Layout from "./components/Layout";
 import Login from "./pages/Login";
 import Admin from "./pages/Admin";
-import AdminStudent from "./components/Admin/Students";
-import AdminTeacher from "./components/Admin/Teachers";
 import Student from "./pages/Student";
 import Teacher from "./pages/Teacher";
-import RequireAuth from "./Auth/RequireAuth";
 import "./index.css";
-import axios from "./api/axios";
 import jwtDecode from "jwt-decode";
 
 let role: string = "";

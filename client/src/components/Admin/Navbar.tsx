@@ -1,16 +1,13 @@
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAddressBook, faBook, faGaugeHigh, faStopwatch } from "@fortawesome/free-solid-svg-icons";
+import { faBook, faGaugeHigh, faStopwatch } from "@fortawesome/free-solid-svg-icons";
 import { faChalkboardUser } from "@fortawesome/free-solid-svg-icons";
 import {
-  faGraduationCap,
   faAdd,
   faUserPlus,
   faUserFriends,
   faSchoolCircleCheck
 } from "@fortawesome/free-solid-svg-icons";
-import { faMessage } from "@fortawesome/free-solid-svg-icons";
-import AddStudent from "./AddStudent";
 import React from "react";
 interface ProfileProps {
   setView: any;

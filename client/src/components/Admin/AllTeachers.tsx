@@ -1,8 +1,7 @@
-import React, { useReducer, useState } from "react";
+import React, { useReducer } from "react";
 import Loading from "../Loading";
 import axios from "../../api/axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import ReactDOM from "react-dom";
 import Modal from "react-modal";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 
@@ -134,7 +133,7 @@ const AllTeachers: React.FC = () => {
     }
   };
   async function saveChangesClick(
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+    _e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) {
     let controller = new AbortController();
 
@@ -291,7 +290,7 @@ const AllTeachers: React.FC = () => {
           </thead>
           <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
             {filtered
-              ? filtered.map((teacher: any, i: number, array: any[]) => {
+              ? filtered.map((teacher: any, i: number, _array: any[]) => {
                   return (
                     <>
                       <tr key={teacher._id}>
@@ -328,7 +327,7 @@ const AllTeachers: React.FC = () => {
 
                         <td
                           className="px-6  py-1 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200 "
-                          onClick={(e) => {
+                          onClick={(_e) => {
                             handleDelete(teacher.teacherId);
                           }}
                         >
