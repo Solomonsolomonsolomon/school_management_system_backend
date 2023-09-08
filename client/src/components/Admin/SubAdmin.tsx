@@ -6,14 +6,14 @@ import { faMoneyBill1 } from "@fortawesome/free-solid-svg-icons";
 import EarningChart from "./charts/EarningChart";
 import ExpenseChart from "./charts/ExpenseChart";
 // import { useNavigate , useLocation} from 'react-router-dom'
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef} from "react";
 // import AuthContext from '../context/AuthProvider'
 // import { Link } from 'react-router-dom';
 import axios from "../../api/axios";
 
 const POST_URL = "/admin";
 const SubAdmin: React.FC = () => {
-  const [isLoading, setIsLoading] = useState(false);
+ // const [isLoading, setIsLoading] = useState(false);
   const noOfStudents = useRef<HTMLParagraphElement>(null);
   const teachersCount = useRef<HTMLParagraphElement>(null);
   let parentsCount = useRef<HTMLParagraphElement>(null);
@@ -69,15 +69,9 @@ const SubAdmin: React.FC = () => {
     };
   });
 
-  const errRef = useRef<HTMLParagraphElement>(null);
-  const getUserData = (user: any) => {
-    const data = sessionStorage.getItem(user);
-    if (!data) {
-      return {};
-    }
-    return JSON.parse(data);
-  };
-  const user = getUserData("user");
+  
+ 
+
 
   return (
     <div className="lg:p-20 md:p-10 sm:p-1 bg-gray-200 grid gap-10 w-[99%] ">
@@ -144,7 +138,7 @@ const SubAdmin: React.FC = () => {
         </div>
       </section>
 
-      <section className="grid grid-cols-[60%_40%] grid-cols-2 gap-5 ">
+      <section className="grid  grid-cols-2 gap-5 ">
         <div className="bg-white p-5 grid grid-rows-[5%_95%] gap-5">
           <h2>Earnings</h2>
           <div className="w-[99%]">

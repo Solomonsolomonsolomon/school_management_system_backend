@@ -3,7 +3,7 @@ import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { PropsWithChildren, ReactNode } from "react";
+import React, {  } from "react";
 import axios from "../../api/axios";
 import { useNavigate } from "react-router-dom";
 

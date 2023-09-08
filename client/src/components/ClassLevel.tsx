@@ -34,10 +34,7 @@ const ClassLevel: React.FC = () => {
   if (loading) {
     return <Loading />;
   }
-  interface IClassLevel {
-    currentClassLevel: string;
-    currentClassArm: string;
-  }
+
   const onSubmit: SubmitHandler<any> = (data: any) => {
 
     let name = `${data.currentClassLevel}${data.currentClassArm}`;
@@ -117,7 +114,7 @@ const ClassLevel: React.FC = () => {
           <option value="O">O</option>
           <option value="P">P</option>
         </select>
-        <button className="border p-3 border bg-gray-600 text-white rounded w-[200px]">
+        <button className=" p-3 border bg-gray-600 text-white rounded w-[200px]">
           ADD CLASS
         </button>
       </form>

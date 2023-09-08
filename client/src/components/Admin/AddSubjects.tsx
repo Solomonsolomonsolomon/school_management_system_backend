@@ -1,8 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import Loading from "../Loading";
 import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "./../../api/axios";
-import ReactDOM from "react-dom";
 function reducer(state: any, action: any) {
   switch (action.type) {
     case "startLoading":
@@ -20,7 +19,7 @@ const AddSubject: React.FC = () => {
     reducer,
     initialState
   );
-  const { register, reset, handleSubmit } = useForm();
+  const { register,handleSubmit } = useForm();
   let [classes, setClasses] = React.useState<any[]>([]);
   let [syncUi, setSyncUi] = useState<any>(null);
   let subjectUrl = "/subject";

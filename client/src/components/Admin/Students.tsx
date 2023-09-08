@@ -1,36 +1,36 @@
-import { useState, useEffect } from 'react'
-// import axios from '.../api/axios'
+
+//import axios from '../.../api/axios'
 
 const Students = ()=> {
-    const [Students, setStudents] = useState([])
-    const [error, setError] = useState(null)
+    // const [Students, setStudents] = useState([])
+    // const [error, setError] = useState(null)
 
-    useEffect(()=> {
-        let isMounted = true
-        const controller = new AbortController()
+    // useEffect(()=> {
+    //     let isMounted = true
+    //     const controller = new AbortController()
 
-        const getStudents = async ()=> {
-            try {
-                const res = await axios.get('/admin/get/students', {
-                    signal: controller.signal
-                })
-                console.log(res.data)
-                isMounted && setStudents(res.data)
-                if(isMounted) {
-                    setStudents(res.data)
-                }
-            } catch(err) {
-                if(isMounted) {
-                    setError(err)
-                }
-            }
-        }
-        getStudents
-        return ()=> {
-            isMounted = false
-            controller.abort()
-        }
-    }, [])
+    //     const getStudents = async ()=> {
+    //         try {
+    //             const res = await axios.get('/admin/get/students', {
+    //                 signal: controller.signal
+    //             })
+    //             console.log(res.data)
+    //             isMounted && setStudents(res.data)
+    //             if(isMounted) {
+    //                 setStudents(res.data)
+    //             }
+    //         } catch(err) {
+    //             if(isMounted) {
+    //                 setError(err)
+    //             }
+    //         }
+    //     }
+    //     getStudents
+    //     return ()=> {
+    //         isMounted = false
+    //         controller.abort()
+    //     }
+    // }, [])
 
     return(
         <main>

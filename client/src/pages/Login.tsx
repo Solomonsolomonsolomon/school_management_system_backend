@@ -1,11 +1,9 @@
 import React, { useRef } from "react";
 
-import { useNavigate, useLocation, redirect } from "react-router-dom";
-import axios, { AxiosLoginInstance } from "../api/axios";
-import { SyntheticEventData } from "react-dom/test-utils";
+import { useNavigate, useLocation } from "react-router-dom";
+import { AxiosLoginInstance } from "../api/axios";
 const LOGIN_URL = "/auth";
 import { isLoggedIn } from "../App";
-import { faIgloo } from "@fortawesome/free-solid-svg-icons";
 export default function Login() {
   interface IDetails {
     email?: string;

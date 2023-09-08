@@ -36,4 +36,5 @@ export {
   ClassLevel,
 };
 export { ITeacher, IStudent };
+
 export default connectDB;

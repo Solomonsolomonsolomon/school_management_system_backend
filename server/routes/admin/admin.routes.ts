@@ -1,11 +1,13 @@
-import express, { Router } from "express";
+import express, { Router,Request,Response } from "express";
 const adminRouter: Router = Router();
+const app = express();
 import asyncErrorHandler from "../../middleware/globalErrorHandler";
 import AcademicTermController from "../../controller/academicterm.controller";
 import AcademicYearController from "../../controller/academicyear.controller";
 import ClassLevelController from "../../controller/classLevel.controller";
 let term = new AcademicTermController();
 let year = new AcademicYearController();
+import { Admin } from "../../model/database";
 let classLevel = new ClassLevelController();
 import {
   addAdmin,
@@ -22,7 +24,8 @@ import {
   editStudent,
   editTeacher,
 } from "../../controller/admin.controller";
-import e from "express";
+
+
 const { addATerm, deleteTerm, setCurrentTerm, getAllTerms, getCurrentTerm } =
   term;
 const {
@@ -86,4 +89,5 @@ adminRouter.delete(
   "/admin/class/:id/delete",
   asyncErrorHandler(deleteClassLevel)
 );
+
 export default adminRouter;

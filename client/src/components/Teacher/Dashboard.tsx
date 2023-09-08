@@ -14,7 +14,6 @@ const Dashboard: React.FC<{
 }> = ({ errRef }) => {
   let ref = React.useRef<HTMLParagraphElement>(null);
   let [formStudents, setFormStudents] = React.useState<any[]>([]);
-  let [subjectsTaught, setSubjectsTaught] = React.useState<any[]>([]);
   console.log(errRef);
   React.useEffect(() => {
     managedStudents();
@@ -43,7 +42,7 @@ const Dashboard: React.FC<{
       try {
         let res = await axios.get(`${baseUrl}/${_id}/get/students/taught`);
         ref.current
-          ? (ref.current.textContent = res.data?.msg || "Form Students here")
+          ? (ref.current.textContent = res.data?.msg || "here")
           : "";
         console.log(res.data?.studentsTaught);
       } catch (error: any) {
@@ -81,7 +80,7 @@ const Dashboard: React.FC<{
                   Gender
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                  Class Level
+                  Parent Name
                 </th>
                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
                   Action
