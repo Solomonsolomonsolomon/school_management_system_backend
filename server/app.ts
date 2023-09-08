@@ -15,7 +15,7 @@ app.get("/", (req: express.Request, res) => {
     status: "success",
     msg: "test end point hit",
   });
-});
+});                
 app.get("/frontend", (req, res) => {
   app.use(express.static(path.join(__dirname, "..", "clients", "dist")));
   res.sendFile(path.join(__dirname, "..", "clients", "dist", "index.html"));

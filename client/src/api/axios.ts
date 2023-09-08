@@ -4,8 +4,8 @@ import axios, {
   AxiosError,
   InternalAxiosRequestConfig,
 } from "axios";
-//let baseURL = "http://localhost:2020/v1";
-let baseURL = "https://solacebackend.onrender.com/v1";
+let baseURL = "http://localhost:2020/v1";
+//let baseURL = "https://solacebackend.onrender.com/v1";
 const instance = axios.create({
   baseURL: baseURL,
   timeout: 10000,
@@ -49,7 +49,7 @@ instance.interceptors.response.use(
 
 export const AxiosLoginInstance = axios.create({
   baseURL: baseURL,
-  timeout: 5000,
+  timeout: 10000,
   headers: { "X-Custom-Header": "foobar", "Content-Type": "application/json" },
 });
 
