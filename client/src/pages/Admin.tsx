@@ -11,6 +11,7 @@ import Subjects from "../components/Admin/Subjects";
 import ClassLevel from "../components/ClassLevel";
 import YearAndTerm from "../components/Admin/YearAndTerm";
 import AddAdmin from "../components/Admin/AddAdmin";
+import AllAdmin from "../components/Admin/AllAdmin";
 //const GET_URL = "/admin";
 let components: any = {
   subadmin: SubAdmin,
@@ -18,10 +19,11 @@ let components: any = {
   allstudents: AllStudents,
   classlevel: ClassLevel,
   addteacher: AddTeacher,
-  allteachers:AllTeachers,
+  allteachers: AllTeachers,
   yearandterm: YearAndTerm,
   subjects: Subjects,
-  addadmin:AddAdmin
+  addadmin: AddAdmin,
+  alladmin: AllAdmin,
 };
 const Admin = () => {
   let [view, setView] = React.useState("subadmin");
@@ -29,8 +31,10 @@ const Admin = () => {
   let Selected = components[view];
 
   return (
-    <div id="adminpage" className="grid md:grid-cols-[24%_75%] lg:grid-cols-[20%_80%] w-full overflow-y-hidden ">
-    
+    <div
+      id="adminpage"
+      className="grid md:grid-cols-[24%_75%] lg:grid-cols-[20%_80%] w-full overflow-y-hidden "
+    >
       <Navbar setView={setView} />
       <main className="container">
         <section className="overflow-y-auto h-[100vh]">

@@ -71,7 +71,17 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
 
             <span className="text-slate-700 mr-2 text-md">Add Admin</span>
           </li>
+          {/* all admin */}
+          <li
+            onClick={() => {
+              setComponent("alladmin");
+            }}
+            className="cursor-pointer hover:shadow-lg hover:transition mr-10 hover:bg-slate-300 p-5 py-1"
+          >
+            <FontAwesomeIcon icon={faUserFriends} size="lg" />
 
+            <span className="text-slate-700 mr-2 text-md">All Admin</span>
+          </li>
           {/* all students */}
           <li
             onClick={() => {

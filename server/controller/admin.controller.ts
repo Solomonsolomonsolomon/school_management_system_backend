@@ -74,7 +74,7 @@ export async function addTeacher(
           await new Teacher<ITeacher>({
             ...req.body,
             school,
-            schoolId
+            schoolId,
           })
             .save()
             .then((teacher) => {
@@ -111,14 +111,14 @@ export async function addStudent(
   let isStudentAlreadyRegistered = !!(await Student.countDocuments({
     name,
     school,
-    schoolId
+    schoolId,
   }));
   if (isStudentAlreadyRegistered)
     throw new CustomError({}, "student already registered", 403);
   let isClassAvailable = !!(await ClassLevel.countDocuments({
     name: `${currentClassLevel}${currentClassArm}`,
     school,
-    schoolId
+    schoolId,
   }));
   if (!isClassAvailable)
     throw new CustomError(
@@ -129,7 +129,7 @@ export async function addStudent(
   let newStudent = new Student({
     ...req.body,
     school,
-    schoolId
+    schoolId,
   });
   await newStudent.save();
   res.status(201).json({
@@ -211,7 +211,7 @@ export async function deleteTeacher(
     const { teacherId } = req.params;
     let school = req.user?.school;
     let schoolId = req.user?.schoolId;
-    await Teacher.findOneAndRemove({ teacherId, school,schoolId })
+    await Teacher.findOneAndRemove({ teacherId, school, schoolId })
       .then((user) => {
         if (!user) {
           throw new Error("Invalid teacherId");
@@ -238,7 +238,8 @@ export async function deleteTeacher(
 export async function getAllAdmin(req: Request, res: Response) {
   try {
     let school = req.user?.school;
-    await Admin.find({ school }).then((admins) => {
+    let schoolId = req.user?.schoolId;
+    await Admin.find({ school, schoolId }).then((admins) => {
       if (admins.length < 1) throw new Error("No admin found");
       res.status(200).json({
         status: 200,
@@ -259,7 +260,7 @@ export async function getAllAdmin(req: Request, res: Response) {
 export async function getAllStudents(req: Request, res: Response) {
   try {
     let schoolId = req.user?.schoolId;
-    await Student.find({ school: req.user?.school,schoolId })
+    await Student.find({ school: req.user?.school, schoolId })
       .sort({ name: 1 })
       .then((student) => {
         if (student.length < 1) throw new Error("No student found");
@@ -283,7 +284,7 @@ export async function getAllTeachers(req: Request, res: Response) {
   try {
     let school = req?.user?.school;
     let schoolId = req.user?.schoolId;
-    await Teacher.find({ school,schoolId })
+    await Teacher.find({ school, schoolId })
       .populate("subjects")
       .then((teacher: any) => {
         if (teacher.length < 1) throw new Error("No teacher found");
@@ -306,7 +307,10 @@ export async function getAllTeachers(req: Request, res: Response) {
 export async function getGenderDivide(req: Request, res: Response) {
   try {
     let schoolId = req.user?.schoolId;
-    let totalStudents = await Student.find({ school: req.user?.school,schoolId });
+    let totalStudents = await Student.find({
+      school: req.user?.school,
+      schoolId,
+    });
     let males = 0;
     let females = 0;
     totalStudents.forEach((student: any) => {
@@ -333,7 +337,7 @@ export async function getGenderDivide(req: Request, res: Response) {
 export async function countTeachers(req: Request, res: Response) {
   let school = req?.user?.school;
   let schoolId = req.user?.schoolId;
-  let noOfTeachers = await Teacher.countDocuments({ school,schoolId });
+  let noOfTeachers = await Teacher.countDocuments({ school, schoolId });
   res.status(200).json({
     status: 200,
     msg: "teachers number found",
@@ -383,7 +387,7 @@ export async function editTeacher(req: Request, res: Response) {
 export async function countParents(req: Request, res: Response) {
   let school = req.user?.school;
   let schoolId = req.user?.schoolId;
-  await Student.countDocuments({ school,schoolId }).then((e) => {
+  await Student.countDocuments({ school, schoolId }).then((e) => {
     res.status(200).json({
       msg: "parents number found",
       parents: e,
