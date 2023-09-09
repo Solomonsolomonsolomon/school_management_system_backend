@@ -1,8 +1,15 @@
 import bcrypt from "bcrypt";
-import mongoose, { Schema, Document, Types, model, Model } from "mongoose";
+import mongoose, {
+  Schema,
+  PopulatedDoc,
+  Document,
+  Types,
+  model,
+  Model,
+} from "mongoose";
 import { AcademicTerm } from "./AcademicTerm";
 import { AcademicYear } from "./AcademicYear";
-import { Subject } from "./Subject";
+import { ISubject, Subject } from "./Subject";
 import { CustomError } from "../../middleware/decorators";
 
 interface IStudent extends Document {
@@ -38,7 +45,7 @@ interface IStudent extends Document {
   isSuspended?: boolean;
   prefectName?: string;
   yearGraduated?: String;
-  subjects?: Types.ObjectId[];
+  subjects?: PopulatedDoc<ISubject & Document>;
   // virtuals
   className?: string;
 }
@@ -304,11 +311,11 @@ studentSchema.pre("save", async function (next) {
 });
 //add subjects
 studentSchema.pre("save", async function (next) {
-let school=this.school
-console.log(school,'from school')
+  let school = this.school;
+  console.log(school, "from school");
   let subjectsOffered: any[] = await Subject.find({
     className: this.className,
-    school
+    school,
   });
   console.log(this.className);
   this.subjects = subjectsOffered;

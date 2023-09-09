@@ -54,7 +54,8 @@ class ClassLevelController {
                 // Group by class name and calculate the number of students in each class.
                 {
                     $group: {
-                        _id: "$name",
+                        _id: "$_id",
+                        name: { $first: "$name" },
                         numberOfStudents: {
                             $sum: { $size: "$students" },
                         },
@@ -63,13 +64,14 @@ class ClassLevelController {
                 // Project to reshape the output.
                 {
                     $project: {
-                        name: "$_id",
+                        name: "$name",
                         numberOfStudents: 1,
                         _id: 1, // Exclude the "_id" field.
                     },
                 },
             ])
                 .then((result) => {
+                console.log(result);
                 res.status(200).json({
                     status: 200,
                     msg: "success",
@@ -110,8 +112,8 @@ class ClassLevelController {
         var _a;
         return __awaiter(this, void 0, void 0, function* () {
             let { id } = req.params;
-            let school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
             console.log(id);
+            let school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
             let _id = new mongoose_1.default.Types.ObjectId(id);
             const classLevelToDelete = yield database_1.ClassLevel.findById(_id);
             if (!classLevelToDelete)

@@ -38,7 +38,7 @@ function managedStudents(req, res, next) {
             status: 200,
             msg: "form students",
             formStudents,
-            formTeacher: teacher === null || teacher === void 0 ? void 0 : teacher.formTeacher
+            formTeacher: teacher === null || teacher === void 0 ? void 0 : teacher.formTeacher,
         });
     });
 }
@@ -55,23 +55,28 @@ function getStudentsTaught(req, res) {
         let studentsTaught = yield database_1.Student.find({
             school,
             subjects: { $in: subjects }, // Filter students by subjects
-        }).select("name _id formTeacher email age className subjects");
+        })
+            .select("name _id formTeacher email age className subjects")
+            .populate("subjects");
+        console.log(studentsTaught);
         if (!studentsTaught.length)
             throw new decorators_1.CustomError({}, "No students enrolled in subjects taught by you", 404);
+        const studentsBySubject = {};
+        studentsTaught.forEach((student) => {
+            var _a;
+            (_a = student.subjects) === null || _a === void 0 ? void 0 : _a.forEach((subject) => {
+                const subjectName = subject.name;
+                if (!studentsBySubject[subjectName]) {
+                    studentsBySubject[subjectName] = [];
+                }
+                studentsBySubject[subjectName].push(student);
+            });
+        });
+        console.log(studentsBySubject);
         // Group students by class name
-        console.log(studentsTaught);
-        const groupedStudents = studentsTaught.reduce((acc, student) => {
-            const className = student.className || "";
-            if (!acc[className]) {
-                acc[className] = [];
-            }
-            acc[className].push(student);
-            return acc;
-        }, {});
-        console.log(Object.keys(groupedStudents));
         res.status(200).json({
             msg: "Form Students",
-            studentsTaught: groupedStudents,
+            studentsTaught: studentsBySubject,
         });
     });
 }

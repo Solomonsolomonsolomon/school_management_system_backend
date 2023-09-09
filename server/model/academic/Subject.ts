@@ -1,7 +1,7 @@
 import mongoose, { Types } from "mongoose";
 
 const { Schema } = mongoose;
-interface ISubject {
+ export interface ISubject {
   name?: string;
   subject: string;
   className: string;
