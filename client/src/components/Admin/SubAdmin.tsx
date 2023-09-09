@@ -75,7 +75,7 @@ const SubAdmin: React.FC = () => {
 
   return (
     <div className="lg:p-10 md:p-2 sm:p-1 bg-white border-slate-200 shadow-2xl box-border grid gap-10 w-[99%] ">
-      <h1 className="text-xl text-gray-900 font-bold box-border shadow-black text-center  border-t-2 border-b-2 p-1 border-gray-900">Admin Dashboard</h1>
+      <h1 className="text-xl text-gray-500 font-bold box-border shadow-black text-center  border-t-2 border-b-2 p-1 border-gray-300">Admin Dashboard</h1>
       <section className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-2 h-auto   ">
         <div className="bg-white p-10 shadow-xl border  box-content flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
           <div className="flex border "></div>
@@ -93,7 +93,7 @@ const SubAdmin: React.FC = () => {
             </p>
           </section>
         </div>
-        <div className="bg-white p-10 shadow-lg border box-border flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
+        <div className="bg-white p-10 shadow-lg border border-gray-200 box-border flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
           <section className="bg-sky-100 p-5 px-7 rounded-full">
             <FontAwesomeIcon
               icon={faUserTie}
@@ -102,7 +102,7 @@ const SubAdmin: React.FC = () => {
             />
           </section>
           <section className="mt-3">
-            <h2 className="text-xl text-slate-400">Teachers</h2>
+            <h2 className=" text-slate-400 text-md">Teachers</h2>
             <p className="text-lg font-semibold" ref={teachersCount}>
               2000
             </p>
@@ -117,7 +117,7 @@ const SubAdmin: React.FC = () => {
             />
           </section>
           <section className="mt-3">
-            <h2 className="text-xl text-slate-400 rounded">Parents</h2>
+            <h2 className=" text-slate-400 rounded text-md">Parents</h2>
             <p className="text-lg font-semibold" ref={parentsCount}>
               xxx
             </p>
@@ -132,7 +132,7 @@ const SubAdmin: React.FC = () => {
             />
           </section>
           <section className="mt-3">
-            <h2 className="text-xl text-slate-400">Earnings</h2>
+            <h2 className=" text-slate-400">Earnings</h2>
             <p className="text-lg font-semibold">$193000</p>
           </section>
         </div>

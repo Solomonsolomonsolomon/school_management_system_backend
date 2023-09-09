@@ -72,7 +72,7 @@ const Profile = () => {
   };
 
   return (
-    <section className="bg-white border-b-2  border-gray-500   p-5 pt-2 w-[100%] border rounded">
+    <section className="bg-white border-b-2 p-5 pt-2 w-[100%] border rounded">
       <div className=" flex justify-end gap-2 cursor-pointer" onClick={toggle}>
         <section>
           <h1 className="text-sm text-gray-900 ">{user.name}</h1>
