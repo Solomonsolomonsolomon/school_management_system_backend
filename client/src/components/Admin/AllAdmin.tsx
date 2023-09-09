@@ -32,15 +32,15 @@ const AllAdmin: React.FC = () => {
   }, []);
   if (loading) return <Loading />;
   return (
-    <>
+    <div className="">
       <p className="font-bold text-center">{msg || "All Admin"}</p>
       <p className="italic underline p-3">
         Please note.Admin is view only and cannot be deleted
       </p>
-      <div>
-        <div className="overflow-x-auto">
-          <table className="divide-y divide-gray-200 dark:divide-gray-700 overflow-x-auto border">
-            <thead className="bg-gray-50 dark:bg-gray-700">
+      <div className="rounded">
+        <div className="overflow-x-auto  rounded bg-white">
+          <table className="divide-y divide-gray-200 dark:divide-gray-700 overflow-x-auto border rounded">
+            <thead className="bg-gray-50 dark:bg-gray-700 rounded border">
               <tr>
                 <th className="py-3 px-4 pr-0">{/* Checkbox input */}</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
@@ -83,7 +83,7 @@ const AllAdmin: React.FC = () => {
           </table>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

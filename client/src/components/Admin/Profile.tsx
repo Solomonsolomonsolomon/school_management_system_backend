@@ -3,7 +3,7 @@ import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, {  } from "react";
+import React from "react";
 import axios from "../../api/axios";
 import { useNavigate } from "react-router-dom";
 
@@ -19,7 +19,7 @@ const Profile = () => {
         let CurrTerm = await axios.get("/term/get/current", {
           signal: controller.signal,
         });
-        
+
         term.current
           ? (term.current.textContent = `current term:${CurrTerm.data?.currentTerm?.name}`)
           : "";
@@ -39,7 +39,7 @@ const Profile = () => {
         signal: controller.signal,
       });
       let current = year.current;
-    
+
       current
         ? (current.textContent = `current academic Year:${currentYear?.data?.current?.name}`)
         : "";
@@ -71,17 +71,23 @@ const Profile = () => {
     profile?.classList.toggle("hidden");
   };
   return (
-    <section className="  mt-1 font-sans border-b-2   p-5  pr-3 pt-3  w-[99%]  rounded">
-      <div className=" flex justify-end border-b-1 gap-2 cursor-pointer " onClick={toggle}>
-        <section>
-          <h1 className="text-sm text-gray-900 ">{user.name}</h1>
-          <p className="text-sm font-bold text-gray-900">{user.role}</p>
-          
-          <h1 className="text-sm text-gray-900 italic">{user.school}</h1>
+    <section className="  mt-1  border-b-2   p-5  pr-3 pt-3  w-[99%]  rounded">
+      <div className=" flex  border-b-1 gap-2 cursor-pointer " onClick={toggle}>
+        <section className="flex gap-5 flex-wrap">
+          <h1 className="text-sm text-gray-900 font-bold underline">
+            {user.name}
+          </h1>
+          {/* <p className="text-sm font-bold text-gray-900">{user.role}</p>
+           */}
+          <h1 className="text-sm text-gray-900 ">
+            school:<span className="italic ">{user.school}</span>
+          </h1>
           <p className="text-gray-900 text-sm" ref={term}>
             current Term:not set
           </p>
-          <p ref={year} className="text-sm">current Academic Year:not set</p>
+          <p ref={year} className="text-sm">
+            current Academic Year:not set
+          </p>
         </section>
         <FontAwesomeIcon icon={faUser} size="2xl" className="mt-3 text-blue" />
       </div>

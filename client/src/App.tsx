@@ -22,7 +22,7 @@ function isLoggedIn(userRole: string = "") {
 
 function App() {
   return (
-    <div className="h-[100%]">
+    <div className="h-[100%] text-sm font-montserrat">
       <Routes>
         <Route path="/" element={<Login />}></Route>
         <Route path="/login" element={<Login />}></Route>

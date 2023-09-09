@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBook,
   faGaugeHigh,
+  faGear,
   faStopwatch,
 } from "@fortawesome/free-solid-svg-icons";
 import { faChalkboardUser } from "@fortawesome/free-solid-svg-icons";
@@ -147,6 +148,16 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
             <FontAwesomeIcon icon={faBook} size="lg" />
 
             <span className="text-slate-700 mr-2"> Subjects</span>
+          </li>
+          <li
+            onClick={() => {
+              setComponent("settings");
+            }}
+            className="cursor-pointer hover:shadow-lg hover:transition mr-10 hover:bg-slate-300 p-5 py-1"
+          >
+            <FontAwesomeIcon icon={faGear} size="lg" />
+
+            <span className="text-slate-700 mr-2"> Settings</span>
           </li>
           <li className="cursor-pointer hover:shadow-lg hover:transition hover:bg-slate-300 p-5">
             <NavLink to="/admin/teacher">

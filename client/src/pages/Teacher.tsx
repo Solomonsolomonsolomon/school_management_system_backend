@@ -15,7 +15,7 @@ function Teacher() {
   let Selected = components[view];
 
   return (
-    <div className="font-mono">
+    <div className="text-sm">
       <Profile />
       <Sidebar setView={setView} />
       <Selected />
