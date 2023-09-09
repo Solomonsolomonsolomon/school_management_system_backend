@@ -15,7 +15,7 @@ class ClassLevelController {
       // Match only the documents for the specific school (replace 'YourSchoolName' with the actual school name).
       {
         $match: {
-          school: req.user?.school,
+          schoolId: req.user?.schoolId,
         },
       },
       // Lookup students that belong to the current class and school.
@@ -29,7 +29,7 @@ class ClassLevelController {
                 $expr: {
                   $and: [
                     { $eq: ["$className", "$$className"] }, // Match students with the same class name.
-                    { $eq: ["$school", req.user?.school] }, // Match students from the specific school.
+                    { $eq: ["$schoolId", req.user?.schoolId] }, // Match students from the specific school.
                   ],
                 },
               },
@@ -41,7 +41,8 @@ class ClassLevelController {
       // Group by class name and calculate the number of students in each class.
       {
         $group: {
-          _id: "$name",
+          _id: "$_id",
+          name: { $first: "$name" },
           numberOfStudents: {
             $sum: { $size: "$students" },
           },
@@ -50,13 +51,14 @@ class ClassLevelController {
       // Project to reshape the output.
       {
         $project: {
-          name: "$_id",
+          name: "$name",
           numberOfStudents: 1,
-          _id: 0, // Exclude the "_id" field.
+          _id: 1, // Exclude the "_id" field.
         },
       },
     ])
       .then((result) => {
+        console.log(result);
         res.status(200).json({
           status: 200,
           msg: "success",
@@ -74,14 +76,17 @@ class ClassLevelController {
   public async createClassLevel(req: express.Request, res: express.Response) {
     let { name } = req.body;
     let school = req.user?.school;
-    let classLevel = await ClassLevel.findOne({ name, school });
+    let schoolId = req.user?.schoolId;
+    let classLevel = await ClassLevel.findOne({ name, school, schoolId });
     if (classLevel)
       throw new CustomError({}, "class level already exists", 400);
     let newClassLevel = new ClassLevel({
       name,
       createdBy: req.user._id,
       school,
+      schoolId,
     });
+
     await newClassLevel.save();
     res.status(201).json({
       status: 201,
@@ -91,12 +96,16 @@ class ClassLevelController {
   }
   public async deleteClassLevel(req: express.Request, res: express.Response) {
     let { id } = req.params;
-    if (!(await mongoose.isValidObjectId(id)))
-      throw new CustomError({}, "enter valid id", 400);
-    const classLevelToDelete = await ClassLevel.findById(id);
+    console.log(id);
+    let school = req.user?.school;
+    let schoolId = req.user?.schoolId;
+    let _id = new mongoose.Types.ObjectId(id);
+    const classLevelToDelete = await ClassLevel.findById(_id);
     if (!classLevelToDelete) throw new CustomError({}, "class not found", 404);
     const classHasStudents: boolean = !!(await Student.countDocuments({
       className: classLevelToDelete?.name,
+      school,
+      schoolId,
     }));
     if (classHasStudents)
       throw new CustomError(

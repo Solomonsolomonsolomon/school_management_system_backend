@@ -58,7 +58,7 @@ class SubjectController {
      * deleteSubjects
      */
     getAllSubjects(req, res) {
-        var _a;
+        var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
             //   let allSubjects = await Subject.find({});
             //   if (!allSubjects.length)
@@ -67,7 +67,8 @@ class SubjectController {
             //     .status(200)
             //     .json({ status: 200, msg: "all students found", subjects: allSubjects });
             let school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
-            let subjectsRawForm = yield Subject_1.Subject.find({ school });
+            let schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
+            let subjectsRawForm = yield Subject_1.Subject.find({ school, schoolId });
             let sorted = subjectsRawForm.reduce((prev, curr) => {
                 if (!prev[curr.className]) {
                     prev[curr.className] = [];
@@ -83,17 +84,19 @@ class SubjectController {
         });
     }
     addSubjects(req, res, next) {
-        var _a;
+        var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
             const bulkPush = [];
             let school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
+            let schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
             const { subject, className, teacherId } = req.body;
             for (let i of className) {
                 bulkPush.push({
                     updateOne: {
                         filter: {
                             name: `${i.toUpperCase()}_${subject.toUpperCase()}`,
-                            school
+                            school,
+                            schoolId
                         },
                         update: {
                             $set: {
@@ -101,6 +104,7 @@ class SubjectController {
                                 className: i,
                                 subject,
                                 school,
+                                schoolId,
                                 teacherId: teacherId || null,
                             },
                         },
@@ -155,10 +159,11 @@ class SubjectController {
         });
     }
     getAllSubjectsAsJson(req, res) {
-        var _a;
+        var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
             let school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
-            let all = yield Subject_1.Subject.find({ school });
+            let schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
+            let all = yield Subject_1.Subject.find({ school, schoolId });
             if (!all)
                 throw new decorators_1.CustomError({}, "no subject found", 404);
             res.status(200).json({

@@ -28,7 +28,7 @@ class ClassLevelController {
                 // Match only the documents for the specific school (replace 'YourSchoolName' with the actual school name).
                 {
                     $match: {
-                        school: (_a = req.user) === null || _a === void 0 ? void 0 : _a.school,
+                        schoolId: (_a = req.user) === null || _a === void 0 ? void 0 : _a.schoolId,
                     },
                 },
                 // Lookup students that belong to the current class and school.
@@ -42,7 +42,7 @@ class ClassLevelController {
                                     $expr: {
                                         $and: [
                                             { $eq: ["$className", "$$className"] },
-                                            { $eq: ["$school", (_b = req.user) === null || _b === void 0 ? void 0 : _b.school] }, // Match students from the specific school.
+                                            { $eq: ["$schoolId", (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId] }, // Match students from the specific school.
                                         ],
                                     },
                                 },
@@ -54,7 +54,8 @@ class ClassLevelController {
                 // Group by class name and calculate the number of students in each class.
                 {
                     $group: {
-                        _id: "$name",
+                        _id: "$_id",
+                        name: { $first: "$name" },
                         numberOfStudents: {
                             $sum: { $size: "$students" },
                         },
@@ -63,13 +64,14 @@ class ClassLevelController {
                 // Project to reshape the output.
                 {
                     $project: {
-                        name: "$_id",
+                        name: "$name",
                         numberOfStudents: 1,
-                        _id: 0, // Exclude the "_id" field.
+                        _id: 1, // Exclude the "_id" field.
                     },
                 },
             ])
                 .then((result) => {
+                console.log(result);
                 res.status(200).json({
                     status: 200,
                     msg: "success",
@@ -86,17 +88,19 @@ class ClassLevelController {
         });
     }
     createClassLevel(req, res) {
-        var _a;
+        var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
             let { name } = req.body;
             let school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
-            let classLevel = yield database_1.ClassLevel.findOne({ name, school });
+            let schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
+            let classLevel = yield database_1.ClassLevel.findOne({ name, school, schoolId });
             if (classLevel)
                 throw new decorators_1.CustomError({}, "class level already exists", 400);
             let newClassLevel = new database_1.ClassLevel({
                 name,
                 createdBy: req.user._id,
                 school,
+                schoolId,
             });
             yield newClassLevel.save();
             res.status(201).json({
@@ -107,15 +111,20 @@ class ClassLevelController {
         });
     }
     deleteClassLevel(req, res) {
+        var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
             let { id } = req.params;
-            if (!(yield mongoose_1.default.isValidObjectId(id)))
-                throw new decorators_1.CustomError({}, "enter valid id", 400);
-            const classLevelToDelete = yield database_1.ClassLevel.findById(id);
+            console.log(id);
+            let school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
+            let schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
+            let _id = new mongoose_1.default.Types.ObjectId(id);
+            const classLevelToDelete = yield database_1.ClassLevel.findById(_id);
             if (!classLevelToDelete)
                 throw new decorators_1.CustomError({}, "class not found", 404);
             const classHasStudents = !!(yield database_1.Student.countDocuments({
                 className: classLevelToDelete === null || classLevelToDelete === void 0 ? void 0 : classLevelToDelete.name,
+                school,
+                schoolId,
             }));
             if (classHasStudents)
                 throw new decorators_1.CustomError({}, "cannot delete class.Students are associated with this class level", 400);

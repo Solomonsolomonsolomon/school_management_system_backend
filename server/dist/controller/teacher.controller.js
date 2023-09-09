@@ -18,10 +18,11 @@ const globalErrorHandler_1 = __importDefault(require("../middleware/globalErrorH
 const decorators_1 = require("../middleware/decorators");
 console.log(globalErrorHandler_1.default);
 function managedStudents(req, res, next) {
-    var _a;
+    var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         const { _id } = req.params;
         let school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
+        let schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
         let teacher = yield database_1.Teacher.findOne({ _id }).select("formTeacher");
         if (!teacher)
             throw new decorators_1.CustomError({}, "teacher not found.either deleted or doesnt exist", 404);
@@ -31,6 +32,7 @@ function managedStudents(req, res, next) {
         let formStudents = yield database_1.Student.find({
             className: formTeacher,
             school,
+            schoolId,
         }).select("name _id formTeacher school email age className studentId gender parent ");
         if (!formStudents.length)
             throw new decorators_1.CustomError({}, "NO students yet..When registered they will be assigned to you", 404);
@@ -38,40 +40,47 @@ function managedStudents(req, res, next) {
             status: 200,
             msg: "form students",
             formStudents,
-            formTeacher: teacher === null || teacher === void 0 ? void 0 : teacher.formTeacher
+            formTeacher: teacher === null || teacher === void 0 ? void 0 : teacher.formTeacher,
         });
     });
 }
 exports.managedStudents = managedStudents;
 function getStudentsTaught(req, res) {
-    var _a, _b;
+    var _a, _b, _c;
     return __awaiter(this, void 0, void 0, function* () {
         let { id } = req.params;
         let school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
-        let teacher = yield database_1.Teacher.findOne({ school: (_b = req.user) === null || _b === void 0 ? void 0 : _b.school, _id: id });
+        let schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
+        let teacher = yield database_1.Teacher.findOne({ school: (_c = req.user) === null || _c === void 0 ? void 0 : _c.school, _id: id });
         if (!teacher)
             throw new decorators_1.CustomError({}, "teacher doesnt exist", 404);
         let subjects = teacher.subjects;
         let studentsTaught = yield database_1.Student.find({
             school,
+            schoolId,
             subjects: { $in: subjects }, // Filter students by subjects
-        }).select("name _id formTeacher email age className subjects");
+        })
+            .select("name _id formTeacher email age className subjects")
+            .populate("subjects");
+        console.log(studentsTaught);
         if (!studentsTaught.length)
             throw new decorators_1.CustomError({}, "No students enrolled in subjects taught by you", 404);
+        const studentsBySubject = {};
+        studentsTaught.forEach((student) => {
+            var _a;
+            (_a = student.subjects) === null || _a === void 0 ? void 0 : _a.forEach((subject) => {
+                const subjectName = subject.name;
+                if (!studentsBySubject[subjectName]) {
+                    studentsBySubject[subjectName] = [];
+                }
+                studentsBySubject[subjectName].push(student);
+            });
+        });
+        console.log(studentsBySubject);
         // Group students by class name
-        console.log(studentsTaught);
-        const groupedStudents = studentsTaught.reduce((acc, student) => {
-            const className = student.className || "";
-            if (!acc[className]) {
-                acc[className] = [];
-            }
-            acc[className].push(student);
-            return acc;
-        }, {});
-        console.log(Object.keys(groupedStudents));
         res.status(200).json({
             msg: "Form Students",
-            studentsTaught: groupedStudents,
+            studentsTaught: studentsBySubject,
         });
     });
 }

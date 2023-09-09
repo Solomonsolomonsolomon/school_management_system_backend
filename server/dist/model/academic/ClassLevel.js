@@ -21,6 +21,10 @@ const ClassLevelSchema = new Schema({
         required: true,
         default: "",
     },
+    schoolId: {
+        type: String,
+        required: true,
+    },
     plan: {
         type: String,
         enum: ["basic", "standard", "advanced"],

@@ -91,10 +91,10 @@ const AddStudent = () => {
             : "text-green-500"
         } text-center w-[100%]`}
       ></p>
-      <div className="justify-items-center grid rounded">
+      <div className="justify-items-center grid rounded ">
         <div className="grid grid-cols-1 justify-center justify-items-center self-center place-content-center border bg-gray w-fit">
           <form
-            className="grid grid-cols-1 sm:w-[100%] md:w-fit lg:w-[40%] p-5 rounded "
+            className="grid grid-cols-1 sm:w-[100%] md:w-fit lg:w-fit p-5 rounded "
             action=""
             onSubmit={handleSubmit(onsubmit)}
           >

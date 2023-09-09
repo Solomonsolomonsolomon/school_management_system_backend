@@ -59,6 +59,20 @@ const adminSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
+    schoolId: {
+        type: String,
+        required: true,
+        default: function () {
+            return ("SCH" +
+                Math.floor(100 + Math.random() * 900) +
+                Date.now().toString().slice(2, 4) +
+                this.name
+                    .split(" ")
+                    .map((name) => name[0])
+                    .join("")
+                    .toUpperCase());
+        },
+    },
     plan: {
         type: String,
         enum: ["basic", "standard", "advanced"],

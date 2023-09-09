@@ -38,10 +38,10 @@ class AcademicYearController {
     //   }
     //    year.isCurrent = true;
     // }
-    makeCurrent(school, term) {
+    makeCurrent(schoolId, term) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                let previous = yield database_1.AcademicYear.findOne({ isCurrent: true, school });
+                let previous = yield database_1.AcademicYear.findOne({ isCurrent: true, schoolId });
                 if (previous) {
                     previous.isCurrent = false;
                     yield previous.save().catch((err) => {
@@ -58,12 +58,13 @@ class AcademicYearController {
         });
     }
     addAcademicYear(req, res) {
-        var _a;
+        var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
             let { fromYear, toYear } = req.body;
             let school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
+            let schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
             let name = `${fromYear}/${toYear}`;
-            let year = yield database_1.AcademicYear.findOne({ name, school });
+            let year = yield database_1.AcademicYear.findOne({ name, schoolId });
             if (year) {
                 throw new decorators_1.CustomError({}, "year already added", 403);
             }
@@ -73,9 +74,10 @@ class AcademicYearController {
                     fromYear,
                     toYear,
                     school,
+                    schoolId,
                     createdBy: req.user._id,
                 });
-                yield this.makeCurrent(school, newYear);
+                yield this.makeCurrent(schoolId, newYear);
                 newYear.save().then((year) => {
                     res.status(201).json({
                         status: 201,
@@ -112,10 +114,11 @@ class AcademicYearController {
         });
     }
     getAllYears(req, res) {
-        var _a;
+        var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
             let school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
-            yield database_1.AcademicYear.find({ school }).then((years) => {
+            let schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
+            yield database_1.AcademicYear.find({ school, schoolId }).then((years) => {
                 if (years.length < 1)
                     throw new decorators_1.CustomError({}, "no years found", 404);
                 res.status(200).json({
@@ -127,10 +130,11 @@ class AcademicYearController {
         });
     }
     getCurrentYear(req, res) {
-        var _a;
+        var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
             let school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
-            let current = yield database_1.AcademicYear.findOne({ isCurrent: true, school });
+            let schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
+            let current = yield database_1.AcademicYear.findOne({ isCurrent: true, school, schoolId });
             if (!current)
                 throw new decorators_1.CustomError({}, "no current year,please set current year", 404);
             yield res.status(200).json({
@@ -157,12 +161,13 @@ class AcademicYearController {
         });
     }
     setCurrentYear(req, res) {
-        var _a, _b;
+        var _a, _b, _c;
         return __awaiter(this, void 0, void 0, function* () {
             let { id } = req.params;
             let _id = yield new mongoose_1.default.Types.ObjectId(id);
             let school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
-            let previous = yield database_1.AcademicYear.findOne({ isCurrent: true, school });
+            let schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
+            let previous = yield database_1.AcademicYear.findOne({ isCurrent: true, school, schoolId });
             if (previous) {
                 previous.isCurrent = false;
                 yield previous.save().catch((err) => {
@@ -173,7 +178,7 @@ class AcademicYearController {
             if (!current)
                 throw new decorators_1.CustomError({}, "year not found", 404);
             current.isCurrent = true;
-            current.updatedBy = (_b = req.user) === null || _b === void 0 ? void 0 : _b._id;
+            current.updatedBy = (_c = req.user) === null || _c === void 0 ? void 0 : _c._id;
             yield current
                 .save()
                 .then((current) => {

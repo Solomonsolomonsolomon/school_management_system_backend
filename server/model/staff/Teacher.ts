@@ -1,5 +1,12 @@
-import mongoose, { Schema, Document, model, Types } from "mongoose";
+import mongoose, {
+  Schema,
+  PopulatedDoc,
+  Document,
+  model,
+  Types,
+} from "mongoose";
 import bcrypt from "bcrypt";
+import { ISubject } from "../academic/Subject";
 interface ITeacher {
   name: string;
   email: string;
@@ -12,8 +19,9 @@ interface ITeacher {
   isSuspended?: boolean;
   role?: string;
   school: string;
+  schoolId: string;
   plan: string;
-  subjects?: Schema.Types.ObjectId[];
+  subjects?: PopulatedDoc<ISubject & Document>[];
   applicationStatus?: "pending" | "approved" | "rejected";
   program?: string;
   classLevel?: string;
@@ -81,6 +89,10 @@ const teacherSchema = new Schema<ITeacher>(
     },
     school: {
       type: String,
+    },
+    schoolId: {
+      type: String,
+      required: true,
     },
     plan: {
       type: String,
@@ -152,5 +164,5 @@ teacherSchema.methods.verifiedPassword = async function (
 
 //model
 const Teacher = mongoose.model<ITeacher>("Teacher", teacherSchema);
-Teacher.syncIndexes()
+Teacher.syncIndexes();
 export { Teacher, ITeacher };

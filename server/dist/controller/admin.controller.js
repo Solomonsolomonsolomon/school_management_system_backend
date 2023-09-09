@@ -13,11 +13,12 @@ exports.countParents = exports.editTeacher = exports.editStudent = exports.count
 const decorators_1 = require("../middleware/decorators");
 const database_1 = require("./../model/database");
 function addAdmin(req, res, next) {
-    var _a, _b;
+    var _a, _b, _c;
     return __awaiter(this, void 0, void 0, function* () {
         try {
             let { name, email, password, role } = req.body;
             let school = ((_a = req.body) === null || _a === void 0 ? void 0 : _a.school) || ((_b = req.user) === null || _b === void 0 ? void 0 : _b.school);
+            let schoolId = (_c = req.user) === null || _c === void 0 ? void 0 : _c.schoolId;
             yield database_1.Admin.findOne({ name, school }).then((alreadyRegistered) => __awaiter(this, void 0, void 0, function* () {
                 if (alreadyRegistered) {
                     throw new Error("This particular admin already registered");
@@ -28,6 +29,7 @@ function addAdmin(req, res, next) {
                         email,
                         password,
                         school,
+                        schoolId,
                         role,
                     })
                         .save()
@@ -56,17 +58,19 @@ function addAdmin(req, res, next) {
 }
 exports.addAdmin = addAdmin;
 function addTeacher(req, res, next) {
-    var _a;
+    var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         try {
             let school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
+            let schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
             let { name, email, password, role, dateEmployed, formTeacher } = req.body;
-            yield database_1.Teacher.findOne({ email, school }).then((alreadyRegistered) => __awaiter(this, void 0, void 0, function* () {
+            yield database_1.Teacher.findOne({ email, schoolId }).then((alreadyRegistered) => __awaiter(this, void 0, void 0, function* () {
                 if (alreadyRegistered) {
                     throw new Error("This particular teacher already registered");
                 }
                 else {
-                    yield new database_1.Teacher(Object.assign(Object.assign({}, req.body), { school }))
+                    yield new database_1.Teacher(Object.assign(Object.assign({}, req.body), { school,
+                        schoolId }))
                         .save()
                         .then((teacher) => {
                         res.json({
@@ -93,23 +97,27 @@ function addTeacher(req, res, next) {
 }
 exports.addTeacher = addTeacher;
 function addStudent(req, res, next) {
-    var _a;
+    var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         let { name, email, currentClassLevel, currentClassArm } = req.body;
         let school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
+        let schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
         let isStudentAlreadyRegistered = !!(yield database_1.Student.countDocuments({
             name,
             school,
+            schoolId
         }));
         if (isStudentAlreadyRegistered)
             throw new decorators_1.CustomError({}, "student already registered", 403);
         let isClassAvailable = !!(yield database_1.ClassLevel.countDocuments({
             name: `${currentClassLevel}${currentClassArm}`,
             school,
+            schoolId
         }));
         if (!isClassAvailable)
             throw new decorators_1.CustomError({}, "the class you selected is not available.please register and try again", 404);
-        let newStudent = new database_1.Student(Object.assign(Object.assign({}, req.body), { school }));
+        let newStudent = new database_1.Student(Object.assign(Object.assign({}, req.body), { school,
+            schoolId }));
         yield newStudent.save();
         res.status(201).json({
             status: 201,
@@ -149,10 +157,11 @@ function deleteAdmin(req, res, next) {
 }
 exports.deleteAdmin = deleteAdmin;
 function deleteStudent(req, res, next) {
-    var _a;
+    var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         try {
             let school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
+            let schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
             const { studentId } = req.params;
             yield database_1.Student.findOneAndRemove({ studentId, school })
                 .then((user) => {
@@ -181,12 +190,13 @@ function deleteStudent(req, res, next) {
 }
 exports.deleteStudent = deleteStudent;
 function deleteTeacher(req, res, next) {
-    var _a;
+    var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         try {
             const { teacherId } = req.params;
             let school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
-            yield database_1.Teacher.findOneAndRemove({ teacherId, school })
+            let schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
+            yield database_1.Teacher.findOneAndRemove({ teacherId, school, schoolId })
                 .then((user) => {
                 if (!user) {
                     throw new Error("Invalid teacherId");
@@ -239,10 +249,11 @@ function getAllAdmin(req, res) {
 }
 exports.getAllAdmin = getAllAdmin;
 function getAllStudents(req, res) {
-    var _a;
+    var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            yield database_1.Student.find({ school: (_a = req.user) === null || _a === void 0 ? void 0 : _a.school })
+            let schoolId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.schoolId;
+            yield database_1.Student.find({ school: (_b = req.user) === null || _b === void 0 ? void 0 : _b.school, schoolId })
                 .sort({ name: 1 })
                 .then((student) => {
                 if (student.length < 1)
@@ -266,11 +277,12 @@ function getAllStudents(req, res) {
 }
 exports.getAllStudents = getAllStudents;
 function getAllTeachers(req, res) {
-    var _a;
+    var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         try {
             let school = (_a = req === null || req === void 0 ? void 0 : req.user) === null || _a === void 0 ? void 0 : _a.school;
-            yield database_1.Teacher.find({ school })
+            let schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
+            yield database_1.Teacher.find({ school, schoolId })
                 .populate("subjects")
                 .then((teacher) => {
                 if (teacher.length < 1)
@@ -294,10 +306,11 @@ function getAllTeachers(req, res) {
 }
 exports.getAllTeachers = getAllTeachers;
 function getGenderDivide(req, res) {
-    var _a;
+    var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            let totalStudents = yield database_1.Student.find({ school: (_a = req.user) === null || _a === void 0 ? void 0 : _a.school });
+            let schoolId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.schoolId;
+            let totalStudents = yield database_1.Student.find({ school: (_b = req.user) === null || _b === void 0 ? void 0 : _b.school, schoolId });
             let males = 0;
             let females = 0;
             totalStudents.forEach((student) => {
@@ -323,10 +336,11 @@ function getGenderDivide(req, res) {
 }
 exports.getGenderDivide = getGenderDivide;
 function countTeachers(req, res) {
-    var _a;
+    var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         let school = (_a = req === null || req === void 0 ? void 0 : req.user) === null || _a === void 0 ? void 0 : _a.school;
-        let noOfTeachers = yield database_1.Teacher.countDocuments({ school });
+        let schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
+        let noOfTeachers = yield database_1.Teacher.countDocuments({ school, schoolId });
         res.status(200).json({
             status: 200,
             msg: "teachers number found",
@@ -381,13 +395,14 @@ function editTeacher(req, res) {
 }
 exports.editTeacher = editTeacher;
 function countParents(req, res) {
-    var _a;
+    var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         let school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
-        yield database_1.Student.countDocuments({ school }).then(e => {
+        let schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
+        yield database_1.Student.countDocuments({ school, schoolId }).then((e) => {
             res.status(200).json({
                 msg: "parents number found",
-                parents: e
+                parents: e,
             });
         });
     });
