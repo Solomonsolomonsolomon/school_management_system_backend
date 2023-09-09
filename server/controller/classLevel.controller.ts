@@ -15,7 +15,7 @@ class ClassLevelController {
       // Match only the documents for the specific school (replace 'YourSchoolName' with the actual school name).
       {
         $match: {
-          school: req.user?.school,
+          schoolId: req.user?.schoolId,
         },
       },
       // Lookup students that belong to the current class and school.
@@ -29,7 +29,7 @@ class ClassLevelController {
                 $expr: {
                   $and: [
                     { $eq: ["$className", "$$className"] }, // Match students with the same class name.
-                    { $eq: ["$school", req.user?.school] }, // Match students from the specific school.
+                    { $eq: ["$schoolId", req.user?.schoolId] }, // Match students from the specific school.
                   ],
                 },
               },
@@ -76,14 +76,17 @@ class ClassLevelController {
   public async createClassLevel(req: express.Request, res: express.Response) {
     let { name } = req.body;
     let school = req.user?.school;
-    let classLevel = await ClassLevel.findOne({ name, school });
+    let schoolId = req.user?.schoolId;
+    let classLevel = await ClassLevel.findOne({ name, school, schoolId });
     if (classLevel)
       throw new CustomError({}, "class level already exists", 400);
     let newClassLevel = new ClassLevel({
       name,
       createdBy: req.user._id,
       school,
+      schoolId,
     });
+
     await newClassLevel.save();
     res.status(201).json({
       status: 201,
@@ -95,12 +98,14 @@ class ClassLevelController {
     let { id } = req.params;
     console.log(id);
     let school = req.user?.school;
+    let schoolId = req.user?.schoolId;
     let _id = new mongoose.Types.ObjectId(id);
     const classLevelToDelete = await ClassLevel.findById(_id);
     if (!classLevelToDelete) throw new CustomError({}, "class not found", 404);
     const classHasStudents: boolean = !!(await Student.countDocuments({
       className: classLevelToDelete?.name,
       school,
+      schoolId,
     }));
     if (classHasStudents)
       throw new CustomError(

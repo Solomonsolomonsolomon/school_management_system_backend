@@ -51,6 +51,10 @@ const academicTermSchema = new mongoose_1.Schema({
     school: {
         type: String,
     },
+    schoolId: {
+        type: String,
+        required: true
+    },
     plan: {
         type: String,
         enum: ["basic", "standard", "advanced"],

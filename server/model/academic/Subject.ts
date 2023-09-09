@@ -1,11 +1,12 @@
 import mongoose, { Types } from "mongoose";
 
 const { Schema } = mongoose;
- export interface ISubject {
+export interface ISubject {
   name?: string;
   subject: string;
   className: string;
   school: string;
+  schoolId: string;
   plan: string;
   academicYear?: Types.ObjectId;
   teacherId?: Types.ObjectId;
@@ -95,6 +96,10 @@ const SubjectSchema = new mongoose.Schema<ISubject>({
   school: {
     type: String,
   },
+  schoolId: {
+    type: String,
+    required: true,
+  },
   plan: {
     type: String,
     enum: ["basic", "standard", "advanced"],
@@ -107,7 +112,7 @@ const SubjectSchema = new mongoose.Schema<ISubject>({
 });
 SubjectSchema.pre("save", function (this: ISubject) {
   this.name = `${this.className.toUpperCase()}_${this.subject.toUpperCase()}`;
-}); 
+});
 const Subject = mongoose.model("Subject", SubjectSchema);
 Subject.syncIndexes();
 export { Subject };

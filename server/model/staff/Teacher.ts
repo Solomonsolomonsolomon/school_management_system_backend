@@ -19,6 +19,7 @@ interface ITeacher {
   isSuspended?: boolean;
   role?: string;
   school: string;
+  schoolId: string;
   plan: string;
   subjects?: PopulatedDoc<ISubject & Document>[];
   applicationStatus?: "pending" | "approved" | "rejected";
@@ -88,6 +89,10 @@ const teacherSchema = new Schema<ITeacher>(
     },
     school: {
       type: String,
+    },
+    schoolId: {
+      type: String,
+      required: true,
     },
     plan: {
       type: String,

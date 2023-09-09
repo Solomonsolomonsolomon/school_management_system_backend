@@ -114,6 +114,10 @@ const studentSchema = new mongoose_1.default.Schema({
     school: {
         type: String,
     },
+    schoolId: {
+        type: String,
+        required: true,
+    },
     plan: {
         type: String,
         enum: ["basic", "standard", "advanced"],
@@ -298,10 +302,12 @@ studentSchema.pre("save", function (next) {
 studentSchema.pre("save", function (next) {
     return __awaiter(this, void 0, void 0, function* () {
         let school = this.school;
-        console.log(school, "from school");
+        let schoolId = this.schoolId;
+        console.log(schoolId, "from school");
         let subjectsOffered = yield Subject_1.Subject.find({
             className: this.className,
             school,
+            schoolId,
         });
         console.log(this.className);
         this.subjects = subjectsOffered;

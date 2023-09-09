@@ -13,6 +13,7 @@ export async function managedStudents(
 ): Promise<any> {
   const { _id } = req.params;
   let school = req.user?.school;
+  let schoolId = req.user?.schoolId;
   let teacher = await Teacher.findOne({ _id }).select("formTeacher");
   if (!teacher)
     throw new CustomError(
@@ -31,6 +32,7 @@ export async function managedStudents(
   let formStudents = await Student.find({
     className: formTeacher,
     school,
+    schoolId,
   }).select(
     "name _id formTeacher school email age className studentId gender parent "
   );
@@ -51,11 +53,13 @@ export async function managedStudents(
 export async function getStudentsTaught(req: Request, res: Response) {
   let { id } = req.params;
   let school = req.user?.school;
+  let schoolId = req.user?.schoolId;
   let teacher = await Teacher.findOne({ school: req.user?.school, _id: id });
   if (!teacher) throw new CustomError({}, "teacher doesnt exist", 404);
   let subjects = teacher.subjects;
   let studentsTaught = await Student.find({
     school,
+    schoolId,
     subjects: { $in: subjects }, // Filter students by subjects
   })
     .select("name _id formTeacher email age className subjects")

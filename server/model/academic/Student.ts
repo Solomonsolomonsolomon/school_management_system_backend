@@ -26,6 +26,7 @@ interface IStudent extends Document {
 
   status?: string;
   school: string;
+  schoolId: string;
   plan: string;
   accessToken?: string;
   classLevels?: Types.ObjectId[];
@@ -123,6 +124,10 @@ const studentSchema: Schema = new mongoose.Schema<IStudent>(
     },
     school: {
       type: String,
+    },
+    schoolId: {
+      type: String,
+      required: true,
     },
     plan: {
       type: String,
@@ -312,10 +317,12 @@ studentSchema.pre("save", async function (next) {
 //add subjects
 studentSchema.pre("save", async function (next) {
   let school = this.school;
-  console.log(school, "from school");
+  let schoolId = this.schoolId;
+  console.log(schoolId, "from school");
   let subjectsOffered: any[] = await Subject.find({
     className: this.className,
     school,
+    schoolId,
   });
   console.log(this.className);
   this.subjects = subjectsOffered;

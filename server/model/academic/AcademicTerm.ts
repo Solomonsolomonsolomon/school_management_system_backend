@@ -4,6 +4,7 @@ interface ITerm {
   description?: string;
   duration: string;
   school: string;
+  schoolId:string,
   plan: string;
   isCurrent: boolean;
   createdBy: Types.ObjectId;
@@ -36,6 +37,10 @@ const academicTermSchema = new Schema<ITerm>(
 
     school: {
       type: String,
+    },
+    schoolId:{
+      type:String,
+      required:true
     },
     plan: {
       type: String,

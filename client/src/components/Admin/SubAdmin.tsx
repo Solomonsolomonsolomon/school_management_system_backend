@@ -75,9 +75,9 @@ const SubAdmin: React.FC = () => {
 
   return (
     <div className="lg:p-10 md:p-2 sm:p-1 bg-white border-slate-200 shadow-2xl box-border grid gap-10 w-[99%] ">
-      <h1 className="text-xl text-gray-500 font-bold box-border shadow-black text-center  border-t-2 border-b-2 p-1 border-gray-300">Admin Dashboard</h1>
+      <h1 className="text-xl text-gray-500 font-bold box-border shadow-gray-600 text-center shadow-sm p-1 border-gray-300 font-mono">Admin Dashboard</h1>
       <section className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-2 h-auto   ">
-        <div className="bg-white p-10 shadow-xl border  box-content flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
+        <div className="bg-white p-10 shadow-gray-300 shadow-xl border  box-content flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
           <div className="flex border "></div>
           <section className="bg-green-100 p-5 rounded-full">
             <FontAwesomeIcon

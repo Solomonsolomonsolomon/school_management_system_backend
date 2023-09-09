@@ -10,6 +10,7 @@ interface IAdmin extends Document {
   accessToken: string;
   // academicTerms?: Types.ObjectId[];
   school: string;
+  schoolId:string;
   plan: string;
   programs?: Types.ObjectId[];
   yearGroups?: Types.ObjectId[];
@@ -39,6 +40,22 @@ const adminSchema = new Schema<IAdmin>(
     school: {
       type: String,
       required: true,
+    },
+    schoolId: {
+      type: String,
+      required: true,
+      default: function (this: IAdmin) {
+        return (
+          "SCH" +
+          Math.floor(100 + Math.random() * 900) +
+          Date.now().toString().slice(2, 4) +
+          this.name
+            .split(" ")
+            .map((name: any) => name[0])
+            .join("")
+            .toUpperCase()
+        );
+      },
     },
     plan: {
       type: String,

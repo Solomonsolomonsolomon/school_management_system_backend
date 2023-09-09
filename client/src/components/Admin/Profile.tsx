@@ -70,10 +70,9 @@ const Profile = () => {
     const profile = document.getElementById("profile");
     profile?.classList.toggle("hidden");
   };
-
   return (
-    <section className="bg-white border-b-2 p-5 pt-2 w-[100%] border rounded">
-      <div className=" flex justify-end gap-2 cursor-pointer" onClick={toggle}>
+    <section className="  mt-1 font-sans border-b-2   p-5  pr-3 pt-3  w-[99%]  rounded">
+      <div className=" flex justify-end border-b-1 gap-2 cursor-pointer " onClick={toggle}>
         <section>
           <h1 className="text-sm text-gray-900 ">{user.name}</h1>
           <p className="text-sm font-bold text-gray-900">{user.role}</p>
