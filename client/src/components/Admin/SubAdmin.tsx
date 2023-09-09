@@ -74,11 +74,11 @@ const SubAdmin: React.FC = () => {
 
 
   return (
-    <div className="lg:p-20 md:p-10 sm:p-1 bg-gray-200 grid gap-10 w-[99%] ">
-      <h1 className="text-2xl font-bold">Admin Dashboard</h1>
-      <section className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-10 h-auto   ">
-        <div className="bg-white p-10 shadow-lg flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
-          <div className="flex border"></div>
+    <div className="lg:p-10  md:p-2 sm:p-1 bg-gray-50 border-slate-200 shadow-2xl box-border grid gap-10 w-[99%] ">
+      <h1 className="text-sm text-gray-500 font-bold box-border shadow-gray-600 text-left shadow-sm p-1 m-0 border-gray-300">Admin Dashboard</h1>
+      <section className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-0 h-auto  ">
+        <div className="bg-white p-10 shadow-gray-300 shadow-xl border  box-content flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
+          <div className="flex border "></div>
           <section className="bg-green-100 p-5 rounded-full">
             <FontAwesomeIcon
               icon={faChildren}
@@ -93,7 +93,7 @@ const SubAdmin: React.FC = () => {
             </p>
           </section>
         </div>
-        <div className="bg-white p-10 shadow-lg flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
+        <div className="bg-white p-10 shadow-lg border border-gray-200 box-border flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
           <section className="bg-sky-100 p-5 px-7 rounded-full">
             <FontAwesomeIcon
               icon={faUserTie}
@@ -102,13 +102,13 @@ const SubAdmin: React.FC = () => {
             />
           </section>
           <section className="mt-3">
-            <h2 className="text-xl text-slate-400">Teachers</h2>
+            <h2 className=" text-slate-400 text-md">Teachers</h2>
             <p className="text-lg font-semibold" ref={teachersCount}>
               2000
             </p>
           </section>
         </div>
-        <div className="bg-white p-10 shadow-lg flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
+        <div className="bg-white p-10 shadow-2xl box-content flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
           <section className="bg-orange-100 p-5 rounded-full">
             <FontAwesomeIcon
               icon={faUserGroup}
@@ -117,7 +117,7 @@ const SubAdmin: React.FC = () => {
             />
           </section>
           <section className="mt-3">
-            <h2 className="text-xl text-slate-400 rounded">Parents</h2>
+            <h2 className=" text-slate-400 rounded text-md">Parents</h2>
             <p className="text-lg font-semibold" ref={parentsCount}>
               xxx
             </p>
@@ -132,21 +132,21 @@ const SubAdmin: React.FC = () => {
             />
           </section>
           <section className="mt-3">
-            <h2 className="text-xl text-slate-400">Earnings</h2>
+            <h2 className=" text-slate-400">Earnings</h2>
             <p className="text-lg font-semibold">$193000</p>
           </section>
         </div>
       </section>
 
-      <section className="grid  grid-cols-2 gap-5 ">
-        <div className="bg-white p-5 grid grid-rows-[5%_95%] gap-5">
+      <section className="grid  grid-cols-2 gap-4 ">
+        <div className="bg-white shadow-lg p-5 grid grid-rows-[5%_95%] gap-5">
           <h2>Earnings</h2>
           <div className="w-[99%]">
             <EarningChart />
           </div>
         </div>
-        <br></br>
-        <div className="bg-white p-5 grid grid-rows-[5%_95%] gap-5">
+      
+        <div className="bg-white p-5 shadow-2xl grid grid-rows-[5%_95%] gap-5">
           <h2>Expenses</h2>
           <div>
             <ExpenseChart />

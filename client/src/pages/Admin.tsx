@@ -1,3 +1,4 @@
+//import axios from "../api/axios";
 import Navbar from "../components/Admin/Navbar";
 import Profile from "../components/Admin/Profile";
 import SubAdmin from "../components/Admin/SubAdmin";
@@ -9,6 +10,9 @@ import AllTeachers from "../components/Admin/AllTeachers";
 import Subjects from "../components/Admin/Subjects";
 import ClassLevel from "../components/ClassLevel";
 import YearAndTerm from "../components/Admin/YearAndTerm";
+import AddAdmin from "../components/Admin/AddAdmin";
+import AllAdmin from "../components/Admin/AllAdmin";
+import Settings from "../components/Admin/Settings";
 //const GET_URL = "/admin";
 let components: any = {
   subadmin: SubAdmin,
@@ -16,9 +20,12 @@ let components: any = {
   allstudents: AllStudents,
   classlevel: ClassLevel,
   addteacher: AddTeacher,
-  allteachers:AllTeachers,
+  allteachers: AllTeachers,
   yearandterm: YearAndTerm,
   subjects: Subjects,
+  addadmin: AddAdmin,
+  alladmin: AllAdmin,
+  settings:Settings
 };
 const Admin = () => {
   let [view, setView] = React.useState("subadmin");
@@ -26,7 +33,10 @@ const Admin = () => {
   let Selected = components[view];
 
   return (
-    <div id="adminpage" className="grid md:grid-cols-[25%_75%] lg:grid-cols-[20%_80%] w-full overflow-y-hidden ">
+    <div
+      id="adminpage"
+      className="grid md:grid-cols-[24%_75%] lg:grid-cols-[20%_80%] w-full overflow-y-hidden"
+    >
       <Navbar setView={setView} />
       <main className="container">
         <section className="overflow-y-auto h-[100vh]">

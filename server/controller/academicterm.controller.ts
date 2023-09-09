@@ -13,6 +13,7 @@ class AcademicTermController {
    */
   public async getAllTerms(req: express.Request, res: express.Response) {
     let school = req.user?.school;
+    let schoolId=req.user?.schoolId;
     let allTerms = await AcademicTerm.find({ school });
     if (!allTerms.length) throw new CustomError({}, "no terms found", 404);
     res.status(200).json({
@@ -20,10 +21,12 @@ class AcademicTermController {
       msg: "all terms data",
       terms: allTerms,
       school,
+      schoolId
     });
   }
   public async addATerm(req: express.Request, res: express.Response) {
     let school = req.user?.school;
+    let schoolId = req.user?.schoolId;
     let name = req.body.name;
     let termExists = await AcademicTerm.findOne({ name, school });
     if (termExists)
@@ -32,6 +35,7 @@ class AcademicTermController {
       createdBy: req.user?._id,
       ...req.body,
       school,
+      schoolId
     });
     await newTerm
       .save()
@@ -43,7 +47,8 @@ class AcademicTermController {
     let { id } = req.params;
     let _id = await new mongoose.Types.ObjectId(id);
     let school = req.user?.school;
-    let previous = await AcademicTerm.findOne({ isCurrent: true, school });
+    let schoolId = req.user?.schoolId;
+    let previous = await AcademicTerm.findOne({ isCurrent: true, school,schoolId });
     if (previous) {
       previous.isCurrent = false;
       await previous.save().catch((err) => {
@@ -51,7 +56,7 @@ class AcademicTermController {
       });
     }
 
-    let current = await AcademicTerm.findOne({ _id, school });
+    let current = await AcademicTerm.findOne({ _id, school ,schoolId});
     current!.isCurrent = true;
     current!.updatedBy = req.user?._id;
     await current!
@@ -70,14 +75,16 @@ class AcademicTermController {
   public async deleteTerm(req: express.Request, res: express.Response) {
     let { id } = req.params;
     let school = req.user?.school;
+    let schoolId = req.user?.schoolId;
     let _id = new mongoose.Types.ObjectId(id);
     let isCurrent = !!(await AcademicTerm.findOne({
       _id,
       isCurrent: true,
       school,
+      schoolId
     }));
     if (isCurrent) throw new CustomError({}, "cannot delete current term", 403);
-    let term = await AcademicTerm.findOneAndRemove({ _id, school });
+    let term = await AcademicTerm.findOneAndRemove({ _id, school ,schoolId});
     if (!term) {
       throw new CustomError(
         {},
@@ -90,8 +97,9 @@ class AcademicTermController {
   }
   public async getCurrentTerm(req: express.Request, res: express.Response) {
     let school = req.user?.school;
-    console.log(school)
-    await AcademicTerm.findOne({ school, isCurrent: true }).then(
+    let schoolId = req.user?.schoolId;
+    console.log(schoolId)
+    await AcademicTerm.findOne({ school, isCurrent: true,schoolId }).then(
       (currentTerm) => {
         if (!currentTerm)
           throw new CustomError({}, "no current term set,set new term", 404);

@@ -9,7 +9,7 @@ const http_1 = require("http");
 const v1_1 = __importDefault(require("./routes/versions/v1"));
 const path_1 = __importDefault(require("path"));
 const server = (0, http_1.createServer)(server_1.default);
-const port = process.env.PORT || 2021;
+const port = process.env.PORT || 2020;
 const globalErrorHandler_1 = require("./middleware/globalErrorHandler");
 //version 1 of api
 server_1.default.get("/", (req, res) => {

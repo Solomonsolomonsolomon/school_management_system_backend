@@ -26,9 +26,9 @@ class AcademicYearController {
   //    year.isCurrent = true;
   // }
 
-  public async makeCurrent(school: string, term: any) {
+  public async makeCurrent(schoolId: string, term: any) {
     try {
-      let previous = await AcademicYear.findOne({ isCurrent: true, school });
+      let previous = await AcademicYear.findOne({ isCurrent: true, schoolId });
       if (previous) {
         previous.isCurrent = false;
         await previous.save().catch((err: any) => {
@@ -45,8 +45,9 @@ class AcademicYearController {
   public async addAcademicYear(req: express.Request, res: express.Response) {
     let { fromYear, toYear } = req.body;
     let school = req.user?.school;
+    let schoolId = req.user?.schoolId;
     let name = `${fromYear}/${toYear}`;
-    let year = await AcademicYear.findOne({ name, school });
+    let year = await AcademicYear.findOne({ name, schoolId });
     if (year) {
       throw new CustomError({}, "year already added", 403);
     } else {
@@ -55,9 +56,10 @@ class AcademicYearController {
         fromYear,
         toYear,
         school,
+        schoolId,
         createdBy: req.user._id,
       });
-      await this.makeCurrent(school, newYear);
+      await this.makeCurrent(schoolId, newYear);
       newYear.save().then((year: any) => {
         res.status(201).json({
           status: 201,
@@ -92,7 +94,8 @@ class AcademicYearController {
   }
   public async getAllYears(req: express.Request, res: express.Response) {
     let school = req.user?.school;
-    await AcademicYear.find({ school }).then((years: any[]) => {
+    let schoolId = req.user?.schoolId;
+    await AcademicYear.find({ school,schoolId }).then((years: any[]) => {
       if (years.length < 1) throw new CustomError({}, "no years found", 404);
       res.status(200).json({
         status: 200,
@@ -104,7 +107,8 @@ class AcademicYearController {
 
   public async getCurrentYear(req: express.Request, res: express.Response) {
     let school = req.user?.school;
-    let current = await AcademicYear.findOne({ isCurrent: true, school });
+    let schoolId = req.user?.schoolId;
+    let current = await AcademicYear.findOne({ isCurrent: true, school ,schoolId});
     if (!current)
       throw new CustomError({}, "no current year,please set current year", 404);
     await res.status(200).json({
@@ -136,7 +140,8 @@ class AcademicYearController {
     let { id } = req.params;
     let _id = await new mongoose.Types.ObjectId(id);
     let school = req.user?.school;
-    let previous = await AcademicYear.findOne({ isCurrent: true, school });
+    let schoolId = req.user?.schoolId;
+    let previous = await AcademicYear.findOne({ isCurrent: true, school,schoolId });
     if (previous) {
       previous.isCurrent = false;
       await previous.save().catch((err: any) => {

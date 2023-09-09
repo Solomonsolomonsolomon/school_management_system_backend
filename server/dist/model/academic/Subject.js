@@ -90,6 +90,10 @@ const SubjectSchema = new mongoose_1.default.Schema({
     school: {
         type: String,
     },
+    schoolId: {
+        type: String,
+        required: true,
+    },
     plan: {
         type: String,
         enum: ["basic", "standard", "advanced"],

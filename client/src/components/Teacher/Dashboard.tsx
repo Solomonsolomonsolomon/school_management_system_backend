@@ -14,6 +14,7 @@ const Dashboard: React.FC<{
 }> = ({ errRef }) => {
   let ref = React.useRef<HTMLParagraphElement>(null);
   let [formStudents, setFormStudents] = React.useState<any[]>([]);
+  let [subjectsTaught, setSubjectsTaught] = React.useState<any>({});
   console.log(errRef);
   React.useEffect(() => {
     managedStudents();
@@ -41,10 +42,9 @@ const Dashboard: React.FC<{
     async function studentsTaught() {
       try {
         let res = await axios.get(`${baseUrl}/${_id}/get/students/taught`);
-        ref.current
-          ? (ref.current.textContent = res.data?.msg || "here")
-          : "";
+        ref.current ? (ref.current.textContent = res.data?.msg || "here") : "";
         console.log(res.data?.studentsTaught);
+        setSubjectsTaught(res.data?.studentsTaught);
       } catch (error: any) {
         console.log(error);
         ref.current
@@ -119,6 +119,54 @@ const Dashboard: React.FC<{
         </div>
       </div>
       <p className="text-center font-bold">Students Taught</p>
+      {Object.keys(subjectsTaught).map((subject) => (
+        <div className="border p-5 h-[300px] overflow-x-auto" key={subject}>
+          <div className="overflow-x-auto">
+            <h2>{subject}</h2>
+            <table className="divide-y divide-gray-200 dark:divide-gray-700 overflow-x-auto border">
+              <thead className="bg-gray-50 dark:bg-gray-950">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    Student Name
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    1CA
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    2CA
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    3CA
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200 dark:divide-gray-700" key={subject}>
+                {subjectsTaught[subject].map((student: any) => (
+                  <tr key={student._id}>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
+                      {student.name}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
+                      0
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
+                      0
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
+                      0
+                    </td>
+                    <td>
+                      <a className="text-blue-500 hover:text-blue-700">
+                        Edit Grades
+                      </a>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      ))}
     </div>
   );
 };
