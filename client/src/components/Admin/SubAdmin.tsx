@@ -138,7 +138,7 @@ const SubAdmin: React.FC = () => {
         </div>
       </section>
 
-      <section className="grid  grid-cols-2 gap-4 ">
+      <section className="grid   gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 ">
         <div className="bg-white shadow-lg p-5 grid grid-rows-[5%_95%] gap-5">
           <h2>Earnings</h2>
           <div className="w-[99%]">
