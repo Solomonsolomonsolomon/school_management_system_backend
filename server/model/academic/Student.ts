@@ -11,6 +11,7 @@ import { AcademicTerm } from "./AcademicTerm";
 import { AcademicYear } from "./AcademicYear";
 import { ISubject, Subject } from "./Subject";
 import { CustomError } from "../../middleware/decorators";
+import { ClassLevel } from "./ClassLevel";
 
 interface IStudent extends Document {
   name: string;
@@ -23,7 +24,10 @@ interface IStudent extends Document {
   gender: string;
   age?: string;
   role: string;
-
+  isPaid: boolean;
+  balance: number;
+  excess: number;
+  percentagePaid: number;
   status?: string;
   school: string;
   schoolId: string;
@@ -102,6 +106,18 @@ const studentSchema: Schema = new mongoose.Schema<IStudent>(
     role: {
       type: String,
       default: "student",
+    },
+    isPaid: {
+      type: Boolean,
+      default: false,
+    },
+    percentagePaid: {
+      type: Number,
+    },
+    balance: Number,
+    excess: {
+      type: Number,
+      default: 0,
     },
     status: {
       type: String,
@@ -314,6 +330,7 @@ studentSchema.methods.verifiedPassword = async function (
 studentSchema.pre("save", async function (next) {
   this.className = `${this.currentClassLevel}${this.currentClassArm}`;
 });
+
 //add subjects
 studentSchema.pre("save", async function (next) {
   let school = this.school;
@@ -327,7 +344,22 @@ studentSchema.pre("save", async function (next) {
   console.log(this.className);
   this.subjects = subjectsOffered;
 });
+//compute balance
+studentSchema.pre("save", async function (next) {
+  let schoolId = this.schoolId;
+  let school = this.school;
+  let theClass: any = await ClassLevel.findOne({
+    name: this.className,
+    schoolId,
+    school,
+  });
+  this.balance = theClass.price;
+  this.paid = false;
+  this.excess += 0;
+  this.percentagePaid = 0;
+});
 //model
 const Student = model<IStudent>("Student", studentSchema);
 Student.syncIndexes();
 export { Student, IStudent };
+

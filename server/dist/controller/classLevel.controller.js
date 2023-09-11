@@ -56,6 +56,7 @@ class ClassLevelController {
                     $group: {
                         _id: "$_id",
                         name: { $first: "$name" },
+                        price: { $first: "$price" },
                         numberOfStudents: {
                             $sum: { $size: "$students" },
                         },
@@ -66,7 +67,8 @@ class ClassLevelController {
                     $project: {
                         name: "$name",
                         numberOfStudents: 1,
-                        _id: 1, // Exclude the "_id" field.
+                        _id: 1,
+                        price: "$price",
                     },
                 },
             ])
@@ -90,7 +92,8 @@ class ClassLevelController {
     createClassLevel(req, res) {
         var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
-            let { name } = req.body;
+            let { name, price } = req.body;
+            console.log(req.body);
             let school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
             let schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
             let classLevel = yield database_1.ClassLevel.findOne({ name, school, schoolId });
@@ -101,7 +104,9 @@ class ClassLevelController {
                 createdBy: req.user._id,
                 school,
                 schoolId,
+                price,
             });
+            console.log(newClassLevel);
             yield newClassLevel.save();
             res.status(201).json({
                 status: 201,

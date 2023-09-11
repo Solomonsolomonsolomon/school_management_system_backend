@@ -28,7 +28,6 @@ const mongoose_1 = __importStar(require("mongoose"));
 const academicTermSchema = new mongoose_1.Schema({
     name: {
         type: String,
-        unique: true,
     },
     description: {
         type: String,

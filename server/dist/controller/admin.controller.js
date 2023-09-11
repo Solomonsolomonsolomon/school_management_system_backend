@@ -19,7 +19,7 @@ function addAdmin(req, res, next) {
             let { name, email, password, role } = req.body;
             let school = ((_a = req.body) === null || _a === void 0 ? void 0 : _a.school) || ((_b = req.user) === null || _b === void 0 ? void 0 : _b.school);
             let schoolId = (_c = req.user) === null || _c === void 0 ? void 0 : _c.schoolId;
-            yield database_1.Admin.findOne({ name, school }).then((alreadyRegistered) => __awaiter(this, void 0, void 0, function* () {
+            yield database_1.Admin.findOne({ email }).then((alreadyRegistered) => __awaiter(this, void 0, void 0, function* () {
                 if (alreadyRegistered) {
                     throw new Error("This particular admin already registered");
                 }
@@ -105,14 +105,14 @@ function addStudent(req, res, next) {
         let isStudentAlreadyRegistered = !!(yield database_1.Student.countDocuments({
             name,
             school,
-            schoolId
+            schoolId,
         }));
         if (isStudentAlreadyRegistered)
             throw new decorators_1.CustomError({}, "student already registered", 403);
         let isClassAvailable = !!(yield database_1.ClassLevel.countDocuments({
             name: `${currentClassLevel}${currentClassArm}`,
             school,
-            schoolId
+            schoolId,
         }));
         if (!isClassAvailable)
             throw new decorators_1.CustomError({}, "the class you selected is not available.please register and try again", 404);
@@ -223,11 +223,12 @@ function deleteTeacher(req, res, next) {
 }
 exports.deleteTeacher = deleteTeacher;
 function getAllAdmin(req, res) {
-    var _a;
+    var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         try {
             let school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
-            yield database_1.Admin.find({ school }).then((admins) => {
+            let schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
+            yield database_1.Admin.find({ school, schoolId }).then((admins) => {
                 if (admins.length < 1)
                     throw new Error("No admin found");
                 res.status(200).json({
@@ -310,7 +311,10 @@ function getGenderDivide(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             let schoolId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.schoolId;
-            let totalStudents = yield database_1.Student.find({ school: (_b = req.user) === null || _b === void 0 ? void 0 : _b.school, schoolId });
+            let totalStudents = yield database_1.Student.find({
+                school: (_b = req.user) === null || _b === void 0 ? void 0 : _b.school,
+                schoolId,
+            });
             let males = 0;
             let females = 0;
             totalStudents.forEach((student) => {
