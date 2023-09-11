@@ -23,6 +23,7 @@ import { Subject } from "./academic/Subject";
 import { AcademicTerm } from "./academic/AcademicTerm";
 import { AcademicYear } from "./academic/AcademicYear";
 import { ClassLevel } from "./academic/ClassLevel";
+import { School } from "./others/School";
 //schemas
 export {
   Teacher,
@@ -34,6 +35,7 @@ export {
   AcademicTerm,
   AcademicYear,
   ClassLevel,
+  School,
 };
 export { ITeacher, IStudent };
 

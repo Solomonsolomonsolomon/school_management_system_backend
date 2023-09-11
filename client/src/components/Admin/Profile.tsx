@@ -72,7 +72,7 @@ const Profile = () => {
   };
   return (
     <section className="  mt-1  border-b-2   p-5  pr-3 pt-3  w-[99%]  rounded">
-      <div className=" flex  border-b-1 gap-2 cursor-pointer " onClick={toggle}>
+      <div className=" flex   justify-center border-b-1 gap-2 cursor-pointer " onClick={toggle}>
         <section className="flex gap-5 flex-wrap justify-end">
           <h1 className="text-sm text-gray-900 font-bold uppercase underline">
             {user.name}
@@ -105,7 +105,7 @@ const Profile = () => {
               icon={faGear}
               className="mt-3  mr-2 text-sky-300"
             />
-            <span className="text-xl text-sky-300  text-white font-bold">
+            <span className="text-xl  text-white font-bold">
               Settings
             </span>
           </li>
@@ -114,7 +114,7 @@ const Profile = () => {
               icon={faUserPlus}
               className="mt-3  mr-2 text-sky-300"
             />
-            <span className="text-xl text-sky-300  text-white font-bold">
+            <span className="text-xl   text-white font-bold">
               Add Admin
             </span>
           </li>
