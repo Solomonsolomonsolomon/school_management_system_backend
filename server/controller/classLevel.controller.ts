@@ -77,7 +77,7 @@ class ClassLevelController {
   }
   public async createClassLevel(req: express.Request, res: express.Response) {
     let { name, price } = req.body;
-    console.log(req.body);
+   
     let school = req.user?.school;
     let schoolId = req.user?.schoolId;
     let classLevel = await ClassLevel.findOne({ name, school, schoolId });

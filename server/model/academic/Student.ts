@@ -160,11 +160,11 @@ const studentSchema: Schema = new mongoose.Schema<IStudent>(
 
     currentClassLevel: {
       type: String,
-      default: function (this: IStudent) {
-        return this.classLevels
-          ? this.classLevels[this.classLevels.length - 1]
-          : "";
-      },
+      // default: function (this: IStudent) {
+      //   return this.classLevels
+      //     ? this.classLevels[this.classLevels.length - 1]
+      //     : "";
+      // },
     },
     currentClassArm: {
       type: String,
@@ -250,7 +250,6 @@ const studentSchema: Schema = new mongoose.Schema<IStudent>(
   },
   {
     timestamps: true,
-    virtuals: true,
   }
 );
 
@@ -267,8 +266,10 @@ studentSchema.pre("save", async function (next) {
 });
 //add current term and current year
 studentSchema.pre("save", async function (next) {
-  let currentTerm = await AcademicTerm.findOne({ isCurrent: true });
-  let currentYear = await AcademicYear.findOne({ isCurrent: true });
+  let school = this.school;
+  console.log(this);
+  let currentTerm = await AcademicTerm.findOne({ isCurrent: true, school });
+  let currentYear = await AcademicYear.findOne({ isCurrent: true, school });
   if (!currentYear || !currentTerm)
     throw new CustomError(
       {},
@@ -277,44 +278,45 @@ studentSchema.pre("save", async function (next) {
     );
   this.academicYear = currentYear;
   this.currentAcademicTerm = currentTerm;
+  console.log("hiiiiiiii");
   next();
 });
 
 //get back to this
-studentSchema.pre("save", async function (next) {
-  console.log("hi");
-  // let classes = [
-  //   "NUR1",
-  //   "NUR2",
-  //   "NUR3",
-  //   "PRY1",
-  //   "PRY2",
-  //   "PRY3",
-  //   "PRY4",
-  //   "PRY5",
-  //   "PRY6",
-  //   "JSS1",
-  //   "JSS2",
-  //   "JSS3",
-  //   "SS1",
-  //   "SS2",
-  //   "SS3",
-  // ];
-  // if (
-  //   this.isModified("currentClassLevel") ||
-  //   this.isModified("classLevel") ||
-  //   this.isModified("isPromoted")
-  // ) {
-  //   if (this.isPromoted) {
-  //     const currentIndex = classes.indexOf(this.currentClassLevel);
-  //     if (currentIndex !== -1 && currentIndex < classes.length - 1) {
-  //       this.currentClassLevel = classes[currentIndex + 1];
-  //     }
-  //   } else {
-  //     this.currentClassLevel;
-  //   }
-  // }
-});
+// studentSchema.pre("save", async function (next) {
+//   console.log("hi");
+//   // let classes = [
+//   //   "NUR1",
+//   //   "NUR2",
+//   //   "NUR3",
+//   //   "PRY1",
+//   //   "PRY2",
+//   //   "PRY3",
+//   //   "PRY4",
+//   //   "PRY5",
+//   //   "PRY6",
+//   //   "JSS1",
+//   //   "JSS2",
+//   //   "JSS3",
+//   //   "SS1",
+//   //   "SS2",
+//   //   "SS3",
+//   // ];
+//   // if (
+//   //   this.isModified("currentClassLevel") ||
+//   //   this.isModified("classLevel") ||
+//   //   this.isModified("isPromoted")
+//   // ) {
+//   //   if (this.isPromoted) {
+//   //     const currentIndex = classes.indexOf(this.currentClassLevel);
+//   //     if (currentIndex !== -1 && currentIndex < classes.length - 1) {
+//   //       this.currentClassLevel = classes[currentIndex + 1];
+//   //     }
+//   //   } else {
+//   //     this.currentClassLevel;
+//   //   }
+//   // }
+// });
 // Verify Password
 studentSchema.methods.verifiedPassword = async function (
   enteredPassword: string
@@ -327,14 +329,18 @@ studentSchema.methods.verifiedPassword = async function (
 // });
 
 //currentClass
-studentSchema.pre("save", async function (next) {
-  this.className = `${this.currentClassLevel}${this.currentClassArm}`;
+studentSchema.pre("save", async function (this: IStudent, next) {
+  console.log(this.currentClassLevel);
+  this.className = `${await this.currentClassLevel}${await this
+    .currentClassArm}`;
+
+  next();
 });
 
 //add subjects
 studentSchema.pre("save", async function (next) {
-  let school = this.school;
-  let schoolId = this.schoolId;
+  let school = await this.school;
+  let schoolId = await this.schoolId;
   console.log(schoolId, "from school");
   let subjectsOffered: any[] = await Subject.find({
     className: this.className,
@@ -343,17 +349,19 @@ studentSchema.pre("save", async function (next) {
   });
   console.log(this.className);
   this.subjects = subjectsOffered;
+  next();
 });
 //compute balance
 studentSchema.pre("save", async function (next) {
-  let schoolId = this.schoolId;
-  let school = this.school;
+  console.log("here");
+  let schoolId = await this.schoolId;
+  let school = await this.school;
   let theClass: any = await ClassLevel.findOne({
-    name: this.className,
+    name: `${await this.currentClassLevel}${await this.currentClassArm}`,
     schoolId,
     school,
   });
-  this.balance = theClass.price;
+  this.balance = theClass ? theClass.price : 0;
   this.paid = false;
   this.excess += 0;
   this.percentagePaid = 0;
@@ -362,4 +370,3 @@ studentSchema.pre("save", async function (next) {
 const Student = model<IStudent>("Student", studentSchema);
 Student.syncIndexes();
 export { Student, IStudent };
-
