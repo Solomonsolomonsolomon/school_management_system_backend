@@ -27,7 +27,7 @@ function signIn(req, res) {
             }
             let Model = index == 0 ? database_1.Student : index == 1 ? database_1.Admin : index == 2 ? database_1.Teacher : database_1.Admin;
             yield Model.findOne({ email })
-                .select("name accessToken role school password email _id ")
+                .select("name accessToken role className  currentClassLevel currentClassArm schoolId school password subjects email _id ")
                 .then((user) => __awaiter(this, void 0, void 0, function* () {
                 if (!user)
                     throw new Error("invalid credentials");
@@ -54,6 +54,7 @@ function signIn(req, res) {
         }
         catch (error) {
             // Handle the error appropriately
+            console.error(error);
             res.status(401).json({
                 status: 401,
                 error,

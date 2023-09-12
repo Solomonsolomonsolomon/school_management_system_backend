@@ -93,7 +93,6 @@ class ClassLevelController {
         var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
             let { name, price } = req.body;
-            console.log(req.body);
             let school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
             let schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
             let classLevel = yield database_1.ClassLevel.findOne({ name, school, schoolId });

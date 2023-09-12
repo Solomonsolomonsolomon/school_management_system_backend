@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "../../api/axios";
 let payUrl = "/paystack";
-import { useForm, SubmitHandler, set } from "react-hook-form";
+import { useForm, SubmitHandler} from "react-hook-form";
 const Settings = () => {
   const [configureVisibility, setConfigureVisibility] =
     React.useState<boolean>(false);
