@@ -71,13 +71,13 @@ const Profile = () => {
     profile?.classList.toggle("hidden");
   };
   return (
-    <section className="  mt-1  border-b-2   p-5  pr-3 pt-3  w-[99%]  rounded">
+    <section className="  mt-1  border-b-2 bg-gray-50  p-5 mb-2 pr-3 pt-3  w-[99%]  rounded">
       <div className=" flex   justify-center border-b-1 gap-2 cursor-pointer " onClick={toggle}>
         <section className="flex gap-5 flex-wrap justify-end">
-          <h1 className="text-sm text-gray-900 font-bold uppercase underline">
+          <h1 className="text-sm text-gray-900 font-bold capitalize ">
             {user.name}
           </h1>
-          {/* <p className="text-sm font-bold text-gray-900">{user.role}</p>
+          {/* <p className="text-sm font-bold text-white">{user.role}</p>
            */}
           <h1 className="text-sm text-gray-900 ">
             school:<span className="italic ">{user.school}</span>
