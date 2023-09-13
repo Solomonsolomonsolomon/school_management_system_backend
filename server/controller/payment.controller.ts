@@ -19,7 +19,8 @@ const initializeTransaction = async (req: Request, res: Response) => {
       amount: amount * 100,
       subaccount: subaccount.subaccount_code,
       transaction_charge: 100 * 100,
-    });
+      bearer: "subaccount",
+    }); 
 
     await paystack
       .initializetransaction(res, body)
@@ -34,6 +35,7 @@ const initializeTransaction = async (req: Request, res: Response) => {
         throw err;
       });
   } catch (error: any) {
+    console.error(error);
     return res.status(400).json({ message: error.message, error });
   }
 };

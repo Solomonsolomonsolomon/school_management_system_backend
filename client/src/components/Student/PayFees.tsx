@@ -16,8 +16,9 @@ const PayFees: React.FC = () => {
         signal: controller.signal,
       });
       setMsg(res.data?.msg || res?.data?.message || "successful");
-      console.log(res);
+      window.location.replace(res.data?.url);
     } catch (error: any) {
+      
       setMsg(
         error?.response?.data?.message ||
           "An error Occured,confirm details and try again"

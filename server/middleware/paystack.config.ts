@@ -11,9 +11,11 @@ const paystack = (() => {
           },
         })
         .then((response: AxiosResponse) => {
+          console.log(response);
           resolve(response.data);
         })
         .catch((err: AxiosError) => {
+          console.log(err);
           reject(err.message);
         });
     });

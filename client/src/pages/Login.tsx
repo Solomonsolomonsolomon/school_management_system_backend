@@ -3,6 +3,7 @@ import React, { useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { AxiosLoginInstance } from "../api/axios";
 const LOGIN_URL = "/auth";
+import svg1 from "../assets/undraw_before_dawn_re_hp4m.svg";
 import { isLoggedIn } from "../App";
 export default function Login() {
   interface IDetails {
@@ -56,7 +57,7 @@ export default function Login() {
         //location.href = `/${details.role}/dashboard`;
       } catch (error: any) {
         //go back to select on fail
-        if(error.name=="AbortError"||error.name=='CanceledError')return;
+        if (error.name == "AbortError" || error.name == "CanceledError") return;
         console.log(error);
         setDetails((prev) => {
           return { ...prev, role: "" };
@@ -93,30 +94,35 @@ export default function Login() {
     }, []);
   }
   return (
-    <div className="grid h-[100%] ">
-      <h1 className="text-center text-[27px] font-bold italic">
+    <div className="h-full overflow-x-hidden overflow-y-hidden">
+      <h1 className="text-center font-bold">
         SOLACE School Management Systems.Login to continue
       </h1>
-      <div className="sm:flex sm:flex-wrap grid grid-cols-1   border-black gap-0 justify-center align-top content-start ">
-        <p
-          ref={msgRef}
-          className={`w-[100%] text-center ${
-            msgRef.current?.textContent === "successful_login"
-              ? "text-green-800"
-              : "text-[red]"
-          }`}
-        ></p>
+      <div className="flex justify-items-center place-content-center">
+        <img src={svg1} className="absolute z-[-100] h-[97vh]" alt="" />
+      </div>
+
+      <div className=" grid justify-center justify-items-center h-full grid-cols-1">
+        <p></p>
         <form
           onSubmit={handleSubmit}
-          className="border content-center border-black rounded place-content-center items-center justify-center py-[10%] grid gap-2 sm:w-[100%] md:w-[50%] lg:w-[40%] h-[auto]"
+          className="grid gap-1 border border-black bg-white h-fit p-6 rounded "
         >
+          <p
+            ref={msgRef}
+            className={`w-[100%] text-center ${
+              msgRef.current?.textContent === "successful_login"
+                ? "text-green-800"
+                : "text-[red]"
+            }`}
+          ></p>
           <input
             type="text"
             placeholder="email"
             name="email"
             value={details.email}
             onChange={handleInput}
-            className="border p-1 border-black rounded"
+            className="border border-black border-t-0 border-b-2 border-l-0 border-r-0 rounded "
           />
           <input
             type="password"
@@ -124,7 +130,7 @@ export default function Login() {
             name="password"
             value={details.password}
             onChange={handleInput}
-            className="border p-1 rounded border-black"
+            className="border border-black border-t-0 border-b-2 border-l-0 border-r-0 rounded"
           />
           <select
             name="role"
@@ -132,6 +138,7 @@ export default function Login() {
             value={details.role}
             required
             onChange={handleInput}
+            className="border border-black border-t-0 border-b-2 border-l-0 border-r-0 rounded"
           >
             <option value="">SELECT</option>
             <option value="admin">admin</option>
@@ -142,7 +149,7 @@ export default function Login() {
             onClick={() => {
               setClicked(clicked + 1);
             }}
-            className="bg-gray-900  text-white p-[10px] rounded"
+            className="bg-gray-900 p-2 rounded text-white"
           >
             LOGIN
           </button>
