@@ -50,24 +50,20 @@ const Sidebar: React.FC<ProfileProps> = ({ setView }) => {
             <li
               className="mb-2"
               onClick={() => {
-                setView("addstudent");
+                setView("payfees");
                 setIsOpen(false);
               }}
             >
-              <a className="block text-gray-300 hover:text-white">
-                Add Student
-              </a>
+              <a className="block text-gray-300 hover:text-white">Pay fees</a>
             </li>
             <li
               className="mb-2"
               onClick={() => {
-                setView("registerclass");
+                setView("viewresult");
                 setIsOpen(false);
               }}
             >
-              <a href="#" className="block text-gray-300 hover:text-white">
-                Register Class
-              </a>
+              <a className="block text-gray-300 hover:text-white">View Results</a>
             </li>
           </ul>
         </div>

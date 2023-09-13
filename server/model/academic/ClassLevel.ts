@@ -5,6 +5,7 @@ interface IClassLevel {
   name: string;
   description?: string;
   createdBy: mongoose.Types.ObjectId;
+  price: number;
   students?: mongoose.Types.ObjectId[];
   subjects?: mongoose.Types.ObjectId[];
   teachers?: mongoose.Types.ObjectId[];
@@ -20,6 +21,7 @@ const ClassLevelSchema = new Schema(
     description: {
       type: String,
     },
+    price: { type: Number, required: true, default: 0 },
     school: {
       type: String,
       required: true,
@@ -28,7 +30,6 @@ const ClassLevelSchema = new Schema(
     schoolId: {
       type: String,
       required: true,
-     
     },
     plan: {
       type: String,

@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
 import paystack from "../middleware/paystack.config";
+import { School } from "../model/database";
+import { CustomError } from "../middleware/decorators";
 //# initialize transaction
 const initializeTransaction = async (req: Request, res: Response) => {
   try {
@@ -7,10 +9,18 @@ const initializeTransaction = async (req: Request, res: Response) => {
     if (!email || !amount) {
       throw new Error("enter email and amount");
     }
+    let subaccount = await School.findOne({ schoolId: req.user?.schoolId });
+    if (!subaccount)
+      throw new CustomError({}, "School hasn`t registered payment", 404);
+    if (!subaccount.subaccount_code)
+      throw new CustomError({}, "School hasn`t entered payment details", 404);
     const body = JSON.stringify({
       email,
       amount: amount * 100,
-    });
+      subaccount: subaccount.subaccount_code,
+      transaction_charge: 100 * 100,
+      bearer: "subaccount",
+    }); 
 
     await paystack
       .initializetransaction(res, body)
@@ -25,6 +35,7 @@ const initializeTransaction = async (req: Request, res: Response) => {
         throw err;
       });
   } catch (error: any) {
+    console.error(error);
     return res.status(400).json({ message: error.message, error });
   }
 };
@@ -44,4 +55,58 @@ const verifyPayment = async (req: Request, res: Response) => {
     return res.status(400).json({ message: error.message, error });
   }
 };
-export { verifyPayment, initializeTransaction };
+
+const subAccount = async (req: Request, res: Response) => {
+  try {
+    let body = req.body;
+    console.log(req.body);
+    let response: any = await paystack.createSubAccount(res, {
+      ...body,
+      percentage_charge: 0.02,
+    });
+
+    const bulkWriteOps = [];
+    const filter = { schoolId: req.user?.schoolId };
+    const replacement = {
+      schoolId: req.user?.schoolId,
+      ...body,
+      subaccount_code: response?.data?.subaccount_code,
+    };
+    const updateOne = {
+      updateOne: {
+        filter,
+        update: replacement,
+        upsert: true, // Insert if not found
+      },
+    };
+    bulkWriteOps.push(updateOne);
+    await School.bulkWrite(bulkWriteOps);
+
+    res.status(200).json(response);
+  } catch (err: any) {
+    res.status(400).json({ ...err });
+  }
+};
+
+const getBank = async (req: Request, res: Response) => {
+  try {
+    let query = req.query;
+    let simplifiedData: any[] = [];
+    let response: any = await paystack.getBank(res, query);
+    for (const bank of response.data) {
+      simplifiedData.push({
+        name: bank.name,
+        code: bank.code,
+      });
+    }
+    res.status(200).json({
+      status: 200,
+      msg: "banks fetched successfully",
+      banks: simplifiedData,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json(error);
+  }
+};
+export { verifyPayment, initializeTransaction, subAccount, getBank };

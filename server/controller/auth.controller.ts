@@ -6,6 +6,7 @@ export async function signIn(req: Request, res: Response) {
   let roles: string[] = ["student", "admin", "teacher"];
   let index: number = roles.indexOf(role);
   let user: any = null;
+  console.log(email, password, role);
   try {
     if (!email || !password || !role) {
       throw new Error("enter email and password");
@@ -13,7 +14,9 @@ export async function signIn(req: Request, res: Response) {
     let Model: any =
       index == 0 ? Student : index == 1 ? Admin : index == 2 ? Teacher : Admin;
     await Model.findOne({ email })
-      .select("name accessToken role school password email _id ")
+      .select(
+        "name accessToken role className password currentClassLevel currentClassArm schoolId school subjects email _id "
+      )
       .then(async (user: any) => {
         if (!user) throw new Error("invalid credentials");
         if (await user.verifiedPassword(password)) {
@@ -41,6 +44,7 @@ export async function signIn(req: Request, res: Response) {
       });
   } catch (error: any) {
     // Handle the error appropriately
+    console.error(error);
     res.status(401).json({
       status: 401,
       error,

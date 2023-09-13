@@ -16,6 +16,7 @@ const ClassLevelSchema = new Schema({
     description: {
         type: String,
     },
+    price: { type: Number, required: true, default: 0 },
     school: {
         type: String,
         required: true,

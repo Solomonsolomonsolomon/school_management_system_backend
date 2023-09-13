@@ -18,10 +18,10 @@ const ClassLevel: React.FC = () => {
       try {
         isLoading(true);
         const res = await axios.get(`${getUrl}/class/get/all`);
-    
+
         res.data?.classes ? setClasses(res.data?.classes) : setClasses([]);
         isLoading(false);
-        console.log('here')
+        console.log("here");
       } catch (error) {
         console.log(error);
         isLoading(false);
@@ -36,13 +36,16 @@ const ClassLevel: React.FC = () => {
   }
 
   const onSubmit: SubmitHandler<any> = (data: any) => {
-
+    console.log(data);
     let name = `${data.currentClassLevel}${data.currentClassArm}`;
     submitAddClassForm();
 
     async function submitAddClassForm() {
       try {
-        let res = await axios.post(`${getUrl}/class/new`, { name });
+        let res = await axios.post(`${getUrl}/class/new`, {
+          name,
+          price: data?.price,
+        });
         console.log(res);
         AddRef.current ? (AddRef.current.textContent = res.data?.msg) : "";
         setClasses([...classes, res.data?.newClassLevel]);
@@ -114,6 +117,12 @@ const ClassLevel: React.FC = () => {
           <option value="O">O</option>
           <option value="P">P</option>
         </select>
+        <input
+          type="number"
+          placeholder="enter school fees"
+          {...register("price")}
+          className="border-b-2 border-t-0 border-l-0 border-r-0 border border-black"
+        />
         <button className=" p-3 border bg-gray-600 text-white rounded w-[200px]">
           ADD CLASS
         </button>
@@ -127,7 +136,6 @@ const ClassLevel: React.FC = () => {
           value={searchQuery}
           onChange={(e) => {
             setSearchQuery(e.target.value);
-            
           }}
           className="p-2 border rounded"
         />
@@ -143,10 +151,10 @@ const ClassLevel: React.FC = () => {
                 </th>
 
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                  Number of Students
+                  No of Students
                 </th>
                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
-                  Action
+                  Price
                 </th>
               </tr>
             </thead>
@@ -164,7 +172,9 @@ const ClassLevel: React.FC = () => {
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
                     {theClass.numberOfStudents}
                   </td>
-
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
+                    {theClass.price}
+                  </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium ">
                     <a
                       className="text-blue-500 hover:text-blue-700"

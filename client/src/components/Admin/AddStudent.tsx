@@ -36,25 +36,25 @@ const AddStudent = () => {
   const onsubmit: SubmitHandler<Iform> = async (data: Iform, e) => {
     e?.preventDefault();
 
-    if (!data.picture || !data.picture.length) {
-      setImageError("Please select an image");
-      return;
-    } else {
-      setImageError(null);
-    }
+    // if (!data.picture || !data.picture.length) {
+    //   setImageError("Please select an image");
+    //   return;
+    // } else {
+       setImageError(null);
+    // }
 
-    let pic: any = tobase64(data.picture[0]).catch((error) => {
-      console.error(error);
-    });
+    // let pic: any = tobase64(data.picture[0]).catch((error) => {
+    //   console.error(error);
+    // });
 
-    let picture = await pic;
+   // let picture = await pic;
 
     async function AddStudentForm() {
       try {
         let controller = new AbortController();
         let addStudent = await axios.post(
           `${POST_URL}/add/student/`,
-          { ...data, picture },
+          { ...data /*, picture */ },
           {
             signal: controller.signal,
             headers: {
@@ -142,12 +142,12 @@ const AddStudent = () => {
               {...register("password", { required: true })}
             />
 
-            <label htmlFor="picture">Picture</label>
+            {/* <label htmlFor="picture">Picture</label>
             <input
               type="file"
               className="border w-[100px] border-gray-400"
               {...register("picture")}
-            />
+            /> */}
 
             <label htmlFor="">Select Gender</label>
             <select
