@@ -22,7 +22,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
     setView(component);
   }
   return (
-    <nav className="bg-white shadow-2xl h-screen py-1 relative overflow-y-auto">
+    <nav className="bg-gray-700 text-white shadow-2xl h-screen py-1 relative overflow-y-auto">
       <h1 className="text-center text-3xl font-mono">ADMIN</h1>
       <section className="my-2">
         <ul className="grid gap-4">
@@ -39,7 +39,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
               }}
             >
               <FontAwesomeIcon icon={faGaugeHigh} size="lg" className="mr-2" />
-              <span className="text-slate-700 text-md">Dashboard</span>
+              <span className="text-white text-md">Dashboard</span>
             </div>
           </li>
           {/* <li className="mr-10">
@@ -48,7 +48,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
               size="2xl"
               className="mr-2"
             />
-            <span className="text-slate-700">Students</span>
+            <span className="text-white">Students</span>
           </li> */}
           {/* add students */}
           <li
@@ -59,7 +59,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
           >
             <FontAwesomeIcon icon={faUserPlus} size="lg" />
 
-            <span className="text-slate-700 mr-2 text-md"> Add student</span>
+            <span className="text-white mr-2 text-md"> Add student</span>
           </li>
           {/* add admin */}
           <li
@@ -70,7 +70,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
           >
             <FontAwesomeIcon icon={faUserPlus} size="lg" />
 
-            <span className="text-slate-700 mr-2 text-md"> Add Admin</span>
+            <span className="text-white mr-2 text-md"> Add Admin</span>
           </li>
           {/* all admin */}
           <li
@@ -81,7 +81,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
           >
             <FontAwesomeIcon icon={faUserFriends} size="lg" />
 
-            <span className="text-slate-700 mr-2 text-md"> All Admin</span>
+            <span className="text-white mr-2 text-md"> All Admin</span>
           </li>
           {/* all students */}
           <li
@@ -92,7 +92,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
           >
             <FontAwesomeIcon icon={faUserFriends} size="lg" />
 
-            <span className="text-slate-700 mr-2"> All students</span>
+            <span className="text-white mr-2"> All students</span>
           </li>
           {/* class level */}
           <li
@@ -103,7 +103,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
           >
             <FontAwesomeIcon icon={faSchoolCircleCheck} size="lg" />
 
-            <span className="text-slate-700 mr-2"> Class level</span>
+            <span className="text-white mr-2"> Class level</span>
           </li>
           {/* add teacher */}
           <li
@@ -114,7 +114,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
           >
             <FontAwesomeIcon icon={faUserPlus} size="lg" />
 
-            <span className="text-slate-700 mr-2"> Add Teacher</span>
+            <span className="text-white mr-2"> Add Teacher</span>
           </li>
           {/* all teachers */}
           <li
@@ -125,7 +125,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
           >
             <FontAwesomeIcon icon={faUserFriends} size="lg" />
 
-            <span className="text-slate-700 mr-2"> All Teachers</span>
+            <span className="text-white mr-2"> All Teachers</span>
           </li>
           {/* year and term */}
           <li
@@ -136,7 +136,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
           >
             <FontAwesomeIcon icon={faStopwatch} size="lg" />
 
-            <span className="text-slate-700 mr-2"> Year and Term</span>
+            <span className="text-white mr-2"> Year and Term</span>
           </li>
           {/* subjects */}
           <li
@@ -147,7 +147,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
           >
             <FontAwesomeIcon icon={faBook} size="lg" />
 
-            <span className="text-slate-700 mr-2"> Subjects</span>
+            <span className="text-white mr-2"> Subjects</span>
           </li>
           <li
             onClick={() => {
@@ -157,7 +157,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
           >
             <FontAwesomeIcon icon={faGear} size="lg" />
 
-            <span className="text-slate-700 mr-2"> Settings</span>
+            <span className="text-white mr-2"> Settings</span>
           </li>
           <li className="cursor-pointer hover:shadow-lg hover:transition hover:bg-slate-300 p-5">
             <NavLink to="/admin/teacher">
@@ -166,13 +166,13 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
                 size="2xl"
                 className="mr-2"
               />
-              <span className="text-slate-700"> Teachers</span>
+              <span className="text-white"> Teachers</span>
             </NavLink>
           </li>
           <li className="cursor-pointer hover:shadow-lg hover:transition hover:bg-slate-300 p-5">
             <NavLink to="/admin/messages">
               <FontAwesomeIcon icon={faAdd} size="2xl" className="mr-2" />
-              <span className="text-slate-700"> Messages</span>
+              <span className="text-white"> Messages</span>
             </NavLink>
           </li>
         </ul>

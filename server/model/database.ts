@@ -24,6 +24,7 @@ import { AcademicTerm } from "./academic/AcademicTerm";
 import { AcademicYear } from "./academic/AcademicYear";
 import { ClassLevel } from "./academic/ClassLevel";
 import { School } from "./others/School";
+import { Transaction } from "./others/Transacton";
 //schemas
 export {
   Teacher,
@@ -36,6 +37,7 @@ export {
   AcademicYear,
   ClassLevel,
   School,
+  Transaction,
 };
 export { ITeacher, IStudent };
 

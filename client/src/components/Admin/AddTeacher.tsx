@@ -138,7 +138,7 @@ const AddTeacher: React.FC<{
         });
         dispatch({
           type: "msg",
-          msg: res.data?.msg || "successful",
+          msg: "Add Teacher",
         });
         setClassData(res.data?.classes);
       } catch (error: any) {
