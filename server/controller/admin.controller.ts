@@ -109,9 +109,8 @@ export async function addStudent(
   let school = req.user?.school;
   let schoolId = req.user?.schoolId;
   let isStudentAlreadyRegistered = !!(await Student.countDocuments({
-    name,
-    school,
-    schoolId,
+    email,
+   
   }));
   if (isStudentAlreadyRegistered)
     throw new CustomError({}, "student already registered", 403);

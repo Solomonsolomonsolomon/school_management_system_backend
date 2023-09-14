@@ -1,21 +1,28 @@
 import React from "react";
 import axios from "../../api/axios";
 let payUrl = "/paystack";
-import { useForm, SubmitHandler} from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
 const Settings = () => {
-  const [configureVisibility, setConfigureVisibility] =
-    React.useState<boolean>(false);
+ 
   let [allBanks, setAllBanks] = React.useState<any[]>([]);
   let [msg, setMsg] = React.useState<string>("");
   const { register, reset, handleSubmit } = useForm();
+  let [settingsState, setSettingsState] = React.useState<any>({
+    configureVisibility: false,
+    showThemes: false,
+  });
+  const submitThemeColor: SubmitHandler<any> = async (data) => {
+    console.log(data);
+  };
   const submitBankConfigData: SubmitHandler<any> = async (data) => {
     let controller = new AbortController();
+
     try {
       let res = await axios.post(`${payUrl}/create/subaccount`, data, {
         signal: controller.signal,
       });
       reset();
-      setConfigureVisibility(false);
+      setSettingsState({ ...settingsState, configureVisibility: false });
       setMsg(res.data?.msg || "successful");
     } catch (error: any) {
       console.log(error);
@@ -46,14 +53,19 @@ const Settings = () => {
       <span>Configure Payment Info</span>
       <button
         onClick={() => {
-          setConfigureVisibility(!configureVisibility);
+          setSettingsState({
+            ...settingsState,
+            configureVisibility: !settingsState.configureVisibility,
+          });
           setMsg("");
         }}
         className="border m-2 p-2 bg-gray-900 text-white text-sm rounded"
       >
         configure
       </button>
-      <div className={`${configureVisibility ? "border" : "hidden"}`}>
+      <div
+        className={`${settingsState.configureVisibility ? "border" : "hidden"}`}
+      >
         <form
           action=""
           className="grid gap-3  justify-center p-2 border rounded  "
@@ -82,7 +94,73 @@ const Settings = () => {
           </button>
         </form>
       </div>
-      <div>set themes</div>
+
+      <div>
+        <span>set themes</span>{" "}
+        <button
+          onClick={() => {
+            setSettingsState({ ...settingsState, showThemes: !settingsState.showThemes });
+            setMsg("");
+          }}
+          className="border m-2 p-2 w-[90px] bg-gray-900 text-white text-sm rounded"
+        >
+          SET
+        </button>
+        <div className={`${settingsState.showThemes ? "border" : "hidden"}`}>
+          <form onSubmit={handleSubmit(submitThemeColor)}>
+            <label htmlFor="" className="block">
+              Sidebar
+            </label>
+            <input
+              type="color"
+              defaultValue="#ffffff"
+              {...register("sidebar")}
+              id=""
+            />
+            <label htmlFor="" className="block">
+              Sidebar text
+            </label>
+            <input
+              type="color"
+              defaultValue="#ffffff"
+              {...register("sidebar")}
+              id=""
+            />
+            <label htmlFor="" className="block">
+              Buttons
+            </label>
+            <input
+              type="color"
+              defaultValue="#ffffff"
+              {...register("sidebar")}
+              id=""
+            />
+            <label htmlFor="" className="block">
+              login image
+            </label>
+            <input
+              type="color"
+              defaultValue="#ffffff"
+              {...register("sidebar")}
+              className="border"
+              id=""
+            />
+            <label htmlFor="" className="block">
+              Text
+            </label>
+            <input
+              type="color"
+              defaultValue="#ffffff"
+              {...register("sidebar")}
+              className="border"
+              id=""
+            />
+            <button className="p-2 bg-green-800 text-white rounded w-fit">
+              APPLY
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 };

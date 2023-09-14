@@ -99,7 +99,7 @@ export default function Login() {
         SOLACE School Management Systems.Login to continue
       </h1>
       <div className="flex justify-items-center place-content-center">
-        <img src={svg1} className="absolute z-[-100] h-[97vh]" alt="" />
+        <img src={svg1} className="absolute  z-[-100] h-[97vh]" alt="" />
       </div>
 
       <div className=" grid justify-center justify-items-center h-full grid-cols-1">

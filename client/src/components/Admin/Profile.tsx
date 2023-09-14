@@ -80,12 +80,12 @@ const Profile = () => {
           {/* <p className="text-sm font-bold text-white">{user.role}</p>
            */}
           <h1 className="text-sm text-gray-900 ">
-            school:<span className="italic ">{user.school}</span>
+            school:<span className="italic capitalize">{user.school}</span>
           </h1>
-          <p className="text-gray-900 text-sm" ref={term}>
+          <p className="text-gray-900 text-sm capitalize" ref={term}>
             current Term:not set
           </p>
-          <p ref={year} className="text-sm">
+          <p ref={year} className="text-sm capitalize">
             current Academic Year:not set
           </p>
         </section>
