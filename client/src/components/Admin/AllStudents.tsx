@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "../../api/axios";
 import Loading from "../Loading";
 import { tobase64 } from "./AddStudent";
+import Button from "../Button/Button";
 const postUrl = "/admin";
 function AllStudents() {
   const [students, setStudents] = useState<any[]>([]);
@@ -220,8 +221,8 @@ function AllStudents() {
               {/* Add more input fields for other data */}
             </div>
             <div className="mt-4 flex justify-end">
-              <button
-                className="px-4 py-2 bg-blue-500 text-white rounded"
+              <Button
+                buttonType={3}
                 onClick={() => {
                   // Here you can implement the update logic
                   editStudent(editingStudent);
@@ -230,13 +231,13 @@ function AllStudents() {
                 }}
               >
                 Update
-              </button>
-              <button
-                className="px-4 py-2 ml-2 bg-gray-300 text-gray-700 rounded"
-                onClick={closeEditModal}
-              >
-                Cancel
-              </button>
+              </Button>
+              <div className="ml-2">
+                {" "}
+                <Button buttonType={2} onClick={closeEditModal}>
+                  Cancel
+                </Button>
+              </div>
             </div>
           </div>
         </div>

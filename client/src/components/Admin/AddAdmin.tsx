@@ -1,5 +1,6 @@
 import React from "react";
 import axios from "../../api/axios";
+import Button from "../Button/Button";
 import { useForm, SubmitHandler } from "react-hook-form";
 let baseUrl = "/admin";
 const AddAdmin = () => {
@@ -65,14 +66,17 @@ const AddAdmin = () => {
 
             <label htmlFor="">Password</label>
             <input
-              className="border w-fit p-2 rounded border-gray-400"
+              className="border w-fit p-2 rounded  border-gray-400"
               type="password"
               {...register("password", { required: true })}
             />
 
-            <button className="mt-2 bg-gray-600 p-3 text-white rounded">
+            <Button
+              buttonType={0}
+            
+            >
               Submit
-            </button>
+            </Button>
           </form>
         </div>
       </div>
@@ -114,7 +118,7 @@ const AddAdmin = () => {
   //                     onChange={(e)=> setPassword(e.target.value)}
   //                     required />
   //                 </section>
-  //                 <button>ADD ADMIN</button>
+  //                 <Button>ADD ADMIN</Button>
   //             </form>
   //         </div>
   //     )

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "../../api/axios";
 import Loading from "../Loading";
-
+import Button from "../Button/Button";
 const YearAndTerm: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [years, setYears] = useState<any[]>([]);
@@ -224,9 +224,9 @@ const YearAndTerm: React.FC = () => {
             type="number"
             {...yearRegister("toYear", { required: true, min: 2000 })}
           />
-          <button className="border bg-gray-500 p-2 rounded text-white">
+          <Button buttonType={0}>
             Add Year
-          </button>
+          </Button>
         </form>
       </div>
 
@@ -247,9 +247,9 @@ const YearAndTerm: React.FC = () => {
             className="border w-[250px] border border-black"
             {...termRegister("name", { required: true })}
           />
-          <button className="border bg-gray-500 p-2 rounded text-white">
+          <Button buttonType={0}>
             Add Term
-          </button>
+          </Button>
         </form>
       </div >
 

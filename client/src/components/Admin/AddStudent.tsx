@@ -1,7 +1,7 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRef, useState } from "react";
 import axios from "./../../api/axios";
-
+import Button from "../Button/Button";
 export async function tobase64(blob: Blob) {
   return new Promise((resolve) => {
     let reader = new FileReader();
@@ -204,9 +204,9 @@ const AddStudent = () => {
               <option value="P">P</option>
             </select>
 
-            <button className="mt-2 bg-gray-600 p-3 text-white rounded">
+            <Button buttonType={0}>
               Submit
-            </button>
+            </Button>
           </form>
         </div>
       </div>

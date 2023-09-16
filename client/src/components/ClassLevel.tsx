@@ -2,6 +2,7 @@ import React from "react";
 import axios from "./../api/axios";
 import { useForm, SubmitHandler } from "react-hook-form";
 import Loading from "./Loading";
+import Button from "./Button/Button";
 const getUrl = "/admin";
 const ClassLevel: React.FC = () => {
   let [classes, setClasses] = React.useState<any[]>([]);
@@ -123,9 +124,7 @@ const ClassLevel: React.FC = () => {
           {...register("price")}
           className="border-b-2 border-t-0 border-l-0 border-r-0 border border-black"
         />
-        <button className=" p-3 border bg-gray-600 text-white rounded w-[200px]">
-          ADD CLASS
-        </button>
+        <Button buttonType={0}>ADD CLASS</Button>
       </form>
 
       <div className="flex flex-col border p-10 ">

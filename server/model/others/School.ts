@@ -13,13 +13,14 @@ const themeSchema = new mongoose.Schema({
 
 const schoolSchema = new mongoose.Schema({
   name: String,
+  school: String,
   schoolId: String,
   account_number: String,
   subaccount_code: String,
   themes: {
     type: themeSchema,
     default: {
-      button: "#1a202c",
+      button: "#4B5563",
       header: "#edf2f7",
       text: "#000000",
       sideBar: "#4a5568",
