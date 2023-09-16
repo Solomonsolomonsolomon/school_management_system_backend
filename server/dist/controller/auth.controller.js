@@ -21,13 +21,14 @@ function signIn(req, res) {
         let roles = ["student", "admin", "teacher"];
         let index = roles.indexOf(role);
         let user = null;
+        console.log(email, password, role);
         try {
             if (!email || !password || !role) {
                 throw new Error("enter email and password");
             }
             let Model = index == 0 ? database_1.Student : index == 1 ? database_1.Admin : index == 2 ? database_1.Teacher : database_1.Admin;
             yield Model.findOne({ email })
-                .select("name accessToken role className  currentClassLevel currentClassArm schoolId school password subjects email _id ")
+                .select("name accessToken role className password currentClassLevel currentClassArm schoolId school balance subjects email _id ")
                 .then((user) => __awaiter(this, void 0, void 0, function* () {
                 if (!user)
                     throw new Error("invalid credentials");

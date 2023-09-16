@@ -333,18 +333,20 @@ studentSchema.pre("save", function (next) {
 //compute balance
 studentSchema.pre("save", function (next) {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log("here");
-        let schoolId = yield this.schoolId;
-        let school = yield this.school;
-        let theClass = yield ClassLevel_1.ClassLevel.findOne({
-            name: `${yield this.currentClassLevel}${yield this.currentClassArm}`,
-            schoolId,
-            school,
-        });
-        this.balance = theClass ? theClass.price : 0;
-        this.paid = false;
-        this.excess += 0;
-        this.percentagePaid = 0;
+        if (this.isNew || this.isModified("className")) {
+            let schoolId = yield this.schoolId;
+            let school = yield this.school;
+            let theClass = yield ClassLevel_1.ClassLevel.findOne({
+                name: `${yield this.currentClassLevel}${yield this.currentClassArm}`,
+                schoolId,
+                school,
+            });
+            this.balance = theClass ? theClass.price : 0;
+            this.paid = false;
+            this.excess += 0;
+            this.percentagePaid = 0;
+        }
+        next();
     });
 });
 //model

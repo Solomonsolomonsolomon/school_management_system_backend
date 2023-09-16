@@ -1,7 +1,7 @@
 import React from "react";
 //import axios from "../../api/axios";
 import Loading from "../Loading";
-import { faSchool } from "@fortawesome/free-solid-svg-icons";
+
 const SubStudent: React.FC = () => {
   let [student, setStudent] = React.useState<any>({
     name: "",
