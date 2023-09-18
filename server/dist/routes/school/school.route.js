@@ -11,7 +11,7 @@ let school = new school_controller_1.default();
 router.get("/school/theme/current", (0, globalErrorHandler_1.default)(school.getCurrentTheme));
 router.get("/school/theme/default", (0, globalErrorHandler_1.default)(school.getDefaultTheme));
 router.post("/school/theme/set", (0, globalErrorHandler_1.default)(school.changeTheme));
-router.get("/school/logo/insert", (0, globalErrorHandler_1.default)(school.insertLogo));
+router.post("/school/logo/insert", (0, globalErrorHandler_1.default)(school.insertLogo));
 router.get("/school/logo/current", (0, globalErrorHandler_1.default)(school.getLogo));
 router.get("/school/logo/theme/get", (0, globalErrorHandler_1.default)(school.logoAndThemes));
 exports.default = router;
