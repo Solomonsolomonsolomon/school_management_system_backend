@@ -50,7 +50,7 @@ const Button: React.FC<PropsWithChildren<IButton>> = (props) => {
     switch (EButton[props.buttonType]) {
       case "default":
         console.log(colors);
-        return `p-3 border text rounded w-[200px] mt-2`;
+        return `p-3 border text relative rounded w-[200px] mt-2`;
       case "green":
         return "bg-green-500 rounded p-2";
       case "update":

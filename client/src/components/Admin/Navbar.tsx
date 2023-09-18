@@ -51,13 +51,16 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
   }
   if (loading) return <Loading />;
   return (
-    <nav style={{
-      backgroundColor:`${colors.sideBar}`,
-      color:`${colors.sideBarText}`
-    }} className="bg-gray-700  shadow-2xl h-screen py-1 relative overflow-y-auto">
+    <nav
+      style={{
+        backgroundColor: `${colors.sideBar}`,
+        color: `${colors.sideBarText}`,
+      }}
+      className="bg-gray-700  shadow-2xl h-screen py-1 relative overflow-y-auto sm:w-full md:w-fit lg:w-fit xl:w-fit"
+    >
       <h1 className="text-center text-3xl font-mono">ADMIN</h1>
       <section className="my-2">
-        <ul className="grid gap-4">
+        <ul className="grid gap-4 text-sm">
           {/* dashboard */}
           <li
             onClick={() => {

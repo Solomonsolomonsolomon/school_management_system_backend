@@ -20,7 +20,7 @@ const AddSubject: React.FC = () => {
     reducer,
     initialState
   );
-  const { register,handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm();
   let [classes, setClasses] = React.useState<any[]>([]);
   let [syncUi, setSyncUi] = useState<any>(null);
   let subjectUrl = "/subject";
@@ -78,27 +78,29 @@ const AddSubject: React.FC = () => {
     <>
       <p className="text-center font-bold">{state.msg}</p>
       <div className="w-[200px]sm:w-[400px] lg:w-[100%] md:w-[100%] w-[350px]">
-        <h1 className="text-center">SUBJECTS</h1>
-        <div className="grid gap-2 justify-items-center">
+        
+        <div className="grid gap-0 justify-items-center">
           <form
             onSubmit={handleSubmit(handleFormSubmit)}
-            className="border grid justify-items-center p-4 border-gray-500 placeholder:text-center gap-3 rounded w-fit"
+            className="border grid justify-items-center p-4 
+             border-gray-500 placeholder:text-center gap-0 rounded-lg w-fit"
           >
             <input
               type="text"
               {...register("subject")}
               required
               placeholder="subject name"
-              className="placeholder:text-center border border-black rounded"
+              className="placeholder:text-center border p-1 border-black border-x-0 border-t-0 border-b-[2px] "
             />
-            <label className="text-center font-bold">
-              select class.you can select multiple
+            <label className="text-center font-bold">Select Class</label>
+            <label className="text-center font-bold opacity-[0.5]">
+              You can select multiple
             </label>
             <select
               multiple
               {...register("className")}
               required
-              className="placeholder:text-center border border-black rounded"
+              className="placeholder:text-center border-y border-black "
             >
               {classes.map((classLevel, index) => {
                 return (
@@ -109,9 +111,7 @@ const AddSubject: React.FC = () => {
               })}
             </select>
 
-            <Button buttonType={0}>
-              ADD SUBJECT
-            </Button>
+            <Button buttonType={0}>ADD SUBJECT</Button>
           </form>
         </div>
       </div>

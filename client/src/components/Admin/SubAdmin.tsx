@@ -103,12 +103,12 @@ const SubAdmin: React.FC = () => {
   });
   if (isLoading) return <Loading />;
   return (
-    <div className="lg:p-10  md:p-2 sm:p-1 bg-gray-50 border-slate-200 shadow-2xl box-border grid gap-10 w-[99%] ">
+    <div className="lg:p-10  md:p-2 sm:p-1  border-slate-200 shadow-2xl box-border grid gap-10 w-[99%] ">
       <h1 className="text-sm text-gray-500 font-bold box-border shadow-gray-600 text-left shadow-sm p-1 m-0 border-gray-300">
         Admin Dashboard
       </h1>
       <section className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-0 h-auto  ">
-        <div className="bg-white p-10 shadow-gray-300 shadow-xl border  box-content flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
+        <div className=" p-10 shadow-gray-500 shadow-lg border  box-content flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
           <div className="flex border "></div>
           <section className="bg-green-100 p-5 rounded-full">
             <FontAwesomeIcon
@@ -124,7 +124,7 @@ const SubAdmin: React.FC = () => {
             </p>
           </section>
         </div>
-        <div className="bg-white p-10 shadow-lg border border-gray-200 box-border flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
+        <div className="  p-10 shadow-gray-500 shadow-lg border  box-content flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
           <section className="bg-sky-100 p-5 px-7 rounded-full">
             <FontAwesomeIcon
               icon={faUserTie}
@@ -139,7 +139,7 @@ const SubAdmin: React.FC = () => {
             </p>
           </section>
         </div>
-        <div className="bg-white p-10 shadow-2xl box-content flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
+        <div className=" p-10 shadow-gray-500 shadow-lg border  box-content flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
           <section className="bg-orange-100 p-5 rounded-full">
             <FontAwesomeIcon
               icon={faUserGroup}
@@ -154,7 +154,7 @@ const SubAdmin: React.FC = () => {
             </p>
           </section>
         </div>
-        <div className="bg-white p-10 shadow-lg flex gap-5 rounded cursor-pointer transition ease-in delay-150  hover:-translate-y-3 duration-300 ">
+        <div className=" p-10 shadow-gray-500 shadow-lg border  box-content flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
           <section className="bg-red-100 p-5 rounded-full">
             <FontAwesomeIcon
               icon={faMoneyBill1}
@@ -172,14 +172,14 @@ const SubAdmin: React.FC = () => {
       </section>
 
       <section className="grid   gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 ">
-        <div className="bg-white shadow-lg p-5 grid grid-rows-[5%_95%] gap-5">
+        <div className=" shadow-lg p-5 grid grid-rows-[5%_95%] gap-5">
           <h2>Earnings</h2>
           <div className="w-[99%]">
             <EarningChart />
           </div>
         </div>
 
-        <div className="bg-white p-5 shadow-2xl grid grid-rows-[5%_95%] gap-5">
+        <div className=" p-5 shadow-2xl grid grid-rows-[5%_95%] gap-5">
           <h2>Expenses</h2>
           <div>
             <ExpenseChart />

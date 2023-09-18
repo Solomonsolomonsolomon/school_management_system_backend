@@ -2,14 +2,31 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import imgDefault from "./../../assets/undraw_real_time_sync_re_nky7.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import axios from "../../api/axios";
 import { useNavigate } from "react-router-dom";
 import Button from "../Button/Button";
+interface ITheme {
+  header: string;
+  headerText: string;
+}
+interface IThemeAndLogo {
+  theme: ITheme;
+  logo: string;
+}
+let schoolUrl = "/school";
 const Profile = () => {
   let term = React.useRef<HTMLParagraphElement>(null);
   let year = React.useRef<HTMLParagraphElement>(null);
+  let [themeandlogo, setthemeandlogo] = React.useState<IThemeAndLogo>({
+    theme: {
+      header: "#edf2f7",
+      headerText: "#000000",
+    },
+    logo: "",
+  });
   React.useEffect(() => {
     let controller = new AbortController();
     currentTerm();
@@ -48,6 +65,26 @@ const Profile = () => {
       controller.abort();
     };
   }, []);
+  //get themes and logo
+  React.useEffect(() => {
+    (async () => {
+      try {
+        let res = await axios.get(`${schoolUrl}/logo/theme/get`);
+        console.log(res);
+        setthemeandlogo({
+          logo: res.data?.logo,
+          theme: {
+            header: res.data?.themes?.header,
+            headerText: res?.data?.themes?.loginImg,
+          },
+        });
+      } catch (error) {
+        console.log(error);
+      } finally {
+        console.log(themeandlogo);
+      }
+    })();
+  }, []);
   let Navigate = useNavigate();
   const getUserData = (user: any) => {
     const data = sessionStorage.getItem(user);
@@ -71,21 +108,27 @@ const Profile = () => {
     profile?.classList.toggle("hidden");
   };
   return (
-    <section className="  mt-1  border-b-2 bg-gray-50  p-5 mb-2 pr-3 pt-3  w-[99%]  rounded">
+    <section
+      className="    border-b-2   p-5 mb-2 pr-3 pt-3  w-[100%]  rounded"
+      style={{
+        backgroundColor: themeandlogo.theme.header || "#edf2f7",
+        color: themeandlogo.theme?.headerText || "#000000",
+      }}
+    >
+      <img src={themeandlogo.logo || imgDefault} alt="" className="w-[3.4em]" />
       <div
         className=" flex   justify-center border-b-1 gap-2 cursor-pointer "
         onClick={toggle}
       >
-        <section className="flex gap-5 flex-wrap justify-end">
-          <h1 className="text-sm text-gray-900 font-bold capitalize ">
-            {user.name}
-          </h1>
+        <section className="flex gap-5 flex-wrap-reverse justify-end">
+          <h1 className="text-sm font-bold capitalize ">{user.name}</h1>
           {/* <p className="text-sm font-bold text-white">{user.role}</p>
            */}
-          <h1 className="text-sm text-gray-900 ">
-            school:<span className="italic capitalize">{user.school}</span>
+          <h1 className="text-sm  ">
+            <span className="capitalize font-xs opacity-[0.6]">school</span>:
+            <span className="capitalize">{user.school}</span>
           </h1>
-          <p className="text-gray-900 text-sm capitalize" ref={term}>
+          <p className=" text-sm capitalize" ref={term}>
             current Term:not set
           </p>
           <p ref={year} className="text-sm capitalize">

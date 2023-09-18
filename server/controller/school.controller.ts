@@ -64,11 +64,11 @@ class SchoolController {
   public async insertLogo(req: express.Request, res: express.Response) {
     let schoolId = req.user?.schoolId;
     let school = req.user?.school;
-    let logo = req.body;
+    let { logo } = req.body;
     let sch = await School.findOne({ schoolId, school });
     if (!sch) return await School.create({ school, schoolId, logo });
     let version = sch.__v;
-    Object.assign(sch, logo);
+    Object.assign(sch, req.body);
     sch.__v = version;
     await sch.save();
     res.status(200).json({
