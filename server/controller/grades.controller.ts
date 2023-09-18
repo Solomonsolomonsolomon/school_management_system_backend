@@ -10,29 +10,48 @@ import { Types } from "mongoose";
 import { CustomError } from "../middleware/decorators";
 export async function addGrades(req: Request, res: Response) {
   try {
-    const { year, term, subjectId } = req.body;
+    const { subjectId } = req.body;
+    const school = req.user?.school;
+    const schoolId = req.user?.schoolId;
     const { studentId } = req.params;
     const studentID = new Types.ObjectId(studentId);
     const subjectID = new Types.ObjectId(subjectId);
-
-    let currentTerm = !!(await AcademicTerm.countDocuments({ name: term }));
-    let currentYear = !!(await AcademicYear.countDocuments({ name: year }));
+    let currentTerm = await AcademicTerm.findOne({
+      school,
+      schoolId,
+      isCurrent: true,
+    });
+    let currentYear = await AcademicYear.findOne({
+      school,
+      schoolId,
+      isCurrent: true,
+    });
     let isValidStudentId = !!(await Student.countDocuments({ _id: studentID }));
     let isValidSubjectId = !!(await Subject.countDocuments({ _id: subjectID }));
 
-    if (!currentYear) throw new Error(" year entered not valid");
-    if (!currentTerm) throw new Error("term entered not valid");
+    if (!currentYear)
+      throw new Error(" no current year set.please visit admin to set");
+    if (!currentTerm)
+      throw new Error("no current term found.please contact admin to set");
     if (!isValidStudentId) throw new Error("enter valid studentId");
     if (!isValidSubjectId) throw new Error("enter valid subjectId");
-    let gradesObjectExists = await Grades.findOne({ studentId, year, term });
+    let gradesObjectExists = await Grades.findOne({
+      studentId,
+      year: currentYear,
+      term: currentTerm,
+      school,
+      schoolId,
+    });
 
     //if grade object doesnt exist
     if (!gradesObjectExists) {
       //create new grade
       const newGradesObject = new Grades({
         studentId: studentID,
-        year,
-        term,
+        year: currentYear,
+        term: currentTerm,
+        school,
+        schoolId,
         grades: [{ ...req.body, studentId: studentID, subjectId: subjectID }],
       });
       const grade = await newGradesObject.save();

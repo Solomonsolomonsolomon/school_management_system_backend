@@ -6,14 +6,13 @@ interface INestedgrades extends Document {
   CA1?: number;
   CA2?: number;
   CA3?: number;
-
   examScore?: number;
   letterGrade?: string;
 }
 interface IGrades extends Document {
   studentId: Types.ObjectId;
-  year: string;
-  term: string;
+  year: mongoose.Types.ObjectId;
+  term: mongoose.Types.ObjectId;
   school: string;
   schoolId: string;
   plan: string;
@@ -26,10 +25,12 @@ let gradesSchema = new Schema<IGrades>({
     ref: "Student",
   },
   year: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "AcademicYear",
   },
   term: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "AcademicTerm",
   },
   school: {
     type: String,
@@ -47,7 +48,6 @@ let gradesSchema = new Schema<IGrades>({
       CA1: Number,
       CA2: Number,
       CA3: Number,
-
       examScore: Number,
       subjectId: {
         type: Schema.Types.ObjectId,

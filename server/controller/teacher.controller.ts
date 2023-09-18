@@ -1,5 +1,11 @@
 import { NextFunction, Request, Response } from "express";
-import { Teacher, Student } from "../model/database";
+import {
+  Teacher,
+  Student,
+  Grades,
+  AcademicTerm,
+  AcademicYear,
+} from "../model/database";
 import asyncErrorHandler from "../middleware/globalErrorHandler";
 import { CustomError } from "../middleware/decorators";
 console.log(asyncErrorHandler);
@@ -49,50 +55,105 @@ export async function managedStudents(
     formTeacher: teacher?.formTeacher,
   });
 }
-
 export async function getStudentsTaught(req: Request, res: Response) {
-  let { id } = req.params;
-  let school = req.user?.school;
-  let schoolId = req.user?.schoolId;
-  let teacher = await Teacher.findOne({ school: req.user?.school, _id: id });
-  if (!teacher) throw new CustomError({}, "teacher doesnt exist", 404);
-  let subjects = teacher.subjects;
-  let studentsTaught = await Student.find({
-    school,
-    schoolId,
-    subjects: { $in: subjects }, // Filter students by subjects
-  })
-    .select("name _id formTeacher email age className subjects")
-    .populate("subjects");
-  console.log(studentsTaught);
-  if (!studentsTaught.length)
-    throw new CustomError(
-      {},
-      "No students enrolled in subjects taught by you",
-      404
-    );
-  const studentsBySubject: Record<string, any[]> = {};
-
-  studentsTaught.forEach((student) => {
-    student.subjects?.forEach((subject: any) => {
-      const subjectName = subject.name;
-
-      if (!studentsBySubject[subjectName]) {
-        studentsBySubject[subjectName] = [];
-      }
-
-      studentsBySubject[subjectName].push(student);
+  try {
+    const { id } = req.params;
+    const school = req.user?.school;
+    const schoolId = req.user?.schoolId;
+    const currentTerm = await AcademicTerm.findOne({
+      school,
+      schoolId,
+      isCurrent: true,
     });
-  });
+    const currentYear = await AcademicYear.findOne({
+      school,
+      schoolId,
+      isCurrent: true,
+    });
 
-  console.log(studentsBySubject);
+    // Find the teacher by ID
+    const teacher = await Teacher.findOne({ school, _id: id }).populate(
+      "subjects"
+    );
+    if (!teacher) {
+      throw new CustomError({}, "Teacher doesn't exist", 404);
+    }
 
-  // Group students by class name
+    const subjects: any = teacher.subjects;
 
-  
+    // Find students taught by the teacher
+    const studentsTaught = await Student.find({
+      school,
+      schoolId,
+      subjects: { $in: subjects },
+    })
+      .select("name _id formTeacher email age className subjects")
+      .populate("subjects");
 
-  res.status(200).json({
-    msg: "Form Students",
-    studentsTaught: studentsBySubject,
-  });
+    if (!studentsTaught.length) {
+      throw new CustomError(
+        {},
+        "No students enrolled in subjects taught by you",
+        404
+      );
+    }
+
+    const studentsWithGrades = await Promise.all(
+      studentsTaught.map(async (student) => {
+        // Find the grades for each subject and student
+        const grades = await Grades.findOne({
+          studentId: student._id,
+          year: currentYear,
+          term: currentTerm,
+          school,
+          schoolId,
+        });
+        console.log({
+          ...student.toObject(),
+          grades: grades ? grades.grades : [],
+        });
+        return {
+          ...student.toObject(),
+          grades: grades ? grades.grades : [],
+        };
+      })
+    );
+
+    // Format the response as needed
+    const formattedResponse: Record<string, any[]> = {};
+
+    subjects.forEach((subject: any) => {
+      const studentsForSubject = studentsWithGrades.filter((student) =>
+        student.subjects.some((subj:any) => subj.name === subject.name)
+      );
+
+      formattedResponse[subject.name] = studentsForSubject.map((student) => ({
+        name: student.name,
+        CA1: getGradeForSubject(student, subject, "CA1"),
+        CA2: getGradeForSubject(student, subject, "CA2"),
+        CA3: getGradeForSubject(student, subject, "CA3"),
+      }));
+    });
+
+    console.log(formattedResponse);
+
+    res.status(200).json({
+      msg: "Form Students",
+      studentsTaught: formattedResponse,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      status: 500,
+      msg: "Failed to fetch data",
+      error: error.message,
+    });
+  }
 }
+
+function getGradeForSubject(student: any, subject: any, exam: any) {
+  const subjectGrades = student.grades.find((grade: any) =>
+    grade.subjectId.equals(subject._id)
+  );
+  return subjectGrades ? subjectGrades[exam] : 0;
+}
+
