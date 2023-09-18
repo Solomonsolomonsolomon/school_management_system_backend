@@ -353,18 +353,20 @@ studentSchema.pre("save", async function (next) {
 });
 //compute balance
 studentSchema.pre("save", async function (next) {
-  console.log("here");
-  let schoolId = await this.schoolId;
-  let school = await this.school;
-  let theClass: any = await ClassLevel.findOne({
-    name: `${await this.currentClassLevel}${await this.currentClassArm}`,
-    schoolId,
-    school,
-  });
-  this.balance = theClass ? theClass.price : 0;
-  this.paid = false;
-  this.excess += 0;
-  this.percentagePaid = 0;
+  if (this.isNew || this.isModified("className")) {
+    let schoolId = await this.schoolId;
+    let school = await this.school;
+    let theClass: any = await ClassLevel.findOne({
+      name: `${await this.currentClassLevel}${await this.currentClassArm}`,
+      schoolId,
+      school,
+    });
+    this.balance = theClass ? theClass.price : 0;
+    this.paid = false;
+    this.excess += 0;
+    this.percentagePaid = 0;
+  }
+  next();
 });
 //model
 const Student = model<IStudent>("Student", studentSchema);

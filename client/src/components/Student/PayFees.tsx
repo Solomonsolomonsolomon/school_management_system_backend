@@ -15,10 +15,9 @@ const PayFees: React.FC = () => {
       let res = await axios.post(`${payUrl}/pay`, data, {
         signal: controller.signal,
       });
-      setMsg(res.data?.msg || res?.data?.message || "successful");
+      setMsg("transaction initialized..please wait");
       window.location.replace(res.data?.url);
     } catch (error: any) {
-      
       setMsg(
         error?.response?.data?.message ||
           "An error Occured,confirm details and try again"

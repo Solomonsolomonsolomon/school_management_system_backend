@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getBank = exports.subAccount = exports.initializeTransaction = exports.verifyPayment = void 0;
+exports.payWebHook = exports.getBank = exports.subAccount = exports.initializeTransaction = exports.verifyPayment = void 0;
 const paystack_config_1 = __importDefault(require("../middleware/paystack.config"));
 const database_1 = require("../model/database");
 const decorators_1 = require("../middleware/decorators");
@@ -34,6 +34,7 @@ const initializeTransaction = (req, res) => __awaiter(void 0, void 0, void 0, fu
             amount: amount * 100,
             subaccount: subaccount.subaccount_code,
             transaction_charge: 100 * 100,
+            bearer: "subaccount",
         });
         yield paystack_config_1.default
             .initializetransaction(res, body)
@@ -49,6 +50,7 @@ const initializeTransaction = (req, res) => __awaiter(void 0, void 0, void 0, fu
         });
     }
     catch (error) {
+        console.error(error);
         return res.status(400).json({ message: error.message, error });
     }
 });
@@ -119,3 +121,7 @@ const getBank = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.getBank = getBank;
+const payWebHook = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    yield paystack_config_1.default.createWebhook(req, res);
+});
+exports.payWebHook = payWebHook;

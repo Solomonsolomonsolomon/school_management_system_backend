@@ -4,6 +4,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const axios_1 = __importDefault(require("axios"));
+const crypto_1 = __importDefault(require("crypto"));
+let secret = process.env.PAYSTACK_SECRET_KEY || "";
 const paystack = (() => {
     function initializetransaction(res, body) {
         return new Promise((resolve, reject) => {
@@ -15,9 +17,11 @@ const paystack = (() => {
                 },
             })
                 .then((response) => {
+                console.log(response);
                 resolve(response.data);
             })
                 .catch((err) => {
+                console.log(err);
                 reject(err.message);
             });
         });
@@ -75,11 +79,23 @@ const paystack = (() => {
             });
         });
     }
+    function createWebhook(req, res) {
+        const hash = crypto_1.default
+            .createHmac("sha512", secret)
+            .update(JSON.stringify(req.body))
+            .digest("hex");
+        if (hash == req.headers["x-paystack-signature"]) {
+            const event = req.body;
+            // Do something with event  }
+        }
+        res.send("hhiiiiii");
+    }
     return {
         initializetransaction,
         verifyPayment,
         getBank,
         createSubAccount,
+        createWebhook,
     };
 })();
 exports.default = paystack;

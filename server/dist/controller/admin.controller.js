@@ -103,9 +103,7 @@ function addStudent(req, res, next) {
         let school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
         let schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
         let isStudentAlreadyRegistered = !!(yield database_1.Student.countDocuments({
-            name,
-            school,
-            schoolId,
+            email,
         }));
         if (isStudentAlreadyRegistered)
             throw new decorators_1.CustomError({}, "student already registered", 403);

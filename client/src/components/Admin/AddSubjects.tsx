@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Loading from "../Loading";
 import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "./../../api/axios";
+import Button from "../Button/Button";
 function reducer(state: any, action: any) {
   switch (action.type) {
     case "startLoading":
@@ -108,9 +109,9 @@ const AddSubject: React.FC = () => {
               })}
             </select>
 
-            <button className="border bg-gray-600 p-3 text-white rounded ">
+            <Button buttonType={0}>
               ADD SUBJECT
-            </button>
+            </Button>
           </form>
         </div>
       </div>

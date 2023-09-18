@@ -1,5 +1,7 @@
-import { Response } from "express";
+import { Response, Request } from "express";
 import axios, { AxiosError, AxiosResponse } from "axios";
+import crypto from "crypto";
+let secret = process.env.PAYSTACK_SECRET_KEY || "";
 const paystack = (() => {
   function initializetransaction(res: Response, body: object | string) {
     return new Promise((resolve, reject) => {
@@ -78,11 +80,23 @@ const paystack = (() => {
         });
     });
   }
+  function createWebhook(req: Request, res: Response) {
+    const hash = crypto
+      .createHmac("sha512", secret)
+      .update(JSON.stringify(req.body))
+      .digest("hex");
+    if (hash == req.headers["x-paystack-signature"]) {
+      const event = req.body;
+      // Do something with event  }
+    }
+    res.send("hhiiiiii");
+  }
   return {
     initializetransaction,
     verifyPayment,
     getBank,
     createSubAccount,
+    createWebhook,
   };
 })();
 export default paystack;

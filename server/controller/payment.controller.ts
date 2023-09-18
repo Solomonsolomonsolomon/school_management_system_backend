@@ -20,7 +20,7 @@ const initializeTransaction = async (req: Request, res: Response) => {
       subaccount: subaccount.subaccount_code,
       transaction_charge: 100 * 100,
       bearer: "subaccount",
-    }); 
+    });
 
     await paystack
       .initializetransaction(res, body)
@@ -48,6 +48,7 @@ const verifyPayment = async (req: Request, res: Response) => {
       .then((data: any) => {
         res.status(200).json({ transaction_status: data.data.status });
       })
+
       .catch((err) => {
         throw err;
       });
@@ -109,4 +110,13 @@ const getBank = async (req: Request, res: Response) => {
     res.status(400).json(error);
   }
 };
-export { verifyPayment, initializeTransaction, subAccount, getBank };
+const payWebHook = async (req: Request, res: Response) => {
+  await paystack.createWebhook(req, res);
+};
+export {
+  verifyPayment,
+  initializeTransaction,
+  subAccount,
+  getBank,
+  payWebHook,
+};

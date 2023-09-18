@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import axios from "../../api/axios";
 import { useNavigate } from "react-router-dom";
-
+import Button from "../Button/Button";
 const Profile = () => {
   let term = React.useRef<HTMLParagraphElement>(null);
   let year = React.useRef<HTMLParagraphElement>(null);
@@ -71,21 +71,24 @@ const Profile = () => {
     profile?.classList.toggle("hidden");
   };
   return (
-    <section className="  mt-1  border-b-2   p-5  pr-3 pt-3  w-[99%]  rounded">
-      <div className=" flex   justify-center border-b-1 gap-2 cursor-pointer " onClick={toggle}>
+    <section className="  mt-1  border-b-2 bg-gray-50  p-5 mb-2 pr-3 pt-3  w-[99%]  rounded">
+      <div
+        className=" flex   justify-center border-b-1 gap-2 cursor-pointer "
+        onClick={toggle}
+      >
         <section className="flex gap-5 flex-wrap justify-end">
-          <h1 className="text-sm text-gray-900 font-bold uppercase underline">
+          <h1 className="text-sm text-gray-900 font-bold capitalize ">
             {user.name}
           </h1>
-          {/* <p className="text-sm font-bold text-gray-900">{user.role}</p>
+          {/* <p className="text-sm font-bold text-white">{user.role}</p>
            */}
           <h1 className="text-sm text-gray-900 ">
-            school:<span className="italic ">{user.school}</span>
+            school:<span className="italic capitalize">{user.school}</span>
           </h1>
-          <p className="text-gray-900 text-sm" ref={term}>
+          <p className="text-gray-900 text-sm capitalize" ref={term}>
             current Term:not set
           </p>
-          <p ref={year} className="text-sm">
+          <p ref={year} className="text-sm capitalize">
             current Academic Year:not set
           </p>
         </section>
@@ -105,27 +108,22 @@ const Profile = () => {
               icon={faGear}
               className="mt-3  mr-2 text-sky-300"
             />
-            <span className="text-xl  text-white font-bold">
-              Settings
-            </span>
+            <span className="text-xl  text-white font-bold">Settings</span>
           </li>
           <li>
             <FontAwesomeIcon
               icon={faUserPlus}
               className="mt-3  mr-2 text-sky-300"
             />
-            <span className="text-xl   text-white font-bold">
-              Add Admin
-            </span>
+            <span className="text-xl   text-white font-bold">Add Admin</span>
           </li>
           <li>
-            <button
-              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-              onClick={logout}
-            >
-              <FontAwesomeIcon icon={faArrowRightFromBracket} />
-              Logout
-            </button>
+            <div className="w-full">
+              <Button buttonType={2} onClick={logout}>
+                <FontAwesomeIcon icon={faArrowRightFromBracket} className="" />
+                <span className="ml-2">Logout</span>
+              </Button>
+            </div>
           </li>
         </ul>
       </div>

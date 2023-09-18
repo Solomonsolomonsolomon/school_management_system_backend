@@ -15,6 +15,8 @@ const teacher_routes_1 = __importDefault(require("./../teacher/teacher.routes"))
 const currentTermAndYear_routes_1 = __importDefault(require("./../admin/currentTermAndYear.routes"));
 const classLevel_routes_1 = __importDefault(require("./../admin/classLevel.routes"));
 const payment_routes_1 = __importDefault(require("../payment/payment.routes"));
+const transactions_routes_1 = __importDefault(require("../payment/transactions.routes"));
+const school_route_1 = __importDefault(require("../school/school.route"));
 v1.use(auth_routes_1.default);
 v1.use(verifyjwt_1.default, currentTermAndYear_routes_1.default);
 v1.use(verifyjwt_1.default, grades_routes_1.default);
@@ -24,4 +26,6 @@ v1.use(verifyjwt_1.default, classLevel_routes_1.default);
 v1.use(verifyjwt_1.default, teacher_routes_1.default);
 v1.use(verifyjwt_1.default, admin_routes_1.default);
 v1.use(payment_routes_1.default);
+v1.use(transactions_routes_1.default);
+v1.use(school_route_1.default);
 exports.default = v1;

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import Button from "../Button/Button";
 import axios from "./../../api/axios";
 import Modal from "react-modal";
 import Loading from "../Loading";
@@ -343,12 +343,9 @@ const AddTeacher: React.FC<{
             </select>
           </div>
 
-          <button
-            type="submit"
-            className="btn btn-primary p-4 text-white bg-gray-600 rounded"
-          >
+          <Button buttonType={0}>
             {isModalSubmitted ? "Register" : "Proceed"}
-          </button>
+          </Button>
         </form>
       </div>
 
@@ -361,7 +358,7 @@ const AddTeacher: React.FC<{
       >
         <h2
           ref={(_subtitle) => (subtitle = _subtitle)}
-          className="text-center font-middle"
+          className="text-center text-sm"
         >
           Select subject(s) taught
         </h2>
@@ -403,19 +400,17 @@ const AddTeacher: React.FC<{
             <input />
           </form>
         </div>
+        <div className="absolute top-1 left-1">
+          <Button buttonType={2} onClick={closeModal}>
+            <FontAwesomeIcon icon={faClose} size="sm"></FontAwesomeIcon>
+          </Button>
+        </div>
 
-        <button
-          onClick={closeModal}
-          className="z-[1000] top-0 left-0 absolute  bg-red-950 p-2  text-white rounded"
-        >
-          <FontAwesomeIcon icon={faClose} size="sm"></FontAwesomeIcon>
-        </button>
-        <button
-          className="z-[1000] top-0 right-0 absolute  bg-green-500 p-2  text-white rounded"
-          onClick={onSubmitSubjects}
-        >
-          <FontAwesomeIcon icon={faCheck} size="sm"></FontAwesomeIcon>
-        </button>
+        <div className="absolute right-1 top-1">
+          <Button buttonType={1} onClick={onSubmitSubjects}>
+            <FontAwesomeIcon icon={faCheck} size="sm"></FontAwesomeIcon>
+          </Button>
+        </div>
       </Modal>
     </>
   );
