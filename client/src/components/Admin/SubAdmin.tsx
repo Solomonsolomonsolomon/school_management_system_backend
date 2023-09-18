@@ -6,21 +6,25 @@ import { faMoneyBill1 } from "@fortawesome/free-solid-svg-icons";
 import EarningChart from "./charts/EarningChart";
 import ExpenseChart from "./charts/ExpenseChart";
 // import { useNavigate , useLocation} from 'react-router-dom'
-import React, { useEffect, useRef} from "react";
+import React, { useEffect, useRef, useState } from "react";
 // import AuthContext from '../context/AuthProvider'
 // import { Link } from 'react-router-dom';
 import axios from "../../api/axios";
+import Loading from "../Loading";
 
 const POST_URL = "/admin";
+let transactionUrl = "/transaction";
 const SubAdmin: React.FC = () => {
- // const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const noOfStudents = useRef<HTMLParagraphElement>(null);
   const teachersCount = useRef<HTMLParagraphElement>(null);
   let parentsCount = useRef<HTMLParagraphElement>(null);
+  let earningsCount = useRef<HTMLParagraphElement>(null);
   useEffect(() => {
     let controller = new AbortController();
     inner();
     async function inner() {
+      setIsLoading(true);
       try {
         let genderDivideResponse = await axios.get(
           `${POST_URL}/gender/divide`,
@@ -40,6 +44,8 @@ const SubAdmin: React.FC = () => {
       } catch (error: any) {
         console.error(error);
         noOfStudents.current ? (noOfStudents.current.textContent = "xxx") : "";
+      } finally {
+        setIsLoading(false);
       }
     }
     return () => {
@@ -50,6 +56,7 @@ const SubAdmin: React.FC = () => {
     let controller1 = new AbortController();
     getTeachersNumber();
     async function getTeachersNumber() {
+      setIsLoading(true);
       try {
         let teachersNumber = await axios.get(`${POST_URL}/get/count/teachers`, {
           signal: controller1.signal,
@@ -61,6 +68,8 @@ const SubAdmin: React.FC = () => {
         teachersCount.current
           ? (teachersCount.current.textContent = "xxx")
           : "";
+      } finally {
+        setIsLoading(false);
       }
     }
 
@@ -68,14 +77,36 @@ const SubAdmin: React.FC = () => {
       controller1.abort();
     };
   });
-
-  
- 
-
-
+  //get earnings data
+  useEffect(() => {
+    let controller = new AbortController();
+    async function earnings() {
+      setIsLoading(true);
+      try {
+        let res = await axios.get(`${transactionUrl}/get/total`, {
+          signal: controller.signal,
+        });
+        let earnings = earningsCount.current;
+        earnings ? (earnings.textContent = res.data?.amount) : "xxx";
+      } catch (error: any) {
+        if (error.name == "AbortError" || error.name == "CanceledError") return;
+        let earnings = earningsCount.current;
+        earnings ? (earnings.textContent = "xxx") : "";
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    earnings();
+    return () => {
+      controller.abort();
+    };
+  });
+  if (isLoading) return <Loading />;
   return (
     <div className="lg:p-10  md:p-2 sm:p-1 bg-gray-50 border-slate-200 shadow-2xl box-border grid gap-10 w-[99%] ">
-      <h1 className="text-sm text-gray-500 font-bold box-border shadow-gray-600 text-left shadow-sm p-1 m-0 border-gray-300">Admin Dashboard</h1>
+      <h1 className="text-sm text-gray-500 font-bold box-border shadow-gray-600 text-left shadow-sm p-1 m-0 border-gray-300">
+        Admin Dashboard
+      </h1>
       <section className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-0 h-auto  ">
         <div className="bg-white p-10 shadow-gray-300 shadow-xl border  box-content flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
           <div className="flex border "></div>
@@ -89,7 +120,7 @@ const SubAdmin: React.FC = () => {
           <section className="mt-3">
             <h2 className="text-l text-slate-400">Students</h2>
             <p className="text-lg font-semibold" ref={noOfStudents}>
-              100000
+              xxx
             </p>
           </section>
         </div>
@@ -104,7 +135,7 @@ const SubAdmin: React.FC = () => {
           <section className="mt-3">
             <h2 className=" text-slate-400 text-md">Teachers</h2>
             <p className="text-lg font-semibold" ref={teachersCount}>
-              2000
+              xxx
             </p>
           </section>
         </div>
@@ -132,20 +163,22 @@ const SubAdmin: React.FC = () => {
             />
           </section>
           <section className="mt-3">
-            <h2 className=" text-slate-400">Earnings</h2>
-            <p className="text-lg font-semibold">$193000</p>
+            <h2 className=" text-slate-400">Earnings(NGN)</h2>
+            <p className="text-lg font-semibold" ref={earningsCount}>
+              xxx
+            </p>
           </section>
         </div>
       </section>
 
-      <section className="grid  grid-cols-2 gap-4 ">
+      <section className="grid   gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 ">
         <div className="bg-white shadow-lg p-5 grid grid-rows-[5%_95%] gap-5">
           <h2>Earnings</h2>
           <div className="w-[99%]">
             <EarningChart />
           </div>
         </div>
-      
+
         <div className="bg-white p-5 shadow-2xl grid grid-rows-[5%_95%] gap-5">
           <h2>Expenses</h2>
           <div>

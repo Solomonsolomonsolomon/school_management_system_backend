@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ClassLevel = exports.AcademicYear = exports.AcademicTerm = exports.Subject = exports.Result = exports.Grades = exports.Student = exports.Admin = exports.Teacher = void 0;
+exports.Transaction = exports.School = exports.ClassLevel = exports.AcademicYear = exports.AcademicTerm = exports.Subject = exports.Result = exports.Grades = exports.Student = exports.Admin = exports.Teacher = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 function connectDB() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -47,4 +47,8 @@ const AcademicYear_1 = require("./academic/AcademicYear");
 Object.defineProperty(exports, "AcademicYear", { enumerable: true, get: function () { return AcademicYear_1.AcademicYear; } });
 const ClassLevel_1 = require("./academic/ClassLevel");
 Object.defineProperty(exports, "ClassLevel", { enumerable: true, get: function () { return ClassLevel_1.ClassLevel; } });
+const School_1 = require("./others/School");
+Object.defineProperty(exports, "School", { enumerable: true, get: function () { return School_1.School; } });
+const Transacton_1 = require("./others/Transacton");
+Object.defineProperty(exports, "Transaction", { enumerable: true, get: function () { return Transacton_1.Transaction; } });
 exports.default = connectDB;

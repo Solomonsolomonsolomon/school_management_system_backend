@@ -42,6 +42,7 @@ const AcademicTerm_1 = require("./AcademicTerm");
 const AcademicYear_1 = require("./AcademicYear");
 const Subject_1 = require("./Subject");
 const decorators_1 = require("../../middleware/decorators");
+const ClassLevel_1 = require("./ClassLevel");
 const studentSchema = new mongoose_1.default.Schema({
     name: {
         type: String,
@@ -92,6 +93,18 @@ const studentSchema = new mongoose_1.default.Schema({
         type: String,
         default: "student",
     },
+    isPaid: {
+        type: Boolean,
+        default: false,
+    },
+    percentagePaid: {
+        type: Number,
+    },
+    balance: Number,
+    excess: {
+        type: Number,
+        default: 0,
+    },
     status: {
         type: String,
         emum: [
@@ -132,11 +145,11 @@ const studentSchema = new mongoose_1.default.Schema({
     ],
     currentClassLevel: {
         type: String,
-        default: function () {
-            return this.classLevels
-                ? this.classLevels[this.classLevels.length - 1]
-                : "";
-        },
+        // default: function (this: IStudent) {
+        //   return this.classLevels
+        //     ? this.classLevels[this.classLevels.length - 1]
+        //     : "";
+        // },
     },
     currentClassArm: {
         type: String,
@@ -219,7 +232,6 @@ const studentSchema = new mongoose_1.default.Schema({
     ],
 }, {
     timestamps: true,
-    virtuals: true,
 });
 //Hash password
 studentSchema.pre("save", function (next) {
@@ -236,52 +248,53 @@ studentSchema.pre("save", function (next) {
 //add current term and current year
 studentSchema.pre("save", function (next) {
     return __awaiter(this, void 0, void 0, function* () {
-        let currentTerm = yield AcademicTerm_1.AcademicTerm.findOne({ isCurrent: true });
-        let currentYear = yield AcademicYear_1.AcademicYear.findOne({ isCurrent: true });
+        let school = this.school;
+        console.log(this);
+        let currentTerm = yield AcademicTerm_1.AcademicTerm.findOne({ isCurrent: true, school });
+        let currentYear = yield AcademicYear_1.AcademicYear.findOne({ isCurrent: true, school });
         if (!currentYear || !currentTerm)
             throw new decorators_1.CustomError({}, "Either current year or current term not set", 400);
         this.academicYear = currentYear;
         this.currentAcademicTerm = currentTerm;
+        console.log("hiiiiiiii");
         next();
     });
 });
 //get back to this
-studentSchema.pre("save", function (next) {
-    return __awaiter(this, void 0, void 0, function* () {
-        console.log("hi");
-        // let classes = [
-        //   "NUR1",
-        //   "NUR2",
-        //   "NUR3",
-        //   "PRY1",
-        //   "PRY2",
-        //   "PRY3",
-        //   "PRY4",
-        //   "PRY5",
-        //   "PRY6",
-        //   "JSS1",
-        //   "JSS2",
-        //   "JSS3",
-        //   "SS1",
-        //   "SS2",
-        //   "SS3",
-        // ];
-        // if (
-        //   this.isModified("currentClassLevel") ||
-        //   this.isModified("classLevel") ||
-        //   this.isModified("isPromoted")
-        // ) {
-        //   if (this.isPromoted) {
-        //     const currentIndex = classes.indexOf(this.currentClassLevel);
-        //     if (currentIndex !== -1 && currentIndex < classes.length - 1) {
-        //       this.currentClassLevel = classes[currentIndex + 1];
-        //     }
-        //   } else {
-        //     this.currentClassLevel;
-        //   }
-        // }
-    });
-});
+// studentSchema.pre("save", async function (next) {
+//   console.log("hi");
+//   // let classes = [
+//   //   "NUR1",
+//   //   "NUR2",
+//   //   "NUR3",
+//   //   "PRY1",
+//   //   "PRY2",
+//   //   "PRY3",
+//   //   "PRY4",
+//   //   "PRY5",
+//   //   "PRY6",
+//   //   "JSS1",
+//   //   "JSS2",
+//   //   "JSS3",
+//   //   "SS1",
+//   //   "SS2",
+//   //   "SS3",
+//   // ];
+//   // if (
+//   //   this.isModified("currentClassLevel") ||
+//   //   this.isModified("classLevel") ||
+//   //   this.isModified("isPromoted")
+//   // ) {
+//   //   if (this.isPromoted) {
+//   //     const currentIndex = classes.indexOf(this.currentClassLevel);
+//   //     if (currentIndex !== -1 && currentIndex < classes.length - 1) {
+//   //       this.currentClassLevel = classes[currentIndex + 1];
+//   //     }
+//   //   } else {
+//   //     this.currentClassLevel;
+//   //   }
+//   // }
+// });
 // Verify Password
 studentSchema.methods.verifiedPassword = function (enteredPassword) {
     return __awaiter(this, void 0, void 0, function* () {
@@ -295,14 +308,17 @@ studentSchema.methods.verifiedPassword = function (enteredPassword) {
 //currentClass
 studentSchema.pre("save", function (next) {
     return __awaiter(this, void 0, void 0, function* () {
-        this.className = `${this.currentClassLevel}${this.currentClassArm}`;
+        console.log(this.currentClassLevel);
+        this.className = `${yield this.currentClassLevel}${yield this
+            .currentClassArm}`;
+        next();
     });
 });
 //add subjects
 studentSchema.pre("save", function (next) {
     return __awaiter(this, void 0, void 0, function* () {
-        let school = this.school;
-        let schoolId = this.schoolId;
+        let school = yield this.school;
+        let schoolId = yield this.schoolId;
         console.log(schoolId, "from school");
         let subjectsOffered = yield Subject_1.Subject.find({
             className: this.className,
@@ -311,6 +327,26 @@ studentSchema.pre("save", function (next) {
         });
         console.log(this.className);
         this.subjects = subjectsOffered;
+        next();
+    });
+});
+//compute balance
+studentSchema.pre("save", function (next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (this.isNew || this.isModified("className")) {
+            let schoolId = yield this.schoolId;
+            let school = yield this.school;
+            let theClass = yield ClassLevel_1.ClassLevel.findOne({
+                name: `${yield this.currentClassLevel}${yield this.currentClassArm}`,
+                schoolId,
+                school,
+            });
+            this.balance = theClass ? theClass.price : 0;
+            this.paid = false;
+            this.excess += 0;
+            this.percentagePaid = 0;
+        }
+        next();
     });
 });
 //model

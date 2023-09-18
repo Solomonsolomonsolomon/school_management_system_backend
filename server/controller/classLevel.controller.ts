@@ -43,6 +43,7 @@ class ClassLevelController {
         $group: {
           _id: "$_id",
           name: { $first: "$name" },
+          price: { $first: "$price" },
           numberOfStudents: {
             $sum: { $size: "$students" },
           },
@@ -54,6 +55,7 @@ class ClassLevelController {
           name: "$name",
           numberOfStudents: 1,
           _id: 1, // Exclude the "_id" field.
+          price: "$price",
         },
       },
     ])
@@ -74,7 +76,8 @@ class ClassLevelController {
       });
   }
   public async createClassLevel(req: express.Request, res: express.Response) {
-    let { name } = req.body;
+    let { name, price } = req.body;
+   
     let school = req.user?.school;
     let schoolId = req.user?.schoolId;
     let classLevel = await ClassLevel.findOne({ name, school, schoolId });
@@ -85,8 +88,9 @@ class ClassLevelController {
       createdBy: req.user._id,
       school,
       schoolId,
+      price,
     });
-
+    console.log(newClassLevel);
     await newClassLevel.save();
     res.status(201).json({
       status: 201,
