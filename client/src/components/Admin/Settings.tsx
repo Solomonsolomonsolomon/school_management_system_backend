@@ -44,6 +44,7 @@ const Settings = () => {
     configureVisibility: false,
     showThemes: false,
     showInsertLogo: false,
+    showGradePoints: false,
   });
   React.useEffect(() => {
     let controller = new AbortController();
@@ -230,7 +231,7 @@ const Settings = () => {
             </label>
             <input
               type="color"
-              defaultValue={themeData.sideBar || "#edf2f7"}
+              defaultValue={themeData.sideBar || "#4a5568"}
               {...register("sideBar")}
               id=""
             />
@@ -313,6 +314,50 @@ const Settings = () => {
             </button>
           </form>
         </div>
+      </div>
+      <div className="mt-2">
+        <span>
+          set grade points{" "}
+          <button
+            className="capitalize bg-gray-900 w-[100px] text-white p-2 rounded"
+            onClick={() => {
+              setSettingsState({
+                ...settingsState,
+                showGradePoints: !settingsState.showGradePoints,
+              });
+
+              setMsg("");
+            }}
+          >
+            SET
+          </button>
+        </span>
+        <div
+          className={`${settingsState.showGradePoints ? "block" : "hidden"}`}
+        >
+          <div>
+            <span>A:</span>
+            <input type="number" />
+          </div>
+          <div>
+            <span>B:</span>
+            <input type="number" />
+          </div>
+          <div>
+            <span>C:</span>
+            <input type="number" />
+          </div>
+          <div>
+            <span>D:</span>
+            <input type="number" />
+          </div>
+          <div>
+            <span>F:</span>
+            <input type="number" />
+          </div>
+
+        </div>
+        
       </div>
     </div>
   );

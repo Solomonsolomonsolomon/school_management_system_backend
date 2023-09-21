@@ -1,6 +1,7 @@
-import { Result, Grades } from "../model/database";
+import { Result, Grades, AcademicTerm, AcademicYear } from "../model/database";
 import { Request, Response } from "express";
 import _, { Dictionary } from "lodash";
+import { CustomError } from "../middleware/decorators";
 export async function calcResult(groupedData: Dictionary<any>) {
   let bulkPushOperations: any = [];
   for (const className in groupedData) {
@@ -41,7 +42,7 @@ export async function calcResult(groupedData: Dictionary<any>) {
         grades: students[i].grades,
         status: students[i].overallGrade == "F" ? "failed" : "passed",
       };
-     
+
       bulkPushOperations.push({
         updateOne: {
           filter: {
@@ -71,8 +72,19 @@ export async function saveResult(student: any, term: number, year: string) {
 }
 export async function genResult(req: Request, res: Response) {
   try {
-    let term = req.query.term;
-    let year = req.query.year;
+    let school = req.user?.school;
+    let schoolId = req.user?.schoolId;
+    let term = await AcademicTerm.findOne({
+      school,
+      schoolId,
+      isCurrent: true,
+    });
+    let year = await AcademicYear.findOne({
+      school,
+      schoolId,
+      isCurrent: true,
+    });
+if(!year||!term)throw new CustomError({},'set current term and current year',400)
 
     let gradesPipeline = await Grades.aggregate([
       {
@@ -96,7 +108,7 @@ export async function genResult(req: Request, res: Response) {
       },
       {
         $match: {
-          $and: [{ term }, { year }],
+          $and: [{ term }, { year }, { school }, { schoolId }],
         },
       },
     ]).exec();

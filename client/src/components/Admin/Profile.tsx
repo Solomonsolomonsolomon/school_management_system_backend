@@ -75,7 +75,7 @@ const Profile = () => {
           logo: res.data?.logo,
           theme: {
             header: res.data?.themes?.header,
-            headerText: res?.data?.themes?.loginImg,
+            headerText: res?.data?.themes?.headerText,
           },
         });
       } catch (error) {

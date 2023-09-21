@@ -51,12 +51,13 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
   }
   if (loading) return <Loading />;
   return (
+    <div className="px-0 lg:py-4 sm:py-1 md:py-4 border bg-gray-200 sm:block lg:flex  md:flex justify-center">
     <nav
       style={{
         backgroundColor: `${colors.sideBar}`,
         color: `${colors.sideBarText}`,
       }}
-      className="bg-gray-700  shadow-2xl h-screen py-1 relative overflow-y-auto sm:w-full md:w-fit lg:w-fit xl:w-fit"
+      className="bg-gray-700  shadow-2xl h-screen py-1 relative overflow-y-auto p-2 sm:w-full md:w-fit lg:w-fit xl:w-fit rounded-2xl"
     >
       <h1 className="text-center text-3xl font-mono">ADMIN</h1>
       <section className="my-2">
@@ -213,6 +214,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
         </ul>
       </section>
     </nav>
+    </div>
   );
 };
 

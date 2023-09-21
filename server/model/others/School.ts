@@ -10,7 +10,13 @@ const themeSchema = new mongoose.Schema({
   background: String,
   headerText: String,
 });
-
+const gradePoint = new mongoose.Schema({
+  A: Number,
+  B: Number,
+  C: Number,
+  D: Number,
+  F: Number,
+});
 const schoolSchema = new mongoose.Schema({
   name: String,
   school: String,
@@ -38,6 +44,16 @@ const schoolSchema = new mongoose.Schema({
   plan: String,
   isPaid: Boolean,
   isSuspended: Boolean,
+  gradePoints: {
+    type: gradePoint,
+    default: {
+      A: 75,
+      B: 60,
+      C: 50,
+      D: 40,
+      F: 0,
+    },
+  },
 });
 
 const School = mongoose.model("School", schoolSchema);

@@ -124,14 +124,17 @@ export async function getStudentsTaught(req: Request, res: Response) {
 
     subjects.forEach((subject: any) => {
       const studentsForSubject = studentsWithGrades.filter((student) =>
-        student.subjects.some((subj:any) => subj.name === subject.name)
+        student.subjects.some((subj: any) => subj.name === subject.name)
       );
 
       formattedResponse[subject.name] = studentsForSubject.map((student) => ({
         name: student.name,
+        studentId: student._id,
+        subjectId: subject._id,
         CA1: getGradeForSubject(student, subject, "CA1"),
         CA2: getGradeForSubject(student, subject, "CA2"),
         CA3: getGradeForSubject(student, subject, "CA3"),
+        examScore: getGradeForSubject(student, subject, "examScore"),
       }));
     });
 
@@ -156,4 +159,3 @@ function getGradeForSubject(student: any, subject: any, exam: any) {
   );
   return subjectGrades ? subjectGrades[exam] : 0;
 }
-

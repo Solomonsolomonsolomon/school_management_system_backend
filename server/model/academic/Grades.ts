@@ -1,4 +1,6 @@
 import mongoose, { Schema, Types, model, Document } from "mongoose";
+import { School } from "../database";
+import { CustomError } from "../../middleware/decorators";
 
 interface INestedgrades extends Document {
   subjectId: Types.ObjectId;
@@ -64,7 +66,7 @@ let gradesSchema = new Schema<IGrades>({
   ],
 });
 
-gradesSchema.pre("save", function (this: IGrades, next) {
+gradesSchema.pre("save", async function (this: IGrades, next) {
   let grades = this.grades;
   function calculateTotal(scores: any, total = 0) {
     for (let i in scores) {
@@ -72,6 +74,16 @@ gradesSchema.pre("save", function (this: IGrades, next) {
     }
     return total;
   }
+  let schoolToCompare = await School.findOne({
+    school: this.school,
+    schoolId: this.schoolId,
+  });
+  if (!schoolToCompare)
+    throw new CustomError(
+      {},
+      "cannot add grades until school completes registration",
+      400
+    );
   for (let grade of grades) {
     let total = calculateTotal([
       grade.CA1,
@@ -80,16 +92,23 @@ gradesSchema.pre("save", function (this: IGrades, next) {
       grade.examScore,
     ]);
     grade.total = total;
-    grade.total >= 75
-      ? (grade.letterGrade = "A")
-      : grade.total >= 60 && grade.total < 75
-      ? (grade.letterGrade = "B")
-      : grade.total >= 50 && grade.total < 60
-      ? (grade.letterGrade = "C")
-      : grade.total > 40 && grade.total <= 49
-      ? (grade.letterGrade = "D")
-      : (grade.letterGrade = "F");
+    let A = schoolToCompare.gradePoints.A || 75;
+    let B = schoolToCompare.gradePoints.B || 60;
+    let C = schoolToCompare.gradePoints.C || 50;
+    let D = schoolToCompare.gradePoints.D || 40;
+    if (grade.total >= A) {
+      grade.letterGrade = "A";
+    } else if (grade.total >= B) {
+      grade.letterGrade = "B";
+    } else if (grade.total >= C) {
+      grade.letterGrade = "C";
+    } else if (grade.total >= D) {
+      grade.letterGrade = "D";
+    } else {
+      grade.letterGrade = "F";
+    }
   }
+
   next();
 });
 let Grades = model("Grades", gradesSchema);
