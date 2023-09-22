@@ -1,4 +1,3 @@
-//import axios from "../api/axios";
 import Navbar from "../components/Admin/Navbar";
 import Profile from "../components/Admin/Profile";
 import SubAdmin from "../components/Admin/SubAdmin";
@@ -25,7 +24,7 @@ let components: any = {
   subjects: Subjects,
   addadmin: AddAdmin,
   alladmin: AllAdmin,
-  settings:Settings
+  settings: Settings,
 };
 const Admin = () => {
   let [view, setView] = React.useState("subadmin");
@@ -35,12 +34,17 @@ const Admin = () => {
   return (
     <div
       id="adminpage"
-      className="grid md:grid-cols-[24%_75%] lg:grid-cols-[20%_80%] w-full overflow-y-hidden"
+      className="grid md:grid-cols-[24%_75%] lg:grid-cols-[23%_77%] w-full overflow-y-hidden"
     >
       <Navbar setView={setView} />
       <main className="container">
-        <section className="overflow-y-auto h-[100vh]">
-          <Profile />
+        <section className="overflow-y-auto h-[100vh] flex flex-col">
+          <header className="bg-white border-b-2 border-gray-200 py-4 shadow">
+            <div className="container mx-auto px-4  ">
+              <Profile />
+            </div>
+          </header>
+
           <Selected />
         </section>
       </main>

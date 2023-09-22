@@ -84,12 +84,12 @@ class SchoolController {
         return __awaiter(this, void 0, void 0, function* () {
             let schoolId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.schoolId;
             let school = (_b = req.user) === null || _b === void 0 ? void 0 : _b.school;
-            let logo = req.body;
+            let { logo } = req.body;
             let sch = yield database_1.School.findOne({ schoolId, school });
             if (!sch)
                 return yield database_1.School.create({ school, schoolId, logo });
             let version = sch.__v;
-            Object.assign(sch, logo);
+            Object.assign(sch, req.body);
             sch.__v = version;
             yield sch.save();
             res.status(200).json({

@@ -34,13 +34,13 @@ const YearAndTerm: React.FC = () => {
       addYearRef.current
         ? (addYearRef.current.textContent = res.data?.msg)
         : "";
-      console.log(res);
+    
     } catch (error: any) {
       addYearRef.current
         ? (addYearRef.current.textContent =
             error.response?.data?.msg || error?.config?.message)
         : "";
-      console.log(error);
+      console.error(error);
     } finally {
       setLoading(false);
     }
@@ -200,51 +200,57 @@ const YearAndTerm: React.FC = () => {
 
   return (
     <>
-      <h1 className="font-bold text-center">Year and Term</h1>
+   
 
       {/* Year Form */}
-      <h1 className="text-[20px] text-center">Add Year</h1>
+      <h1 className="text-lg text-center font-semibold">Add Year</h1>
       <p ref={addYearRef} className="font-bold text-center">
         ...
       </p>
       <div className="flex justify-center">
         <form
           onSubmit={handleYearSubmit(handleYearFormSubmit)}
-          className="grid justify-center justify-items-center border w-[350px] p-6  border-black rounded text-gray-600 "
+          className="grid justify-center justify-items-start border w-fit py-6 p-2 border-black rounded-xl"
         >
-          <label htmlFor="fromYear">FROM</label>
+          <label htmlFor="fromYear" className="opacity-[.5]">FROM</label>
           <input
             type="number"
-            className="border w-[250px] border-black"
+            className="border  border-black  rounded p-1 w-fit"
+            placeholder="e.g 2022"
             {...yearRegister("fromYear", { required: true, min: 2000 })}
           />
-          <label htmlFor="toYear">TO</label>
+          <label htmlFor="toYear" className="opacity-[.5]">TO</label>
           <input
-            className="border w-[250px] border-black"
+            className="border  border-black rounded p-1"
             type="number"
+            placeholder="e.g 2023"
             {...yearRegister("toYear", { required: true, min: 2000 })}
           />
-          <Button buttonType={0}>
+     
+  <Button buttonType={0}>
             Add Year
           </Button>
+          
+        
         </form>
       </div>
 
       {/* Term Form */}
-      <h1 className="text-[20px] text-center">Add Term</h1>
+      <h1 className="text-lg mt-2 font-bold  text-center">Add Term</h1>
       <p ref={addTermRef} className="font-bold text-center">
         ...
       </p>
       <div className="flex justify-center">
         <form
           onSubmit={handleTermSubmit(handleTermFormSubmit)}
-          className="grid justify-center justify-items-center border w-[350px] p-6  border-black rounded text-gray-600 "
+          className="grid justify-center justify-items-start border w-fit p-2 border-black rounded-xl text-gray-600 "
         >
           <label htmlFor="termName">Name</label>
           <input
             type="text"
             id="termName"
-            className="border w-[250px] border border-black"
+            placeholder="e.g 1st term"
+            className="border w-fit  border-black rounded p-1"
             {...termRegister("name", { required: true })}
           />
           <Button buttonType={0}>
@@ -255,8 +261,8 @@ const YearAndTerm: React.FC = () => {
 
       {/* Display List of Years */}
       <div className="grid justify-items- border justify-center my-3">
-        <div className="w-[200px]sm:w-[400px] lg:w-[100%] md:w-[100%] w-[350px]">
-          <div className="w-[200px] sm:w-[400px] lg:w-[100%] md:w-[100%] w-[350px] h-[400px] overflow-y-auto">
+        <div className="w-[200px]sm:w-[400px] lg:w-[100%] md:w-[100%] w-[300px]">
+          <div className=" sm:w-[400px] lg:w-[100%] md:w-[100%] w-[350px] h-[400px] overflow-y-auto">
             <h1 className="font-bold text-center">List of Years</h1>
             <table className="divide-y divide-gray-200 dark:divide-gray-700 overflow-x-auto border">
               <thead className="bg-gray-50 dark:bg-gray-700">

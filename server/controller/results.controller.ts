@@ -1,14 +1,31 @@
-import { Result, Grades } from "../model/database";
+import { Result, Grades, AcademicTerm, AcademicYear } from "../model/database";
 import { Request, Response } from "express";
 import _, { Dictionary } from "lodash";
+import { CustomError } from "../middleware/decorators";
 export async function calcResult(groupedData: Dictionary<any>) {
   let bulkPushOperations: any = [];
   for (const className in groupedData) {
     const students = groupedData[className];
     for (const student of students) {
-      const totalMarks = _.sumBy(student.grades, "total");
-      const averageMarks = totalMarks / student.grades.length;
+      let validGrades = 0;
+      let totalMarks = 0;
+      for (let i of student.grades) {
+        if (
+          i.CA1 !== null ||
+          i.CA2 !== null ||
+          i.CA3 !== null ||
+          i.examScore !== null
+        )
+          validGrades++;
+      }
+      totalMarks = validGrades ? _.sumBy(student.grades, "total") : 0;
+      console.log(student.grades);
+      const averageMarks = validGrades ? totalMarks / validGrades : -1;
+
       let overallGrade = "";
+      if (averageMarks === -1) {
+        overallGrade = "N/A";
+      }
       if (averageMarks >= 75) {
         overallGrade = "A";
       } else if (averageMarks >= 60) {
@@ -33,6 +50,7 @@ export async function calcResult(groupedData: Dictionary<any>) {
         id: students[i].studentId._id,
         totalScore: students[i].totalMarks,
         year: students[i].year,
+        school: students[i].school,
         term: students[i].term,
         position: students[i].position,
         class: `${students[i].studentId.currentClassLevel}${students[i].studentId.currentClassArm}`,
@@ -41,7 +59,7 @@ export async function calcResult(groupedData: Dictionary<any>) {
         grades: students[i].grades,
         status: students[i].overallGrade == "F" ? "failed" : "passed",
       };
-     
+
       bulkPushOperations.push({
         updateOne: {
           filter: {
@@ -71,8 +89,21 @@ export async function saveResult(student: any, term: number, year: string) {
 }
 export async function genResult(req: Request, res: Response) {
   try {
-    let term = req.query.term;
-    let year = req.query.year;
+    let school = req.user?.school;
+    let schoolId = req.user?.schoolId;
+    let term = await AcademicTerm.findOne({
+      school,
+      schoolId,
+      isCurrent: true,
+    });
+    let year = await AcademicYear.findOne({
+      school,
+      schoolId,
+      isCurrent: true,
+    });
+
+    if (!year || !term)
+      throw new CustomError({}, "set current term and current year", 400);
 
     let gradesPipeline = await Grades.aggregate([
       {
@@ -96,7 +127,12 @@ export async function genResult(req: Request, res: Response) {
       },
       {
         $match: {
-          $and: [{ term }, { year }],
+          $and: [
+            { school },
+            { schoolId },
+            { year: year._id },
+            { term: term._id },
+          ],
         },
       },
     ]).exec();
@@ -104,11 +140,12 @@ export async function genResult(req: Request, res: Response) {
     let groupedData = _.groupBy(gradesPipeline, (student: any) => {
       return `${student.studentId.currentClassLevel}${student.studentId.currentClassArm}`;
     });
-
     let results = await calcResult(groupedData);
+
     res.status(201).json({
       status: 201,
       msg: "results generated successfully",
+      results,
     });
   } catch (error: any) {
     res.status(400).json({

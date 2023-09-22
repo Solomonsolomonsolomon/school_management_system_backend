@@ -11,7 +11,7 @@ interface ITheme {
   text: string;
   sideBar: string;
   background: string;
-  loginImg: string;
+  headerText: string;
   sideBarText: string;
 }
 let initialTheme = {
@@ -21,9 +21,19 @@ let initialTheme = {
   text: "",
   sideBar: "",
   background: "",
-  loginImg: "",
+  headerText: "",
   sideBarText: "",
 };
+let resultUrl = "/results";
+export async function tobase64(blob: Blob) {
+  return new Promise((resolve) => {
+    let reader = new FileReader();
+    reader.readAsDataURL(blob);
+    reader.onloadend = () => {
+      resolve(reader.result);
+    };
+  });
+}
 const Settings = () => {
   let [allBanks, setAllBanks] = React.useState<any[]>([]);
   let [msg, setMsg] = React.useState<string>("");
@@ -33,6 +43,8 @@ const Settings = () => {
   let [settingsState, setSettingsState] = React.useState<any>({
     configureVisibility: false,
     showThemes: false,
+    showInsertLogo: false,
+    showGradePoints: false,
   });
   React.useEffect(() => {
     let controller = new AbortController();
@@ -44,7 +56,6 @@ const Settings = () => {
       } catch (error: any) {
         if (error.name == "CanceledError" || error.name == "AbortError") return;
       } finally {
-      
         setLoading(false);
       }
     }
@@ -56,15 +67,17 @@ const Settings = () => {
 
   const submitThemeColor: SubmitHandler<any> = async (data: any) => {
     const controller = new AbortController();
-    const { sideBar, sideBarText, headers, button, buttonText } = data;
-    console.log(data);
+    const { sideBar, sideBarText, header, button, buttonText, headerText } =
+      data;
+
     async function submitColors() {
       try {
         const colors = {
           sideBar,
           sideBarText,
-          headers,
+          header,
           button,
+          headerText,
           buttonText,
         };
         console.log(colors);
@@ -72,6 +85,10 @@ const Settings = () => {
           signal: controller.signal,
         });
         setMsg(res.data?.msg + " ,refresh to see changes");
+        setSettingsState({
+          ...settingsState,
+          showThemes: !settingsState.showThemes,
+        });
       } catch (error: any) {
         if (
           error.name == "AbortController" ||
@@ -94,7 +111,12 @@ const Settings = () => {
     let controller = new AbortController();
 
     try {
-      let res = await axios.post(`${payUrl}/create/subaccount`, data, {
+      let bankData = {
+        account_number: data?.account_number,
+        business_name: data?.business_name,
+        settlement_bank: data?.settlement_bank,
+      };
+      let res = await axios.post(`${payUrl}/create/subaccount`, bankData, {
         signal: controller.signal,
       });
       reset();
@@ -107,6 +129,28 @@ const Settings = () => {
     return () => {
       controller.abort();
     };
+  };
+  const submitLogoData: SubmitHandler<any> = async (data) => {
+    let { logo } = data;
+    if (!logo[0].type.startsWith("image")) return setMsg("please select image");
+    let pic = await tobase64(logo[0]);
+
+    (async () => {
+      try {
+        await axios.post(`${schoolUrl}/logo/insert`, { logo: pic });
+        setMsg("updated logo successfully,refresh to see changes");
+      } catch (error: any) {
+        setMsg(
+          error?.response?.data?.msg || error?.message || "error updating logo"
+        );
+      }
+    })();
+  };
+  const generateResults = () => {
+    (async () => {
+      const res = await axios.get(`${resultUrl}/generate`);
+      console.log(res);
+    })();
   };
   React.useEffect(() => {
     let controller = new AbortController();
@@ -125,7 +169,7 @@ const Settings = () => {
   }, []);
   if (loading) return <Loading />;
   return (
-    <div>
+    <div className="mx-3">
       <p className="font-bold text-center italic">{msg}</p>
       <span>Configure Payment Info</span>
       <button
@@ -193,7 +237,7 @@ const Settings = () => {
             </label>
             <input
               type="color"
-              defaultValue={themeData.sideBar || "#edf2f7"}
+              defaultValue={themeData.sideBar || "#4a5568"}
               {...register("sideBar")}
               id=""
             />
@@ -211,17 +255,17 @@ const Settings = () => {
             </label>
             <input
               type="color"
-              defaultValue={themeData.button || "#abbbab"}
+              defaultValue={themeData.button || "#4B5563"}
               {...register("button")}
               id=""
             />
             <label htmlFor="" className="block">
-              login image
+              header text
             </label>
             <input
               type="color"
-              defaultValue={themeData.loginImg || "#aaaaaa"}
-              {...register("loginImg")}
+              defaultValue={themeData.headerText || "#000000"}
+              {...register("headerText")}
               className="border"
               id=""
             />
@@ -230,7 +274,7 @@ const Settings = () => {
             </label>
             <input
               type="color"
-              defaultValue={themeData.text || "#aaaaaa"}
+              defaultValue={themeData.text || "#000000"}
               {...register("text")}
               className="border"
               id=""
@@ -251,6 +295,79 @@ const Settings = () => {
           </form>
         </div>
       </div>
+      <div>
+        <span>
+          insert logo{" "}
+          <button
+            className="capitalize bg-gray-900 w-[100px] text-white p-2 rounded"
+            onClick={() => {
+              setSettingsState({
+                ...settingsState,
+                showInsertLogo: !settingsState.showInsertLogo,
+              });
+
+              setMsg("");
+            }}
+          >
+            insert
+          </button>
+        </span>
+        <div className={`${settingsState.showInsertLogo ? "block" : "hidden"}`}>
+          <form onSubmit={handleSubmit(submitLogoData)}>
+            <input type="file" {...register("logo")} id="" required />
+            <button className="p-2 bg-green-800 text-white rounded w-fit">
+              save
+            </button>
+          </form>
+        </div>
+      </div>
+      <div className="mt-2">
+        <span>
+          set grade points{" "}
+          <button
+            className="capitalize bg-gray-900 w-[100px] text-white p-2 rounded"
+            onClick={() => {
+              setSettingsState({
+                ...settingsState,
+                showGradePoints: !settingsState.showGradePoints,
+              });
+
+              setMsg("");
+            }}
+          >
+            SET
+          </button>
+        </span>
+        <div
+          className={`${settingsState.showGradePoints ? "block" : "hidden"}`}
+        >
+          <div>
+            <span>A:</span>
+            <input type="number" />
+          </div>
+          <div>
+            <span>B:</span>
+            <input type="number" />
+          </div>
+          <div>
+            <span>C:</span>
+            <input type="number" />
+          </div>
+          <div>
+            <span>D:</span>
+            <input type="number" />
+          </div>
+          <div>
+            <span>F:</span>
+            <input type="number" />
+          </div>
+        </div>
+      </div>
+
+      {/* generate results */}
+      <button className="bg-red-700 mt-5 hover:bg-red-500 hover:text-gray-500  p-4 text-white rounded-xl hover:text" onClick={generateResults}>
+        Generate Results
+      </button>
     </div>
   );
 };

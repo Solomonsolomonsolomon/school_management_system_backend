@@ -13,7 +13,7 @@ const themeSchema = new mongoose_1.default.Schema({
     sideBar: String,
     sideBarText: String,
     background: String,
-    loginImg: String,
+    headerText: String,
 });
 const schoolSchema = new mongoose_1.default.Schema({
     name: String,
@@ -30,7 +30,7 @@ const schoolSchema = new mongoose_1.default.Schema({
             sideBar: "#4a5568",
             sideBarText: "#ffffff",
             background: "#ffffff",
-            loginImg: "#ffffff",
+            headerText: "#000000",
             buttonText: "#ffffff",
         },
     },

@@ -14,8 +14,8 @@ interface IResult extends Document {
   id?: Types.ObjectId;
   totalScore?: number;
   position?: number;
-  year?: string;
-  term?: number;
+  year?:Types.ObjectId;
+  term?: Types.ObjectId;
   class?: string;
   average?: number;
   overallGrade?: string;
@@ -45,10 +45,12 @@ let resultSchema = new Schema<IResult>({
     type: String,
   },
   year: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref:"AcademicYear"
   },
   term: {
-    type: Number,
+    type: Schema.Types.ObjectId,
+    ref:"AcademicTerm"
   },
   average: {
     type: Number,

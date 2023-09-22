@@ -113,7 +113,7 @@ const AllSubjects: React.FC = () => {
           please note subjects are view-only you cannot edit or delete
         </p> */}
 
-        <p className="text-center">ALL SUBJECTS SORTED BY CLASS</p>
+        <p className="text-center  capitalize font-bold mt-2">all subjects sorted by class</p>
         <p className="text-center font-bold">{state.msg}</p>
         {/* Table */}
         {Object.entries(state.data).map<any>((_, index, arr: any[]) => {

@@ -51,6 +51,7 @@ interface IStudent extends Document {
   prefectName?: string;
   yearGraduated?: String;
   subjects?: PopulatedDoc<ISubject & Document>;
+  gradesBySubject?: any;
   // virtuals
   className?: string;
 }
@@ -247,6 +248,10 @@ const studentSchema: Schema = new mongoose.Schema<IStudent>(
         ref: "Subject",
       },
     ],
+    gradesBySubject: {
+      type: mongoose.Schema.Types.Mixed,
+      default: {},
+    },
   },
   {
     timestamps: true,
@@ -278,7 +283,7 @@ studentSchema.pre("save", async function (next) {
     );
   this.academicYear = currentYear;
   this.currentAcademicTerm = currentTerm;
-  console.log("hiiiiiiii");
+
   next();
 });
 

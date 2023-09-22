@@ -136,7 +136,7 @@ const ClassLevel: React.FC = () => {
           onChange={(e) => {
             setSearchQuery(e.target.value);
           }}
-          className="p-2 border rounded"
+          className="p-2 border rounded "
         />
         <p ref={errRef}></p>
         {/* Table */}
