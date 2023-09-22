@@ -6,7 +6,7 @@ export async function signIn(req: Request, res: Response) {
   let roles: string[] = ["student", "admin", "teacher"];
   let index: number = roles.indexOf(role);
   let user: any = null;
-  console.log(email, password, role);
+
   try {
     if (!email || !password || !role) {
       throw new Error("enter email and password");

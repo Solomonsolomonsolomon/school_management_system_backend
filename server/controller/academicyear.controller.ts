@@ -86,7 +86,7 @@ class AcademicYearController {
         });
         await this.makeCurrent(school, newYear);
         await newYear.save();
-        console.log("added successfully");
+   
       } catch (error: any) {
         console.error(error.message);
       }

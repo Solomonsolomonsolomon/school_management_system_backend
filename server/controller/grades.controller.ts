@@ -11,6 +11,9 @@ import { CustomError } from "../middleware/decorators";
 export async function addGrades(req: Request, res: Response) {
   try {
     const { subjectId } = req.body;
+    const { CA1, CA2, CA3, examScore } = req.body;
+    console.log(CA1, CA2, CA3, examScore);
+   
     const school = req.user?.school;
     const schoolId = req.user?.schoolId;
     const { studentId } = req.params;

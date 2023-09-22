@@ -8,7 +8,7 @@ import {
 } from "../model/database";
 import asyncErrorHandler from "../middleware/globalErrorHandler";
 import { CustomError } from "../middleware/decorators";
-console.log(asyncErrorHandler);
+
 type GroupedStudents = {
   [className: string]: any[]; // The key is a class name, and the value is an array of students
 };
@@ -108,10 +108,7 @@ export async function getStudentsTaught(req: Request, res: Response) {
           school,
           schoolId,
         });
-        console.log({
-          ...student.toObject(),
-          grades: grades ? grades.grades : [],
-        });
+        
         return {
           ...student.toObject(),
           grades: grades ? grades.grades : [],
@@ -138,7 +135,7 @@ export async function getStudentsTaught(req: Request, res: Response) {
       }));
     });
 
-    console.log(formattedResponse);
+  
 
     res.status(200).json({
       msg: "Form Students",

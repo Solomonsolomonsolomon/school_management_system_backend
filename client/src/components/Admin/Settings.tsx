@@ -24,7 +24,7 @@ let initialTheme = {
   headerText: "",
   sideBarText: "",
 };
-
+let resultUrl = "/results";
 export async function tobase64(blob: Blob) {
   return new Promise((resolve) => {
     let reader = new FileReader();
@@ -144,6 +144,12 @@ const Settings = () => {
           error?.response?.data?.msg || error?.message || "error updating logo"
         );
       }
+    })();
+  };
+  const generateResults = () => {
+    (async () => {
+      const res = await axios.get(`${resultUrl}/generate`);
+      console.log(res);
     })();
   };
   React.useEffect(() => {
@@ -355,10 +361,13 @@ const Settings = () => {
             <span>F:</span>
             <input type="number" />
           </div>
-
         </div>
-        
       </div>
+
+      {/* generate results */}
+      <button className="bg-red-700 mt-5 hover:bg-red-500 hover:text-gray-500  p-4 text-white rounded-xl hover:text" onClick={generateResults}>
+        Generate Results
+      </button>
     </div>
   );
 };

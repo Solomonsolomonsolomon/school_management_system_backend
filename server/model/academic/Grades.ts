@@ -85,27 +85,30 @@ gradesSchema.pre("save", async function (this: IGrades, next) {
       400
     );
   for (let grade of grades) {
+    console.log(grade!.CA1);
+    if (typeof grade!.CA1 !== "number" || grade!.CA1 == null) continue;
     let total = calculateTotal([
-      grade.CA1,
-      grade.CA2,
-      grade.CA3,
-      grade.examScore,
+      grade!.CA1,
+      grade!.CA2,
+      grade!.CA3,
+      grade!.examScore,
     ]);
-    grade.total = total;
+    grade!.total = total;
+
     let A = schoolToCompare.gradePoints.A || 75;
     let B = schoolToCompare.gradePoints.B || 60;
     let C = schoolToCompare.gradePoints.C || 50;
     let D = schoolToCompare.gradePoints.D || 40;
-    if (grade.total >= A) {
-      grade.letterGrade = "A";
-    } else if (grade.total >= B) {
-      grade.letterGrade = "B";
-    } else if (grade.total >= C) {
-      grade.letterGrade = "C";
-    } else if (grade.total >= D) {
-      grade.letterGrade = "D";
+    if (grade!.total >= A) {
+      grade!.letterGrade = "A";
+    } else if (grade!.total >= B) {
+      grade!.letterGrade = "B";
+    } else if (grade!.total >= C) {
+      grade!.letterGrade = "C";
+    } else if (grade!.total >= D) {
+      grade!.letterGrade = "D";
     } else {
-      grade.letterGrade = "F";
+      grade!.letterGrade = "F";
     }
   }
 

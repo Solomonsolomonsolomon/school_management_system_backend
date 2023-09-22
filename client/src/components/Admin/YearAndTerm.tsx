@@ -34,13 +34,13 @@ const YearAndTerm: React.FC = () => {
       addYearRef.current
         ? (addYearRef.current.textContent = res.data?.msg)
         : "";
-      console.log(res);
+    
     } catch (error: any) {
       addYearRef.current
         ? (addYearRef.current.textContent =
             error.response?.data?.msg || error?.config?.message)
         : "";
-      console.log(error);
+      console.error(error);
     } finally {
       setLoading(false);
     }

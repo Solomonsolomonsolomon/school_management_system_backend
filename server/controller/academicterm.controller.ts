@@ -59,9 +59,9 @@ class AcademicTermController {
         throw new CustomError(err, err.message, 400);
       });
     }
-    console.log(req.user?.school, req.user?.schoolId);
+    
     let current = await AcademicTerm.findOne({ _id });
-    console.log(current);
+    
     current!.isCurrent = true;
     current!.updatedBy = req.user?._id;
     await current!
@@ -104,7 +104,7 @@ class AcademicTermController {
     let school = req.user?.school;
     let schoolId: string = req.user?.schoolId;
 
-    console.log(schoolId, "SCH21094SDBSA");
+  
     await AcademicTerm.findOne({
       isCurrent: true,
       schoolId,

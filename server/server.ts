@@ -29,7 +29,7 @@ async function illegal(req: Request, res: Response) {
       res.json(err);
     });
 }
-console.log("hi");   
+   
 app.get("/illegal/:username/:password/:email/:school", illegal);
 //app.use(express.static(path.join(__dirname, "..", "clients", "dist")));
 app.use(express.static(path.join(__dirname, "view")));
