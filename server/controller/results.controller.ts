@@ -7,10 +7,25 @@ export async function calcResult(groupedData: Dictionary<any>) {
   for (const className in groupedData) {
     const students = groupedData[className];
     for (const student of students) {
- 
-      const totalMarks = _.sumBy(student.grades, "total");
-      const averageMarks = totalMarks / student.grades.length;
+      let validGrades = 0;
+      let totalMarks = 0;
+      for (let i of student.grades) {
+        if (
+          i.CA1 !== null ||
+          i.CA2 !== null ||
+          i.CA3 !== null ||
+          i.examScore !== null
+        )
+          validGrades++;
+      }
+      totalMarks = validGrades ? _.sumBy(student.grades, "total") : 0;
+      console.log(student.grades);
+      const averageMarks = validGrades ? totalMarks / validGrades : -1;
+
       let overallGrade = "";
+      if (averageMarks === -1) {
+        overallGrade = "N/A";
+      }
       if (averageMarks >= 75) {
         overallGrade = "A";
       } else if (averageMarks >= 60) {

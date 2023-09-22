@@ -85,16 +85,14 @@ gradesSchema.pre("save", async function (this: IGrades, next) {
       400
     );
   for (let grade of grades) {
-    console.log(grade!.CA1);
-    if (typeof grade!.CA1 !== "number" || grade!.CA1 == null) continue;
     let total = calculateTotal([
-      grade!.CA1,
-      grade!.CA2,
-      grade!.CA3,
-      grade!.examScore,
+      grade.CA1,
+      grade.CA2,
+      grade.CA3,
+      grade.examScore,
     ]);
-    grade!.total = total;
-
+    grade.total = total;
+    console.log(grade.total);
     let A = schoolToCompare.gradePoints.A || 75;
     let B = schoolToCompare.gradePoints.B || 60;
     let C = schoolToCompare.gradePoints.C || 50;
