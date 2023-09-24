@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "../../api/axios";
 import Loading from "../Loading";
-import { tobase64 } from "./AddStudent";
+//import { tobase64 } from "./AddStudent";
 import Button from "../Button/Button";
 const postUrl = "/admin";
 function AllStudents() {
@@ -61,7 +61,6 @@ function AllStudents() {
     return <Loading />;
   }
 
-
   const openEditModal = (student: any) => {
     setEditingStudent(student);
     setIsEditModalOpen(true);
@@ -80,6 +79,7 @@ function AllStudents() {
           `${postUrl}/edit/student/${student.studentId}`,
           student
         );
+        console.log(student.currentClassLevel, student.currentClassArm);
         errRef.current
           ? (errRef.current.textContent = editStudent.data?.msg)
           : "";
@@ -134,7 +134,7 @@ function AllStudents() {
                 }
                 className="w-full p-2 border rounded"
               />
-              <input
+              {/* <input
                 type="file"
                 name="picture"
                 id=""
@@ -150,7 +150,7 @@ function AllStudents() {
                     }
                   }
                 }}
-              />
+              /> */}
               {/*gender */}
               <select
                 name="gender"
@@ -169,6 +169,7 @@ function AllStudents() {
               <select
                 className="border rounded border-gray-400"
                 onChange={(e) => {
+               
                   setEditingStudent({
                     ...editingStudent,
                     currentClassLevel: e.target.value,
