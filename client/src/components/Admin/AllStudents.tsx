@@ -168,14 +168,15 @@ function AllStudents() {
               {/* current class Level */}
               <select
                 className="border rounded border-gray-400"
+                defaultValue=""
                 onChange={(e) => {
-               
                   setEditingStudent({
                     ...editingStudent,
                     currentClassLevel: e.target.value,
                   });
                 }}
               >
+                <option value="">class</option>
                 <option value="NUR1">NUR1</option>
                 <option value="NUR2">NUR2</option>
                 <option value="NUR3">NUR3</option>
@@ -195,6 +196,7 @@ function AllStudents() {
               {/*current class Arm*/}{" "}
               <select
                 className="border rounded border-gray-400"
+                defaultValue=""
                 onChange={(e) => {
                   setEditingStudent({
                     ...editingStudent,
@@ -202,6 +204,8 @@ function AllStudents() {
                   });
                 }}
               >
+                {" "}
+                <option value="">select</option>
                 <option value="A">A</option>
                 <option value="B">B</option>
                 <option value="C">C</option>

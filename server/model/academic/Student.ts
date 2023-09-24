@@ -361,32 +361,23 @@ studentSchema.pre("save", async function (next) {
         "error occured fetching price.contact admin",
         400
       );
-    let total = theClass.price;
-
-    let partPaid = this.excess > 0 ? this.excess : 0;
-
-    this.balance = partPaid < total ? total - partPaid : 0;
-
-    if (this.total < Math.abs(partPaid)) {
-      this.excess = this.excess - total;
-      this.pecentagePaid = 100;
-    } else {
-      this.excess += 0;
-      this.percentagePaid = ((total - this.balance) / total) * 100;
-    }
-
-    this.isPaid = this.percentagePaid === 100;
+    this.percentagePaid = 0;
+    this.excess = 0;
+    this.isPaid = false;
+    this.balance = theClass.price;
   }
   next();
 });
 //compute balance on online fees payment
 studentSchema.pre("save", async function (this: IStudent, next) {
   if (this.isModified("amount")) {
+    console.log("1");
     let classLevel = await ClassLevel.findOne({
-      name: this.currentClassLevel,
+      name: this.className,
       school: this.school,
       schoolId: this.schoolId,
     });
+    console.log(classLevel);
     if (!classLevel || !classLevel.price)
       throw new CustomError(
         {},
@@ -395,18 +386,18 @@ studentSchema.pre("save", async function (this: IStudent, next) {
       );
     const total = classLevel.price;
     //excess balance
-    if (this.amount + this.excess > this.balance) {
-      this.excess = this.amount + this.excess - this.balance;
+    if (this.amount > this.balance) {
+      console.log("2");
       this.percentagePaid = 100;
       this.isPaid = true;
       this.balance = 0;
-    } else if (this.amount + this.excess === this.balance) {
+    } else if (this.amount === this.balance) {
       this.percentagePaid = 100;
       this.isPaid = true;
       this.balance = 0;
-      this.excess = this.amount + this.excess - this.balance;
     } else {
-      this.balance -= this.amount + this.excess;
+      console.log("3");
+      this.balance = this.balance - this.amount;
       let partPaid = total - this.balance;
       this.percentagePaid = ((total - partPaid) / total) * 100;
       this.isPaid = this.percentagePaid === 100;
