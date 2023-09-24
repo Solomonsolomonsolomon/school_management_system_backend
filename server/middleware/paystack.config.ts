@@ -87,7 +87,7 @@ const paystack = (() => {
       .digest("hex");
     if (hash == req.headers["x-paystack-signature"]) {
       const event = req.body;
-      // Do something with event  }
+      console.log(event);
     }
     res.send("hhiiiiii");
   }
