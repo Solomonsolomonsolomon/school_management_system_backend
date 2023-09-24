@@ -42,20 +42,27 @@ const Sidebar: React.FC<ProfileProps> = ({ setView }) => {
 
   return (
     <nav className="">
-      <button onClick={toggleSidebar} className="m-2 absolute top-4">
-        <FontAwesomeIcon icon={faBars} size="2xl" />
+      <button
+        onClick={toggleSidebar}
+        className="m-2 absolute right-4 top-4"
+        style={{
+          backgroundColor: colors.sideBar || "rgb(31 41 55)",
+          color: colors.sideBarText || "#ffffff",
+        }}
+      >
+        <FontAwesomeIcon icon={faBars} size="xl" />
       </button>
       <div
         style={{
           backgroundColor: colors.sideBar || "rgb(31 41 55)",
           color: colors.sideBarText || "#ffffff",
         }}
-        className={`fixed h-full left-0 top-0 bg-gray-800 text-white transition-transform transform ${
+        className={`fixed h-full left-0 top-0 text-white transition-transform transform ${
           isOpen ? "translate-x-0 sm:w-full" : "-translate-x-full"
         } w-64 overflow-y-auto ease-in-out duration-300 z-30`}
       >
         <button
-          className="absolute top-3 right-3 text-white bg-black"
+          className="absolute top-3 right-3 text-white "
           onClick={toggleSidebar}
         >
           <i className={`fas ${isOpen ? "fa-times" : "fa-bars"} text-xl`}>
@@ -95,9 +102,7 @@ const Sidebar: React.FC<ProfileProps> = ({ setView }) => {
                 setIsOpen(false);
               }}
             >
-              <a className="block  hover:text-white">
-                View Results
-              </a>
+              <a className="block  hover:text-white">View Results</a>
             </li>
           </ul>
         </div>

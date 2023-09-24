@@ -92,11 +92,11 @@ const paystack = (() => {
         let student = await Student.findOne({
           email: event.data.customer.email,
         });
-      
+
         if (student) {
           student.amount = event.data?.fees_split?.subaccount / 100;
           await student.save();
-          console.log('herrrrrrre')
+          res.status(200).send(200);
         }
       }
     }

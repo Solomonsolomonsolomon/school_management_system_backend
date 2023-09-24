@@ -11,6 +11,7 @@ import { AcademicYear } from "./AcademicYear";
 import { ISubject, Subject } from "./Subject";
 import { CustomError } from "../../middleware/decorators";
 import { ClassLevel } from "./ClassLevel";
+import { Transaction } from "../database";
 
 interface IStudent extends Document {
   name: string;
@@ -370,8 +371,9 @@ studentSchema.pre("save", async function (next) {
 });
 //compute balance on online fees payment
 studentSchema.pre("save", async function (this: IStudent, next) {
-  if (this.isModified("amount")) {
+  if (this.isDirectModified("amount")) {
     console.log("1");
+    console.log(this.amount);
     let classLevel = await ClassLevel.findOne({
       name: this.className,
       school: this.school,
@@ -402,7 +404,15 @@ studentSchema.pre("save", async function (this: IStudent, next) {
       this.percentagePaid = ((total - partPaid) / total) * 100;
       this.isPaid = this.percentagePaid === 100;
     }
+    await new Transaction({
+      amountPaid: this.amount,
+      status: "success",
+      school: this.school,
+      schoolId: this.schoolId,
+      payerId: this._id,
+    }).save();
     this.amount = 0;
+
     next();
   }
 });
