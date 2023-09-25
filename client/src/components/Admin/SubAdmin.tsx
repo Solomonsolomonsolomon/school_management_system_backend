@@ -186,9 +186,7 @@ const SubAdmin: React.FC = () => {
           </div>
         </div>
       </section>
-      <section></section>
-      <section></section>
-      <section></section>
+   
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import paystack from "../middleware/paystack.config";
-import { School } from "../model/database";
+import { School, ClassLevel } from "../model/database";
 import { CustomError } from "../middleware/decorators";
 //# initialize transaction
 const initializeTransaction = async (req: Request, res: Response) => {
@@ -9,6 +9,9 @@ const initializeTransaction = async (req: Request, res: Response) => {
     if (!email || !amount) {
       throw new Error("enter email and amount");
     }
+
+    if (amount > req.user?.balance)
+      throw new Error(`your balance is ${req.user?.balance} not ${amount}`);
     let subaccount = await School.findOne({ schoolId: req.user?.schoolId });
     if (!subaccount)
       throw new CustomError({}, "School hasn`t registered payment", 404);

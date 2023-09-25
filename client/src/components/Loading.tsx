@@ -1,19 +1,11 @@
+import { HashLoader} from "react-spinners";
 
-
-
-
-
-
-
-
-
-
-
-const Loading=()=>{
-return (
-  <>
-    <div className="flex w-[100%] justify-center items-center h-[100%]">
-      <svg
+const Loading = () => {
+  return (
+    <>
+      <div className="flex w-[100%] justify-center items-center h-[100%]">
+        <HashLoader color="#41c3ab"/>
+        {/* <svg
         className="animate-spin -ml-1 mr-3 h-13 w-12   text-blue-500"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
@@ -32,9 +24,9 @@ return (
           fill="currentColor"
           d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.963 7.963 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-3.647z"
         ></path>
-      </svg>
-    </div>
-  </>
-);
-}
+      </svg> */}
+      </div>
+    </>
+  );
+};
 export default Loading;

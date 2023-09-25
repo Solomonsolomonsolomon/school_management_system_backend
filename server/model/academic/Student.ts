@@ -5,13 +5,13 @@ import mongoose, {
   Document,
   Types,
   model,
-  Model,
 } from "mongoose";
 import { AcademicTerm } from "./AcademicTerm";
 import { AcademicYear } from "./AcademicYear";
 import { ISubject, Subject } from "./Subject";
 import { CustomError } from "../../middleware/decorators";
 import { ClassLevel } from "./ClassLevel";
+import { Transaction } from "../database";
 
 interface IStudent extends Document {
   name: string;
@@ -26,6 +26,7 @@ interface IStudent extends Document {
   role: string;
   isPaid: boolean;
   balance: number;
+  amount: number;
   excess: number;
   percentagePaid: number;
   status?: string;
@@ -42,9 +43,6 @@ interface IStudent extends Document {
   dateAdmitted?: Date;
   examResults?: Types.ObjectId[];
   program?: Types.ObjectId;
-  isPromotedToLevel200?: boolean;
-  isPromotedToLevel300?: boolean;
-  isPromotedToLevel400?: boolean;
   isGraduated?: boolean;
   isWithdrawn?: boolean;
   isSuspended?: boolean;
@@ -107,6 +105,10 @@ const studentSchema: Schema = new mongoose.Schema<IStudent>(
     role: {
       type: String,
       default: "student",
+    },
+    amount: {
+      type: Number,
+      default: 0,
     },
     isPaid: {
       type: Boolean,
@@ -199,18 +201,6 @@ const studentSchema: Schema = new mongoose.Schema<IStudent>(
       ref: "Program",
     },
 
-    isPromotedToLevel200: {
-      type: Boolean,
-      default: false,
-    },
-    isPromotedToLevel300: {
-      type: Boolean,
-      default: false,
-    },
-    isPromotedToLevel400: {
-      type: Boolean,
-      default: false,
-    },
     isGraduated: {
       type: Boolean,
       default: false,
@@ -272,7 +262,7 @@ studentSchema.pre("save", async function (next) {
 //add current term and current year
 studentSchema.pre("save", async function (next) {
   let school = this.school;
-  console.log(this);
+
   let currentTerm = await AcademicTerm.findOne({ isCurrent: true, school });
   let currentYear = await AcademicYear.findOne({ isCurrent: true, school });
   if (!currentYear || !currentTerm)
@@ -352,13 +342,13 @@ studentSchema.pre("save", async function (next) {
     school,
     schoolId,
   });
-  console.log(this.className);
   this.subjects = subjectsOffered;
   next();
 });
-//compute balance
+//compute balance on registration or promotion
 studentSchema.pre("save", async function (next) {
-  if (this.isNew || this.isModified("className")) {
+  if (this.isNew || this.isDirectModified("className")) {
+    console.log("className modified");
     let schoolId = await this.schoolId;
     let school = await this.school;
     let theClass: any = await ClassLevel.findOne({
@@ -366,12 +356,65 @@ studentSchema.pre("save", async function (next) {
       schoolId,
       school,
     });
-    this.balance = theClass ? theClass.price : 0;
-    this.paid = false;
-    this.excess += 0;
+    if (!theClass)
+      throw new CustomError(
+        {},
+        "error occured fetching price.contact admin",
+        400
+      );
     this.percentagePaid = 0;
+    this.excess = 0;
+    this.isPaid = false;
+    this.balance = theClass.price;
   }
   next();
+});
+//compute balance on online fees payment
+studentSchema.pre("save", async function (this: IStudent, next) {
+  if (this.isDirectModified("amount")) {
+    console.log("1");
+    console.log(this.amount);
+    let classLevel = await ClassLevel.findOne({
+      name: this.className,
+      school: this.school,
+      schoolId: this.schoolId,
+    });
+    console.log(classLevel);
+    if (!classLevel || !classLevel.price)
+      throw new CustomError(
+        {},
+        "error occured fetching price.contact admin",
+        400
+      );
+    const total = classLevel.price;
+    //excess balance
+    if (this.amount > this.balance) {
+      console.log("2");
+      this.percentagePaid = 100;
+      this.isPaid = true;
+      this.balance = 0;
+    } else if (this.amount === this.balance) {
+      this.percentagePaid = 100;
+      this.isPaid = true;
+      this.balance = 0;
+    } else {
+      console.log("3");
+      this.balance = this.balance - this.amount;
+      let partPaid = total - this.balance;
+      this.percentagePaid = ((total - partPaid) / total) * 100;
+      this.isPaid = this.percentagePaid === 100;
+    }
+    await new Transaction({
+      amountPaid: this.amount,
+      status: "success",
+      school: this.school,
+      schoolId: this.schoolId,
+      payerId: this._id,
+    }).save();
+    this.amount = 0;
+
+    next();
+  }
 });
 //model
 const Student = model<IStudent>("Student", studentSchema);
