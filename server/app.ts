@@ -13,7 +13,7 @@ import { ErrorHandler } from "./middleware/globalErrorHandler";
 app.get("/", (req: express.Request, res) => {
   res.json({
     status: "success",
-    msg: "test end point hit",
+    msg: "test end point hit", 
   });
 });                
 app.get("/frontend", (req, res) => {

@@ -15,10 +15,10 @@ app.use(express.json({ limit: "20mb" }));
 
 async function illegal(req: Request, res: Response) {
   let { username, password,email, school } = req.params;
-  await new Admin({
+  await new Admin({  
     name: username,
     password,
-    email,
+    email,   
     school,
   })
     .save()
