@@ -34,7 +34,7 @@ const Admin = () => {
   return (
     <div
       id="adminpage"
-      className="grid md:grid-cols-[24%_75%] lg:grid-cols-[23%_77%] w-full overflow-y-hidden"
+      className="grid md:grid-cols-[24%_75%] lg:grid-cols-[23%_77%] xl:grid-cols-[18%_82%] w-full overflow-y-hidden"
     >
       <Navbar setView={setView} />
       <main className="container">

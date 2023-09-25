@@ -139,7 +139,7 @@ const Profile = () => {
       </div>
       <div
         id="profile"
-        className="absolute hidden transition-opacity duration-500  left-[60%] p-6 shadow-lg w-fit z-20 bg-gray-950"
+        className="absolute hidden transition-opacity duration-500  left-[60%] p-6 shadow-lg w-fit =z-20 bg-gray-950"
       >
         <ul className="grid gap-3  justify-center m-0 p-0">
           <li>
