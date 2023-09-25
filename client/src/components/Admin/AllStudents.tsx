@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "../../api/axios";
 import Loading from "../Loading";
-import { tobase64 } from "./AddStudent";
+//import { tobase64 } from "./AddStudent";
 import Button from "../Button/Button";
 const postUrl = "/admin";
 function AllStudents() {
@@ -61,7 +61,6 @@ function AllStudents() {
     return <Loading />;
   }
 
-
   const openEditModal = (student: any) => {
     setEditingStudent(student);
     setIsEditModalOpen(true);
@@ -80,6 +79,7 @@ function AllStudents() {
           `${postUrl}/edit/student/${student.studentId}`,
           student
         );
+        console.log(student.currentClassLevel, student.currentClassArm);
         errRef.current
           ? (errRef.current.textContent = editStudent.data?.msg)
           : "";
@@ -134,7 +134,7 @@ function AllStudents() {
                 }
                 className="w-full p-2 border rounded"
               />
-              <input
+              {/* <input
                 type="file"
                 name="picture"
                 id=""
@@ -150,7 +150,7 @@ function AllStudents() {
                     }
                   }
                 }}
-              />
+              /> */}
               {/*gender */}
               <select
                 name="gender"
@@ -168,6 +168,7 @@ function AllStudents() {
               {/* current class Level */}
               <select
                 className="border rounded border-gray-400"
+                defaultValue=""
                 onChange={(e) => {
                   setEditingStudent({
                     ...editingStudent,
@@ -175,6 +176,7 @@ function AllStudents() {
                   });
                 }}
               >
+                <option value="">class</option>
                 <option value="NUR1">NUR1</option>
                 <option value="NUR2">NUR2</option>
                 <option value="NUR3">NUR3</option>
@@ -194,6 +196,7 @@ function AllStudents() {
               {/*current class Arm*/}{" "}
               <select
                 className="border rounded border-gray-400"
+                defaultValue=""
                 onChange={(e) => {
                   setEditingStudent({
                     ...editingStudent,
@@ -201,6 +204,8 @@ function AllStudents() {
                   });
                 }}
               >
+                {" "}
+                <option value="">select</option>
                 <option value="A">A</option>
                 <option value="B">B</option>
                 <option value="C">C</option>
@@ -278,6 +283,12 @@ function AllStudents() {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                   Class Level
                 </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  FEES
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  BALANCE
+                </th>
                 <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
                   Action
                 </th>
@@ -306,6 +317,12 @@ function AllStudents() {
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
                     {student.currentClassLevel}
                     {student.currentClassArm}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+                    {student.isPaid ? "paid" : "unpaid"}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+                    {student.balance}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium ">
                     <a

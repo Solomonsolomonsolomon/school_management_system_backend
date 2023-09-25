@@ -44,7 +44,7 @@ export async function signIn(req: Request, res: Response) {
       });
   } catch (error: any) {
     // Handle the error appropriately
-    console.error(error);
+    
     res.status(401).json({
       status: 401,
       error,

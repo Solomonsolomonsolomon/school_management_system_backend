@@ -1,6 +1,7 @@
 import { Response, Request } from "express";
 import axios, { AxiosError, AxiosResponse } from "axios";
 import crypto from "crypto";
+import { School, Student } from "../model/database";
 let secret = process.env.PAYSTACK_SECRET_KEY || "";
 const paystack = (() => {
   function initializetransaction(res: Response, body: object | string) {
@@ -13,7 +14,6 @@ const paystack = (() => {
           },
         })
         .then((response: AxiosResponse) => {
-          console.log(response);
           resolve(response.data);
         })
         .catch((err: AxiosError) => {
@@ -80,16 +80,26 @@ const paystack = (() => {
         });
     });
   }
-  function createWebhook(req: Request, res: Response) {
+  async function createWebhook(req: Request, res: Response) {
     const hash = crypto
       .createHmac("sha512", secret)
       .update(JSON.stringify(req.body))
       .digest("hex");
     if (hash == req.headers["x-paystack-signature"]) {
       const event = req.body;
-      console.log(event);
+      if (event.event === "charge.success") {
+        console.log("successful transaction");
+        let student = await Student.findOne({
+          email: event.data.customer.email,
+        });
+
+        if (student) {
+          student.amount = event.data?.fees_split?.subaccount / 100;
+          await student.save();
+          res.status(200).send(200);
+        }
+      }
     }
-    res.send("hhiiiiii");
   }
   return {
     initializetransaction,
