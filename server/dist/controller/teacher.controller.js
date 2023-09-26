@@ -8,15 +8,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getStudentsTaught = exports.managedStudents = void 0;
 const database_1 = require("../model/database");
-const globalErrorHandler_1 = __importDefault(require("../middleware/globalErrorHandler"));
 const decorators_1 = require("../middleware/decorators");
-console.log(globalErrorHandler_1.default);
 function managedStudents(req, res, next) {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
@@ -46,42 +41,80 @@ function managedStudents(req, res, next) {
 }
 exports.managedStudents = managedStudents;
 function getStudentsTaught(req, res) {
-    var _a, _b, _c;
+    var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
-        let { id } = req.params;
-        let school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
-        let schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
-        let teacher = yield database_1.Teacher.findOne({ school: (_c = req.user) === null || _c === void 0 ? void 0 : _c.school, _id: id });
-        if (!teacher)
-            throw new decorators_1.CustomError({}, "teacher doesnt exist", 404);
-        let subjects = teacher.subjects;
-        let studentsTaught = yield database_1.Student.find({
-            school,
-            schoolId,
-            subjects: { $in: subjects }, // Filter students by subjects
-        })
-            .select("name _id formTeacher email age className subjects")
-            .populate("subjects");
-        console.log(studentsTaught);
-        if (!studentsTaught.length)
-            throw new decorators_1.CustomError({}, "No students enrolled in subjects taught by you", 404);
-        const studentsBySubject = {};
-        studentsTaught.forEach((student) => {
-            var _a;
-            (_a = student.subjects) === null || _a === void 0 ? void 0 : _a.forEach((subject) => {
-                const subjectName = subject.name;
-                if (!studentsBySubject[subjectName]) {
-                    studentsBySubject[subjectName] = [];
-                }
-                studentsBySubject[subjectName].push(student);
+        try {
+            const { id } = req.params;
+            const school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
+            const schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
+            const currentTerm = yield database_1.AcademicTerm.findOne({
+                school,
+                schoolId,
+                isCurrent: true,
             });
-        });
-        console.log(studentsBySubject);
-        // Group students by class name
-        res.status(200).json({
-            msg: "Form Students",
-            studentsTaught: studentsBySubject,
-        });
+            const currentYear = yield database_1.AcademicYear.findOne({
+                school,
+                schoolId,
+                isCurrent: true,
+            });
+            // Find the teacher by ID
+            const teacher = yield database_1.Teacher.findOne({ school, _id: id }).populate("subjects");
+            if (!teacher) {
+                throw new decorators_1.CustomError({}, "Teacher doesn't exist", 404);
+            }
+            const subjects = teacher.subjects;
+            // Find students taught by the teacher
+            const studentsTaught = yield database_1.Student.find({
+                school,
+                schoolId,
+                subjects: { $in: subjects },
+            })
+                .select("name _id formTeacher email age className subjects")
+                .populate("subjects");
+            if (!studentsTaught.length) {
+                throw new decorators_1.CustomError({}, "No students enrolled in subjects taught by you", 404);
+            }
+            const studentsWithGrades = yield Promise.all(studentsTaught.map((student) => __awaiter(this, void 0, void 0, function* () {
+                // Find the grades for each subject and student
+                const grades = yield database_1.Grades.findOne({
+                    studentId: student._id,
+                    year: currentYear,
+                    term: currentTerm,
+                    school,
+                    schoolId,
+                });
+                return Object.assign(Object.assign({}, student.toObject()), { grades: grades ? grades.grades : [] });
+            })));
+            // Format the response as needed
+            const formattedResponse = {};
+            subjects.forEach((subject) => {
+                const studentsForSubject = studentsWithGrades.filter((student) => student.subjects.some((subj) => subj.name === subject.name));
+                formattedResponse[subject.name] = studentsForSubject.map((student) => ({
+                    name: student.name,
+                    studentId: student._id,
+                    subjectId: subject._id,
+                    CA1: getGradeForSubject(student, subject, "CA1"),
+                    CA2: getGradeForSubject(student, subject, "CA2"),
+                    CA3: getGradeForSubject(student, subject, "CA3"),
+                    examScore: getGradeForSubject(student, subject, "examScore"),
+                }));
+            });
+            res.status(200).json({
+                msg: "Form Students",
+                studentsTaught: formattedResponse,
+            });
+        }
+        catch (error) {
+            res.status(500).json({
+                status: 500,
+                msg: "Failed to fetch data",
+                error: error.message,
+            });
+        }
     });
 }
 exports.getStudentsTaught = getStudentsTaught;
+function getGradeForSubject(student, subject, exam) {
+    const subjectGrades = student.grades.find((grade) => grade.subjectId.equals(subject._id));
+    return subjectGrades ? subjectGrades[exam] : 0;
+}

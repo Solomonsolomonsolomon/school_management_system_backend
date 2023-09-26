@@ -41,7 +41,7 @@ const Dashboard: React.FC<{
         setUpdated(!updated);
       } catch (error) {
         console.log(error);
-        setUpdated(!updated)
+        setUpdated(!updated);
       }
     })();
 

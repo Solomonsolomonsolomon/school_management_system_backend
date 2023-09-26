@@ -15,15 +15,29 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.genResult = exports.saveResult = exports.calcResult = void 0;
 const database_1 = require("../model/database");
 const lodash_1 = __importDefault(require("lodash"));
+const decorators_1 = require("../middleware/decorators");
 function calcResult(groupedData) {
     return __awaiter(this, void 0, void 0, function* () {
         let bulkPushOperations = [];
         for (const className in groupedData) {
             const students = groupedData[className];
             for (const student of students) {
-                const totalMarks = lodash_1.default.sumBy(student.grades, "total");
-                const averageMarks = totalMarks / student.grades.length;
+                let validGrades = 0;
+                let totalMarks = 0;
+                for (let i of student.grades) {
+                    if (i.CA1 !== null ||
+                        i.CA2 !== null ||
+                        i.CA3 !== null ||
+                        i.examScore !== null)
+                        validGrades++;
+                }
+                totalMarks = validGrades ? lodash_1.default.sumBy(student.grades, "total") : 0;
+                console.log(student.grades);
+                const averageMarks = validGrades ? totalMarks / validGrades : -1;
                 let overallGrade = "";
+                if (averageMarks === -1) {
+                    overallGrade = "N/A";
+                }
                 if (averageMarks >= 75) {
                     overallGrade = "A";
                 }
@@ -52,6 +66,7 @@ function calcResult(groupedData) {
                     id: students[i].studentId._id,
                     totalScore: students[i].totalMarks,
                     year: students[i].year,
+                    school: students[i].school,
                     term: students[i].term,
                     position: students[i].position,
                     class: `${students[i].studentId.currentClassLevel}${students[i].studentId.currentClassArm}`,
@@ -94,10 +109,23 @@ function saveResult(student, term, year) {
 }
 exports.saveResult = saveResult;
 function genResult(req, res) {
+    var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            let term = req.query.term;
-            let year = req.query.year;
+            let school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
+            let schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
+            let term = yield database_1.AcademicTerm.findOne({
+                school,
+                schoolId,
+                isCurrent: true,
+            });
+            let year = yield database_1.AcademicYear.findOne({
+                school,
+                schoolId,
+                isCurrent: true,
+            });
+            if (!year || !term)
+                throw new decorators_1.CustomError({}, "set current term and current year", 400);
             let gradesPipeline = yield database_1.Grades.aggregate([
                 {
                     $lookup: {
@@ -120,7 +148,12 @@ function genResult(req, res) {
                 },
                 {
                     $match: {
-                        $and: [{ term }, { year }],
+                        $and: [
+                            { school },
+                            { schoolId },
+                            { year: year._id },
+                            { term: term._id },
+                        ],
                     },
                 },
             ]).exec();
@@ -131,6 +164,7 @@ function genResult(req, res) {
             res.status(201).json({
                 status: 201,
                 msg: "results generated successfully",
+                results,
             });
         }
         catch (error) {

@@ -105,7 +105,6 @@ class AcademicYearController {
                     });
                     yield this.makeCurrent(school, newYear);
                     yield newYear.save();
-                    console.log("added successfully");
                 }
                 catch (error) {
                     console.error(error.message);

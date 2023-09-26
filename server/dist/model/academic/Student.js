@@ -43,6 +43,7 @@ const AcademicYear_1 = require("./AcademicYear");
 const Subject_1 = require("./Subject");
 const decorators_1 = require("../../middleware/decorators");
 const ClassLevel_1 = require("./ClassLevel");
+const database_1 = require("../database");
 const studentSchema = new mongoose_1.default.Schema({
     name: {
         type: String,
@@ -92,6 +93,10 @@ const studentSchema = new mongoose_1.default.Schema({
     role: {
         type: String,
         default: "student",
+    },
+    amount: {
+        type: Number,
+        default: 0,
     },
     isPaid: {
         type: Boolean,
@@ -181,18 +186,6 @@ const studentSchema = new mongoose_1.default.Schema({
         type: mongoose_1.default.Schema.Types.ObjectId,
         ref: "Program",
     },
-    isPromotedToLevel200: {
-        type: Boolean,
-        default: false,
-    },
-    isPromotedToLevel300: {
-        type: Boolean,
-        default: false,
-    },
-    isPromotedToLevel400: {
-        type: Boolean,
-        default: false,
-    },
     isGraduated: {
         type: Boolean,
         default: false,
@@ -230,6 +223,10 @@ const studentSchema = new mongoose_1.default.Schema({
             ref: "Subject",
         },
     ],
+    gradesBySubject: {
+        type: mongoose_1.default.Schema.Types.Mixed,
+        default: {},
+    },
 }, {
     timestamps: true,
 });
@@ -249,14 +246,12 @@ studentSchema.pre("save", function (next) {
 studentSchema.pre("save", function (next) {
     return __awaiter(this, void 0, void 0, function* () {
         let school = this.school;
-        console.log(this);
         let currentTerm = yield AcademicTerm_1.AcademicTerm.findOne({ isCurrent: true, school });
         let currentYear = yield AcademicYear_1.AcademicYear.findOne({ isCurrent: true, school });
         if (!currentYear || !currentTerm)
             throw new decorators_1.CustomError({}, "Either current year or current term not set", 400);
         this.academicYear = currentYear;
         this.currentAcademicTerm = currentTerm;
-        console.log("hiiiiiiii");
         next();
     });
 });
@@ -325,15 +320,15 @@ studentSchema.pre("save", function (next) {
             school,
             schoolId,
         });
-        console.log(this.className);
         this.subjects = subjectsOffered;
         next();
     });
 });
-//compute balance
+//compute balance on registration or promotion
 studentSchema.pre("save", function (next) {
     return __awaiter(this, void 0, void 0, function* () {
-        if (this.isNew || this.isModified("className")) {
+        if (this.isNew || this.isDirectModified("className")) {
+            console.log("className modified");
             let schoolId = yield this.schoolId;
             let school = yield this.school;
             let theClass = yield ClassLevel_1.ClassLevel.findOne({
@@ -341,12 +336,60 @@ studentSchema.pre("save", function (next) {
                 schoolId,
                 school,
             });
-            this.balance = theClass ? theClass.price : 0;
-            this.paid = false;
-            this.excess += 0;
+            if (!theClass)
+                throw new decorators_1.CustomError({}, "error occured fetching price.contact admin", 400);
             this.percentagePaid = 0;
+            this.excess = 0;
+            this.isPaid = false;
+            this.balance = theClass.price;
         }
         next();
+    });
+});
+//compute balance on online fees payment
+studentSchema.pre("save", function (next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (this.isDirectModified("amount")) {
+            console.log("1");
+            console.log(this.amount);
+            let classLevel = yield ClassLevel_1.ClassLevel.findOne({
+                name: this.className,
+                school: this.school,
+                schoolId: this.schoolId,
+            });
+            console.log(classLevel);
+            if (!classLevel || !classLevel.price)
+                throw new decorators_1.CustomError({}, "error occured fetching price.contact admin", 400);
+            const total = classLevel.price;
+            //excess balance
+            if (this.amount > this.balance) {
+                console.log("2");
+                this.percentagePaid = 100;
+                this.isPaid = true;
+                this.balance = 0;
+            }
+            else if (this.amount === this.balance) {
+                this.percentagePaid = 100;
+                this.isPaid = true;
+                this.balance = 0;
+            }
+            else {
+                console.log("3");
+                this.balance = this.balance - this.amount;
+                let partPaid = total - this.balance;
+                this.percentagePaid = ((total - partPaid) / total) * 100;
+                this.isPaid = this.percentagePaid === 100;
+            }
+            yield new database_1.Transaction({
+                amountPaid: this.amount,
+                status: "success",
+                school: this.school,
+                schoolId: this.schoolId,
+                payerId: this._id,
+            }).save();
+            this.amount = 0;
+            next();
+        }
     });
 });
 //model

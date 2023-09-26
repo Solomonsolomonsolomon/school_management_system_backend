@@ -22,9 +22,20 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Grades = void 0;
 const mongoose_1 = __importStar(require("mongoose"));
+const database_1 = require("../database");
+const decorators_1 = require("../../middleware/decorators");
 let gradesSchema = new mongoose_1.Schema({
     studentId: {
         type: mongoose_1.default.Schema.Types.ObjectId,
@@ -32,10 +43,12 @@ let gradesSchema = new mongoose_1.Schema({
         ref: "Student",
     },
     year: {
-        type: String,
+        type: mongoose_1.default.Schema.Types.ObjectId,
+        ref: "AcademicYear",
     },
     term: {
-        type: String,
+        type: mongoose_1.default.Schema.Types.ObjectId,
+        ref: "AcademicTerm",
     },
     school: {
         type: String,
@@ -69,32 +82,51 @@ let gradesSchema = new mongoose_1.Schema({
     ],
 });
 gradesSchema.pre("save", function (next) {
-    let grades = this.grades;
-    function calculateTotal(scores, total = 0) {
-        for (let i in scores) {
-            typeof scores[i] == "number" ? (total += scores[i]) : (total += 0);
+    return __awaiter(this, void 0, void 0, function* () {
+        let grades = this.grades;
+        function calculateTotal(scores, total = 0) {
+            for (let i in scores) {
+                typeof scores[i] == "number" ? (total += scores[i]) : (total += 0);
+            }
+            return total;
         }
-        return total;
-    }
-    for (let grade of grades) {
-        let total = calculateTotal([
-            grade.CA1,
-            grade.CA2,
-            grade.CA3,
-            grade.examScore,
-        ]);
-        grade.total = total;
-        grade.total >= 75
-            ? (grade.letterGrade = "A")
-            : grade.total >= 60 && grade.total < 75
-                ? (grade.letterGrade = "B")
-                : grade.total >= 50 && grade.total < 60
-                    ? (grade.letterGrade = "C")
-                    : grade.total > 40 && grade.total <= 49
-                        ? (grade.letterGrade = "D")
-                        : (grade.letterGrade = "F");
-    }
-    next();
+        let schoolToCompare = yield database_1.School.findOne({
+            school: this.school,
+            schoolId: this.schoolId,
+        });
+        if (!schoolToCompare)
+            throw new decorators_1.CustomError({}, "cannot add grades until school completes registration", 400);
+        for (let grade of grades) {
+            let total = calculateTotal([
+                grade.CA1,
+                grade.CA2,
+                grade.CA3,
+                grade.examScore,
+            ]);
+            grade.total = total;
+            console.log(grade.total);
+            let A = schoolToCompare.gradePoints.A || 75;
+            let B = schoolToCompare.gradePoints.B || 60;
+            let C = schoolToCompare.gradePoints.C || 50;
+            let D = schoolToCompare.gradePoints.D || 40;
+            if (grade.total >= A) {
+                grade.letterGrade = "A";
+            }
+            else if (grade.total >= B) {
+                grade.letterGrade = "B";
+            }
+            else if (grade.total >= C) {
+                grade.letterGrade = "C";
+            }
+            else if (grade.total >= D) {
+                grade.letterGrade = "D";
+            }
+            else {
+                grade.letterGrade = "F";
+            }
+        }
+        next();
+    });
 });
 let Grades = (0, mongoose_1.model)("Grades", gradesSchema);
 exports.Grades = Grades;

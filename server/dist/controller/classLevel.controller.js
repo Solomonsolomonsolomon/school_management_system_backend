@@ -105,7 +105,6 @@ class ClassLevelController {
                 schoolId,
                 price,
             });
-            console.log(newClassLevel);
             yield newClassLevel.save();
             res.status(201).json({
                 status: 201,

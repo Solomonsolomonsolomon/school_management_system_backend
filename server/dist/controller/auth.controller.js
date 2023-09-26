@@ -21,7 +21,6 @@ function signIn(req, res) {
         let roles = ["student", "admin", "teacher"];
         let index = roles.indexOf(role);
         let user = null;
-        console.log(email, password, role);
         try {
             if (!email || !password || !role) {
                 throw new Error("enter email and password");
@@ -55,7 +54,6 @@ function signIn(req, res) {
         }
         catch (error) {
             // Handle the error appropriately
-            console.error(error);
             res.status(401).json({
                 status: 401,
                 error,

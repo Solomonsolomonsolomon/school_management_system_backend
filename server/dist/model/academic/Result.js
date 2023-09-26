@@ -34,10 +34,12 @@ let resultSchema = new mongoose_1.Schema({
         type: String,
     },
     year: {
-        type: String,
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: "AcademicYear"
     },
     term: {
-        type: Number,
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: "AcademicTerm"
     },
     average: {
         type: Number,

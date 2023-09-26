@@ -13,32 +13,53 @@ exports.addGrades = void 0;
 const database_1 = require("../model/database");
 const mongoose_1 = require("mongoose");
 function addGrades(req, res) {
+    var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const { year, term, subjectId } = req.body;
+            const { subjectId } = req.body;
+            const { CA1, CA2, CA3, examScore } = req.body;
+            console.log(CA1, CA2, CA3, examScore);
+            const school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
+            const schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
             const { studentId } = req.params;
             const studentID = new mongoose_1.Types.ObjectId(studentId);
             const subjectID = new mongoose_1.Types.ObjectId(subjectId);
-            let currentTerm = !!(yield database_1.AcademicTerm.countDocuments({ name: term }));
-            let currentYear = !!(yield database_1.AcademicYear.countDocuments({ name: year }));
+            let currentTerm = yield database_1.AcademicTerm.findOne({
+                school,
+                schoolId,
+                isCurrent: true,
+            });
+            let currentYear = yield database_1.AcademicYear.findOne({
+                school,
+                schoolId,
+                isCurrent: true,
+            });
             let isValidStudentId = !!(yield database_1.Student.countDocuments({ _id: studentID }));
             let isValidSubjectId = !!(yield database_1.Subject.countDocuments({ _id: subjectID }));
             if (!currentYear)
-                throw new Error(" year entered not valid");
+                throw new Error(" no current year set.please visit admin to set");
             if (!currentTerm)
-                throw new Error("term entered not valid");
+                throw new Error("no current term found.please contact admin to set");
             if (!isValidStudentId)
                 throw new Error("enter valid studentId");
             if (!isValidSubjectId)
                 throw new Error("enter valid subjectId");
-            let gradesObjectExists = yield database_1.Grades.findOne({ studentId, year, term });
+            let gradesObjectExists = yield database_1.Grades.findOne({
+                studentId,
+                year: currentYear,
+                term: currentTerm,
+                school,
+                schoolId,
+            });
             //if grade object doesnt exist
             if (!gradesObjectExists) {
                 //create new grade
                 const newGradesObject = new database_1.Grades({
                     studentId: studentID,
-                    year,
-                    term,
+                    year: currentYear,
+                    term: currentTerm,
+                    school,
+                    schoolId,
                     grades: [Object.assign(Object.assign({}, req.body), { studentId: studentID, subjectId: subjectID })],
                 });
                 const grade = yield newGradesObject.save();

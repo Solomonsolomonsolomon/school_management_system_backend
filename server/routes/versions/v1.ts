@@ -14,6 +14,7 @@ import paymentRouter from "../payment/payment.routes";
 import transactionRouter from "../payment/transactions.routes";
 import schoolRouter from "../school/school.route";
 import webHookRouter from "../payment/webhook.routes";
+import attendanceRouter from '../attendance/attendance.routes'
 v1.use(authRoutes);
 v1.use(webHookRouter);
 v1.use(secured, currentTermAndYear);
@@ -26,4 +27,5 @@ v1.use(secured, adminRoutes);
 v1.use(secured, paymentRouter);
 v1.use(secured, transactionRouter);
 v1.use(secured, schoolRouter);
+v1.use(secured,attendanceRouter)
 export default v1;

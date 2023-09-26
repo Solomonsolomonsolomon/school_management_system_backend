@@ -18,7 +18,7 @@ app.get("/", (req: express.Request, res) => {
 });                
 app.get("/frontend", (req, res) => {
   app.use(express.static(path.join(__dirname, "..", "clients", "dist")));
-  res.sendFile(path.join(__dirname, "..", "clients", "dist", "index.html"));
+  res.sendFile(path.join(__dirname, "..", "client", "dist", "index.html"));
 });
 app.use("/v1", apiv1);
 app.use(ErrorHandler);

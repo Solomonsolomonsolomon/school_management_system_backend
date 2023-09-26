@@ -4,10 +4,12 @@ import AddStudent from "../components/Admin/AddStudent";
 import React from "react";
 import RegisterClass from "../components/Teacher/RegisterSubject";
 import Dashboard from "../components/Teacher/Dashboard";
+import AttendanceManagement from "../components/Teacher/Attendance";
 let components: any = {
   dashboard: Dashboard,
   addstudent: AddStudent,
   registerclass: RegisterClass,
+  computeattendance:AttendanceManagement
 };
 function Teacher() {
   let [view, setView] = React.useState("dashboard");
@@ -28,7 +30,7 @@ function Teacher() {
         </header>
 
         {/* Content */}
-        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-200">
+        <main className="flex-1 overflow-x-hidden overflow-y-auto bg-gray-100">
           <div className="container mx-auto py-6 px-4">
             <Selected />
           </div>
