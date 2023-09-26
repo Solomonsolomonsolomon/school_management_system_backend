@@ -104,6 +104,10 @@ class AttendanceController {
       });
       await details.save();
     }
+    return res.status(201).json({
+      msg: "successful addition",
+      status: 201,
+    });
   }
   public async EditAttendanceDetails(
     req: express.Request,

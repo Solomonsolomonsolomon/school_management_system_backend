@@ -5,6 +5,7 @@ import Button from "../Button/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
 import EditAttendance from "./EditAttendance";
+import Loading from "../Loading";
 
 interface Student {
   _id: string;
@@ -51,7 +52,9 @@ const AttendanceManagement: React.FC = () => {
   let [isEditModalOpen, setIsEditModalOpen] = React.useState<boolean>(false);
   let focusRef = React.useRef<HTMLInputElement>(null);
   let msgRef = React.useRef<HTMLParagraphElement>(null);
+  let [isLoading, setLoading] = React.useState<boolean>(false);
   let [msg, setMsg] = React.useState<string>("");
+
   let [editDetails, setEditDetails] = React.useState<any>({
     date: "",
     status: "",
@@ -97,7 +100,6 @@ const AttendanceManagement: React.FC = () => {
           setAttendanceDetails([
             ...response.data?.attendance?.attendanceDetails,
           ]);
-          console.log(response.data);
         })
         .catch((err) => {
           throw err;
@@ -105,7 +107,6 @@ const AttendanceManagement: React.FC = () => {
     } catch (error) {
       console.error(error);
     } finally {
-      console.log(attendanceDetails);
     }
   };
 
@@ -125,33 +126,32 @@ const AttendanceManagement: React.FC = () => {
   };
 
   const handleRecordAttendance = async () => {
-    // Create a new attendance record or update an existing record
     const newAttendance: Attendance = {
       studentId: selectedStudent?._id || "",
       date,
       studentName: selectedStudent?.name || "",
       status: attendanceStatus,
-      class: selectedStudent?.className || "", // Assuming className is available
+      class: selectedStudent?.className || "",
     };
 
     try {
-      await axios
-        .post(
-          `/attendance/new/${selectedStudent?._id}/${selectedStudent?.className}`,
-          newAttendance
-        )
-        .then((response) => {
-          // Update the attendance details in the state
-          setAttendanceDetails([...attendanceDetails, newAttendance]);
-          closeModal();
-          setMsg(response.data?.msg || "attendance added successfully");
-        })
-        .catch((err) => {
-          throw err;
-        });
+      setLoading(true);
+      let response = await axios.post(
+        `/attendance/new/${selectedStudent?._id}/${selectedStudent?.className}`,
+        newAttendance
+      );
+
+      console.log(",,");
+      //  setAttendanceDetails([...attendanceDetails, newAttendance]);
+      closeModal();
+
+      setMsg(response.data?.msg || "attendance added successfully");
     } catch (error: any) {
       closeModal();
-      setMsg(error?.response?.data?.msg || "failed to compute attendance");
+      setMsg(error?.response?.data?.msg || "");
+    } finally {
+      setLoading(false);
+      closeModal();
     }
   };
 
@@ -159,13 +159,16 @@ const AttendanceManagement: React.FC = () => {
     setIsEditModalOpen(true);
     setEditDetails(data);
   };
+  if (isLoading) return <Loading />;
   return (
     <div>
       <h1 className="text-center font-bold">Attendance Management</h1>
       <p ref={msgRef} className="font-bold text-center capitalize"></p>
       <p className="font-bold text-center capitalize text-sm">{msg}</p>
       <div>
-        <h2 className="text-center italic font-bold text-xs">Select a Student</h2>
+        <h2 className="text-center italic font-bold text-xs">
+          Select a Student
+        </h2>
         <input
           type="search"
           className="border rounded-2xl p-2 w-full"
@@ -258,22 +261,22 @@ const AttendanceManagement: React.FC = () => {
                             </thead>
                             <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                               {attendanceDetails.map(
-                                (admin: any, index: number) => (
+                                (record: any, index: number) => (
                                   <tr key={index}>
                                     <td className="py-3 pl-4">
-                                      <div className="flex items-center h-5">
-                                        {/* ... Checkbox input ... */}
-                                      </div>
+                                      <div className="flex items-center h-5"></div>
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
-                                      {admin.date}
+                                      {record.date}
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                      {admin.status}
+                                      {record.status}
                                     </td>
                                     <td
                                       className="px-6 py-4 whitespace-nowrap text-sm text-blue-900 dark:text-gray-200"
-                                      onClick={() => handleEditModalOpen(admin)}
+                                      onClick={() =>
+                                        handleEditModalOpen(record)
+                                      }
                                     >
                                       edit
                                     </td>
