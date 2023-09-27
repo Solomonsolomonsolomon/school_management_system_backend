@@ -18,7 +18,6 @@ function addGrades(req, res) {
         try {
             const { subjectId } = req.body;
             const { CA1, CA2, CA3, examScore } = req.body;
-            console.log(CA1, CA2, CA3, examScore);
             const school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
             const schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
             const { studentId } = req.params;

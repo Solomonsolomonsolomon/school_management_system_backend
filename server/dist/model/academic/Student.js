@@ -179,7 +179,7 @@ const studentSchema = new mongoose_1.default.Schema({
     examResults: [
         {
             type: mongoose_1.default.Schema.Types.ObjectId,
-            ref: "ExamResult",
+            ref: "Result",
         },
     ],
     program: {

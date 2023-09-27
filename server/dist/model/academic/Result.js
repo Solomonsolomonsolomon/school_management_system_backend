@@ -35,11 +35,11 @@ let resultSchema = new mongoose_1.Schema({
     },
     year: {
         type: mongoose_1.Schema.Types.ObjectId,
-        ref: "AcademicYear"
+        ref: "AcademicYear",
     },
     term: {
         type: mongoose_1.Schema.Types.ObjectId,
-        ref: "AcademicTerm"
+        ref: "AcademicTerm",
     },
     average: {
         type: Number,
@@ -56,8 +56,8 @@ let resultSchema = new mongoose_1.Schema({
 });
 resultSchema.pre("save", function (next) {
     return __awaiter(this, void 0, void 0, function* () {
-        console.log('hitting');
-        this.overallGrade == "F"
+        console.log("hitting");
+        this.overallGrade === "F"
             ? (this.status = "failed")
             : (this.status = "passed");
         next();

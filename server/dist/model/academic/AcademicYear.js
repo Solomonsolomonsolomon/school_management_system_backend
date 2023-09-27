@@ -1,8 +1,11 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AcademicYear = void 0;
-const mongoose = require("mongoose");
-const academicYearSchema = new mongoose.Schema({
+const mongoose_1 = __importDefault(require("mongoose"));
+const academicYearSchema = new mongoose_1.default.Schema({
     name: {
         type: String,
         required: true,
@@ -31,7 +34,11 @@ const academicYearSchema = new mongoose.Schema({
         default: false,
     },
     createdBy: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose_1.default.Schema.Types.ObjectId,
+        ref: "Admin",
+    },
+    updatedBy: {
+        type: mongoose_1.default.Schema.Types.ObjectId,
         ref: "Admin",
     },
     createdByBot: {
@@ -41,13 +48,13 @@ const academicYearSchema = new mongoose.Schema({
     },
     students: [
         {
-            type: mongoose.Schema.Types.ObjectId,
+            type: mongoose_1.default.Schema.Types.ObjectId,
             ref: "Student",
         },
     ],
     teachers: [
         {
-            type: mongoose.Schema.Types.ObjectId,
+            type: mongoose_1.default.Schema.Types.ObjectId,
             ref: "Teacher",
         },
     ],
@@ -58,6 +65,6 @@ const academicYearSchema = new mongoose.Schema({
     timestamps: true,
 });
 //model
-const AcademicYear = mongoose.model("AcademicYear", academicYearSchema);
+const AcademicYear = mongoose_1.default.model("AcademicYear", academicYearSchema);
 exports.AcademicYear = AcademicYear;
 AcademicYear.syncIndexes();

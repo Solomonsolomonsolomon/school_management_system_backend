@@ -73,7 +73,6 @@ class ClassLevelController {
                 },
             ])
                 .then((result) => {
-                console.log(result);
                 res.status(200).json({
                     status: 200,
                     msg: "success",
@@ -117,7 +116,6 @@ class ClassLevelController {
         var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
             let { id } = req.params;
-            console.log(id);
             let school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
             let schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
             let _id = new mongoose_1.default.Types.ObjectId(id);

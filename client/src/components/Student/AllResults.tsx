@@ -37,6 +37,7 @@ let baseUrl = "/student";
 const AllResults: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   let [query, setQuery] = React.useState<string>("");
+  console.log(query);
   let [isLoading, setLoading] = React.useState<boolean>(false);
   const [reportCard, setReportCard] = React.useState<any>(null);
   const [selectedReport, setSelectedReport] = React.useState<Years | null>(

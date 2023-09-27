@@ -13,21 +13,33 @@ const attendanceSchema = new Schema({
     },
     studentName: {
         type: String,
+        default: "",
+    },
+    term: {
+        type: Schema.Types.ObjectId,
+        ref: "AcademicTerm",
         required: true,
     },
+    year: {
+        type: Schema.Types.ObjectId,
+        ref: "AcademicYear",
+        required: true,
+    },
+    className: {
+        type: String,
+        required: true,
+    },
+    school: String,
+    schoolId: String,
     attendanceDetails: [
         {
             date: {
-                type: Date,
+                type: String,
                 required: true,
             },
             status: {
                 type: String,
                 enum: ["present", "absent", "late", "excused"],
-                required: true,
-            },
-            class: {
-                type: String,
                 required: true,
             },
         },

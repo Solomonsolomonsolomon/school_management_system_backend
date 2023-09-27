@@ -32,7 +32,6 @@ function calcResult(groupedData) {
                         validGrades++;
                 }
                 totalMarks = validGrades ? lodash_1.default.sumBy(student.grades, "total") : 0;
-                console.log(student.grades);
                 const averageMarks = validGrades ? totalMarks / validGrades : -1;
                 let overallGrade = "";
                 if (averageMarks === -1) {
@@ -161,9 +160,10 @@ function genResult(req, res) {
                 return `${student.studentId.currentClassLevel}${student.studentId.currentClassArm}`;
             });
             let results = yield calcResult(groupedData);
+            //  await pushResultsToStudents(results, year, term);
             res.status(201).json({
                 status: 201,
-                msg: "results generated successfully",
+                msg: "results generated and pushed successfully",
                 results,
             });
         }
@@ -177,3 +177,29 @@ function genResult(req, res) {
     });
 }
 exports.genResult = genResult;
+// async function pushResultsToStudents(results: any, year: any, term: any) {
+//   const result = Object.values(results);
+//   const bulkOperations = [];
+//   const unsorted: any[] = result.flat();
+//   for (const i of unsorted) {
+//     console.log("processing result for student", i.studentId.name);
+// bulkOperations.push({
+//   updateOne: {
+//     filter: {
+//       school: i.school,
+//       schoolId: i.schoolId,
+//       _id: i.studentId._id,
+//     },
+//     update: {
+//       $addToSet: { examResults: i._id }, // Add the new result to the examResults array
+//     },
+//   },
+// });
+//}
+// try {
+//   const res = await Student.bulkWrite(bulkOperations);
+//   console.log(res, "hgf");
+// } catch (err) {
+//   console.error("Error updating examResults:", err);
+// }
+//}

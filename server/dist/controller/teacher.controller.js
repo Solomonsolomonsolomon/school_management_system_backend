@@ -107,7 +107,7 @@ function getStudentsTaught(req, res) {
         catch (error) {
             res.status(500).json({
                 status: 500,
-                msg: "Failed to fetch data",
+                msg: "No students taught by you",
                 error: error.message,
             });
         }

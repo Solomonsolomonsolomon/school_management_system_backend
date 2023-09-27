@@ -20,7 +20,7 @@ server_1.default.get("/", (req, res) => {
 });
 server_1.default.get("/frontend", (req, res) => {
     server_1.default.use(express_1.default.static(path_1.default.join(__dirname, "..", "clients", "dist")));
-    res.sendFile(path_1.default.join(__dirname, "..", "client", "src", "dist", "index.html"));
+    res.sendFile(path_1.default.join(__dirname, "..", "client", "dist", "index.html"));
 });
 server_1.default.use("/v1", v1_1.default);
 server_1.default.use(globalErrorHandler_1.ErrorHandler);
