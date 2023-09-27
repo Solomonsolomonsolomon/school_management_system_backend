@@ -51,7 +51,7 @@ class AttendanceController {
     let school = req.user?.school;
     let schoolId = req.user?.schoolId;
     const { date, status } = req.body;
-    console.log(req.body);
+  
     const { id, className } = req.params;
     let year = await AcademicYear.findOne({
       school,
@@ -116,7 +116,7 @@ class AttendanceController {
     let school = req.user?.school;
     let schoolId = req.user?.schoolId;
     const { date, status } = req.body;
-    console.log(req.body);
+
     const { id, className } = req.params;
     let year = await AcademicYear.findOne({
       school,

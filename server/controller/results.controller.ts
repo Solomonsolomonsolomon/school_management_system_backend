@@ -1,6 +1,12 @@
-import { Result, Grades, AcademicTerm, AcademicYear } from "../model/database";
+import {
+  Result,
+  Grades,
+  AcademicTerm,
+  AcademicYear,
+  Student,
+} from "../model/database";
 import { Request, Response } from "express";
-import _, { Dictionary } from "lodash";
+import _, { Dictionary, result } from "lodash";
 import { CustomError } from "../middleware/decorators";
 export async function calcResult(groupedData: Dictionary<any>) {
   let bulkPushOperations: any = [];
@@ -19,7 +25,7 @@ export async function calcResult(groupedData: Dictionary<any>) {
           validGrades++;
       }
       totalMarks = validGrades ? _.sumBy(student.grades, "total") : 0;
-      console.log(student.grades);
+
       const averageMarks = validGrades ? totalMarks / validGrades : -1;
 
       let overallGrade = "";
@@ -141,10 +147,10 @@ export async function genResult(req: Request, res: Response) {
       return `${student.studentId.currentClassLevel}${student.studentId.currentClassArm}`;
     });
     let results = await calcResult(groupedData);
-
+    //  await pushResultsToStudents(results, year, term);
     res.status(201).json({
       status: 201,
-      msg: "results generated successfully",
+      msg: "results generated and pushed successfully",
       results,
     });
   } catch (error: any) {
@@ -155,3 +161,33 @@ export async function genResult(req: Request, res: Response) {
     });
   }
 }
+
+// async function pushResultsToStudents(results: any, year: any, term: any) {
+//   const result = Object.values(results);
+//   const bulkOperations = [];
+//   const unsorted: any[] = result.flat();
+
+//   for (const i of unsorted) {
+//     console.log("processing result for student", i.studentId.name);
+
+// bulkOperations.push({
+//   updateOne: {
+//     filter: {
+//       school: i.school,
+//       schoolId: i.schoolId,
+//       _id: i.studentId._id,
+//     },
+//     update: {
+//       $addToSet: { examResults: i._id }, // Add the new result to the examResults array
+//     },
+//   },
+// });
+//}
+
+// try {
+//   const res = await Student.bulkWrite(bulkOperations);
+//   console.log(res, "hgf");
+// } catch (err) {
+//   console.error("Error updating examResults:", err);
+// }
+//}

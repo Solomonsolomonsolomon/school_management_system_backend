@@ -193,7 +193,7 @@ const studentSchema: Schema = new mongoose.Schema<IStudent>(
     examResults: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "ExamResult",
+        ref: "Result",
       },
     ],
     program: {

@@ -98,7 +98,7 @@ const Sidebar: React.FC<ProfileProps> = ({ setView }) => {
             <li
               className="mb-2"
               onClick={() => {
-                setView("viewresult");
+                setView("allresults");
                 setIsOpen(false);
               }}
             >
