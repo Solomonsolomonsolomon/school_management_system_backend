@@ -35,7 +35,7 @@ class SchoolController {
   public async getCurrentTheme(req: express.Request, res: express.Response) {
     let schoolId = req.user?.schoolId;
     let school = req.user?.school;
-    console.log(schoolId, school);
+
     let theSchool = await School.findOne({ schoolId });
     if (!theSchool) throw new CustomError({}, "school details not found", 404);
     res.status(200).json({

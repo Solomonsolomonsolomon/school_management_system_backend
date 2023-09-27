@@ -60,7 +60,7 @@ class ClassLevelController {
       },
     ])
       .then((result) => {
-        console.log(result);
+     
         res.status(200).json({
           status: 200,
           msg: "success",
@@ -100,7 +100,7 @@ class ClassLevelController {
   }
   public async deleteClassLevel(req: express.Request, res: express.Response) {
     let { id } = req.params;
-    console.log(id);
+ 
     let school = req.user?.school;
     let schoolId = req.user?.schoolId;
     let _id = new mongoose.Types.ObjectId(id);

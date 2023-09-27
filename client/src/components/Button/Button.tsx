@@ -20,9 +20,8 @@ const Button: React.FC<PropsWithChildren<IButton>> = (props) => {
   const [loading, setLoading] = useState<boolean>(true);
   const [colors, setColors] = useState<any>({
     button: "#4a5565",
-    buttonText: "#ffffff", 
+    buttonText: "#ffffff",
   });
-  
 
   useEffect(() => {
     async function getColor() {
@@ -32,11 +31,10 @@ const Button: React.FC<PropsWithChildren<IButton>> = (props) => {
         if (fetchedColors) {
           setColors({
             ...fetchedColors,
-          
           });
-        } 
+        }
       } catch (error) {
-        console.error("Error fetching colors:", error);
+        error;
       } finally {
         setLoading(false);
       }
@@ -46,7 +44,6 @@ const Button: React.FC<PropsWithChildren<IButton>> = (props) => {
   }, []);
 
   const buttonClass = (() => {
-    console.log('color',colors.button);
     switch (EButton[props.buttonType]) {
       case "default":
         console.log(colors);
@@ -67,9 +64,13 @@ const Button: React.FC<PropsWithChildren<IButton>> = (props) => {
       {...props}
       style={{
         backgroundColor: `${
-          EButton[props.buttonType] == "default" ? colors.button ||'#4a5365' : ""
+          EButton[props.buttonType] == "default"
+            ? colors.button || "#4a5365"
+            : ""
         }`,
-        color: `${EButton[props.buttonType] == "default" ? colors.buttonText : ""}`,
+        color: `${
+          EButton[props.buttonType] == "default" ? colors.buttonText : ""
+        }`,
       }}
     >
       {props.children}

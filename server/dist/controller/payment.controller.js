@@ -18,13 +18,15 @@ const database_1 = require("../model/database");
 const decorators_1 = require("../middleware/decorators");
 //# initialize transaction
 const initializeTransaction = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _a;
+    var _a, _b, _c;
     try {
         const { email, amount } = req.body;
         if (!email || !amount) {
             throw new Error("enter email and amount");
         }
-        let subaccount = yield database_1.School.findOne({ schoolId: (_a = req.user) === null || _a === void 0 ? void 0 : _a.schoolId });
+        if (amount > ((_a = req.user) === null || _a === void 0 ? void 0 : _a.balance))
+            throw new Error(`your balance is ${(_b = req.user) === null || _b === void 0 ? void 0 : _b.balance} not ${amount}`);
+        let subaccount = yield database_1.School.findOne({ schoolId: (_c = req.user) === null || _c === void 0 ? void 0 : _c.schoolId });
         if (!subaccount)
             throw new decorators_1.CustomError({}, "School hasn`t registered payment", 404);
         if (!subaccount.subaccount_code)
@@ -74,14 +76,14 @@ const verifyPayment = (req, res) => __awaiter(void 0, void 0, void 0, function* 
 });
 exports.verifyPayment = verifyPayment;
 const subAccount = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var _b, _c, _d;
+    var _d, _e, _f;
     try {
         let body = req.body;
         console.log(req.body);
         let response = yield paystack_config_1.default.createSubAccount(res, Object.assign(Object.assign({}, body), { percentage_charge: 0.02 }));
         const bulkWriteOps = [];
-        const filter = { schoolId: (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId };
-        const replacement = Object.assign(Object.assign({ schoolId: (_c = req.user) === null || _c === void 0 ? void 0 : _c.schoolId }, body), { subaccount_code: (_d = response === null || response === void 0 ? void 0 : response.data) === null || _d === void 0 ? void 0 : _d.subaccount_code });
+        const filter = { schoolId: (_d = req.user) === null || _d === void 0 ? void 0 : _d.schoolId };
+        const replacement = Object.assign(Object.assign({ schoolId: (_e = req.user) === null || _e === void 0 ? void 0 : _e.schoolId }, body), { subaccount_code: (_f = response === null || response === void 0 ? void 0 : response.data) === null || _f === void 0 ? void 0 : _f.subaccount_code });
         const updateOne = {
             updateOne: {
                 filter,

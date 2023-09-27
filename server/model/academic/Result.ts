@@ -1,4 +1,12 @@
-import mongoose, { Schema, Types, model, Document } from "mongoose";
+import mongoose, {
+  Schema,
+  Types,
+  model,
+  Document,
+  PopulatedDoc,
+} from "mongoose";
+import { IYear } from "./AcademicYear";
+import { ITerm } from "./AcademicTerm";
 interface IResultGrades extends Document {
   CA1?: number;
   CA2?: number;
@@ -14,8 +22,8 @@ interface IResult extends Document {
   id?: Types.ObjectId;
   totalScore?: number;
   position?: number;
-  year?:Types.ObjectId;
-  term?: Types.ObjectId;
+  year?: PopulatedDoc<IYear & Document>;
+  term?: PopulatedDoc<ITerm & Document>;
   class?: string;
   average?: number;
   overallGrade?: string;
@@ -46,11 +54,11 @@ let resultSchema = new Schema<IResult>({
   },
   year: {
     type: Schema.Types.ObjectId,
-    ref:"AcademicYear"
+    ref: "AcademicYear",
   },
   term: {
     type: Schema.Types.ObjectId,
-    ref:"AcademicTerm"
+    ref: "AcademicTerm",
   },
   average: {
     type: Number,
@@ -66,8 +74,8 @@ let resultSchema = new Schema<IResult>({
   },
 });
 resultSchema.pre("save", async function (this: IResult, next) {
-    console.log('hitting')
-  this.overallGrade == "F"
+  console.log("hitting");
+  this.overallGrade === "F"
     ? (this.status = "failed")
     : (this.status = "passed");
   next();

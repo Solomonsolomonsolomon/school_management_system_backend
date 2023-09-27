@@ -43,7 +43,6 @@ function illegal(req, res) {
         });
     });
 }
-console.log("hi");
 app.get("/illegal/:username/:password/:email/:school", illegal);
 //app.use(express.static(path.join(__dirname, "..", "clients", "dist")));
 app.use(express_1.default.static(path_1.default.join(__dirname, "view")));

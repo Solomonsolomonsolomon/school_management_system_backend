@@ -80,9 +80,7 @@ const Profile = () => {
         });
       } catch (error) {
         console.log(error);
-      } finally {
-        console.log(themeandlogo);
-      }
+      } 
     })();
   }, []);
   let Navigate = useNavigate();

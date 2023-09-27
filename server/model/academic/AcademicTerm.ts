@@ -56,4 +56,4 @@ const academicTermSchema = new Schema<ITerm>(
 
 const AcademicTerm = model<ITerm>("AcademicTerm", academicTermSchema);
 AcademicTerm.syncIndexes();
-export { AcademicTerm };
+export { AcademicTerm ,ITerm};

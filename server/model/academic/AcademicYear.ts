@@ -1,6 +1,20 @@
-const mongoose = require("mongoose");
+import mongoose, { Document } from "mongoose";
 
-const academicYearSchema = new mongoose.Schema(
+interface IYear extends Document {
+  name: string;
+  fromYear: string;
+  toYear: string;
+  school?: string;
+  schoolId: string;
+  plan?: string;
+  isCurrent: boolean;
+  createdByBot?: string;
+  createdBy?: mongoose.Types.ObjectId;
+  students?: mongoose.Types.ObjectId[];
+  teachers?: mongoose.Types.ObjectId[];
+  updatedBy?: mongoose.Types.ObjectId;
+}
+const academicYearSchema = new mongoose.Schema<IYear>(
   {
     name: {
       type: String,
@@ -33,6 +47,10 @@ const academicYearSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Admin",
     },
+    updatedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Admin",
+    },
     createdByBot: {
       type: Boolean,
       default: false,
@@ -62,4 +80,4 @@ const academicYearSchema = new mongoose.Schema(
 //model
 const AcademicYear = mongoose.model("AcademicYear", academicYearSchema);
 AcademicYear.syncIndexes();
-export { AcademicYear };
+export { AcademicYear, IYear };

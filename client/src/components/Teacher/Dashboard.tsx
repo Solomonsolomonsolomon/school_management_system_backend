@@ -41,7 +41,7 @@ const Dashboard: React.FC<{
         setUpdated(!updated);
       } catch (error) {
         console.log(error);
-        setUpdated(!updated)
+        setUpdated(!updated);
       }
     })();
 
@@ -57,7 +57,7 @@ const Dashboard: React.FC<{
           ? (ref.current.textContent = res.data?.msg || "Form Students here")
           : "";
         setFormStudents(res.data?.formStudents);
-        console.log(res.data?.formStudents);
+        
       } catch (error: any) {
         console.log(error);
         ref.current

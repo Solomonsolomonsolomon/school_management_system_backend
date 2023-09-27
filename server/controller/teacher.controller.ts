@@ -108,7 +108,7 @@ export async function getStudentsTaught(req: Request, res: Response) {
           school,
           schoolId,
         });
-        
+
         return {
           ...student.toObject(),
           grades: grades ? grades.grades : [],
@@ -135,8 +135,6 @@ export async function getStudentsTaught(req: Request, res: Response) {
       }));
     });
 
-  
-
     res.status(200).json({
       msg: "Form Students",
       studentsTaught: formattedResponse,
@@ -144,7 +142,7 @@ export async function getStudentsTaught(req: Request, res: Response) {
   } catch (error: any) {
     res.status(500).json({
       status: 500,
-      msg: "Failed to fetch data",
+      msg: "No students taught by you",
       error: error.message,
     });
   }

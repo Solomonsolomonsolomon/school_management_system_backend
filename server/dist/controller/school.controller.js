@@ -50,7 +50,6 @@ class SchoolController {
         return __awaiter(this, void 0, void 0, function* () {
             let schoolId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.schoolId;
             let school = (_b = req.user) === null || _b === void 0 ? void 0 : _b.school;
-            console.log(schoolId, school);
             let theSchool = yield database_1.School.findOne({ schoolId });
             if (!theSchool)
                 throw new decorators_1.CustomError({}, "school details not found", 404);

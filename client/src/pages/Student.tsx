@@ -4,11 +4,13 @@ import Sidebar from "../components/Student/Sidebar";
 import Results from "../components/Student/Results";
 import PayFees from "../components/Student/PayFees";
 import SubStudent from "../components/Student/Substudent";
+import AllResults from "../components/Student/AllResults";
 
 let components: any = {
   dashboard: SubStudent,
   viewresult: Results,
   payfees: PayFees,
+  allresults: AllResults,
 };
 
 function Student() {

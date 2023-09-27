@@ -105,6 +105,15 @@ const Sidebar: React.FC<ProfileProps> = ({ setView }) => {
                 Register Class
               </a>
             </li>
+            <li
+              className="mb-2"
+              onClick={() => {
+                setView("computeattendance");
+                setIsOpen(false);
+              }}
+            >
+              <a className="block  hover:text-white">Compute Attendance</a>
+            </li>
           </ul>
         </div>
       </div>

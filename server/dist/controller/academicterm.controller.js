@@ -57,7 +57,7 @@ class AcademicTermController {
         });
     }
     setCurrentTerm(req, res) {
-        var _a, _b, _c, _d, _e;
+        var _a, _b, _c;
         return __awaiter(this, void 0, void 0, function* () {
             let { id } = req.params;
             let _id = yield new mongoose_1.default.Types.ObjectId(id);
@@ -74,11 +74,9 @@ class AcademicTermController {
                     throw new decorators_1.CustomError(err, err.message, 400);
                 });
             }
-            console.log((_c = req.user) === null || _c === void 0 ? void 0 : _c.school, (_d = req.user) === null || _d === void 0 ? void 0 : _d.schoolId);
             let current = yield database_1.AcademicTerm.findOne({ _id });
-            console.log(current);
             current.isCurrent = true;
-            current.updatedBy = (_e = req.user) === null || _e === void 0 ? void 0 : _e._id;
+            current.updatedBy = (_c = req.user) === null || _c === void 0 ? void 0 : _c._id;
             yield current
                 .save()
                 .then((current) => {
@@ -122,7 +120,6 @@ class AcademicTermController {
         return __awaiter(this, void 0, void 0, function* () {
             let school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
             let schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
-            console.log(schoolId, "SCH21094SDBSA");
             yield database_1.AcademicTerm.findOne({
                 isCurrent: true,
                 schoolId,
