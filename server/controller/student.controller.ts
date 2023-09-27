@@ -40,7 +40,7 @@ class StudentController {
       term,
       year,
       id,
-    });
+    }).populate("grades.subjectId");
     if (!result) throw new CustomError({}, "no result details found", 404);
 
     res.status(200).json({

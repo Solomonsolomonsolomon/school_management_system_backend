@@ -147,7 +147,7 @@ const AllResults: React.FC = () => {
       >
         {reportCard && selectedReport && (
           <div
-            className="mt-5  grid grid-cols-1 w-full h-[350px]"
+            className="mt-5  grid grid-cols-1 w-full h-full"
             ref={printRef}
           >
             <ReportCard

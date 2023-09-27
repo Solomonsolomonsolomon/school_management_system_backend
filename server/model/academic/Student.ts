@@ -163,11 +163,6 @@ const studentSchema: Schema = new mongoose.Schema<IStudent>(
 
     currentClassLevel: {
       type: String,
-      // default: function (this: IStudent) {
-      //   return this.classLevels
-      //     ? this.classLevels[this.classLevels.length - 1]
-      //     : "";
-      // },
     },
     currentClassArm: {
       type: String,
