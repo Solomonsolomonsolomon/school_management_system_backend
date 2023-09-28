@@ -203,25 +203,25 @@ const YearAndTerm: React.FC = () => {
    
 
       {/* Year Form */}
-      <h1 className="text-lg text-center font-semibold">Add Year</h1>
-      <p ref={addYearRef} className="font-bold text-center">
+      <h1 className="dark:bg-gray-900 text-lg text-center font-semibold">Add Year</h1>
+      <p ref={addYearRef} className="dark:bg-gray-900 font-bold text-center">
         ...
       </p>
-      <div className="flex justify-center">
+      <div className="dark:bg-gray-900 flex justify-center">
         <form
           onSubmit={handleYearSubmit(handleYearFormSubmit)}
-          className="grid justify-center justify-items-start border w-fit py-6 p-2 border-black rounded-xl"
+          className="dark:bg-gray-900 grid justify-center justify-items-start border w-fit py-6 p-2 border-black rounded-xl"
         >
-          <label htmlFor="fromYear" className="opacity-[.5]">FROM</label>
+          <label htmlFor="fromYear" className="dark:bg-gray-900 opacity-[.5]">FROM</label>
           <input
             type="number"
-            className="border  border-black  rounded p-1 w-fit"
+            className="dark:bg-gray-900 border  border-black  rounded p-1 w-fit"
             placeholder="e.g 2022"
             {...yearRegister("fromYear", { required: true, min: 2000 })}
           />
-          <label htmlFor="toYear" className="opacity-[.5]">TO</label>
+          <label htmlFor="toYear" className="dark:bg-gray-900 opacity-[.5]">TO</label>
           <input
-            className="border  border-black rounded p-1"
+            className="dark:bg-gray-900 border  border-black rounded p-1"
             type="number"
             placeholder="e.g 2023"
             {...yearRegister("toYear", { required: true, min: 2000 })}
@@ -236,21 +236,21 @@ const YearAndTerm: React.FC = () => {
       </div>
 
       {/* Term Form */}
-      <h1 className="text-lg mt-2 font-bold  text-center">Add Term</h1>
-      <p ref={addTermRef} className="font-bold text-center">
+      <h1 className="dark:bg-gray-900 text-lg mt-2 font-bold  text-center">Add Term</h1>
+      <p ref={addTermRef} className="dark:bg-gray-900 font-bold text-center">
         ...
       </p>
-      <div className="flex justify-center">
+      <div className="dark:bg-gray-900 flex justify-center">
         <form
           onSubmit={handleTermSubmit(handleTermFormSubmit)}
-          className="grid justify-center justify-items-start border w-fit p-2 border-black rounded-xl text-gray-600 "
+          className="dark:bg-gray-900 grid justify-center justify-items-start border w-fit p-2 border-black rounded-xl text-gray-600 "
         >
           <label htmlFor="termName">Name</label>
           <input
             type="text"
             id="termName"
             placeholder="e.g 1st term"
-            className="border w-fit  border-black rounded p-1"
+            className="dark:bg-gray-900 border border w-fit  border-black rounded p-1"
             {...termRegister("name", { required: true })}
           />
           <Button buttontype={0}>
@@ -260,26 +260,26 @@ const YearAndTerm: React.FC = () => {
       </div >
 
       {/* Display List of Years */}
-      <div className="grid justify-items- border justify-center my-3">
-        <div className="w-[200px]sm:w-[400px] lg:w-[100%] md:w-[100%] w-[300px]">
-          <div className=" sm:w-[400px] lg:w-[100%] md:w-[100%] w-[350px] h-[400px] overflow-y-auto">
-            <h1 className="font-bold text-center">List of Years</h1>
-            <table className="divide-y divide-gray-200 dark:divide-gray-700 overflow-x-auto border">
-              <thead className="bg-gray-50 dark:bg-gray-700">
+      <div className="dark:bg-gray-900 grid justify-items- border justify-center my-3">
+        <div className="dark:bg-gray-900 w-[200px]sm:w-[400px] lg:w-[100%] md:w-[100%] w-[300px]">
+          <div className="dark:bg-gray-900  sm:w-[400px] lg:w-[100%] md:w-[100%] w-[350px] h-[400px] overflow-y-auto">
+            <h1 className="dark:bg-gray-900 font-bold text-center">List of Years</h1>
+            <table className="dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700 overflow-x-auto border">
+              <thead className="dark:bg-gray-900 bg-gray-50 dark:bg-gray-700">
                 <tr>
-                  {/* <th className="py-3 px-4 pr-0">Checkbox input</th> */}
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  {/* <th className="dark:bg-gray-900 py-3 px-4 pr-0">Checkbox input</th> */}
+                  <th className="dark:bg-gray-900 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                     Year Name
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  <th className="dark:bg-gray-900 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                     IS CURRENT
                   </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
+                  <th className="dark:bg-gray-900 px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
                     Actions
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+              <tbody className="dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
                 {years.map((year: any, index: number) => (
                   <tr key={index}>
                     <td>{year.name}</td>
@@ -287,13 +287,13 @@ const YearAndTerm: React.FC = () => {
                     {/* ... Your years table cells ... */}
 
                     <td
-                      className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-blue-500 hover:text-blue-700 cursor-pointer"
+                      className="dark:bg-gray-900 px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-blue-500 hover:text-blue-700 cursor-pointer"
                       onClick={() => handleSetCurrentYear(year._id)}
                     >
                       Set Current
                     </td>
                     <td
-                      className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-blue-500 hover:text-blue-700 cursor-pointer"
+                      className="dark:bg-gray-900 px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-blue-500 hover:text-blue-700 cursor-pointer"
                       onClick={() => handleDeleteYear(year._id)}
                     >
                       Delete
@@ -305,24 +305,24 @@ const YearAndTerm: React.FC = () => {
           </div>
 
           {/* Display List of Terms */}
-          <div className="w-[200px] sm:w-[400px] lg:w-[100%] md:w-[100%] w-[350px] h-[400px] overflow-y-auto">
-            <h1 className="text-center font-bold">List of Terms</h1>
-            <table className="divide-y divide-gray-200 dark:divide-gray-700 overflow-x-auto border">
-              <thead className="bg-gray-50 dark:bg-gray-700">
+          <div className="dark:bg-gray-900 w-[200px] sm:w-[400px] lg:w-[100%] md:w-[100%] w-[350px] h-[400px] overflow-y-auto">
+            <h1 className="dark:bg-gray-900 text-center font-bold">List of Terms</h1>
+            <table className="dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700 overflow-x-auto border">
+              <thead className="dark:bg-gray-900 bg-gray-50 dark:bg-gray-700">
                 <tr>
                   {/* ... Your terms table headers ... */}
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  <th className="dark:bg-gray-900 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                     Term Name
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  <th className="dark:bg-gray-900 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                     Current Term
                   </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
+                  <th className="dark:bg-gray-900 px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
                     Actions
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+              <tbody className="dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
                 {terms.map((term: any, index: number) => (
                   <tr key={index}>
                     {/* ... Your terms table cells ... */}
@@ -330,13 +330,13 @@ const YearAndTerm: React.FC = () => {
                     <td>{`${term.isCurrent}`}</td>
 
                     <td
-                      className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-blue-500 hover:text-blue-700 cursor-pointer"
+                      className="dark:bg-gray-900 px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-blue-500 hover:text-blue-700 cursor-pointer"
                       onClick={() => handleSetCurrentTerm(term._id)}
                     >
                       Set Current
                     </td>
                     <td
-                      className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-blue-500 hover:text-blue-700 cursor-pointer"
+                      className="dark:bg-gray-900 px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-blue-500 hover:text-blue-700 cursor-pointer"
                       onClick={() => handleDeleteTerm(term._id)}
                     >
                       Delete

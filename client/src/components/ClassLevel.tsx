@@ -71,13 +71,13 @@ const ClassLevel: React.FC = () => {
       </p>
       <p className="text-center" ref={AddRef}></p>
       <form
-        className="grid mb-4 grid-cols-1 place-content-center items-center self-center gap-2 justify-center justify-items-center"
+        className="grid mb-4 dark:bg-gray-900 grid-cols-1 place-content-center items-center self-center gap-2 justify-center justify-items-center"
         onSubmit={handleSubmit(onSubmit)}
       >
         {" "}
         <label htmlFor="">Enter Class Name</label>
         <select
-          className="border rounded border-gray-400 w-[200px]"
+          className="border rounded dark:bg-gray-900 border-gray-400 w-[200px]"
           {...register("currentClassLevel", { required: true })}
         >
           <option value="NUR1">NUR1</option>
@@ -98,7 +98,7 @@ const ClassLevel: React.FC = () => {
         </select>
         <label htmlFor="">Enter Class Arm</label>
         <select
-          className="border rounded border-gray-400 w-[200px] "
+          className="border dark:bg-gray-900 rounded border-gray-400 w-[200px] "
           {...register("currentClassArm", { required: true })}
         >
           <option value="A">A</option>
@@ -122,27 +122,28 @@ const ClassLevel: React.FC = () => {
           type="number"
           placeholder="enter school fees"
           {...register("price")}
-          className="border-b-2 border-t-0 border-l-0 border-r-0 border border-black"
+          className="border-b-2 dark:bg-gray-900 border-t-0 border-l-0 border-r-0 border border-black"
         />
         <Button buttontype={0}>ADD CLASS</Button>
       </form>
 
       <div className="flex flex-col border p-10 ">
         {/* Search bar */}
-        <input
-          type="text"
-          placeholder="Search for theClass..."
-          value={searchQuery}
-          onChange={(e) => {
-            setSearchQuery(e.target.value);
-          }}
-          className="p-2 border rounded "
-        />
+
         <p ref={errRef}></p>
         {/* Table */}
         <div className="overflow-x-auto">
+          <input
+            type="search"
+            placeholder="Search for theClass..."
+            value={searchQuery}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+            }}
+            className="p-2 dark:bg-gray-900 border rounded  w-[45%]"
+          />
           <table className="divide-y divide-gray-200 dark:divide-gray-700 overflow-x-auto border">
-            <thead className="bg-gray-50 dark:bg-gray-700">
+            <thead className="bg-gray-50 dark:bg-gray-900">
               <tr>
                 <th className="py-3 px-4 pr-0">{/* Checkbox input */}</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">

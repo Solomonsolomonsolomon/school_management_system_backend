@@ -2,7 +2,6 @@ import { NavLink } from "react-router-dom";
 import axios from "./../../api/axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-
   faBook,
   faGaugeHigh,
   faGear,
@@ -19,9 +18,10 @@ import Loading from "../Loading";
 import React from "react";
 interface ProfileProps {
   setView: any;
+  isOpen?: any;
 }
 const schoolUrl = "/school";
-const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
+const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
   const [colors, setColors] = React.useState<any>({
     sideBar: "000000",
     sideBarText: "#ffffff",
@@ -49,6 +49,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
 
   function setComponent(component: any): any {
     setView(component);
+    isOpen ? isOpen(false) : "";
   }
   if (loading) return <Loading />;
   return (
@@ -58,9 +59,8 @@ const Navbar: React.FC<ProfileProps> = ({ setView }: ProfileProps) => {
           backgroundColor: `${colors.sideBar}`,
           color: `${colors.sideBarText}`,
         }}
-        className="bg-gray-700  shadow-2xl h-screen py-1 relative overflow-y-auto p-3 sm:w-full md:w-fit lg:w-fit xl:w-fit rounded-2xl"
+        className="bg-gray-700  shadow-2xl h-screen py-1 relative overflow-y-auto p-3 sm:w-full md:w-fit lg:w-fit xl:w-fit lg:rounded-2xl md:rounded-2xl  sm:rounded-none l"
       >
-        
         <h1 className="text-center text-3xl">ADMIN</h1>
         <section className="my-2">
           <ul className="grid gap-4 text-sm">

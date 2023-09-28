@@ -189,23 +189,23 @@ const Settings = () => {
       >
         <form
           action=""
-          className="grid gap-3  justify-center p-2 border rounded  "
+          className="dark:bg-gray-900 grid gap-3  justify-center p-2 border rounded  "
           onSubmit={handleSubmit(submitBankConfigData)}
         >
           <input
             type="text"
             {...register("business_name")}
             placeholder="enter business name"
-            className="border  border-t-0 border-l-0 border-r-0 border-b-2 border-black"
+            className="dark:bg-gray-900 border  border-t-0 border-l-0 border-r-0 border-b-2 border-black"
           />
           <input
             type="text"
             {...register("account_number")}
             placeholder="enter Account number "
-            className="border  border-t-0 border-l-0 border-r-0 border-b-2 border-black"
+            className="dark:bg-gray-900 border  border-t-0 border-l-0 border-r-0 border-b-2 border-black"
           />
           <label htmlFor="">Select Bank</label>
-          <select {...register("settlement_bank")} id="">
+          <select {...register("settlement_bank")} className="dark:bg-gray-900">
             {allBanks.map((bank) => {
               return <option value={bank?.code}>{bank?.name}</option>;
             })}
@@ -239,7 +239,7 @@ const Settings = () => {
               type="color"
               defaultValue={themeData.sideBar || "#4a5568"}
               {...register("sideBar")}
-              id=""
+              className="dark:bg-gray-900"
             />
             <label htmlFor="" className="block">
               Sidebar text
@@ -248,7 +248,7 @@ const Settings = () => {
               type="color"
               defaultValue={themeData.sideBarText || "#ffffff"}
               {...register("sideBarText")}
-              id=""
+              className="dark:bg-gray-900"
             />
             <label htmlFor="" className="block">
               Buttons
@@ -257,7 +257,7 @@ const Settings = () => {
               type="color"
               defaultValue={themeData.button || "#4B5563"}
               {...register("button")}
-              id=""
+              className="dark:bg-gray-900"
             />
             <label htmlFor="" className="block">
               header text
@@ -266,8 +266,7 @@ const Settings = () => {
               type="color"
               defaultValue={themeData.headerText || "#000000"}
               {...register("headerText")}
-              className="border"
-              id=""
+              className="dark:bg-gray-900 border"
             />
             <label htmlFor="" className="block">
               Text
@@ -276,8 +275,7 @@ const Settings = () => {
               type="color"
               defaultValue={themeData.text || "#000000"}
               {...register("text")}
-              className="border"
-              id=""
+              className="dark:bg-gray-900 border"
             />
             <label htmlFor="" className="block">
               Header
@@ -286,10 +284,9 @@ const Settings = () => {
               type="color"
               defaultValue={themeData.header || "#aaaaaa"}
               {...register("header")}
-              className="border"
-              id=""
+              className="dark:bg-gray-900 border"
             />
-            <button className="p-2 bg-green-800 text-white rounded w-fit">
+            <button className="p-2 bg-green-800 mb-4 text-white rounded w-fit">
               APPLY
             </button>
           </form>
@@ -299,7 +296,7 @@ const Settings = () => {
         <span>
           insert logo{" "}
           <button
-            className="capitalize bg-gray-900 w-[100px] text-white p-2 rounded"
+            className="capitalize bg-gray-900 w-[100px] text-white p-2 rounded border"
             onClick={() => {
               setSettingsState({
                 ...settingsState,
@@ -314,8 +311,13 @@ const Settings = () => {
         </span>
         <div className={`${settingsState.showInsertLogo ? "block" : "hidden"}`}>
           <form onSubmit={handleSubmit(submitLogoData)}>
-            <input type="file" {...register("logo")} id="" required />
-            <button className="p-2 bg-green-800 text-white rounded w-fit">
+            <input
+              type="file"
+              {...register("logo")}
+              className="dark:bg-gray-900"
+              required
+            />
+            <button className="p-2 bg-green-800 text-white rounded w-fit border">
               save
             </button>
           </form>
@@ -325,7 +327,7 @@ const Settings = () => {
         <span>
           set grade points{" "}
           <button
-            className="capitalize bg-gray-900 w-[100px] text-white p-2 rounded"
+            className="capitalize bg-gray-900 w-[100px] text-white p-2 rounded border"
             onClick={() => {
               setSettingsState({
                 ...settingsState,
@@ -365,7 +367,10 @@ const Settings = () => {
       </div>
 
       {/* generate results */}
-      <button className="bg-red-700 mt-5 hover:bg-red-500 hover:text-gray-500  p-4 text-white rounded-xl hover:text" onClick={generateResults}>
+      <button
+        className="bg-red-700 mt-5 hover:bg-red-500 hover:text-gray-500  p-4 text-white rounded-xl hover:text"
+        onClick={generateResults}
+      >
         Generate Results
       </button>
     </div>

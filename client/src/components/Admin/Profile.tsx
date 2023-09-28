@@ -80,7 +80,7 @@ const Profile = () => {
         });
       } catch (error) {
         console.log(error);
-      } 
+      }
     })();
   }, []);
   let Navigate = useNavigate();
@@ -109,7 +109,7 @@ const Profile = () => {
     <section
       className="    border-b-2   p-5 mb-2 pr-3 pt-3  w-[100%]  rounded"
       style={{
-        backgroundColor: themeandlogo.theme.header || "#edf2f7",
+        backgroundColor: themeandlogo.theme?.header || "#4a5568",
         color: themeandlogo.theme?.headerText || "#000000",
       }}
     >

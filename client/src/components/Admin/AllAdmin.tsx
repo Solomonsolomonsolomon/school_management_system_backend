@@ -38,7 +38,7 @@ const AllAdmin: React.FC = () => {
         Please note.Admin is view only and cannot be deleted
       </p>
       <div className="rounded">
-        <div className="overflow-x-auto  rounded bg-white">
+        <div className="overflow-x-auto  rounded">
           <table className="divide-y divide-gray-200 dark:divide-gray-700 overflow-x-auto border rounded">
             <thead className="bg-gray-50 dark:bg-gray-700 rounded border">
               <tr>

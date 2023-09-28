@@ -262,7 +262,7 @@ const AllTeachers: React.FC = () => {
           placeholder="Search for teachers..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="p-2 border rounded"
+          className=" dark:bg-gray-900 p-2 border rounded"
         />
         <table className="divide-y divide-gray-200 dark:divide-gray-700 overflow-x-auto border">
           <thead className="bg-gray-50 dark:bg-gray-700">

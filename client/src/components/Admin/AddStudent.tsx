@@ -40,14 +40,14 @@ const AddStudent = () => {
     //   setImageError("Please select an image");
     //   return;
     // } else {
-       setImageError(null);
+    setImageError(null);
     // }
 
     // let pic: any = tobase64(data.picture[0]).catch((error) => {
     //   console.error(error);
     // });
 
-   // let picture = await pic;
+    // let picture = await pic;
 
     async function AddStudentForm() {
       try {
@@ -104,47 +104,47 @@ const AddStudent = () => {
 
             <label htmlFor=""> Full Name</label>
             <input
-              className="border p-2 w-fit rounded border-gray-400 "
+              className="dark:bg-gray-900 border p-2 w-fit rounded border-gray-400 "
               type="text"
               {...register("name", { required: true })}
             />
             <label htmlFor=""> guardian</label>
             <input
-              className="border p-2 w-fit rounded border-gray-400 "
+              className="dark:bg-gray-900 border p-2 w-fit rounded border-gray-400 "
               type="text"
               {...register("parent", { required: true })}
             />
             <label htmlFor=""> Relationship with WARD</label>
             <input
-              className="border p-2 w-fit rounded border-gray-400 "
+              className="dark:bg-gray-900 border p-2 w-fit rounded border-gray-400 "
               type="text"
               {...register("relationship", { required: true })}
             />
 
             <label htmlFor="">Age</label>
             <input
-              className="border w-fit p-2 rounded border-gray-400 "
+              className="dark:bg-gray-900 border w-fit p-2 rounded border-gray-400 "
               type="text"
               {...register("age", { required: true })}
             />
 
             <label htmlFor="">Email</label>
             <input
-              className="border w-fit p-2 rounded border-gray-400"
+              className="dark:bg-gray-900 border w-fit p-2 rounded border-gray-400"
               type="email"
               {...register("email", { required: true })}
             />
 
             <label htmlFor="">Password</label>
             <input
-              className="border w-fit p-2 rounded border-gray-400"
+              className="dark:bg-gray-900 border w-fit p-2 rounded border-gray-400"
               type="password"
               {...register("password", { required: true })}
             />
 
             {/* <label htmlFor="picture">Picture</label>
             <input
-              type="file"
+              type="file"dark:bg-gray-900 
               className="border w-[100px] border-gray-400"
               {...register("picture")}
             /> */}
@@ -152,7 +152,8 @@ const AddStudent = () => {
             <label htmlFor="">Select Gender</label>
             <select
               id=""
-              className="border w-fit p-2 rounded border-gray-400"
+              className="border dark:bg-gray-900
+           w-fit p-2 rounded border-gray-400"
               {...register("gender", { required: true })}
             >
               <option value="M">Male</option>
@@ -161,7 +162,7 @@ const AddStudent = () => {
 
             <label htmlFor="">Current Class Level</label>
             <select
-              className="border w-fit p-2 rounded border-gray-400"
+              className="border dark:bg-gray-900 w-fit p-2 rounded border-gray-400"
               {...register("currentClassLevel", { required: true })}
             >
               <option value="NUR1">NUR1</option>
@@ -183,7 +184,7 @@ const AddStudent = () => {
 
             <label htmlFor="">Current Class Arm</label>
             <select
-              className="border w-fit p-2 rounded border-gray-400"
+              className="border dark:bg-gray-900 w-fit p-2 rounded border-gray-400"
               {...register("currentClassArm", { required: true })}
             >
               <option value="A">A</option>
@@ -204,9 +205,7 @@ const AddStudent = () => {
               <option value="P">P</option>
             </select>
 
-            <Button buttontype={0}>
-              Submit
-            </Button>
+            <Button buttontype={0}>Submit</Button>
           </form>
         </div>
       </div>
