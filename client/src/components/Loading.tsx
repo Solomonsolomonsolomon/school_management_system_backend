@@ -1,10 +1,10 @@
-import { HashLoader} from "react-spinners";
+import { ClipLoader} from "react-spinners";
 
 const Loading = () => {
   return (
     <>
       <div className="flex w-[100%] justify-center items-center h-[100%]">
-        <HashLoader color="#41c3ab"/>
+        <ClipLoader color="#41c3ab"/>
         {/* <svg
         className="animate-spin -ml-1 mr-3 h-13 w-12   text-blue-500"
         xmlns="http://www.w3.org/2000/svg"

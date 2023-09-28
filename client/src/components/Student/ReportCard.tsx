@@ -23,10 +23,13 @@ const ReportCard: React.FC<Ivalues> = ({
       }
     })();
   }, []);
+  console.log(reportCardDetails)
   return (
     <div className="h-full font-mono   ">
       <h1 className="text-xl uppercase text-center">Report Card</h1>
-      <h1 className="text-lg uppercase text-center">School Name goes here</h1>
+      <h1 className="text-lg uppercase text-center">
+        {reportCardDetails?.school||"SCHOOL"}
+      </h1>
       <h1 className="text-md uppercase text-center">
         {selectedReportDetails.termName} RESULT
       </h1>
@@ -55,6 +58,7 @@ const ReportCard: React.FC<Ivalues> = ({
           </span>
         </p>
       </div>
+
       <div>
         <h1 className="text-2xl text center w-full border text-center bg-gray-500  mb-[25px] text-white rounded">
           SUBJECTS
@@ -88,6 +92,9 @@ const ReportCard: React.FC<Ivalues> = ({
             </thead>
             <tbody>
               {reportCardDetails?.grades?.map((grade: any) => {
+                {
+                  console.log(grade?.subjectId);
+                }
                 return (
                   <tr>
                     <td className="truncate text-xs  text-center sm:text-base md:text-lg lg:text-xl">

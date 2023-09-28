@@ -60,7 +60,7 @@ const AttendanceManagement: React.FC = () => {
     status: "",
     _id: "",
   });
-  let date = new Date().toISOString().split("T")[1];
+  let date = new Date().toISOString().split("T")[0];
 
   const closeModal = () => {
     setQuery("");
@@ -94,19 +94,16 @@ const AttendanceManagement: React.FC = () => {
     setIsModalOpen(true);
     // Fetch attendance details for the selected student
     try {
-      await axios
-        .get(`/attendance/get/${student._id}/${student.className}`)
-        .then((response) => {
-          setAttendanceDetails([
-            ...response.data?.attendance?.attendanceDetails,
-          ]);
-        })
-        .catch((err) => {
-          throw err;
-        });
+      let response = await axios.get(
+        `/attendance/get/${student._id}/${student.className}`
+      );
+      console.log(response);
+      setAttendanceDetails([...response.data?.attendance?.attendanceDetails]);
     } catch (error) {
       console.error(error);
+      setAttendanceDetails([]);
     } finally {
+      console.log(attendanceDetails);
     }
   };
 
@@ -164,23 +161,23 @@ const AttendanceManagement: React.FC = () => {
     <div>
       <h1 className="text-center font-bold">Attendance Management</h1>
       <p ref={msgRef} className="font-bold text-center capitalize"></p>
-      <p className="font-bold text-center capitalize text-sm">{msg}</p>
+      <p className="font-bold text-center capitalize text-sm ">{msg}</p>
       <div>
         <h2 className="text-center italic font-bold text-xs">
           Select a Student
         </h2>
         <input
           type="search"
-          className="border rounded-2xl p-2 w-full"
+          className="border border-black  rounded-2xl p-2 w-full"
           value={query}
           onChange={(e) => {
             setQuery(e.target.value);
             focusRef.current ? focusRef.current.focus() : "";
           }}
-          placeholder="search student..."
+          placeholder={`search student...`}
           ref={focusRef}
         />
-        <ul>
+        <ul className="mt-4">
           {filtered.map((student) => (
             <li key={student._id} onClick={() => handleStudentSelect(student)}>
               {student.name}

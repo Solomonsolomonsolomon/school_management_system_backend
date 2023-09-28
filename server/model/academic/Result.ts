@@ -10,12 +10,14 @@ import { ITerm } from "./AcademicTerm";
 interface IResultGrades extends Document {
   CA1?: number;
   CA2?: number;
+  CA3?: number;
   examScore?: number;
   total?: number;
   subjectId?: Types.ObjectId;
   letterGrade: string;
   _id?: Types.ObjectId;
 }
+
 interface IResult extends Document {
   name: string;
   studentId: string;
@@ -30,6 +32,18 @@ interface IResult extends Document {
   grades?: IResultGrades;
   status: string;
 }
+let gradesSchema = new Schema<IResultGrades>({
+  CA1: Number,
+  CA2: Number,
+  CA3: Number,
+  examScore: Number,
+  total: Number,
+  subjectId: {
+    type: Schema.Types.ObjectId,
+    ref: "Subject",
+  },
+  letterGrade: String,
+});
 let resultSchema = new Schema<IResult>({
   name: {
     type: String,
@@ -63,7 +77,11 @@ let resultSchema = new Schema<IResult>({
   average: {
     type: Number,
   },
-  grades: [{}],
+  grades: [
+    {
+      type: gradesSchema,
+    },
+  ],
   overallGrade: {
     type: String,
   },
@@ -73,6 +91,7 @@ let resultSchema = new Schema<IResult>({
     default: "failed",
   },
 });
+
 resultSchema.pre("save", async function (this: IResult, next) {
   console.log("hitting");
   this.overallGrade === "F"

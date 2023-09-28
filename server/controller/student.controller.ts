@@ -47,6 +47,7 @@ class StudentController {
       msg: "result ",
       status: 200,
       result,
+      school: req.user?.school,
     });
   }
 }

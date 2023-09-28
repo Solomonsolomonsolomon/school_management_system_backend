@@ -60,7 +60,7 @@ const AllResults: React.FC = () => {
         let res = await axios.get(
           `${baseUrl}/${details._id}/result/${report?.yearId}/${report?.termId}`
         );
-        setReportCard(res?.data?.result);
+        setReportCard({ ...res?.data?.result, school: res?.data?.school });
       } catch (error) {
         console.error(error);
       } finally {
@@ -110,7 +110,7 @@ const AllResults: React.FC = () => {
   if (isLoading) return <Loading />;
   return (
     <div>
-      <p className="text-center font-bold border shadow-2xl shadow box-border ">
+      <p className="text-center font-bold border shadow-2xl  box-border ">
         Results here
       </p>
       {years.length ? (
@@ -147,7 +147,7 @@ const AllResults: React.FC = () => {
       >
         {reportCard && selectedReport && (
           <div
-            className="mt-5  grid grid-cols-1 w-full h-full"
+            className="mt-5  grid grid-cols-1 w-full h-[80vh]"
             ref={printRef}
           >
             <ReportCard
