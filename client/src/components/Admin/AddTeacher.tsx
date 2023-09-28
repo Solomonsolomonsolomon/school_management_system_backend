@@ -343,7 +343,7 @@ const AddTeacher: React.FC<{
             </select>
           </div>
 
-          <Button buttonType={0}>
+          <Button buttontype={0}>
             {isModalSubmitted ? "Register" : "Proceed"}
           </Button>
         </form>
@@ -401,13 +401,13 @@ const AddTeacher: React.FC<{
           </form>
         </div>
         <div className="absolute top-1 left-1">
-          <Button buttonType={2} onClick={closeModal}>
+          <Button buttontype={2} onClick={closeModal}>
             <FontAwesomeIcon icon={faClose} size="sm"></FontAwesomeIcon>
           </Button>
         </div>
 
         <div className="absolute right-1 top-1">
-          <Button buttonType={1} onClick={onSubmitSubjects}>
+          <Button buttontype={1} onClick={onSubmitSubjects}>
             <FontAwesomeIcon icon={faCheck} size="sm"></FontAwesomeIcon>
           </Button>
         </div>

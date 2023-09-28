@@ -227,7 +227,7 @@ const YearAndTerm: React.FC = () => {
             {...yearRegister("toYear", { required: true, min: 2000 })}
           />
      
-  <Button buttonType={0}>
+  <Button buttontype={0}>
             Add Year
           </Button>
           
@@ -253,7 +253,7 @@ const YearAndTerm: React.FC = () => {
             className="border w-fit  border-black rounded p-1"
             {...termRegister("name", { required: true })}
           />
-          <Button buttonType={0}>
+          <Button buttontype={0}>
             Add Term
           </Button>
         </form>

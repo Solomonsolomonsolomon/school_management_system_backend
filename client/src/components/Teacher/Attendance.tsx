@@ -225,7 +225,7 @@ const AttendanceManagement: React.FC = () => {
                     </select>
                     <span className="mx-2">
                       {" "}
-                      <Button buttonType={1}>Record</Button>
+                      <Button buttontype={1}>Record</Button>
                     </span>
                   </form>
                 </div>
@@ -298,7 +298,7 @@ const AttendanceManagement: React.FC = () => {
         )}
 
         <div className="absolute top-1 right-1">
-          <Button buttonType={2} onClick={closeModal}>
+          <Button buttontype={2} onClick={closeModal}>
             <FontAwesomeIcon icon={faClose} size="sm"></FontAwesomeIcon>
           </Button>
         </div>

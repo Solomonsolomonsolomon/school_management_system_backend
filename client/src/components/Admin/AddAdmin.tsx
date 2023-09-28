@@ -72,7 +72,7 @@ const AddAdmin = () => {
             />
 
             <Button
-              buttonType={0}
+              buttontype={0}
             
             >
               Submit

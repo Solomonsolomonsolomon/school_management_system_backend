@@ -204,7 +204,7 @@ const AddStudent = () => {
               <option value="P">P</option>
             </select>
 
-            <Button buttonType={0}>
+            <Button buttontype={0}>
               Submit
             </Button>
           </form>

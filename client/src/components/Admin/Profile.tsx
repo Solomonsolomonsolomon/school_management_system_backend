@@ -160,7 +160,7 @@ const Profile = () => {
           </li>
           <li>
             <div className="w-full">
-              <Button buttonType={2} onClick={logout}>
+              <Button buttontype={2} onClick={logout}>
                 <FontAwesomeIcon icon={faArrowRightFromBracket} className="" />
                 <span className="ml-2">Logout</span>
               </Button>

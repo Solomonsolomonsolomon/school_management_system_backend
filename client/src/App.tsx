@@ -7,11 +7,12 @@ import "./index.css";
 import jwtDecode from "jwt-decode";
 
 let role: string = "";
+
 function isLoggedIn(userRole: string = "") {
   try {
     let accessToken: string = sessionStorage.getItem("accessToken") || "";
     let c: any = jwtDecode(accessToken);
-    if (Date.now() >= c.exp * 1000) throw new Error("");
+    if (Date.now() >= c.exp * 1000) throw new Error("token expired");
     role = sessionStorage.getItem("role") || "";
     if (userRole !== "" && userRole !== role) throw new Error("failed");
     return true;

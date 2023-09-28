@@ -44,7 +44,7 @@ const Admin = () => {
           <Navbar setView={setView} />
         </div>
         <main className="container">
-          <section className="overflow-y-auto h-[100vh] flex  flex-col">
+          <section className="overflow-y-auto h-[100vh] flex  flex-col ">
             <header className="bg-white border-b-2 border-gray-200 py-4 shadow ">
               <div className="container mx-auto px-4  ">
                 <Profile />

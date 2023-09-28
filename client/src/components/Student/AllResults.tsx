@@ -167,7 +167,7 @@ const AllResults: React.FC = () => {
           ></FontAwesomeIcon>{" "}
         </div>
         <div className="absolute top-1 right-1">
-          <Button buttonType={2} onClick={closeModal}>
+          <Button buttontype={2} onClick={closeModal}>
             <FontAwesomeIcon icon={faClose} size="sm"></FontAwesomeIcon>
           </Button>
         </div>

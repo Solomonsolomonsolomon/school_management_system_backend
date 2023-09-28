@@ -124,7 +124,7 @@ const ClassLevel: React.FC = () => {
           {...register("price")}
           className="border-b-2 border-t-0 border-l-0 border-r-0 border border-black"
         />
-        <Button buttonType={0}>ADD CLASS</Button>
+        <Button buttontype={0}>ADD CLASS</Button>
       </form>
 
       <div className="flex flex-col border p-10 ">

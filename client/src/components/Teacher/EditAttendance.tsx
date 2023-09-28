@@ -86,7 +86,7 @@ const EditAttendance: React.FC<{
         </select>
         <span className="mx-2">
           {" "}
-          <Button buttonType={1}>Edit</Button>
+          <Button buttontype={1}>Edit</Button>
         </span>
       </form>
     </>

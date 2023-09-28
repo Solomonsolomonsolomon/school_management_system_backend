@@ -5,7 +5,6 @@ import { AxiosLoginInstance } from "../api/axios";
 const LOGIN_URL = "/auth";
 import svg1 from "../assets/undraw_before_dawn_re_hp4m.svg";
 import { isLoggedIn } from "../App";
-import { faDashboard } from "@fortawesome/free-solid-svg-icons";
 export default function Login() {
   interface IDetails {
     email?: string;
@@ -53,9 +52,9 @@ export default function Login() {
           replace: true,
           state: location.pathname,
         });
-       // let path = location.pathname;
-       // if (path !== "/" && path !== "/login") window.location.reload();
-        window.location.href = `/${details.role}/dashboard`;
+        let path = location.pathname;
+        if (path !== "/" && path !== "/login") window.location.reload();
+        //location.href = `/${details.role}/dashboard`;
       } catch (error: any) {
         //go back to select on fail
         if (error.name == "AbortError" || error.name == "CanceledError") return;
@@ -72,41 +71,28 @@ export default function Login() {
     return () => {
       controller.abort();
     };
-  }, [clicked]);
+  }, [clicked, isLoggedIn()]);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     console.log(details);
   }
   //if already logged in navigate
-  React.useEffect(() => {
-     let path = location.pathname;
-     if (path !== "/" && path !== "/login") window.location.reload();
-    if (isLoggedIn()) {
-      let role: string = sessionStorage.getItem("role") || "";
-      if (role) {
+  if (isLoggedIn()) {
+    let role: string = sessionStorage.getItem("role") || "";
+    if (role !== "") {
+      React.useEffect(() => {
         Navigate(`/${role}/dashboard`, {
           replace: true,
           state: location.pathname,
         });
-      } else {
-        console.log("😒");
-      }
-      //   if (role !== "") {
-      //     React.useEffect(() => {
-      //       Navigate(`/${role}/dashboard`, {
-      //         replace: true,
-      //         state: location.pathname,
-      //       });
-      //     }, []);
-      //   }
-      // } else {
-      //   React.useEffect(() => {
-      //     console.log("trying to prevent,render more hooks");
-      //   }, []);
+      }, []);
     }
-  }, []);
-
+  } else {
+    React.useEffect(() => {
+      console.log("trying to prevent,render more hooks");
+    }, []);
+  }
   return (
     <div className="h-full overflow-x-hidden overflow-y-hidden">
       <h1 className="text-center font-bold">

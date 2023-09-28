@@ -111,7 +111,7 @@ const AddSubject: React.FC = () => {
               })}
             </select>
 
-            <Button buttonType={0}>ADD SUBJECT</Button>
+            <Button buttontype={0}>ADD SUBJECT</Button>
           </form>
         </div>
       </div>

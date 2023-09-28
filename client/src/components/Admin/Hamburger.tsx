@@ -5,16 +5,16 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 const Hamburger: React.FC<{
   renderNavBar: boolean;
   setRenderNavBar: React.Dispatch<React.SetStateAction<boolean>>;
-}> = () => {
-  let [renderNavBar, setRenderNavBar] = React.useState<boolean>(true);
+}> = ({ renderNavBar, setRenderNavBar }) => {
   const handleRenderNavBar = () => {
     setRenderNavBar(!renderNavBar);
+    console.log(renderNavBar);
   };
   return (
     <>
       <button
-        className="absolute right-6 top-6 p-3 border "
-        onClick={(_) => handleRenderNavBar}
+        className="fixed bg-blue-900 z-50 right-6 top-6 p-3 border  cursor-pointer"
+        onClick={(_) => handleRenderNavBar()}
       >
         <FontAwesomeIcon icon={faBars} size="2x"></FontAwesomeIcon>
       </button>

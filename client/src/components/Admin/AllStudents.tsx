@@ -227,7 +227,7 @@ function AllStudents() {
             </div>
             <div className="mt-4 flex justify-end">
               <Button
-                buttonType={3}
+                buttontype={3}
                 onClick={() => {
                   // Here you can implement the update logic
                   editStudent(editingStudent);
@@ -239,7 +239,7 @@ function AllStudents() {
               </Button>
               <div className="ml-2">
                 {" "}
-                <Button buttonType={2} onClick={closeEditModal}>
+                <Button buttontype={2} onClick={closeEditModal}>
                   Cancel
                 </Button>
               </div>
