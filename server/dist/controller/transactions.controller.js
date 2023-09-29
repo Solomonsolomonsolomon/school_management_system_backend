@@ -90,6 +90,35 @@ class TransactionController {
                 amount: totalAmount,
             });
         });
+        this.getTotalAmountAndMonthPaid = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            var _j, _k, _l, _m, _o;
+            let school = (_j = req.user) === null || _j === void 0 ? void 0 : _j.school;
+            let schoolId = (_k = req.user) === null || _k === void 0 ? void 0 : _k.schoolId;
+            const completedTransactions = yield database_1.Transaction.find({
+                status: "success",
+                school,
+                schoolId,
+            });
+            const totalAmount = completedTransactions.reduce((prev, current, i) => {
+                return [
+                    ...prev,
+                    {
+                        amount: prev[i].amount + current.amountPaid,
+                        month: current.month,
+                    },
+                ];
+            }, [{ amount: 0, month: 0 }]);
+            let months = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+            for (let i = 0; i <= totalAmount.length - 1; i++) {
+                months[(_l = totalAmount[i]) === null || _l === void 0 ? void 0 : _l.month] = ((_m = totalAmount[i]) === null || _m === void 0 ? void 0 : _m.amount) || 0;
+                console.log((_o = totalAmount[i]) === null || _o === void 0 ? void 0 : _o.month);
+            }
+            res.status(200).json({
+                status: 200,
+                msg: "total transaction amount fetched successfully",
+                label: months,
+            });
+        });
     }
 }
 exports.default = TransactionController;

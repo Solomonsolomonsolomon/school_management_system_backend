@@ -4,7 +4,7 @@ import Loading from "../Loading";
 let payUrl = "/paystack";
 let schoolUrl = "/school";
 import { useForm, SubmitHandler } from "react-hook-form";
-import Button from "../Button/Button";
+
 interface ITheme {
   button: string;
   buttonText: string;

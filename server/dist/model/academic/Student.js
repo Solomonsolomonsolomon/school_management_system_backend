@@ -150,11 +150,6 @@ const studentSchema = new mongoose_1.default.Schema({
     ],
     currentClassLevel: {
         type: String,
-        // default: function (this: IStudent) {
-        //   return this.classLevels
-        //     ? this.classLevels[this.classLevels.length - 1]
-        //     : "";
-        // },
     },
     currentClassArm: {
         type: String,
@@ -246,8 +241,17 @@ studentSchema.pre("save", function (next) {
 studentSchema.pre("save", function (next) {
     return __awaiter(this, void 0, void 0, function* () {
         let school = this.school;
-        let currentTerm = yield AcademicTerm_1.AcademicTerm.findOne({ isCurrent: true, school });
-        let currentYear = yield AcademicYear_1.AcademicYear.findOne({ isCurrent: true, school });
+        let schoolId = this.schoolId;
+        let currentTerm = yield AcademicTerm_1.AcademicTerm.findOne({
+            isCurrent: true,
+            school,
+            schoolId,
+        });
+        let currentYear = yield AcademicYear_1.AcademicYear.findOne({
+            isCurrent: true,
+            school,
+            schoolId,
+        });
         if (!currentYear || !currentTerm)
             throw new decorators_1.CustomError({}, "Either current year or current term not set", 400);
         this.academicYear = currentYear;
@@ -324,7 +328,7 @@ studentSchema.pre("save", function (next) {
         next();
     });
 });
-//compute balance on registration or promotion
+//compute balance on registration , promotion
 studentSchema.pre("save", function (next) {
     return __awaiter(this, void 0, void 0, function* () {
         if (this.isNew || this.isDirectModified("className")) {
@@ -346,27 +350,63 @@ studentSchema.pre("save", function (next) {
         next();
     });
 });
-//compute balance on online fees payment
+//compute balance on fees payment
 studentSchema.pre("save", function (next) {
     return __awaiter(this, void 0, void 0, function* () {
-        if (this.isDirectModified("amount")) {
-            console.log("1");
-            console.log(this.amount);
-            let classLevel = yield ClassLevel_1.ClassLevel.findOne({
-                name: this.className,
-                school: this.school,
-                schoolId: this.schoolId,
-            });
-            console.log(classLevel);
-            if (!classLevel || !classLevel.price)
-                throw new decorators_1.CustomError({}, "error occured fetching price.contact admin", 400);
-            const total = classLevel.price;
-            //excess balance
-            if (this.amount > this.balance) {
-                console.log("2");
+        let classLevel = yield ClassLevel_1.ClassLevel.findOne({
+            name: this.className,
+            school: this.school,
+            schoolId: this.schoolId,
+        });
+        if (!classLevel || !classLevel.price)
+            throw new decorators_1.CustomError({}, "error occured fetching price.contact admin", 400);
+        if (this.isDirectModified("isPaid")) {
+            if (this.isPaid) {
                 this.percentagePaid = 100;
                 this.isPaid = true;
                 this.balance = 0;
+                yield new database_1.Transaction({
+                    amountPaid: classLevel.price,
+                    status: "success",
+                    school: this.school,
+                    schoolId: this.schoolId,
+                    payerId: this._id,
+                    year: this.academicYear,
+                    term: this.currentAcademicTerm,
+                }).save();
+            }
+            else {
+                let bulkOperations = [];
+                this.percentagePaid = 0;
+                this.isPaid = false;
+                this.balance = classLevel.price;
+                let deduct = yield database_1.Transaction.find({});
+                deduct.map((_) => {
+                    bulkOperations.push({
+                        updateOne: {
+                            filter: {
+                                school: this.school,
+                                schoolId: this.schoolId,
+                                payerId: this._id,
+                                year: this.academicYear,
+                                term: this.currentAcademicTerm,
+                            },
+                            update: {
+                                $set: { status: "failed" },
+                            },
+                        },
+                    });
+                });
+                database_1.Transaction.bulkWrite(bulkOperations);
+            }
+        }
+        if (this.isDirectModified("amount")) {
+            console.log("1");
+            console.log(this.amount);
+            const total = classLevel.price;
+            //excess balance
+            if (this.amount > this.balance) {
+                throw new decorators_1.CustomError({}, `Cannot deposit amount greater than school fees`, 400);
             }
             else if (this.amount === this.balance) {
                 this.percentagePaid = 100;
@@ -377,7 +417,7 @@ studentSchema.pre("save", function (next) {
                 console.log("3");
                 this.balance = this.balance - this.amount;
                 let partPaid = total - this.balance;
-                this.percentagePaid = ((total - partPaid) / total) * 100;
+                this.percentagePaid = ((total - this.balance) / total) * 100;
                 this.isPaid = this.percentagePaid === 100;
             }
             yield new database_1.Transaction({
@@ -386,6 +426,8 @@ studentSchema.pre("save", function (next) {
                 school: this.school,
                 schoolId: this.schoolId,
                 payerId: this._id,
+                year: this.academicYear,
+                term: this.currentAcademicTerm,
             }).save();
             this.amount = 0;
             next();

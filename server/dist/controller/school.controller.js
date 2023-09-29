@@ -13,7 +13,7 @@ const database_1 = require("../model/database");
 const decorators_1 = require("../middleware/decorators");
 let oldThemes = {
     button: "#4B5563",
-    header: "#edf2f7",
+    header: "#4a5568",
     text: "#000000",
     sideBar: "#4a5568",
     sideBarText: "#ffffff",
@@ -67,7 +67,7 @@ class SchoolController {
                 msg: "default theme settings",
                 default: {
                     button: "#4B5563",
-                    header: "#edf2f7",
+                    header: "#4a5568",
                     text: "#000000",
                     sideBar: "#4a5568",
                     sideBarText: "#ffffff",
