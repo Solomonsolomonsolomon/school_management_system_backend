@@ -11,7 +11,7 @@ const Sidebar: React.FC<ProfileProps> = ({ setView }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const [colors, setColors] = React.useState<any>({
-    sideBar: "000000",
+    sideBar: "rgb(17 24 39)",
     sideBarText: "#ffffff",
   });
   const [loading, setLoading] = React.useState<boolean>(true);
@@ -46,8 +46,8 @@ const Sidebar: React.FC<ProfileProps> = ({ setView }) => {
         onClick={toggleSidebar}
         className="m-2 absolute right-4 top-4"
         style={{
-          backgroundColor: colors.sideBar || "rgb(31 41 55)",
-          color: colors.sideBarText || "#ffffff",
+        
+          color: colors.sideBar || "#000000",
         }}
       >
         <FontAwesomeIcon icon={faBars} size="xl" />

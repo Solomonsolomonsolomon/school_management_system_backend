@@ -52,31 +52,27 @@ const AddAdmin = () => {
           >
             <label htmlFor=""> Full Name</label>
             <input
-              className="border p-2 w-fit rounded border-gray-400 "
+              className="border p-2 w-fit dark:bg-gray-900
+ rounded border-gray-400 "
               type="text"
               {...register("name", { required: true })}
             />
 
             <label htmlFor="">Email</label>
             <input
-              className="border w-fit p-2 rounded border-gray-400"
+              className="border w-fit dark:bg-gray-900 p-2 rounded border-gray-400"
               type="email"
               {...register("email", { required: true })}
             />
 
             <label htmlFor="">Password</label>
             <input
-              className="border w-fit p-2 rounded  border-gray-400"
+              className="border w-fit dark:bg-gray-900 p-2 rounded  border-gray-400"
               type="password"
               {...register("password", { required: true })}
             />
 
-            <Button
-              buttonType={0}
-            
-            >
-              Submit
-            </Button>
+            <Button buttontype={0}>Submit</Button>
           </form>
         </div>
       </div>

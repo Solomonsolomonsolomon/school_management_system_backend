@@ -1,6 +1,7 @@
 import jwt, { Secret } from "jsonwebtoken";
 import { Admin, Student, Teacher } from "./../model/database";
 import { NextFunction, Request, Response } from "express";
+import { CustomError } from "../middleware/decorators";
 export async function signIn(req: Request, res: Response) {
   const { email, password, role } = req.body;
   let roles: string[] = ["student", "admin", "teacher"];
@@ -44,7 +45,7 @@ export async function signIn(req: Request, res: Response) {
       });
   } catch (error: any) {
     // Handle the error appropriately
-    
+
     res.status(401).json({
       status: 401,
       error,
@@ -98,3 +99,34 @@ export async function signOut(req: Request, res: Response, next: NextFunction) {
     });
   }
 }
+export async function changePassword(req: Request, res: Response) {
+  const { email, oldPassword, newPassword, role, passwordRepeat } = req.body;
+  if (!email || !oldPassword || !newPassword || !role)
+    throw new CustomError({}, "required fields", 400);
+  if (newPassword !== passwordRepeat)
+    throw new CustomError({}, "passwords dont match", 400);
+  const roles: any[] = ["admin", "teacher", "student"];
+  let index = roles.indexOf(role);
+  let Model: any = Admin;
+  index === 0
+    ? (Model = Admin)
+    : index === 1
+    ? (Model = Teacher)
+    : index === 2
+    ? (Model = Student)
+    : (Model = Admin);
+  let user = await Model.findOne({ email });
+  let version = user.__v;
+  if (!user) throw new CustomError({}, "email not found in database", 404);
+  if (!(await user.verifiedPassword(oldPassword)))
+    throw new CustomError({}, "old password is incorrect ", 404);
+  user.password = newPassword;
+  user.__v = version;
+  await user.save();
+  return res.status(200).json({
+    msg: "password change successful",
+    status: 200,
+  });
+}
+
+export async function resetPassword(req: Request, res: Response) {}

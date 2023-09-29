@@ -60,7 +60,7 @@ const AttendanceManagement: React.FC = () => {
     status: "",
     _id: "",
   });
-  let date = new Date().toISOString().split("T")[1];
+  let date = new Date().toISOString().split("T")[0];
 
   const closeModal = () => {
     setQuery("");
@@ -94,19 +94,16 @@ const AttendanceManagement: React.FC = () => {
     setIsModalOpen(true);
     // Fetch attendance details for the selected student
     try {
-      await axios
-        .get(`/attendance/get/${student._id}/${student.className}`)
-        .then((response) => {
-          setAttendanceDetails([
-            ...response.data?.attendance?.attendanceDetails,
-          ]);
-        })
-        .catch((err) => {
-          throw err;
-        });
+      let response = await axios.get(
+        `/attendance/get/${student._id}/${student.className}`
+      );
+      console.log(response);
+      setAttendanceDetails([...response.data?.attendance?.attendanceDetails]);
     } catch (error) {
       console.error(error);
+      setAttendanceDetails([]);
     } finally {
+      console.log(attendanceDetails);
     }
   };
 
@@ -164,23 +161,23 @@ const AttendanceManagement: React.FC = () => {
     <div>
       <h1 className="text-center font-bold">Attendance Management</h1>
       <p ref={msgRef} className="font-bold text-center capitalize"></p>
-      <p className="font-bold text-center capitalize text-sm">{msg}</p>
+      <p className="font-bold text-center capitalize text-sm ">{msg}</p>
       <div>
         <h2 className="text-center italic font-bold text-xs">
           Select a Student
         </h2>
         <input
           type="search"
-          className="border rounded-2xl p-2 w-full"
+          className="border dark:bg-gray-900 border-black  rounded-2xl p-2 w-full"
           value={query}
           onChange={(e) => {
             setQuery(e.target.value);
             focusRef.current ? focusRef.current.focus() : "";
           }}
-          placeholder="search student..."
+          placeholder={`search student...`}
           ref={focusRef}
         />
-        <ul>
+        <ul className="mt-4">
           {filtered.map((student) => (
             <li key={student._id} onClick={() => handleStudentSelect(student)}>
               {student.name}
@@ -228,7 +225,7 @@ const AttendanceManagement: React.FC = () => {
                     </select>
                     <span className="mx-2">
                       {" "}
-                      <Button buttonType={1}>Record</Button>
+                      <Button buttontype={1}>Record</Button>
                     </span>
                   </form>
                 </div>
@@ -248,13 +245,13 @@ const AttendanceManagement: React.FC = () => {
                                 <th className="py-3 px-4 pr-0">
                                   {/* Checkbox input */}
                                 </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                <th className="px-6 py-3 text-left text-xs font-medium dark:text-gray-900 text-gray-500 uppercase">
                                   Date
                                 </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                <th className="px-6 py-3 text-left text-xs font-medium dark:text-gray-900 text-gray-500 uppercase">
                                   status
                                 </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                <th className="px-6 py-3 text-left text-xs font-medium dark:text-gray-900 text-gray-500 uppercase">
                                   Edit
                                 </th>
                               </tr>
@@ -262,8 +259,8 @@ const AttendanceManagement: React.FC = () => {
                             <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                               {attendanceDetails.map(
                                 (record: any, index: number) => (
-                                  <tr key={index}>
-                                    <td className="py-3 pl-4">
+                                  <tr key={index} className="dark:bg-gray-900">
+                                    <td className="dark:bg-gray-900 py-3 pl-4">
                                       <div className="flex items-center h-5"></div>
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
@@ -301,7 +298,7 @@ const AttendanceManagement: React.FC = () => {
         )}
 
         <div className="absolute top-1 right-1">
-          <Button buttonType={2} onClick={closeModal}>
+          <Button buttontype={2} onClick={closeModal}>
             <FontAwesomeIcon icon={faClose} size="sm"></FontAwesomeIcon>
           </Button>
         </div>

@@ -13,7 +13,7 @@ enum EButton {
 
 interface IButton {
   onClick?: any;
-  buttonType: EButton;
+  buttontype: EButton;
 }
 
 const Button: React.FC<PropsWithChildren<IButton>> = (props) => {
@@ -44,7 +44,7 @@ const Button: React.FC<PropsWithChildren<IButton>> = (props) => {
   }, []);
 
   const buttonClass = (() => {
-    switch (EButton[props.buttonType]) {
+    switch (EButton[props.buttontype]) {
       case "default":
         console.log(colors);
         return `p-3 border text relative rounded w-[200px] mt-2`;
@@ -64,12 +64,12 @@ const Button: React.FC<PropsWithChildren<IButton>> = (props) => {
       {...props}
       style={{
         backgroundColor: `${
-          EButton[props.buttonType] == "default"
+          EButton[props.buttontype] == "default"
             ? colors.button || "#4a5365"
             : ""
         }`,
         color: `${
-          EButton[props.buttonType] == "default" ? colors.buttonText : ""
+          EButton[props.buttontype] == "default" ? colors.buttonText : ""
         }`,
       }}
     >

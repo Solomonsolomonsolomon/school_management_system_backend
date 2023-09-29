@@ -25,5 +25,8 @@ transactionRouter.get(
   "transaction/complete",
   asyncErrorHandler(transaction.getAllCompletedTransactions)
 );
-
+transactionRouter.get(
+  "/transaction/monthly",
+  asyncErrorHandler(transaction.getTotalAmountAndMonthPaid)
+);
 export default transactionRouter;

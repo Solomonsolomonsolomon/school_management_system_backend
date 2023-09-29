@@ -15,6 +15,8 @@ const customStyles = {
     bottom: "auto",
     marginRight: "-50%",
     transform: "translate(-50%, -50%)",
+
+   border:"1px solid black"
   },
 };
 Modal.setAppElement("#root");
@@ -239,8 +241,11 @@ const AddTeacher: React.FC<{
   if (state.loading) return <Loading />;
   return (
     <>
-      <p className="text-center font-bold"> {state.msg} </p>
-      <div className="grid px-4 justify-items-center" ref={checkboxRef}>
+      <p className="dark:bg-gray-900 text-center font-bold"> {state.msg} </p>
+      <div
+        className="dark:bg-gray-900 grid px-4 justify-items-center"
+        ref={checkboxRef}
+      >
         <form
           onSubmit={
             isModalSubmitted
@@ -250,83 +255,89 @@ const AddTeacher: React.FC<{
                 }
               : handleSubmit(onSubmit)
           }
-          className="grid justify-items justify-between border border-gray-300 p-3 gap-4 w-fit items-center place-content-between"
+          className="dark:bg-gray-900 grid justify-items justify-between border border-gray-300 p-3 gap-4 w-fit items-center place-content-between"
         >
-          <div className="form-group grid ">
+          <div className="dark:bg-gray-900 form-group grid ">
             <label htmlFor="name">Full Name</label>
             <input
               type="text"
               id="name"
-              className={`${
+              className={`dark:bg-gray-900 ${
                 !isModalSubmitted
-                  ? "form-control border rounded p-2 border-gray-300"
+                  ? "form-control border rounded p-2 border-gray-300 dark:bg-gray-900"
                   : "hidden"
               }`}
               {...register("name", { required: true })}
               placeholder="Full Name"
             />
             {errors.name && (
-              <span className="text-danger">Name is required</span>
+              <span className="dark:bg-gray-900 text-danger">
+                Name is required
+              </span>
             )}
           </div>
 
-          <div className="form-group grid">
+          <div className="dark:bg-gray-900 form-group grid">
             <label htmlFor="email">Email Address</label>
             <input
               type="email"
               id="email"
-              className={`${
+              className={`dark:bg-gray-900 ${
                 !isModalSubmitted
-                  ? "form-control border rounded p-2 border-gray-300"
+                  ? "form-control border rounded p-2 border-gray-300 dark:bg-gray-900"
                   : "hidden"
               }`}
               {...register("email", { required: true, pattern: /^\S+@\S+$/i })}
               placeholder="Email Address"
             />
             {errors.email && (
-              <span className="text-danger">Invalid email address</span>
+              <span className="dark:bg-gray-900 text-danger">
+                Invalid email address
+              </span>
             )}
           </div>
 
-          <div className="form-group grid">
+          <div className="dark:bg-gray-900 form-group grid">
             <label htmlFor="password">Password</label>
             <input
               type="password"
               id="password"
-              className={`${
+              className={`dark:bg-gray-900 ${
                 !isModalSubmitted
-                  ? "form-control border rounded p-2 border-gray-300"
+                  ? "form-control border rounded p-2 border-gray-300 dark:bg-gray-900"
                   : "hidden"
               }`}
               {...register("password", { required: true })}
               placeholder="Password"
             />
             {errors.password && (
-              <span className="text-danger">Password is required</span>
+              <span className="dark:bg-gray-900 text-danger">
+                Password is required
+              </span>
             )}
           </div>
 
-          <div className="form-group grid">
+          <div className="dark:bg-gray-900 form-group grid">
             <label htmlFor="dateEmployed">Date Employed</label>
             <input
               type="date"
               id="dateEmployed"
-              className={`${
+              className={`dark:bg-gray-900 ${
                 !isModalSubmitted
-                  ? "form-control border rounded p-2 border-gray-300"
+                  ? "form-control border rounded p-2 border-gray-300 dark:bg-gray-900"
                   : "hidden"
               }`}
               {...register("dateEmployed")}
             />
           </div>
 
-          <div className="form-group grid">
+          <div className="dark:bg-gray-900 form-group grid">
             <label htmlFor="formTeacher">Form Teacher</label>
             <select
               id="formTeacher"
-              className={`${
+              className={`dark:bg-gray-900 ${
                 !isModalSubmitted
-                  ? "form-control border rounded p-2 border-gray-300"
+                  ? "form-control border rounded p-2 border-gray-300 dark:bg-gray-900"
                   : "hidden"
               }`}
               {...register("formTeacher")}
@@ -343,7 +354,7 @@ const AddTeacher: React.FC<{
             </select>
           </div>
 
-          <Button buttonType={0}>
+          <Button buttontype={0}>
             {isModalSubmitted ? "Register" : "Proceed"}
           </Button>
         </form>
@@ -355,18 +366,19 @@ const AddTeacher: React.FC<{
         onRequestClose={closeModal}
         style={customStyles}
         contentLabel="Example Modal"
+       
       >
         <h2
           ref={(_subtitle) => (subtitle = _subtitle)}
-          className="text-center text-sm"
+          className=" dark:bg-gray-900 dark:text-white text-center text-sm"
         >
           Select subject(s) taught
         </h2>
 
-        <div className="h-[150px]">
+        <div className="dark:bg-gray-900 h-[150px]">
           <input
             type="search"
-            className="border rounded-none"
+            className="dark:bg-gray-900 dark:text-white border rounded-none"
             value={query}
             onChange={(e) => {
               setQuery(e.target.value);
@@ -375,18 +387,18 @@ const AddTeacher: React.FC<{
             placeholder="search subjects..."
             ref={focusRef}
           />
-          <div ref={CheckBoxDivRef} className="grid gap-3">
+          <div ref={CheckBoxDivRef} className="dark:bg-gray-900 grid gap-3">
             {filtered.map((subject, index) => {
               return (
                 <React.Fragment key={index}>
-                  <div className="font-blue flex gap-1">
+                  <div className="dark:bg-gray-900 font-blue flex gap-1">
                     <span
                       key={subject.name}
                       onClick={() => handleSubjectClick(subject._id)}
-                      className={`${
+                      className={`dark:bg-gray-900  ${
                         selectedSubjects.includes(subject._id)
                           ? "text-blue-800"
-                          : "text-black"
+                          : "dark:text-white text-black"
                       }`}
                     >
                       {subject.name}
@@ -397,17 +409,17 @@ const AddTeacher: React.FC<{
             })}
           </div>
           <form>
-            <input />
+            <input className="dark:bg-gray-900" />
           </form>
         </div>
-        <div className="absolute top-1 left-1">
-          <Button buttonType={2} onClick={closeModal}>
+        <div className="dark:bg-gray-900 absolute top-1 left-1">
+          <Button buttontype={2} onClick={closeModal}>
             <FontAwesomeIcon icon={faClose} size="sm"></FontAwesomeIcon>
           </Button>
         </div>
 
-        <div className="absolute right-1 top-1">
-          <Button buttonType={1} onClick={onSubmitSubjects}>
+        <div className="dark:bg-gray-900 absolute right-1 top-1">
+          <Button buttontype={1} onClick={onSubmitSubjects}>
             <FontAwesomeIcon icon={faCheck} size="sm"></FontAwesomeIcon>
           </Button>
         </div>

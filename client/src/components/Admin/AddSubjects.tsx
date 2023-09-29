@@ -76,13 +76,13 @@ const AddSubject: React.FC = () => {
 
   return (
     <>
-      <p className="text-center font-bold">{state.msg}</p>
-      <div className="w-[200px]sm:w-[400px] lg:w-[100%] md:w-[100%] w-[350px]">
+      <p className="dark:bg-gray-900 text-center font-bold">{state.msg}</p>
+      <div className="dark:bg-gray-900 w-[200px]sm:w-[400px] lg:w-[100%] md:w-[100%] w-[350px]">
         
-        <div className="grid gap-0 justify-items-center">
+        <div className="dark:bg-gray-900 grid gap-0 justify-items-center">
           <form
             onSubmit={handleSubmit(handleFormSubmit)}
-            className="border grid justify-items-center p-4 
+            className="dark:bg-gray-900 border grid justify-items-center p-4 
              border-gray-500 placeholder:text-center gap-0 rounded-lg w-fit"
           >
             <input
@@ -90,17 +90,17 @@ const AddSubject: React.FC = () => {
               {...register("subject")}
               required
               placeholder="subject name"
-              className="placeholder:text-center border p-1 border-black border-x-0 border-t-0 border-b-[2px] "
+              className="dark:bg-gray-900 placeholder:text-center border p-1 border-black border-x-0 border-t-0 border-b-[2px] "
             />
-            <label className="text-center font-bold">Select Class</label>
-            <label className="text-center font-bold opacity-[0.5]">
+            <label className="dark:bg-gray-900 text-center font-bold">Select Class</label>
+            <label className="dark:bg-gray-900 text-center font-bold opacity-[0.5]">
               You can select multiple
             </label>
             <select
               multiple
               {...register("className")}
               required
-              className="placeholder:text-center border-y border-black "
+              className="dark:bg-gray-900 placeholder:text-center border-y border-black "
             >
               {classes.map((classLevel, index) => {
                 return (
@@ -111,7 +111,7 @@ const AddSubject: React.FC = () => {
               })}
             </select>
 
-            <Button buttonType={0}>ADD SUBJECT</Button>
+            <Button buttontype={0}>ADD SUBJECT</Button>
           </form>
         </div>
       </div>

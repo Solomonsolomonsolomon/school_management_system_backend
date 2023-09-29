@@ -6,7 +6,7 @@ import imgDefault from "./../../assets/undraw_real_time_sync_re_nky7.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import axios from "../../api/axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Button from "../Button/Button";
 interface ITheme {
   header: string;
@@ -80,7 +80,7 @@ const Profile = () => {
         });
       } catch (error) {
         console.log(error);
-      } 
+      }
     })();
   }, []);
   let Navigate = useNavigate();
@@ -109,7 +109,7 @@ const Profile = () => {
     <section
       className="    border-b-2   p-5 mb-2 pr-3 pt-3  w-[100%]  rounded"
       style={{
-        backgroundColor: themeandlogo.theme.header || "#edf2f7",
+        backgroundColor: themeandlogo.theme?.header || "#4a5568",
         color: themeandlogo.theme?.headerText || "#000000",
       }}
     >
@@ -156,11 +156,16 @@ const Profile = () => {
               icon={faUserPlus}
               className="mt-3  mr-2 text-sky-300"
             />
-            <span className="text-xl   text-white font-bold">Add Admin</span>
+            <Link
+              to="/change-password"
+              className="text-xl    font-bold text-blue-100 hover:text-blue-800"
+            >
+              Change Password
+            </Link>
           </li>
           <li>
             <div className="w-full">
-              <Button buttonType={2} onClick={logout}>
+              <Button buttontype={2} onClick={logout}>
                 <FontAwesomeIcon icon={faArrowRightFromBracket} className="" />
                 <span className="ml-2">Logout</span>
               </Button>

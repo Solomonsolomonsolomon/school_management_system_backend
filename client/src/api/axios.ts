@@ -1,6 +1,6 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
-//let baseURL = "http://localhost:2020/v1";
-let baseURL = "https://solacebackend.onrender.com/v1";
+let baseURL = "http://localhost:2020/v1";
+//let baseURL = "https://solacebackend.onrender.com/v1";
 const instance = axios.create({
   baseURL: baseURL,
   timeout: 10000,

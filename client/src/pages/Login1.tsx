@@ -2,11 +2,9 @@ import React, { useRef } from "react";
 
 import { useNavigate, useLocation } from "react-router-dom";
 import { AxiosLoginInstance } from "../api/axios";
-import { Link } from "react-router-dom";
 const LOGIN_URL = "/auth";
 import svg1 from "../assets/undraw_before_dawn_re_hp4m.svg";
 import { isLoggedIn } from "../App";
-
 export default function Login() {
   interface IDetails {
     email?: string;
@@ -54,9 +52,9 @@ export default function Login() {
           replace: true,
           state: location.pathname,
         });
-        // let path = location.pathname;
-        // if (path !== "/" && path !== "/login") window.location.reload();
-        window.location.href = `/${details.role}/dashboard`;
+        let path = location.pathname;
+        if (path !== "/" && path !== "/login") window.location.reload();
+        //location.href = `/${details.role}/dashboard`;
       } catch (error: any) {
         //go back to select on fail
         if (error.name == "AbortError" || error.name == "CanceledError") return;
@@ -73,44 +71,28 @@ export default function Login() {
     return () => {
       controller.abort();
     };
-  }, [clicked]);
+  }, [clicked, isLoggedIn()]);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     console.log(details);
   }
   //if already logged in navigate
-  React.useEffect(() => {
-    let path = location.pathname;
-    if (path !== "/" && path !== "/login") {
-
-      window.location.href = "/";
-    }
-    if (isLoggedIn()) {
-      let role: string = sessionStorage.getItem("role") || "";
-      if (role) {
+  if (isLoggedIn()) {
+    let role: string = sessionStorage.getItem("role") || "";
+    if (role !== "") {
+      React.useEffect(() => {
         Navigate(`/${role}/dashboard`, {
           replace: true,
           state: location.pathname,
         });
-      } else {
-        console.log("😒");
-      }
-      //   if (role !== "") {
-      //     React.useEffect(() => {
-      //       Navigate(`/${role}/dashboard`, {
-      //         replace: true,
-      //         state: location.pathname,
-      //       });
-      //     }, []);
-      //   }
-      // } else {
-      //   React.useEffect(() => {
-      //     console.log("trying to prevent,render more hooks");
-      //   }, []);
+      }, []);
     }
-  }, []);
-
+  } else {
+    React.useEffect(() => {
+      console.log("trying to prevent,render more hooks");
+    }, []);
+  }
   return (
     <div className="h-full overflow-x-hidden overflow-y-hidden">
       <h1 className="text-center font-bold">
@@ -124,11 +106,11 @@ export default function Login() {
         <p></p>
         <form
           onSubmit={handleSubmit}
-          className="grid g dark:text-gray-900ap-1 border border-black bg-white h-fit p-6 rounded "
+          className="grid gap-1 border border-black bg-white h-fit p-6 rounded "
         >
           <p
             ref={msgRef}
-            className={`w-[10 dark:text-gray-9000%] text-center ${
+            className={`w-[100%] text-center ${
               msgRef.current?.textContent === "successful_login"
                 ? "text-green-800"
                 : "text-[red]"
@@ -140,7 +122,7 @@ export default function Login() {
             name="email"
             value={details.email}
             onChange={handleInput}
-            className="border dark:text-gray-900 border-black border-t-0 border-b-2 border-l-0 border-r-0 rounded "
+            className="border border-black border-t-0 border-b-2 border-l-0 border-r-0 rounded "
           />
           <input
             type="password"
@@ -148,7 +130,7 @@ export default function Login() {
             name="password"
             value={details.password}
             onChange={handleInput}
-            className="border dark:text-gray-900 border-black border-t-0 border-b-2 border-l-0 border-r-0 rounded"
+            className="border border-black border-t-0 border-b-2 border-l-0 border-r-0 rounded"
           />
           <select
             name="role"
@@ -156,14 +138,13 @@ export default function Login() {
             value={details.role}
             required
             onChange={handleInput}
-            className="border dark:text-gray-900 border-black border-t-0 border-b-2 border-l-0 border-r-0 rounded"
+            className="border border-black border-t-0 border-b-2 border-l-0 border-r-0 rounded"
           >
             <option value="">SELECT</option>
             <option value="admin">admin</option>
             <option value="student">student</option>
             <option value="teacher">teacher</option>
           </select>
-         <Link to="forgot-password" className="text-blue-800">Forgot password?</Link>
           <button
             onClick={() => {
               setClicked(clicked + 1);
@@ -271,7 +252,7 @@ export default function Login() {
 //         <h1 className="text-2xl text-center">Login To Your Account</h1>
 //         <div className="m-auto mt-10 sm:w-[90%] w-[80%]">
 //           <p
-//             className={error  dark:text-gray-900? "text-red-700 text-center block" : "none"}
+//             className={error ? "text-red-700 text-center block" : "none"}
 //             ref={msgRef}
 //             aria-live="assertive"
 //           >
@@ -282,7 +263,7 @@ export default function Login() {
 //               <select
 //                 name="roles"
 //                 id="roles"
-//                 className="w-full dark:text-gray-900 text-xl pointer"
+//                 className="w-full text-xl pointer"
 //                 ref={roleRef}
 //                 onChange={(e) => setRole(e.target.value)}
 //                 required
@@ -303,7 +284,7 @@ export default function Login() {
 //                 placeholder="Enter Staff Portal"
 //                 required
 //                 ref={emailRef}
-//                 className="w-100% dark:text-gray-900 bg-slate-200 p-3 text-xl rounded-xl"
+//                 className="w-100% bg-slate-200 p-3 text-xl rounded-xl"
 //                 autoComplete="on"
 //                 value={email}
 //                 onChange={(e) => setEmail(e.target.value)}
@@ -320,7 +301,7 @@ export default function Login() {
 //                 required
 //                 onChange={(e) => setPassword(e.target.value)}
 //                 value={password}
-//                 className="w-100% dark:text-gray-900 bg-slate-200 p-3 text-xl rounded-xl"
+//                 className="w-100% bg-slate-200 p-3 text-xl rounded-xl"
 //               />
 //             </section>
 //             <a href="#" className="text-xl text-right text-blue-700 underline">

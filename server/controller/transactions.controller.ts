@@ -88,5 +88,45 @@ class TransactionController {
       amount: totalAmount,
     });
   };
+  getTotalAmountAndMonthPaid = async (
+    req: Request,
+    res: Response
+  ): Promise<any> => {
+    interface Itotal {
+      amount: number;
+      month: number;
+    }
+    let school = req.user?.school;
+    let schoolId = req.user?.schoolId;
+    const completedTransactions = await Transaction.find({
+      status: "success",
+      school,
+      schoolId,
+    });
+
+    const totalAmount: Itotal[] = completedTransactions.reduce(
+      (prev, current, i) => {
+        return [
+          ...prev,
+          {
+            amount: prev[i].amount + current.amountPaid,
+            month: current.month,
+          },
+        ];
+      },
+      [{ amount: 0, month: 0 }]
+    );
+    let months = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    for (let i = 0; i <= totalAmount.length - 1; i++) {
+      months[totalAmount[i]?.month] = totalAmount[i]?.amount || 0;
+      console.log(totalAmount[i]?.month);
+    }
+
+    res.status(200).json({
+      status: 200,
+      msg: "total transaction amount fetched successfully",
+      label: months,
+    });
+  };
 }
 export default TransactionController;

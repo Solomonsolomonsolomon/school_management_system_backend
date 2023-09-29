@@ -11,6 +11,7 @@ const ReportCard: React.FC<Ivalues> = ({
   selectedReportDetails,
 }) => {
   let [logo, setLogo] = React.useState<string>("");
+  console.log(reportCardDetails.grades);
   React.useEffect(() => {
     (async () => {
       try {
@@ -22,40 +23,106 @@ const ReportCard: React.FC<Ivalues> = ({
       }
     })();
   }, []);
+  console.log(reportCardDetails)
   return (
-    <div>
-      <div className="flex gap-8 justify-between border-y-0 border-x-0 border border-b-2 border-gray-800 p-1">
-        <p>School Name here Lorem ipsum dolor sit amet.</p>
-        <img src={logo || imgDefault} alt="" className="w-[3.4em]" />
+    <div className="h-full font-mono   ">
+      <h1 className="text-xl uppercase text-center">Report Card</h1>
+      <h1 className="text-lg uppercase text-center">
+        {reportCardDetails?.school||"SCHOOL"}
+      </h1>
+      <h1 className="text-md uppercase text-center">
+        {selectedReportDetails.termName} RESULT
+      </h1>
+      <img src={logo || imgDefault} alt="" className="w-[3.4em]" />
+      <div className="p-3">
+        <p>
+          <span className="font-bold ">STUDENTS NAME:</span>
+          <span className="underline capitalize">{reportCardDetails.name}</span>
+        </p>
+        <p>
+          <span className="font-bold ">SCHOOL YEAR:</span>
+          <span className="underline capitalize">
+            {selectedReportDetails.yearName}
+          </span>
+        </p>
+        <p>
+          <span className="font-bold ">CLASS NAME:</span>
+          <span className="underline capitalize">
+            {reportCardDetails.class}
+          </span>
+        </p>
+        <p>
+          <span className="font-bold ">AVERAGE:</span>
+          <span className="underline capitalize">
+            {reportCardDetails.average}
+          </span>
+        </p>
       </div>
-      <div className="flex gap-2 flex-wrap">
-        <p>
-          <span>Year:{selectedReportDetails.yearName}</span>
-        </p>
-        <p>
-          <span>Class:{reportCardDetails.class}</span>
-        </p>
-        <p>
-          <span>Term:{selectedReportDetails.termName}</span>
-        </p>
-        <div className="grid">
-          <p>Name:{reportCardDetails.name?.toUpperCase()}</p>
-        </div>
+
+      <div>
+        <h1 className="text-2xl text center w-full border text-center bg-gray-500  mb-[25px] text-white rounded">
+          SUBJECTS
+        </h1>
         <div>
-          <p>
-            <span>Total Obtainable Average:100.00</span>
-          </p>
-          <div className="flex justify-between gap-6">
-            <p>
-              <span>obtained Average: {reportCardDetails.average}</span>
-            </p>
-            <p>
-              <span>OverAll Grade: {reportCardDetails.overallGrade}</span>
-            </p>
-          </div>
-        </div>
-        <div>
-          <h1>GRADES BREAKDOWN</h1>
+          <table className="w-full">
+            <thead className="bg-slate-900">
+              <tr>
+                <th className="truncate text-xs sm:text-base md:text-lg lg:text-xl text-white py-2 ">
+                  Subject
+                </th>
+                <th className="truncate text-xs sm:text-base md:text-lg lg:text-xl text-white py-2 ">
+                  CA1
+                </th>
+                <th className="truncate text-xs sm:text-base md:text-lg lg:text-xl text-white py-2 ">
+                  CA2
+                </th>
+                <th className="truncate text-xs sm:text-base md:text-lg lg:text-xl text-white py-2 ">
+                  CA3
+                </th>
+                <th className="truncate text-xs sm:text-base md:text-lg lg:text-xl text-white py-2 ">
+                  Exam Score
+                </th>
+                <th className="truncate text-xs sm:text-base md:text-lg lg:text-xl text-white py-2 ">
+                  Total
+                </th>
+                <th className="truncate text-xs sm:text-base md:text-lg lg:text-xl text-white py-2 ">
+                  Letter Grade
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {reportCardDetails?.grades?.map((grade: any) => {
+                {
+                  console.log(grade?.subjectId);
+                }
+                return (
+                  <tr>
+                    <td className="truncate text-xs  text-center sm:text-base md:text-lg lg:text-xl">
+                      {grade?.subjectId?.subject || "subjectName"}
+                    </td>
+                    <td className="truncate text-xs text-center py-1 sm:text-base md:text-lg lg:text-xl">
+                      {grade?.CA1}
+                    </td>
+                    <td className="truncate text-xs text-center sm:text-base md:text-lg lg:text-xl">
+                      {grade?.CA2}
+                    </td>
+                    <td className="truncate text-xs text-center sm:text-base md:text-lg lg:text-xl">
+                      {grade?.CA3}
+                    </td>
+                    <td className="truncate text-xs text-center sm:text-base md:text-lg lg:text-xl">
+                      {grade?.examScore}
+                    </td>
+                    <td className="truncate text-xs text-center sm:text-base md:text-lg lg:text-xl">
+                      {grade?.total}
+                    </td>
+                    <td className="truncate text-xs text-center sm:text-base md:text-lg lg:text-xl">
+                      {grade?.letterGrade}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

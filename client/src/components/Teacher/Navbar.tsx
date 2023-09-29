@@ -50,8 +50,8 @@ const Sidebar: React.FC<ProfileProps> = ({ setView }) => {
         onClick={toggleSidebar}
         className="m-2 absolute right-4 top-4"
         style={{
-          backgroundColor: colors.sideBar || "rgb(31 41 55)",
-          color: colors?.sideBarText || "#ffffff",
+   
+          color: colors?.sideBar || "#ffffff",
         }}
       >
         <FontAwesomeIcon icon={faBars} size="2x" />
