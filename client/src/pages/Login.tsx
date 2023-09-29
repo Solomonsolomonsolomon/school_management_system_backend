@@ -56,7 +56,7 @@ export default function Login() {
         });
         // let path = location.pathname;
         // if (path !== "/" && path !== "/login") window.location.reload();
-        window.location.href = `/${details.role}/dashboard`;
+        window.location.reload();
       } catch (error: any) {
         //go back to select on fail
         if (error.name == "AbortError" || error.name == "CanceledError") return;
@@ -83,7 +83,6 @@ export default function Login() {
   React.useEffect(() => {
     let path = location.pathname;
     if (path !== "/" && path !== "/login") {
-
       window.location.href = "/";
     }
     if (isLoggedIn()) {
@@ -163,7 +162,9 @@ export default function Login() {
             <option value="student">student</option>
             <option value="teacher">teacher</option>
           </select>
-         <Link to="forgot-password" className="text-blue-800">Forgot password?</Link>
+          <Link to="forgot-password" className="text-blue-800">
+            Forgot password?
+          </Link>
           <button
             onClick={() => {
               setClicked(clicked + 1);
