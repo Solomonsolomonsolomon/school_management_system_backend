@@ -2,10 +2,11 @@ import React, { useRef } from "react";
 
 import { useNavigate, useLocation } from "react-router-dom";
 import { AxiosLoginInstance } from "../api/axios";
+import { Link } from "react-router-dom";
 const LOGIN_URL = "/auth";
 import svg1 from "../assets/undraw_before_dawn_re_hp4m.svg";
 import { isLoggedIn } from "../App";
-import { faDashboard } from "@fortawesome/free-solid-svg-icons";
+
 export default function Login() {
   interface IDetails {
     email?: string;
@@ -162,6 +163,7 @@ export default function Login() {
             <option value="student">student</option>
             <option value="teacher">teacher</option>
           </select>
+         <Link to="forgot-password" className="text-blue-800">Forgot password?</Link>
           <button
             onClick={() => {
               setClicked(clicked + 1);

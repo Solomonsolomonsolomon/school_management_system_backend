@@ -6,7 +6,7 @@ import imgDefault from "./../../assets/undraw_real_time_sync_re_nky7.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import axios from "../../api/axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Button from "../Button/Button";
 interface ITheme {
   header: string;
@@ -156,7 +156,12 @@ const Profile = () => {
               icon={faUserPlus}
               className="mt-3  mr-2 text-sky-300"
             />
-            <span className="text-xl   text-white font-bold">Add Admin</span>
+            <Link
+              to="/change-password"
+              className="text-xl    font-bold text-blue-100 hover:text-blue-800"
+            >
+              Change Password
+            </Link>
           </li>
           <li>
             <div className="w-full">

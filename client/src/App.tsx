@@ -5,6 +5,8 @@ import Student from "./pages/Student";
 import Teacher from "./pages/Teacher";
 import "./index.css";
 import jwtDecode from "jwt-decode";
+import ForgotPassword from "./components/ForgotPassword";
+import ChangePassword from "./components/ChangePassword";
 
 let role: string = "";
 
@@ -39,6 +41,8 @@ function App() {
           path="/teacher/dashboard"
           element={isLoggedIn("teacher") ? <Teacher /> : <Login />}
         ></Route>
+        <Route path="/forgot-password" element={<ForgotPassword />}></Route>
+        <Route path="/change-password" element={<ChangePassword/>} />
         {/* catch all */}
         <Route path="*" element={<Login />}></Route>
       </Routes>

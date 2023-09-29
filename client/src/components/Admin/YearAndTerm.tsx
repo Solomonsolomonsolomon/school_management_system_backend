@@ -17,24 +17,22 @@ const YearAndTerm: React.FC = () => {
   const addTermRef = useRef<HTMLParagraphElement>(null);
   const postUrl = "/admin";
 
-
   const handleYearFormSubmit: SubmitHandler<any> = async (data: any) => {
     try {
       addTermRef.current
         ? (addTermRef.current.textContent = "please wait...")
         : "....";
-        const res = await axios.post(`${postUrl}/year/add`, data);
-    //update UI
-    let updateOnYearAddition=years.map((year)=>{
-        year.isCurrent=false;
+      const res = await axios.post(`${postUrl}/year/add`, data);
+      //update UI
+      let updateOnYearAddition = years.map((year) => {
+        year.isCurrent = false;
         return year;
-    })
-    setYears([...updateOnYearAddition,res.data?.year])
+      });
+      setYears([...updateOnYearAddition, res.data?.year]);
 
       addYearRef.current
         ? (addYearRef.current.textContent = res.data?.msg)
         : "";
-    
     } catch (error: any) {
       addYearRef.current
         ? (addYearRef.current.textContent =
@@ -56,8 +54,8 @@ const YearAndTerm: React.FC = () => {
         ? (addTermRef.current.textContent = res.data?.msg)
         : "";
       console.log(res);
-     
-        setTerms([...terms, res.data?.term]);
+
+      setTerms([...terms, res.data?.term]);
       reset(); // Reset the form
     } catch (error: any) {
       addTermRef.current
@@ -200,10 +198,10 @@ const YearAndTerm: React.FC = () => {
 
   return (
     <>
-   
-
       {/* Year Form */}
-      <h1 className="dark:bg-gray-900 text-lg text-center font-semibold">Add Year</h1>
+      <h1 className="dark:bg-gray-900 text-lg text-center font-semibold">
+        Add Year
+      </h1>
       <p ref={addYearRef} className="dark:bg-gray-900 font-bold text-center">
         ...
       </p>
@@ -212,31 +210,33 @@ const YearAndTerm: React.FC = () => {
           onSubmit={handleYearSubmit(handleYearFormSubmit)}
           className="dark:bg-gray-900 grid justify-center justify-items-start border w-fit py-6 p-2 border-black rounded-xl"
         >
-          <label htmlFor="fromYear" className="dark:bg-gray-900 opacity-[.5]">FROM</label>
+          <label htmlFor="fromYear" className="dark:bg-gray-900 opacity-[.5]">
+            FROM
+          </label>
           <input
             type="number"
             className="dark:bg-gray-900 border  border-black  rounded p-1 w-fit"
             placeholder="e.g 2022"
             {...yearRegister("fromYear", { required: true, min: 2000 })}
           />
-          <label htmlFor="toYear" className="dark:bg-gray-900 opacity-[.5]">TO</label>
+          <label htmlFor="toYear" className="dark:bg-gray-900 opacity-[.5]">
+            TO
+          </label>
           <input
             className="dark:bg-gray-900 border  border-black rounded p-1"
             type="number"
             placeholder="e.g 2023"
             {...yearRegister("toYear", { required: true, min: 2000 })}
           />
-     
-  <Button buttontype={0}>
-            Add Year
-          </Button>
-          
-        
+
+          <Button buttontype={0}>Add Year</Button>
         </form>
       </div>
 
       {/* Term Form */}
-      <h1 className="dark:bg-gray-900 text-lg mt-2 font-bold  text-center">Add Term</h1>
+      <h1 className="dark:bg-gray-900 text-lg mt-2 font-bold  text-center">
+        Add Term
+      </h1>
       <p ref={addTermRef} className="dark:bg-gray-900 font-bold text-center">
         ...
       </p>
@@ -250,22 +250,22 @@ const YearAndTerm: React.FC = () => {
             type="text"
             id="termName"
             placeholder="e.g 1st term"
-            className="dark:bg-gray-900 border border w-fit  border-black rounded p-1"
+            className="dark:bg-gray-900  border w-fit  border-black rounded p-1"
             {...termRegister("name", { required: true })}
           />
-          <Button buttontype={0}>
-            Add Term
-          </Button>
+          <Button buttontype={0}>Add Term</Button>
         </form>
-      </div >
+      </div>
 
       {/* Display List of Years */}
       <div className="dark:bg-gray-900 grid justify-items- border justify-center my-3">
         <div className="dark:bg-gray-900 w-[200px]sm:w-[400px] lg:w-[100%] md:w-[100%] w-[300px]">
           <div className="dark:bg-gray-900  sm:w-[400px] lg:w-[100%] md:w-[100%] w-[350px] h-[400px] overflow-y-auto">
-            <h1 className="dark:bg-gray-900 font-bold text-center">List of Years</h1>
+            <h1 className="dark:bg-gray-900 font-bold text-center">
+              List of Years
+            </h1>
             <table className="dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700 overflow-x-auto border">
-              <thead className="dark:bg-gray-900 bg-gray-50 dark:bg-gray-700">
+              <thead className="dark:bg-gray-900 bg-gray-500">
                 <tr>
                   {/* <th className="dark:bg-gray-900 py-3 px-4 pr-0">Checkbox input</th> */}
                   <th className="dark:bg-gray-900 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
@@ -306,9 +306,11 @@ const YearAndTerm: React.FC = () => {
 
           {/* Display List of Terms */}
           <div className="dark:bg-gray-900 w-[200px] sm:w-[400px] lg:w-[100%] md:w-[100%] w-[350px] h-[400px] overflow-y-auto">
-            <h1 className="dark:bg-gray-900 text-center font-bold">List of Terms</h1>
+            <h1 className="dark:bg-gray-900 text-center font-bold">
+              List of Terms
+            </h1>
             <table className="dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700 overflow-x-auto border">
-              <thead className="dark:bg-gray-900 bg-gray-50 dark:bg-gray-700">
+              <thead className="dark:bg-gray-900 bg-gray-50">
                 <tr>
                   {/* ... Your terms table headers ... */}
                   <th className="dark:bg-gray-900 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">

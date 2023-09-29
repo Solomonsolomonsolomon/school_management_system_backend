@@ -168,7 +168,7 @@ const AttendanceManagement: React.FC = () => {
         </h2>
         <input
           type="search"
-          className="border border-black  rounded-2xl p-2 w-full"
+          className="border dark:bg-gray-900 border-black  rounded-2xl p-2 w-full"
           value={query}
           onChange={(e) => {
             setQuery(e.target.value);
@@ -245,13 +245,13 @@ const AttendanceManagement: React.FC = () => {
                                 <th className="py-3 px-4 pr-0">
                                   {/* Checkbox input */}
                                 </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                <th className="px-6 py-3 text-left text-xs font-medium dark:text-gray-900 text-gray-500 uppercase">
                                   Date
                                 </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                <th className="px-6 py-3 text-left text-xs font-medium dark:text-gray-900 text-gray-500 uppercase">
                                   status
                                 </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                <th className="px-6 py-3 text-left text-xs font-medium dark:text-gray-900 text-gray-500 uppercase">
                                   Edit
                                 </th>
                               </tr>
@@ -259,8 +259,8 @@ const AttendanceManagement: React.FC = () => {
                             <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                               {attendanceDetails.map(
                                 (record: any, index: number) => (
-                                  <tr key={index}>
-                                    <td className="py-3 pl-4">
+                                  <tr key={index} className="dark:bg-gray-900">
+                                    <td className="dark:bg-gray-900 py-3 pl-4">
                                       <div className="flex items-center h-5"></div>
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
