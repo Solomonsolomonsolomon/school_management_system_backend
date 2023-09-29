@@ -257,9 +257,18 @@ studentSchema.pre("save", async function (next) {
 //add current term and current year
 studentSchema.pre("save", async function (next) {
   let school = this.school;
+  let schoolId = this.schoolId;
 
-  let currentTerm = await AcademicTerm.findOne({ isCurrent: true, school });
-  let currentYear = await AcademicYear.findOne({ isCurrent: true, school });
+  let currentTerm = await AcademicTerm.findOne({
+    isCurrent: true,
+    school,
+    schoolId,
+  });
+  let currentYear = await AcademicYear.findOne({
+    isCurrent: true,
+    school,
+    schoolId,
+  });
   if (!currentYear || !currentTerm)
     throw new CustomError(
       {},
@@ -340,7 +349,7 @@ studentSchema.pre("save", async function (next) {
   this.subjects = subjectsOffered;
   next();
 });
-//compute balance on registration or promotion
+//compute balance on registration , promotion
 studentSchema.pre("save", async function (next) {
   if (this.isNew || this.isDirectModified("className")) {
     console.log("className modified");
@@ -364,30 +373,70 @@ studentSchema.pre("save", async function (next) {
   }
   next();
 });
-//compute balance on online fees payment
+//compute balance on fees payment
 studentSchema.pre("save", async function (this: IStudent, next) {
-  if (this.isDirectModified("amount")) {
-    console.log("1");
-    console.log(this.amount);
-    let classLevel = await ClassLevel.findOne({
-      name: this.className,
-      school: this.school,
-      schoolId: this.schoolId,
-    });
-    console.log(classLevel);
-    if (!classLevel || !classLevel.price)
-      throw new CustomError(
-        {},
-        "error occured fetching price.contact admin",
-        400
-      );
-    const total = classLevel.price;
-    //excess balance
-    if (this.amount > this.balance) {
-      console.log("2");
+  let classLevel = await ClassLevel.findOne({
+    name: this.className,
+    school: this.school,
+    schoolId: this.schoolId,
+  });
+  if (!classLevel || !classLevel.price)
+    throw new CustomError(
+      {},
+      "error occured fetching price.contact admin",
+      400
+    );
+  if (this.isDirectModified("isPaid")) {
+    if (this.isPaid) {
       this.percentagePaid = 100;
       this.isPaid = true;
       this.balance = 0;
+      await new Transaction({
+        amountPaid: classLevel.price,
+        status: "success",
+        school: this.school,
+        schoolId: this.schoolId,
+        payerId: this._id,
+        year: this.academicYear,
+        term: this.currentAcademicTerm,
+      }).save();
+    } else {
+      let bulkOperations: any[] = [];
+      this.percentagePaid = 0;
+      this.isPaid = false;
+      this.balance = classLevel.price;
+      let deduct = await Transaction.find({});
+      deduct.map((_) => {
+        bulkOperations.push({
+          updateOne: {
+            filter: {
+              school: this.school,
+              schoolId: this.schoolId,
+              payerId: this._id,
+              year: this.academicYear,
+              term: this.currentAcademicTerm,
+            },
+            update: {
+              $set: { status: "failed" },
+            },
+          },
+        });
+      });
+      Transaction.bulkWrite(bulkOperations);
+    }
+  }
+  if (this.isDirectModified("amount")) {
+    console.log("1");
+    console.log(this.amount);
+
+    const total = classLevel.price;
+    //excess balance
+    if (this.amount > this.balance) {
+      throw new CustomError(
+        {},
+        `Cannot deposit amount greater than school fees`,
+        400
+      );
     } else if (this.amount === this.balance) {
       this.percentagePaid = 100;
       this.isPaid = true;
@@ -396,7 +445,7 @@ studentSchema.pre("save", async function (this: IStudent, next) {
       console.log("3");
       this.balance = this.balance - this.amount;
       let partPaid = total - this.balance;
-      this.percentagePaid = ((total - partPaid) / total) * 100;
+      this.percentagePaid = ((total - this.balance) / total) * 100;
       this.isPaid = this.percentagePaid === 100;
     }
     await new Transaction({
@@ -405,9 +454,10 @@ studentSchema.pre("save", async function (this: IStudent, next) {
       school: this.school,
       schoolId: this.schoolId,
       payerId: this._id,
+      year: this.academicYear,
+      term: this.currentAcademicTerm,
     }).save();
     this.amount = 0;
-
     next();
   }
 });

@@ -3,14 +3,15 @@ import axios from "../../api/axios";
 import Loading from "../Loading";
 //import { tobase64 } from "./AddStudent";
 import Button from "../Button/Button";
+
 const postUrl = "/admin";
 function AllStudents() {
   const [students, setStudents] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editingStudent, setEditingStudent] = useState<any>(null);
+  let [updateUI, setUpdateUI] = useState<number>(0);
   let errRef = React.useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
@@ -41,7 +42,7 @@ function AllStudents() {
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [updateUI]);
 
   const filteredStudents = students.filter((student: any) => {
     const searchTerm = searchQuery.toLowerCase();
@@ -79,18 +80,12 @@ function AllStudents() {
           `${postUrl}/edit/student/${student.studentId}`,
           student
         );
+
         console.log(student.currentClassLevel, student.currentClassArm);
         errRef.current
           ? (errRef.current.textContent = editStudent.data?.msg)
           : "";
-        const updatedStudents = students.map((eachStudent) => {
-          if (eachStudent.studentId === editingStudent.studentId) {
-            eachStudent = editingStudent;
-          }
-          return eachStudent;
-        });
-
-        setStudents(updatedStudents);
+        setUpdateUI((prev) => prev+1);
       } catch (error: any) {
         console.log(error);
         errRef.current
@@ -132,6 +127,18 @@ function AllStudents() {
                   setEditingStudent({
                     ...editingStudent,
                     email: e.target.value,
+                  })
+                }
+                className="dark:bg-gray-900  w-full p-2  border rounded"
+              />
+              <input
+                type="password"
+                placeholder="password"
+                value={editingStudent.password}
+                onChange={(e) =>
+                  setEditingStudent({
+                    ...editingStudent,
+                    password: e.target.value,
                   })
                 }
                 className="dark:bg-gray-900  w-full p-2  border rounded"
@@ -227,6 +234,40 @@ function AllStudents() {
               </select>
               {/* Add more input fields for other data */}
             </div>
+            {/* payment information */}
+
+            <div>
+              <p className="font-bold">Financial Details</p>
+              <form action="">
+                <label htmlFor="payment details">Fees Status</label>
+                <select
+                  name=""
+                  id=""
+                  className="bg-inherit border mx-2 p-1 dark:bg-gray-700"
+                  onChange={(e) => {
+                    setEditingStudent({
+                      ...editingStudent,
+                      isPaid: e.target.value,
+                    });
+                  }}
+                >
+                  <option value="">select</option>
+                  <option value="true">paid</option>
+                  <option value="false">unpaid</option>
+                </select>
+              </form>
+              <input
+                type="number"
+                placeholder="amount deposited"
+                className="bg-inherit p-2 rounded mt-1 border"
+                onChange={(e) => {
+                  setEditingStudent({
+                    ...editingStudent,
+                    amount: e.target.value,
+                  });
+                }}
+              />
+            </div>
             <div className="dark:bg-gray-900  mt-4 flex justify-end">
               <Button
                 buttontype={3}
@@ -293,6 +334,9 @@ function AllStudents() {
                 <th className="dark:bg-gray-900  px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                   BALANCE
                 </th>
+                <th className="dark:bg-gray-900  px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  PERCENTAGE PAID
+                </th>
                 <th className="dark:bg-gray-900  px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
                   Action
                 </th>
@@ -327,6 +371,9 @@ function AllStudents() {
                   </td>
                   <td className="dark:bg-gray-900  px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
                     {student.balance}
+                  </td>
+                  <td className="dark:bg-gray-900  px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+                    {student.percentagePaid?.toFixed(2)}%
                   </td>
                   <td className="dark:bg-gray-900  px-6 py-4 whitespace-nowrap text-right text-sm font-medium ">
                     <a

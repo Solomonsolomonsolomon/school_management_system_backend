@@ -128,3 +128,5 @@ export async function changePassword(req: Request, res: Response) {
     status: 200,
   });
 }
+
+export async function resetPassword(req: Request, res: Response) {}
