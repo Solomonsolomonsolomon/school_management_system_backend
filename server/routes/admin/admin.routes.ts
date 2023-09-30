@@ -1,4 +1,4 @@
-import express, { Router,Request,Response } from "express";
+import express, { Router, Request, Response } from "express";
 const adminRouter: Router = Router();
 const app = express();
 import asyncErrorHandler from "../../middleware/globalErrorHandler";
@@ -23,8 +23,8 @@ import {
   countTeachers,
   editStudent,
   editTeacher,
+  resetSchoolTransaction,
 } from "../../controller/admin.controller";
-
 
 const { addATerm, deleteTerm, setCurrentTerm, getAllTerms, getCurrentTerm } =
   term;
@@ -90,4 +90,8 @@ adminRouter.delete(
   asyncErrorHandler(deleteClassLevel)
 );
 
+adminRouter.get(
+  "/admin/reset/student/transaction/",
+  asyncErrorHandler(resetSchoolTransaction)
+);
 export default adminRouter;

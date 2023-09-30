@@ -10,6 +10,7 @@ import {
   AcademicTerm,
 } from "./../model/database";
 import { NextFunction, Request, Response } from "express";
+import student from "./student.controller";
 
 export async function addAdmin(
   req: Request,
@@ -110,7 +111,6 @@ export async function addStudent(
   let schoolId = req.user?.schoolId;
   let isStudentAlreadyRegistered = !!(await Student.countDocuments({
     email,
-   
   }));
   if (isStudentAlreadyRegistered)
     throw new CustomError({}, "student already registered", 403);
@@ -391,5 +391,35 @@ export async function countParents(req: Request, res: Response) {
       msg: "parents number found",
       parents: e,
     });
+  });
+}
+
+export async function resetSchoolTransaction(req: Request, res: Response) {
+  const bulkOperations: any[] = [];
+  let allStudents = await Student.find({
+    school: req.user?.school,
+    schoolId: req.user?.schoolId,
+  });
+  for (let i = 0; i <= allStudents.length - 1; i++) {
+    let cl = await ClassLevel.findOne({ name: allStudents[i].className });
+
+    bulkOperations.push({
+      updateOne: {
+        filter: {
+          school: req.user?.school,
+          schoolId: req.user?.schoolId,
+          _id: allStudents[i]._id,
+        },
+        update: {
+          $set: { isPaid: false, balance: cl?.price, percentagePaid: 0 },
+        },
+      },
+    });
+  }
+  console.log(bulkOperations);
+  await Student.bulkWrite(bulkOperations);
+  return res.status(200).json({
+    msg: 200,
+    status: "successful ",
   });
 }

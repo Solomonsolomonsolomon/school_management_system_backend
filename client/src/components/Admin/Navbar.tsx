@@ -53,7 +53,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
   }
   if (loading) return <Loading />;
   return (
-    <div className="px-0 lg:py-4  sm:py-1 md:py-4 border bg-gray-200 sm:block lg:flex  md:flex justify-center">
+    <div className="px-0 lg:py-4  sm:py-1 md:py-4 border bg-gray-50 sm:block lg:flex  md:flex justify-center">
       <nav
         style={{
           backgroundColor: `${colors.sideBar}`,

@@ -38,14 +38,14 @@ const Admin = () => {
         id="adminpage"
         className="grid md:grid-cols-[24%_75%] lg:grid-cols-[23%_77%] xl:grid-cols-[18%_82%] w-full overflow-y-hidden"
       >
-        <div className="mx-1 hidden lg:block md:block xl:block">
+        <div className="mx-1  hidden lg:block md:block xl:block relative">
           {" "}
           <Navbar setView={setView} />
         </div>
         <main className="container">
-          <section className="overflow-y-auto h-[100vh] flex flex-col">
-            <header className="bg-white border-b-2 border-gray-200 py-4 shadow ">
-              <div className="container mx-auto px-4  ">
+          <section className="overflow-y-auto h-[100vh] flex flex-col  ">
+            <header className="bg-white border-b-2 border-gray-200 py-4 shadow  ">
+              <div className="container mx-auto px-4  w-full  ">
                 <Profile />
               </div>
             </header>
