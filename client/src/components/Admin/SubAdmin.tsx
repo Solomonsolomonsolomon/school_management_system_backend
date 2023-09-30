@@ -4,13 +4,15 @@ import { faUserGroup } from "@fortawesome/free-solid-svg-icons";
 import { faUserTie } from "@fortawesome/free-solid-svg-icons";
 import { faMoneyBill1 } from "@fortawesome/free-solid-svg-icons";
 import EarningChart from "./charts/EarningChart";
-import ExpenseChart from "./charts/ExpenseChart";
+// import ExpenseChart from "./charts/ExpenseChart";
 // import { useNavigate , useLocation} from 'react-router-dom'
 import React, { useEffect, useRef, useState } from "react";
 // import AuthContext from '../context/AuthProvider'
 // import { Link } from 'react-router-dom';
 import axios from "../../api/axios";
 import Loading from "../Loading";
+
+import DoughnutChart from "./charts/RatioChart";
 
 const POST_URL = "/admin";
 let transactionUrl = "/transaction";
@@ -103,11 +105,11 @@ const SubAdmin: React.FC = () => {
   });
   if (isLoading) return <Loading />;
   return (
-    <div className="lg:p-10  md:p-2 sm:p-1  border-slate-200 shadow-2xl box-border grid gap-10 w-[99%] ">
+    <div className="lg:p-10  md:p-2 sm:p-1  border-slate-200 shadow-2xl box-border grid gap-10 w-full ">
       <h1 className="text-sm text-gray-500 font-bold box-border shadow-gray-600 text-left shadow-sm p-1 m-0 border-gray-300">
         Admin Dashboard
       </h1>
-      <section className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-0 h-auto  ">
+      <section className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3 mt-0 h-auto  ">
         <div className=" p-10 shadow-gray-500 shadow-lg border  box-content flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
           <div className="flex border "></div>
           <section className="bg-green-100 p-5 rounded-full">
@@ -169,8 +171,15 @@ const SubAdmin: React.FC = () => {
             </p>
           </section>
         </div>
+        <div className=" p-10 shadow-gray-500 shadow-lg border  box-content flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
+        
+          <section className="mt-3">
+            <DoughnutChart/>
+             
+          </section>
+        </div>
       </section>
-   
+
       <section className="grid   gap-4 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1  ">
         <div className=" shadow-lg p-5 grid grid-rows-[5%_95%] gap-5">
           <h2>Earnings</h2>
@@ -179,12 +188,12 @@ const SubAdmin: React.FC = () => {
           </div>
         </div>
 
-        <div className=" p-5 shadow-2xl grid grid-rows-[5%_95%] gap-5">
+        {/* <div className=" p-5 shadow-2xl grid grid-rows-[5%_95%] gap-5">
           <h2>Expenses</h2>
-          <div>
+          <div className="w-[99%]">
             <ExpenseChart />
           </div>
-        </div>
+        </div> */}
       </section>
     </div>
   );

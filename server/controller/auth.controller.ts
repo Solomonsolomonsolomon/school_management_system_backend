@@ -16,7 +16,7 @@ export async function signIn(req: Request, res: Response) {
       index == 0 ? Student : index == 1 ? Admin : index == 2 ? Teacher : Admin;
     await Model.findOne({ email })
       .select(
-        "name accessToken role className password currentClassLevel currentClassArm schoolId school balance subjects email _id "
+        "name accessToken role className password currentClassLevel currentClassArm schoolId school balance subjects email _id className formTeacher"
       )
       .then(async (user: any) => {
         if (!user) throw new Error("invalid credentials");

@@ -53,16 +53,16 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
   }
   if (loading) return <Loading />;
   return (
-    <div className="px-0 lg:py-4  sm:py-1 md:py-4 border bg-gray-50 sm:block lg:flex  md:flex justify-center">
+    <div className="px-0 lg:py-0 scrollbar-hide sm:py-1 md:py-0  bg-gray-50 sm:block lg:flex  md:flex justify-center">
       <nav
         style={{
           backgroundColor: `${colors.sideBar}`,
           color: `${colors.sideBarText}`,
         }}
-        className="bg-gray-700  shadow-2xl h-screen py-1 relative overflow-y-auto p-3 sm:w-full md:w-fit lg:w-fit xl:w-fit lg:rounded-2xl md:rounded-2xl  sm:rounded-none l"
+        className="bg-gray-700  shadow-2xl scrollbar-hide h-screen py-0 relative overflow-y-auto p-2 sm:w-full md:w-fit lg:w-fit xl:w-full lg:rounded-none md:rounded-none  sm:rounded-none l"
       >
-        <h1 className="text-center text-3xl">ADMIN</h1>
-        <section className="my-2">
+        {/* <h1 className="text-center text-3xl">ADMIN</h1> */}
+        <section className="my-3  ">
           <ul className="grid gap-4 text-sm">
             {/* dashboard */}
             <li
@@ -81,7 +81,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
                   size="lg"
                   className="mr-2"
                 />
-                <span className=" text-md">Dashboard</span>
+                <span className="md:hidden lg:inline xl:inline sm:inline text-md ">Dashboard</span>
               </div>
             </li>
             {/* <li className="mr-10">
@@ -90,7 +90,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
               size="2xl"
               className="mr-2"
             />
-            <span className="">Students</span>
+            <span className="md:hidden lg:inline xl:inline sm:inline">Students</span>
           </li> */}
             {/* add students */}
             <li
@@ -101,7 +101,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
             >
               <FontAwesomeIcon icon={faUserPlus} size="lg" />
 
-              <span className=" mr-2 text-md"> Add student</span>
+              <span className="md:hidden lg:inline xl:inline sm:inline mr-2 text-md"> Add student</span>
             </li>
             {/* add admin */}
             <li
@@ -112,7 +112,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
             >
               <FontAwesomeIcon icon={faUserPlus} size="lg" />
 
-              <span className=" mr-2 text-md"> Add Admin</span>
+              <span className="md:hidden lg:inline xl:inline sm:inline mr-2 text-md"> Add Admin</span>
             </li>
             {/* all admin */}
             <li
@@ -123,7 +123,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
             >
               <FontAwesomeIcon icon={faUserFriends} size="lg" />
 
-              <span className=" mr-2 text-md"> All Admin</span>
+              <span className="md:hidden lg:inline xl:inline sm:inline mr-2 text-md"> All Admin</span>
             </li>
             {/* all students */}
             <li
@@ -134,7 +134,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
             >
               <FontAwesomeIcon icon={faUserFriends} size="lg" />
 
-              <span className=" mr-2"> All students</span>
+              <span className="md:hidden lg:inline xl:inline sm:inline mr-2"> All students</span>
             </li>
             {/* class level */}
             <li
@@ -145,7 +145,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
             >
               <FontAwesomeIcon icon={faSchoolCircleCheck} size="lg" />
 
-              <span className=" mr-2"> Class level</span>
+              <span className="md:hidden lg:inline xl:inline sm:inline mr-2"> Class level</span>
             </li>
             {/* add teacher */}
             <li
@@ -156,7 +156,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
             >
               <FontAwesomeIcon icon={faUserPlus} size="lg" />
 
-              <span className=" mr-2"> Add Teacher</span>
+              <span className="md:hidden lg:inline xl:inline sm:inline mr-2"> Add Teacher</span>
             </li>
             {/* all teachers */}
             <li
@@ -167,7 +167,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
             >
               <FontAwesomeIcon icon={faUserFriends} size="lg" />
 
-              <span className=" mr-2"> All Teachers</span>
+              <span className="md:hidden lg:inline xl:inline sm:inline mr-2"> All Teachers</span>
             </li>
             {/* year and term */}
             <li
@@ -178,7 +178,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
             >
               <FontAwesomeIcon icon={faStopwatch} size="lg" />
 
-              <span className=" mr-2"> Year and Term</span>
+              <span className="md:hidden lg:inline xl:inline sm:inline mr-2"> Year and Term</span>
             </li>
             {/* subjects */}
             <li
@@ -189,7 +189,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
             >
               <FontAwesomeIcon icon={faBook} size="lg" />
 
-              <span className=" mr-2"> Subjects</span>
+              <span className="md:hidden lg:inline xl:inline sm:inline mr-2"> Subjects</span>
             </li>
             <li
               onClick={() => {
@@ -199,7 +199,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
             >
               <FontAwesomeIcon icon={faGear} size="lg" />
 
-              <span className=" mr-2"> Settings</span>
+              <span className="md:hidden lg:inline xl:inline sm:inline mr-2"> Settings</span>
             </li>
             <li className="cursor-pointer hover:shadow-lg hover:transition hover:bg-slate-300 p-5">
               <NavLink to="/admin/teacher">
@@ -208,13 +208,13 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
                   size="2xl"
                   className="mr-2"
                 />
-                <span className=""> Teachers</span>
+                <span className="md:hidden lg:inline xl:inline sm:inline"> Teachers</span>
               </NavLink>
             </li>
             <li className="cursor-pointer hover:shadow-lg hover:transition hover:bg-slate-300 p-5">
               <NavLink to="/admin/messages">
                 <FontAwesomeIcon icon={faAdd} size="2xl" className="mr-2" />
-                <span className=""> Messages</span>
+                <span className="md:hidden lg:inline xl:inline sm:inline"> Messages</span>
               </NavLink>
             </li>
           </ul>

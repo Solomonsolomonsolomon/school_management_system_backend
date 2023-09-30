@@ -1,4 +1,4 @@
-import { faUser } from "@fortawesome/free-solid-svg-icons";
+import { faLongArrowLeft, faUser } from "@fortawesome/free-solid-svg-icons";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
@@ -20,6 +20,9 @@ let schoolUrl = "/school";
 const Profile = () => {
   let term = React.useRef<HTMLParagraphElement>(null);
   let year = React.useRef<HTMLParagraphElement>(null);
+  const [confirmable, setConfirmable] = React.useState<boolean>(false);
+  const [confirmModal, setConfirmModal] = React.useState<boolean>(false);
+  const [loading, setLoading] = React.useState<boolean>(false);
   let [themeandlogo, setthemeandlogo] = React.useState<IThemeAndLogo>({
     theme: {
       header: "#edf2f7",
@@ -83,7 +86,6 @@ const Profile = () => {
       }
     })();
   }, []);
-  let Navigate = useNavigate();
   const getUserData = (user: any) => {
     const data = sessionStorage.getItem(user);
     if (!data) {
@@ -91,8 +93,8 @@ const Profile = () => {
     }
     return JSON.parse(data);
   };
-
   const user = getUserData("user");
+  let Navigate = useNavigate();
 
   const logout = () => {
     sessionStorage.removeItem("accessToken");
@@ -105,60 +107,75 @@ const Profile = () => {
     const profile = document.getElementById("profile");
     profile?.classList.toggle("hidden");
   };
+  if (confirmModal)
+    return (
+      <ProfileModal
+        confirmModal={setConfirmModal}
+        confirmable={setConfirmable}
+        term={term}
+        year={year}
+      />
+    );
   return (
     <section
-      className="    border-b-2   p-5 mb-2 pr-3 pt-3  w-[100%]  rounded"
+      className=" flex flex-wrap justify-between sm:my-10yy md:my-0 border-b-2  p-1  mb-1  pr-3 pt-2  w-[100%] lg:rounded-2xl p-4 sm:rounded-2xl md:rounded-2xl"
       style={{
         backgroundColor: themeandlogo.theme?.header || "#4a5568",
         color: themeandlogo.theme?.headerText || "#000000",
       }}
     >
       <img src={themeandlogo.logo || imgDefault} alt="" className="w-[3.4em]" />
-      <div
-        className=" flex   justify-center border-b-1 gap-2 cursor-pointer "
-        onClick={toggle}
-      >
-        <section className="flex gap-5 flex-wrap-reverse justify-end">
-          <h1 className="text-sm font-bold capitalize ">{user.name}</h1>
-          {/* <p className="text-sm font-bold text-white">{user.role}</p>
-           */}
-          <h1 className="text-sm  ">
-            <span className="capitalize font-xs opacity-[0.6]">school</span>:
-            <span className="capitalize">{user.school}</span>
-          </h1>
-          <p className=" text-sm capitalize" ref={term}>
-            current Term:not set
-          </p>
-          <p ref={year} className="text-sm capitalize">
-            current Academic Year:not set
-          </p>
-        </section>
-        <FontAwesomeIcon icon={faUser} size="2xl" className="mt-3 text-blue" />
+      <div className="lg:mr-10 md:mr-10 sm:mr-0 xl:mr-10">
+        <button
+          className=" flex justify-end mt-14 md:mt-0 bg lg:mt-0 border-b-1 gap-2 border  border-gray-700 dark:border-gray-400  px-5 bg-inherit rounded-3xl cursor-pointer shadow-2xl "
+          onClick={() => {
+            toggle();
+          }}
+        >
+          {" "}
+          <div className="mt-6 flex justify-end">
+            <span className="flex">
+              {" "}
+              <p className="capitalize">{user?.name.substring(0, 5)}...</p>
+            </span>
+          </div>
+          <FontAwesomeIcon
+            icon={faUser}
+            size="lg"
+            className=" text-blue p-2  rounded-xl mt-2 "
+          />
+        </button>
       </div>
+
       <div
         id="profile"
-        className="absolute hidden transition-opacity duration-500  left-[60%] p-6 shadow-lg w-fit =z-20 bg-gray-950"
+        //className="absolute hidden transition-opacity duration-500  right-[14%] top-[15%] p-6 shadow-lg w-fit =z-20 bg-inherit"
+        className="w-full hidden"
       >
         <ul className="grid gap-3  justify-center m-0 p-0">
           <li>
-            <FontAwesomeIcon icon={faUser} className="mt-3 mr-2 text-sky-300" />
-            <span className="text-xl text-sky-300 font-bold">Profile</span>
+            <FontAwesomeIcon
+              icon={faUser}
+              className="mt-3 mr-2 font-bold hover:text-blue-800"
+            />
+            <span
+              className="text-xl font-bold"
+              onClick={() => {
+                setConfirmModal(true);
+              }}
+            >
+              Profile
+            </span>
           </li>
           <li>
-            <FontAwesomeIcon
-              icon={faGear}
-              className="mt-3  mr-2 text-sky-300"
-            />
-            <span className="text-xl  text-white font-bold">Settings</span>
+            <FontAwesomeIcon icon={faGear} className="mt-3  mr-2" />
+            <span className="text-xl  font-bold">Settings</span>
           </li>
           <li>
-            <FontAwesomeIcon
-              icon={faUserPlus}
-              className="mt-3  mr-2 text-sky-300"
-            />
+            <FontAwesomeIcon icon={faUserPlus} className="mt-3  mr-2" />
             <Link
               to="/change-password"
-              className="text-xl    font-bold text-blue-100 hover:text-blue-800"
+              className="text-xl    font-bold hover:text-blue-800"
             >
               Change Password
             </Link>
@@ -178,3 +195,79 @@ const Profile = () => {
 };
 
 export default Profile;
+
+const ProfileModal: React.FC<{
+  confirmable: React.SetStateAction<any>;
+  confirmModal: React.SetStateAction<any>;
+  term: any;
+  year: any;
+}> = ({ confirmable, confirmModal, term, year }) => {
+  const getUserData = (user: any) => {
+    const data = sessionStorage.getItem(user);
+    if (!data) {
+      return {};
+    }
+    return JSON.parse(data);
+  };
+  const user = getUserData("user");
+
+  return (
+    <>
+      {/* to use pass 2 set states confirm modal and confirmable */}
+      {/* const [confirmable,setConfirmable]=React.useState<boolean>(false);
+    const [confirmModal,setConfirmModal]=React.useState<boolean>(false); */}
+
+      <div className="w-full absolute z-[10]  inset-1  overflow-hidden grid bg-inherit  justify-center items-center h-[100vh]  ">
+        <div className="border relative opacity-100 dark:bg-gray-800 bg-gray-200 rounded-2xl shadow-2xl h-fit box-border p-20">
+          <h1 className="p-5 ">your profile details</h1>
+          <section className="grid gap-5 flex-wrap-reverse justify-end">
+            <h1 className="text-sm font-bold capitalize ">{user.name}</h1>
+            {/* <p className="text-sm font-bold text-white">{user.role}</p>
+             */}
+            <h1 className="text-sm  ">
+              <span className="capitalize font-xs opacity-[0.6]">school</span>:
+              <span className="capitalize">{user.school}</span>
+            </h1>
+            <p className=" text-sm capitalize" ref={term}>
+              current Term:not set
+            </p>
+            <p ref={year} className="text-sm capitalize">
+              current Academic Year:not set
+            </p>
+            <p>
+              <span>{user?.className ? "class:" : ""}</span>
+              {user?.classNname}
+            </p>
+            <p>
+              <span>{user?.formTeacher ? "FormTeacher:" : ""}</span>
+              {user?.formTeacher}
+            </p>
+          </section>
+          <span className="absolute left-2 top-2">
+            <button
+              className="bg-blue-700 p-3 z-10 text-white rounded"
+              onClick={() => {
+                confirmable(true);
+                confirmModal(false);
+              }}
+            >
+              <FontAwesomeIcon icon={faLongArrowLeft}></FontAwesomeIcon>
+            </button>
+          </span>
+          {/* <span className="absolute left-2">
+            {" "}
+            <button
+              className="bg-red-700 p-3 z-10 text-white rounded"
+              onClick={() => {
+                confirmable(false);
+                confirmModal(false);
+              }}
+            >
+              Cancel
+            </button>
+          </span> */}
+        </div>
+      </div>
+    </>
+  );
+};

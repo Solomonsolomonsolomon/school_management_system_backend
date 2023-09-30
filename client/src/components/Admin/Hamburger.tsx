@@ -12,7 +12,7 @@ const Hamburger: React.FC<{
     headerText: string;
   }
   let [renderNavBar, setRenderNavBar] = React.useState<boolean>(false);
-  const [theme, settheme] = React.useState<Color>({ headerText: "#ffffff" });
+  const [theme, settheme] = React.useState<Color>({ headerText: "#000000" });
   const handleRenderNavBar = () => {
     setRenderNavBar(!renderNavBar);
     console.log(renderNavBar);

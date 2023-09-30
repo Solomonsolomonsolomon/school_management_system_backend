@@ -323,6 +323,7 @@ export async function getGenderDivide(req: Request, res: Response) {
       females,
       males,
       totalStudents: totalStudents.length,
+      ratio: [males, females],
     });
   } catch (error: any) {
     res.status(500).json({
