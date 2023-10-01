@@ -50,7 +50,6 @@ const Sidebar: React.FC<ProfileProps> = ({ setView }) => {
         onClick={toggleSidebar}
         className="m-2 absolute right-4 top-4"
         style={{
-   
           color: colors?.sideBar || "black",
         }}
       >
@@ -113,6 +112,15 @@ const Sidebar: React.FC<ProfileProps> = ({ setView }) => {
               }}
             >
               <a className="block  hover:text-white">Compute Attendance</a>
+            </li>
+            <li
+              className="mb-2"
+              onClick={() => {
+                setView("computeresult");
+                setIsOpen(false);
+              }}
+            >
+              <a className="block  hover:text-white">Results</a>
             </li>
           </ul>
         </div>

@@ -114,17 +114,23 @@ const Profile = () => {
         confirmable={setConfirmable}
         term={term}
         year={year}
+      
       />
     );
+
   return (
     <section
-      className=" flex flex-wrap justify-between sm:my-10yy md:my-0 border-b-2  p-1  mb-1  pr-3 pt-2  w-[100%] lg:rounded-2xl p-4 sm:rounded-2xl md:rounded-2xl"
+    
+      className=" flex flex-wrap justify-between sm:my-10yy md:my-0 border-b-2  p-1  mb-1  pr-3 pt-2  w-[100%] lg:rounded-none  sm:rounded-none md:rounded-none"
       style={{
         backgroundColor: themeandlogo.theme?.header || "#4a5568",
         color: themeandlogo.theme?.headerText || "#000000",
+      
       }}
     >
       <img src={themeandlogo.logo || imgDefault} alt="" className="w-[3.4em]" />
+     
+
       <div className="lg:mr-10 md:mr-10 sm:mr-0 xl:mr-10">
         <button
           className=" flex justify-end mt-14 md:mt-0 bg lg:mt-0 border-b-1 gap-2 border  border-gray-700 dark:border-gray-400  px-5 bg-inherit rounded-3xl cursor-pointer shadow-2xl "
@@ -136,7 +142,9 @@ const Profile = () => {
           <div className="mt-6 flex justify-end">
             <span className="flex">
               {" "}
-              <p className="capitalize">{user?.name.substring(0, 5)}...</p>
+              <p className="capitalize opacity-60">
+                {user?.name.substring(0, 5)}...
+              </p>
             </span>
           </div>
           <FontAwesomeIcon

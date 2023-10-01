@@ -60,7 +60,8 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
           color: `${colors.sideBarText}`,
         }}
         className="bg-gray-700  shadow-2xl scrollbar-hide h-screen py-0 relative overflow-y-auto p-2 sm:w-full md:w-fit lg:w-fit xl:w-full lg:rounded-none md:rounded-none  sm:rounded-none l"
-      >
+      >school name and logo here
+        <p></p>
         {/* <h1 className="text-center text-3xl">ADMIN</h1> */}
         <section className="my-3  ">
           <ul className="grid gap-4 text-sm">

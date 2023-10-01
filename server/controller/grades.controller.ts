@@ -11,12 +11,14 @@ import { CustomError } from "../middleware/decorators";
 export async function addGrades(req: Request, res: Response) {
   try {
     const { subjectId } = req.body;
-    const { CA1, CA2, CA3, examScore } = req.body; 
+    const { CA1, CA2, CA3, examScore } = req.body;
     const school = req.user?.school;
     const schoolId = req.user?.schoolId;
     const { studentId } = req.params;
     const studentID = new Types.ObjectId(studentId);
     const subjectID = new Types.ObjectId(subjectId);
+    const className = await Student.findById(studentID);
+
     let currentTerm = await AcademicTerm.findOne({
       school,
       schoolId,
@@ -29,7 +31,6 @@ export async function addGrades(req: Request, res: Response) {
     });
     let isValidStudentId = !!(await Student.countDocuments({ _id: studentID }));
     let isValidSubjectId = !!(await Subject.countDocuments({ _id: subjectID }));
-
     if (!currentYear)
       throw new Error(" no current year set.please visit admin to set");
     if (!currentTerm)
@@ -40,6 +41,7 @@ export async function addGrades(req: Request, res: Response) {
       studentId,
       year: currentYear,
       term: currentTerm,
+      className: className?.className,
       school,
       schoolId,
     });
@@ -49,6 +51,7 @@ export async function addGrades(req: Request, res: Response) {
       //create new grade
       const newGradesObject = new Grades({
         studentId: studentID,
+        className: className?.className,
         year: currentYear,
         term: currentTerm,
         school,
