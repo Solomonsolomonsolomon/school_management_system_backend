@@ -14,6 +14,7 @@ import axios from "../../api/axios";
 import Loading from "../Loading";
 
 import DoughnutChart from "./charts/RatioChart";
+import EarningsTOExpense from "./charts/EarningsToExpense";
 
 const POST_URL = "/admin";
 let transactionUrl = "/transaction";
@@ -43,7 +44,7 @@ const SubAdmin: React.FC = () => {
         parentsCount.current
           ? (parentsCount.current.textContent = number?.totalStudents)
           : "";
-        console.log(number);
+      
       } catch (error: any) {
         console.error(error);
         noOfStudents.current ? (noOfStudents.current.textContent = "xxx") : "";
@@ -111,7 +112,7 @@ const SubAdmin: React.FC = () => {
 
       <div
         className="w-full flex justify-center flex-wrap 
-      bg-orange-300 dark:bg-gray-700 p-5 rounded-2xl"
+      bg-gray-200 dark:bg-gray-700 p-5 rounded-2xl"
       >
         <div className="flex flex-col justify-center flex-wrap opacity-60">
           <p className="uppercase ">
@@ -123,7 +124,7 @@ const SubAdmin: React.FC = () => {
 
         <img src={banner} alt="" className="h-[250px] z-4" />
       </div>
-      
+
       <section className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3 mt-0 h-auto  ">
         <div className=" p-10 shadow-gray-500 shadow-lg border  box-content flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
           <div className="flex border "></div>
@@ -191,22 +192,25 @@ const SubAdmin: React.FC = () => {
             <DoughnutChart />
           </section>
         </div>
+        <div className=" p-10 shadow-gray-500 shadow-lg border  box-content flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
+          <section className="mt-3">
+            <EarningsTOExpense />
+          </section>
+        </div>
       </section>
 
-      <section className="grid   gap-4 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1  ">
+      <section className="grid  gap-4 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1  ">
         <div className=" shadow-lg p-5 grid grid-rows-[5%_95%] gap-5">
-          <h2>Earnings</h2>
+          <h2>Finances</h2>
           <div className="w-[99%]">
             <EarningChart />
           </div>
         </div>
 
-        {/* <div className=" p-5 shadow-2xl grid grid-rows-[5%_95%] gap-5">
+        <div className="shadow-lg p-5 grid grid-rows-[5%_95%] gap-5">
           <h2>Expenses</h2>
-          <div className="w-[99%]">
-            <ExpenseChart />
-          </div>
-        </div> */}
+          <div className="w-[99%]"></div>
+        </div>
       </section>
     </div>
   );

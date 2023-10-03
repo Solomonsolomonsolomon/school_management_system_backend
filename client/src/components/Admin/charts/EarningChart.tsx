@@ -26,7 +26,7 @@ ChartJS.register(
   Legend
 );
 
- const options = {
+const options = {
   responsive: true,
 
   plugins: {
@@ -57,10 +57,11 @@ const labels = [
 ];
 
 const transactionUrl = "/transaction";
+const expenseUrl = "/expense";
 export default function EarningChart() {
   const [loading, setLoading] = React.useState<boolean>(true);
   const [label, setLabel] = React.useState<number[]>([]);
-  
+  const [expenses, setExpenses] = React.useState<number[]>([]);
   React.useEffect(() => {
     (async () => {
       try {
@@ -74,29 +75,42 @@ export default function EarningChart() {
       }
     })();
   }, []);
+  React.useEffect(() => {
+    (async () => {
+      try {
+        setLoading(true);
+        let res = await axios.get(`${expenseUrl}/monthly`);
+        setExpenses(res?.data?.label);
+      } catch (error) {
+        setExpenses([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, []);
   if (loading) return <Loading />;
-  
-const data = {
-  labels,
-  datasets: [
-    {
-      fill: false,
-      label: "Earnings",
-      data: label,
-      borderColor: "rgb(53, 162, 235)",
-      backgroundColor: "rgb(53, 162, 235)",
-      tension: 0.4,
-    },
-    {
-      fill: false,
-      label: "Expenses",
-      data: [0,0,0,0,0,0,0,0,0,0,0,0,],
-      borderColor: "rgb(255, 99, 132)",
-      backgroundColor: "rgb(255, 99, 132)",
-      tension: 0.4,
-    },
-  ],
-};
+
+  const data = {
+    labels,
+    datasets: [
+      {
+        fill: false,
+        label: "Earnings",
+        data: label,
+        borderColor: "rgb(53, 162, 235)",
+        backgroundColor: "rgb(53, 162, 235)",
+        tension: 0.4,
+      },
+      {
+        fill: false,
+        label: "Expenses",
+        data: expenses,
+        borderColor: "rgb(255, 99, 132)",
+        backgroundColor: "rgb(255, 99, 132)",
+        tension: 0.4,
+      },
+    ],
+  };
   return (
     <Line
       options={options}

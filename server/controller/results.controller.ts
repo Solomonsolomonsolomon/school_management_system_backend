@@ -302,7 +302,7 @@ export async function calcResultAndCummulativeAndAutoPromote(
     totalScore: number;
     studentId: string;
     name: string;
-    average: number;
+    //average: number;
     // grades: any[];
   }
   interface P {
@@ -312,25 +312,23 @@ export async function calcResultAndCummulativeAndAutoPromote(
 
   let cummulativeScore: subP[] = allTerms.reduce(
     (p: P, c) => {
-      const { totalScore, studentId, name, average, grades } = c;
+      const { totalScore, studentId, name, grades } = c;
       const i = p.tracker.get(studentId);
-      if (totalScore && grades && average) {
+      if (totalScore ) {
         if (i) {
+          console.log("wow");
           p.student[i].totalScore += totalScore;
-
-          p.student[i].average += p.student[i].totalScore / grades?.length || 1;
         } else {
           p.tracker.set(studentId, p.student.length);
-          p.student.push({ studentId, totalScore, name, average });
+          p.student.push({ studentId, totalScore, name });
         }
       } else {
         return p;
       }
-
       return p;
     },
     {
-      student: [{ totalScore: 0, studentId: "", name: "", average: 0 }],
+      student: [{ totalScore: 0, studentId: "", name: "" }],
       tracker: new Map(),
     }
   ).student;
@@ -338,8 +336,8 @@ export async function calcResultAndCummulativeAndAutoPromote(
   cummulativeScore.shift();
   console.log(cummulativeScore);
   cummulativeScore.map((student) => {
-    console.log(student.average);
-    if (student.average >= 40) {
+
+    if (student.totalScore >= 40) {
       let currentClassIndex = promotionClasses.findIndex(
         (currentClass) => currentClass === teacher?.formTeacher
       );

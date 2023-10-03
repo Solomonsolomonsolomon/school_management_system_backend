@@ -21,7 +21,7 @@ const Hamburger: React.FC<{
     (async () => {
       try {
         let res = await axios.get(`${schoolUrl}/logo/theme/get`);
-        console.log(res);
+ 
         settheme({
           headerText: res?.data?.themes?.headerText,
         });

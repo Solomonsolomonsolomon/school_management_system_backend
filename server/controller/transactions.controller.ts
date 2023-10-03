@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { CustomError } from "../middleware/decorators";
 import { Transaction, Student } from "../model/database";
+import { Expense } from "../model/others/Expense";
 
 class TransactionController {
   constructor() {}
@@ -149,6 +150,31 @@ class TransactionController {
       status: 200,
       msg: "total transaction amount fetched successfully",
       label: months,
+    });
+  };
+  getRatioOfEarningsToExpense = async (req: Request, res: Response) => {
+    let school = req.user?.school;
+    let schoolId = req.user?.schoolId;
+    const completedTransactions = await Transaction.find({
+      status: "success",
+      school,
+      schoolId,
+    });
+    let allExpenses = await Expense.find({});
+    // Calculate the total amount
+    const totalAmount: number = completedTransactions.reduce(
+      (sum, transaction) => sum + transaction.amountPaid,
+      0
+    );
+    const totalExpenses: number = allExpenses.reduce(
+      (sum, expense) => sum + expense.amountPaid,
+      0
+    );
+
+    res.status(200).json({
+      status: 200,
+      msg: "total transaction amount fetched successfully",
+      ratio: [totalAmount, totalExpenses],
     });
   };
 }

@@ -13,6 +13,7 @@ import AddAdmin from "../components/Admin/AddAdmin";
 import AllAdmin from "../components/Admin/AllAdmin";
 import Settings from "../components/Admin/Settings";
 import Hamburger from "../components/Admin/Hamburger";
+import Expense from "../components/Admin/Expense";
 //const GET_URL = "/admin";
 let components: any = {
   subadmin: SubAdmin,
@@ -26,6 +27,7 @@ let components: any = {
   addadmin: AddAdmin,
   alladmin: AllAdmin,
   settings: Settings,
+  expenses: Expense,
 };
 const Admin = () => {
   let [view, setView] = React.useState("subadmin");

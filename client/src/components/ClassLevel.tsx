@@ -15,7 +15,6 @@ const ClassLevel: React.FC = () => {
   const [confirmable, setConfirmable] = React.useState<boolean>(false);
   const [confirmModal, setConfirmModal] = React.useState<boolean>(false);
 
-
   let [selectedClass, setSelectedClass] = React.useState<any>({ id: "" });
 
   React.useEffect(() => {
@@ -30,7 +29,7 @@ const ClassLevel: React.FC = () => {
         isLoading(false);
         console.log("here");
       } catch (error) {
-        console.log(error);
+        error;
         isLoading(false);
       }
     }
@@ -64,7 +63,7 @@ const ClassLevel: React.FC = () => {
         AddRef.current ? (AddRef.current.textContent = res.data?.msg) : "";
         setClasses([...classes, res.data?.newClassLevel]);
       } catch (error: any) {
-        console.log(error);
+        error;
         AddRef.current
           ? (AddRef.current.textContent =
               error.response?.data?.msg || error?.message)
@@ -224,7 +223,7 @@ const ClassLevel: React.FC = () => {
                             );
                             setClasses(updatedtheClasss);
                           } catch (error: any) {
-                            console.log(error);
+                            error;
                             errRef.current
                               ? (errRef.current.textContent =
                                   error.response?.data?.msg || error?.message)
@@ -283,12 +282,11 @@ const EditPriceModal: React.FC<{
             <button
               className="bg-blue-700 p-3 z-10 text-white rounded"
               onClick={async () => {
-               
                 let res = await axios.put(`${getUrl}/class/price/edit/${id}`, {
                   price,
                 });
                 console.log(res);
-                 confirmable(true);
+                confirmable(true);
                 confirmModal(false);
               }}
             >

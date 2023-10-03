@@ -73,7 +73,7 @@ const Profile = () => {
     (async () => {
       try {
         let res = await axios.get(`${schoolUrl}/logo/theme/get`);
-        console.log(res);
+   
         setthemeandlogo({
           logo: res.data?.logo,
           theme: {
