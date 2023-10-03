@@ -431,7 +431,8 @@ studentSchema.pre("save", async function (this: IStudent, next) {
 
     const total = classLevel.price;
     //excess balance
-    if (this.amount > this.balance) {
+   // 0.0125 * this.balance + 100 ;
+    if (this.amount > this.balance ) {
       throw new CustomError(
         {},
         `Cannot deposit amount greater than school fees`,

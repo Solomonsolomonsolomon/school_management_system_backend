@@ -116,10 +116,33 @@ class TransactionController {
       },
       [{ amount: 0, month: 0 }]
     );
+    let total = completedTransactions.reduce(
+      (p: any, c) => {
+        const { amountPaid, month } = c;
+        const i = p.tracker.get(month);
+        if (amountPaid) {
+          if (i) {
+            p.total[i].amount += amountPaid;
+          } else {
+            p.tracker.set(month, p.total.length);
+            p.total.push({ month, amount: amountPaid });
+          }
+        } else {
+          return p;
+        }
+
+        return p;
+      },
+      {
+        total: [{ amount: 0, month: 0 }],
+        tracker: new Map(),
+      }
+    ).total;
+    console.log(total);
     let months = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    for (let i = 0; i <= totalAmount.length - 1; i++) {
-      months[totalAmount[i]?.month] = totalAmount[i]?.amount || 0;
-      console.log(totalAmount[i]?.month);
+    for (let i = 0; i <= total.length - 1; i++) {
+      months[total[i]?.month] = total[i]?.amount || 0;
+      console.log(total[i]?.month);
     }
 
     res.status(200).json({

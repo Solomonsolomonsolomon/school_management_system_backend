@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "../../api/axios";
 import Loading from "../Loading";
 import Button from "../Button/Button";
+import WarningComponent from "../../helpers/WarningComponent";
 const YearAndTerm: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [years, setYears] = useState<any[]>([]);
@@ -108,7 +109,25 @@ const YearAndTerm: React.FC = () => {
       setLoading(false);
     }
   };
+  const handleSetPromotionTerm = async (termId: string) => {
+    try {
+      setLoading(true);
+      const res = await axios.put(`${postUrl}/term/${termId}/set/promotion`);
+      console.log(res);
+      // Implement logic to update UI or refetch terms data
+      const refreshAfterSettingTerm = terms.map((term) => {
+        if (term.isCurrent == true) term.isCurrent = false;
+        if (term._id === termId) term.isPromotionTerm = true;
 
+        return term;
+      });
+      setYears(refreshAfterSettingTerm);
+    } catch (error: any) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
   const handleDeleteYear = async (yearId: string) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this year? This action is permanent."
@@ -303,7 +322,9 @@ const YearAndTerm: React.FC = () => {
               </tbody>
             </table>
           </div>
-
+          <WarningComponent>
+            If you do not set a Promotion term ,Auto promotion is Disabled
+          </WarningComponent>
           {/* Display List of Terms */}
           <div className="dark:bg-gray-900 w-[200px] sm:w-[400px] lg:w-[100%] md:w-[100%] w-[350px] h-[400px] overflow-y-auto">
             <h1 className="dark:bg-gray-900 text-center font-bold">
@@ -319,6 +340,9 @@ const YearAndTerm: React.FC = () => {
                   <th className="dark:bg-gray-900 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                     Current Term
                   </th>
+                  <th className="dark:bg-gray-900 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    Promotion Term
+                  </th>
                   <th className="dark:bg-gray-900 px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
                     Actions
                   </th>
@@ -330,12 +354,19 @@ const YearAndTerm: React.FC = () => {
                     {/* ... Your terms table cells ... */}
                     <td>{term.name}</td>
                     <td>{`${term.isCurrent}`}</td>
-
+                    <td>{`${term.isPromotionTerm}`}</td>
                     <td
                       className="dark:bg-gray-900 px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-blue-500 hover:text-blue-700 cursor-pointer"
                       onClick={() => handleSetCurrentTerm(term._id)}
                     >
                       Set Current
+                    </td>
+
+                    <td
+                      className="dark:bg-gray-900 px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-blue-500 hover:text-blue-700 cursor-pointer"
+                      onClick={() => handleSetPromotionTerm(term._id)}
+                    >
+                      Set As Promotion Term
                     </td>
                     <td
                       className="dark:bg-gray-900 px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-blue-500 hover:text-blue-700 cursor-pointer"

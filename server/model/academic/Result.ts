@@ -31,7 +31,7 @@ interface IResult extends Document {
   class?: string;
   average?: number;
   overallGrade?: string;
-  grades?: IResultGrades;
+  grades?: IResultGrades[];
   status: string;
 }
 let gradesSchema = new Schema<IResultGrades>({

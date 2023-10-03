@@ -81,16 +81,16 @@ const data = {
   datasets: [
     {
       fill: false,
-      label: "Dataset 2",
+      label: "Earnings",
       data: label,
       borderColor: "rgb(53, 162, 235)",
       backgroundColor: "rgb(53, 162, 235)",
       tension: 0.4,
     },
     {
-      fill: true,
-      label: "Dataset 1",
-      data: label,
+      fill: false,
+      label: "Expenses",
+      data: [0,0,0,0,0,0,0,0,0,0,0,0,],
       borderColor: "rgb(255, 99, 132)",
       backgroundColor: "rgb(255, 99, 132)",
       tension: 0.4,

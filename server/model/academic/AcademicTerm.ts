@@ -4,9 +4,10 @@ interface ITerm {
   description?: string;
   duration: string;
   school: string;
-  schoolId:string,
+  schoolId: string;
   plan: string;
   isCurrent: boolean;
+  isPromotionTerm: boolean;
   createdBy: Types.ObjectId;
   updatedBy?: Types.ObjectId;
 }
@@ -14,7 +15,6 @@ const academicTermSchema = new Schema<ITerm>(
   {
     name: {
       type: String,
-     
     },
     description: {
       type: String,
@@ -29,6 +29,11 @@ const academicTermSchema = new Schema<ITerm>(
       default: false,
       required: true,
     },
+    isPromotionTerm: {
+      type: Boolean,
+      default: false,
+      required: true,
+    },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Admin",
@@ -38,9 +43,10 @@ const academicTermSchema = new Schema<ITerm>(
     school: {
       type: String,
     },
-    schoolId:{
-      type:String,
-      required:true
+
+    schoolId: {
+      type: String,
+      required: true,
     },
     plan: {
       type: String,
@@ -56,4 +62,4 @@ const academicTermSchema = new Schema<ITerm>(
 
 const AcademicTerm = model<ITerm>("AcademicTerm", academicTermSchema);
 AcademicTerm.syncIndexes();
-export { AcademicTerm ,ITerm};
+export { AcademicTerm, ITerm };

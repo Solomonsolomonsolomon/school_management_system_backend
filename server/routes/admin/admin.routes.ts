@@ -26,8 +26,14 @@ import {
   resetSchoolTransaction,
 } from "../../controller/admin.controller";
 
-const { addATerm, deleteTerm, setCurrentTerm, getAllTerms, getCurrentTerm } =
-  term;
+const {
+  addATerm,
+  deleteTerm,
+  setCurrentTerm,
+  getAllTerms,
+  getCurrentTerm,
+  setPromotionTerm,
+} = term;
 const {
   addAcademicYear,
   addYearAutomatically,
@@ -36,7 +42,12 @@ const {
   deleteYear,
   setCurrentYear,
 } = year;
-const { createClassLevel, deleteClassLevel, getAllClassLevels } = classLevel;
+const {
+  createClassLevel,
+  deleteClassLevel,
+  getAllClassLevels,
+  editClassPrice,
+} = classLevel;
 //#adding users
 adminRouter.post("/admin/add/admin", addAdmin);
 adminRouter.post("/admin/add/teacher", asyncErrorHandler(addTeacher));
@@ -70,7 +81,10 @@ adminRouter.post(
 );
 adminRouter.delete("/admin/term/:id/delete", asyncErrorHandler(deleteTerm));
 adminRouter.get("/admin/term/get/current", asyncErrorHandler(getCurrentTerm));
-
+adminRouter.put(
+  "/admin/term/:id/set/promotion",
+  asyncErrorHandler(setPromotionTerm)
+);
 //# year
 adminRouter.post("/admin/year/add", asyncErrorHandler(addAcademicYear));
 //addYearAutomatically(); //automatically adds Year first of september
@@ -88,6 +102,10 @@ adminRouter.post("/admin/class/new", asyncErrorHandler(createClassLevel));
 adminRouter.delete(
   "/admin/class/:id/delete",
   asyncErrorHandler(deleteClassLevel)
+);
+adminRouter.put(
+  "/admin/class/price/edit/:id/",
+  asyncErrorHandler(editClassPrice)
 );
 
 adminRouter.get(

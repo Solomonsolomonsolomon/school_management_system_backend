@@ -6,6 +6,8 @@ interface IClassLevel {
   description?: string;
   createdBy: mongoose.Types.ObjectId;
   price: number;
+  school: string;
+  schoolId: string;
   students?: mongoose.Types.ObjectId[];
   subjects?: mongoose.Types.ObjectId[];
   teachers?: mongoose.Types.ObjectId[];

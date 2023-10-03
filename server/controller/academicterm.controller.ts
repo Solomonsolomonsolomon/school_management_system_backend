@@ -117,5 +117,42 @@ class AcademicTermController {
       });
     });
   }
+
+  public async setPromotionTerm(req: express.Request, res: express.Response) {
+    let { id } = req.params;
+    let _id = await new mongoose.Types.ObjectId(id);
+    let school = req.user?.school;
+    let schoolId = req.user?.schoolId;
+    let previous = await AcademicTerm.findOne({
+     isPromotionTerm:true,
+      school,
+      schoolId,
+    });
+    console.log('sdsksdk')
+    if (previous) {
+      previous.isPromotionTerm = false;
+      await previous.save().catch((err) => {
+        throw new CustomError(err, err.message, 400);
+      });
+    }
+
+    let current = await AcademicTerm.findOne({ _id });
+
+    current!.isPromotionTerm = true;
+    current!.updatedBy = req.user?._id;
+    await current!
+      .save()
+      .then((current) => {
+        console.log('here')
+        res.status(200).json({
+          status: 200,
+          msg: "current set",
+          current,
+        });
+      })
+      .catch((err) => {
+        throw new CustomError({}, err.message, 400);
+      });
+  }
 }
 export default AcademicTermController;

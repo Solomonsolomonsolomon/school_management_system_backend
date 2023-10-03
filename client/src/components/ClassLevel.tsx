@@ -4,6 +4,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import Loading from "./Loading";
 import Button from "./Button/Button";
 const getUrl = "/admin";
+import WarningComponent from "../helpers/WarningComponent";
 const ClassLevel: React.FC = () => {
   let [classes, setClasses] = React.useState<any[]>([]);
   let { register, handleSubmit } = useForm();
@@ -11,6 +12,11 @@ const ClassLevel: React.FC = () => {
   let errRef = React.useRef<HTMLParagraphElement>(null);
   let AddRef = React.useRef<HTMLParagraphElement>(null);
   let [searchQuery, setSearchQuery] = React.useState<any>("");
+  const [confirmable, setConfirmable] = React.useState<boolean>(false);
+  const [confirmModal, setConfirmModal] = React.useState<boolean>(false);
+
+
+  let [selectedClass, setSelectedClass] = React.useState<any>({ id: "" });
 
   React.useEffect(() => {
     let controller = new AbortController();
@@ -31,11 +37,18 @@ const ClassLevel: React.FC = () => {
     return () => {
       controller.abort();
     };
-  }, []);
+  }, [confirmable]);
   if (loading) {
     return <Loading />;
   }
-
+  if (confirmModal)
+    return (
+      <EditPriceModal
+        confirmModal={setConfirmModal}
+        confirmable={setConfirmable}
+        id={selectedClass._id}
+      />
+    );
   const onSubmit: SubmitHandler<any> = (data: any) => {
     console.log(data);
     let name = `${data.currentClassLevel}${data.currentClassArm}`;
@@ -70,6 +83,7 @@ const ClassLevel: React.FC = () => {
         Add Class Level
       </p>
       <p className="text-center" ref={AddRef}></p>
+
       <form
         className="grid mb-4 dark:bg-gray-900 grid-cols-1 place-content-center items-center self-center gap-2 justify-center justify-items-center"
         onSubmit={handleSubmit(onSubmit)}
@@ -126,7 +140,10 @@ const ClassLevel: React.FC = () => {
         />
         <Button buttontype={0}>ADD CLASS</Button>
       </form>
-
+      <WarningComponent>
+        please make sure you edit price before the term begins as prices updated
+        mid-term may not reflect in the students school fees
+      </WarningComponent>
       <div className="flex flex-col border p-10 ">
         {/* Search bar */}
 
@@ -174,6 +191,17 @@ const ClassLevel: React.FC = () => {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
                     {theClass.price}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
+                    <a
+                      className="text-blue-500 hover:text-blue-700"
+                      onClick={() => {
+                        setConfirmModal(true);
+                        setSelectedClass(theClass);
+                      }}
+                    >
+                      edit price
+                    </a>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium ">
                     <a
@@ -223,3 +251,64 @@ const ClassLevel: React.FC = () => {
   );
 };
 export default ClassLevel;
+
+const EditPriceModal: React.FC<{
+  confirmable: React.SetStateAction<any>;
+  confirmModal: React.SetStateAction<any>;
+  id: string;
+}> = ({ confirmable, confirmModal, id }) => {
+  let [price, setPrice] = React.useState<number>(0);
+
+  return (
+    <>
+      {/* to use pass 2 set states confirm modal and confirmable */}
+      {/* const [confirmable,setConfirmable]=React.useState<boolean>(false);
+    const [confirmModal,setConfirmModal]=React.useState<boolean>(false); */}
+      <div className="w-full absolute z-[10]  inset-1  overflow-hidden grid bg-inherit  justify-center items-center h-[100vh]  bg-opacity-0 ">
+        <div className="border relative opacity-100 dark:bg-gray-800 bg-gray-200 rounded-2xl shadow-2xl h-fit box-border p-20">
+          <h1 className="p-5 ">Enter new Price</h1>
+          <form action="" className="">
+            {" "}
+            <input
+              type="number"
+              className="p-2 bg-inherit border rounded-xl"
+              required
+              value={price}
+              onChange={(e) => {
+                setPrice(+e.target.value);
+              }}
+            />
+          </form>
+          <span className="absolute right-2 ">
+            <button
+              className="bg-blue-700 p-3 z-10 text-white rounded"
+              onClick={async () => {
+               
+                let res = await axios.put(`${getUrl}/class/price/edit/${id}`, {
+                  price,
+                });
+                console.log(res);
+                 confirmable(true);
+                confirmModal(false);
+              }}
+            >
+              Continue
+            </button>
+          </span>
+          <span className="absolute left-2">
+            {" "}
+            <button
+              className="bg-red-700 p-3 z-10 text-white rounded"
+              onClick={() => {
+                confirmable(false);
+                confirmModal(false);
+              }}
+            >
+              Cancel
+            </button>
+          </span>
+        </div>
+      </div>
+    </>
+  );
+};

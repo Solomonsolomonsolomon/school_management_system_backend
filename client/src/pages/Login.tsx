@@ -115,7 +115,7 @@ export default function Login() {
       <h1 className="text-center font-bold">
         SOLACE School Management Systems.Login to continue
       </h1>
-      <div className="flex justify-items-center place-content-center">
+      <div className="flex  justify-items-center place-content-center">
         <img src={svg1} className="absolute  z-[-100] h-[97vh]" alt="" />
       </div>
 
@@ -123,7 +123,7 @@ export default function Login() {
         <p></p>
         <form
           onSubmit={handleSubmit}
-          className="grid g dark:text-gray-900ap-1 border border-black bg-white h-fit p-6 rounded "
+          className="grid g dark:text-gray-900  gap-2 p border border-black bg-white h-fit p-7 rounded "
         >
           <p
             ref={msgRef}

@@ -3,8 +3,12 @@ import axios from "./../../api/axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBook,
+  faDashboard,
   faGaugeHigh,
   faGear,
+  faHome,
+  faHomeUser,
+  faHouseMedical,
   faStopwatch,
 } from "@fortawesome/free-solid-svg-icons";
 import { faChalkboardUser } from "@fortawesome/free-solid-svg-icons";
@@ -78,7 +82,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
                 }}
               >
                 <FontAwesomeIcon
-                  icon={faGaugeHigh}
+                  icon={faHouseMedical}
                   size="lg"
                   className="mr-2"
                 />
