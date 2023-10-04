@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { Subscription } from "../model/others/Subscription";
 import { CustomError } from "../middleware/decorators";
+import { School } from "../model/database";
 class SubscriptionController {
   public async renewSubscription(req: Request, res: Response) {
     let subscription = await Subscription.findOne({
@@ -14,7 +15,7 @@ class SubscriptionController {
         404
       );
     let v = subscription.__v;
-    subscription.expiresAt = Date.now() / 1000 + 5670000;
+    subscription.expiresAt = Date.now() / 1000 + 1000;
     subscription.isActive = true;
     subscription.__v = v;
 
@@ -29,6 +30,7 @@ class SubscriptionController {
       school: req.user?.school,
       schoolId: req.user?.schoolId,
     });
+
     if (!subscription)
       throw new CustomError(
         {},
@@ -36,7 +38,6 @@ class SubscriptionController {
         404
       );
     let v = subscription.__v;
-    subscription.expiresAt = Date.now() / 1000 + 500;
     if (subscription.expiresAt <= Date.now() / 1000) {
       subscription.isActive = false;
       await subscription.save();
@@ -45,8 +46,29 @@ class SubscriptionController {
     subscription.isActive = true;
     subscription.__v = v;
     await subscription.save();
+  }
+
+  public async manualRenewal(req: Request, res: Response) {
+    interface manualRenewal {
+      schoolId: string;
+      timeInMinutes: number;
+    }
+    const { schoolId, timeInMinutes } = req.params;
+    let subscription = await Subscription.findOne({ schoolId });
+    if (!subscription)
+      throw new CustomError(
+        {},
+        "not found....you do not have a subscription",
+        404
+      );
+    let v = subscription.__v;
+    subscription.expiresAt = Date.now() / 1000 + +timeInMinutes * 60;
+    subscription.isActive = true;
+    subscription.__v = v;
+
+    await subscription.save();
     return res.status(200).json({
-      msg: true,
+      msg: "subscription renewed",
       status: 200,
     });
   }

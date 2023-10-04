@@ -109,7 +109,7 @@ const AllTeachers: React.FC = () => {
     setEditingTeacher({ ...editingTeacher, [e.target.name]: e.target.value });
   }
 
-  const filtered = state.teachers.filter((teacher) => {
+  const filtered = state.teachers?.filter((teacher) => {
     return (
       teacher.name.includes(searchQuery) ||
       teacher.email.includes(searchQuery) ||
@@ -185,12 +185,13 @@ const AllTeachers: React.FC = () => {
           payload: res.data?.teacher,
         });
       } catch (error: any) {
+        console.log("its this");
         if (error.name == "AbortError" || error.name == "CanceledError") return;
         dispatch({
           type: "msg",
           msg:
             error.response?.data || error?.message == "canceled"
-              ? "loading........."
+              ? "no teachers fetched"
               : error?.message || "error in fetching",
         });
       }
@@ -210,6 +211,7 @@ const AllTeachers: React.FC = () => {
           signal: controller.signal,
         });
         setAllSubjects(res.data?.asJson);
+        console.log("no this");
       } catch (error: any) {
         if (error.name == "CanceledError" || error.name == "AbortError") return;
         dispatch({
@@ -255,7 +257,11 @@ const AllTeachers: React.FC = () => {
   if (state.loading) return <Loading />;
   return (
     <div className="w-[200px]sm:w-[400px] lg:w-[100%] md:w-[100%] w-[350px]">
-      <h1 className="text-center font-bold">{state.msg}</h1>
+      <h1 className="text-center font-bold">
+        {typeof state.msg == "string"
+          ? state.msg
+          : "Abnormal beaviour detected"}
+      </h1>
       <div className="overflow-x-auto grid">
         <input
           type="text"

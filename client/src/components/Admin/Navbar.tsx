@@ -6,6 +6,7 @@ import {
   faGear,
   faHouseMedical,
   faMoneyBillAlt,
+  faNetworkWired,
   faStopwatch,
 } from "@fortawesome/free-solid-svg-icons";
 import { faChalkboardUser } from "@fortawesome/free-solid-svg-icons";
@@ -260,18 +261,21 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
                 Settings
               </span>
             </li>
-            <li className="cursor-pointer hover:shadow-lg hover:transition hover:bg-slate-300 p-5">
-              <NavLink to="/admin/teacher">
-                <FontAwesomeIcon
-                  icon={faChalkboardUser}
-                  size="2xl"
-                  className="mr-2"
-                />
-                <span className="md:hidden lg:inline xl:inline sm:inline">
-                  {" "}
-                  Teachers
-                </span>
-              </NavLink>
+            <li
+              onClick={() => {
+                setComponent("subscription");
+              }}
+              className="cursor-pointer hover:shadow-lg hover:transition hover:bg-slate-300 p-5"
+            >
+              <FontAwesomeIcon
+                icon={faNetworkWired}
+                size="2xl"
+                className="mr-2"
+              />
+              <span className="md:hidden lg:inline xl:inline sm:inline">
+                {" "}
+                Subscription
+              </span>
             </li>
             <li className="cursor-pointer hover:shadow-lg hover:transition hover:bg-slate-300 p-5">
               <NavLink to="/admin/messages">

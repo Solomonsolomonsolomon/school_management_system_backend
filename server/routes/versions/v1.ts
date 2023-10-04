@@ -9,7 +9,9 @@ import resultRoutes from "../results/results.routes";
 import teacherRoutes from "./../teacher/teacher.routes";
 import currentTermAndYear from "./../admin/currentTermAndYear.routes";
 import classlevel from "./../admin/classLevel.routes";
-import { ErrorHandler } from "../../middleware/globalErrorHandler";
+import asyncErrorHandler, {
+  ErrorHandler,
+} from "../../middleware/globalErrorHandler";
 import paymentRouter from "../payment/payment.routes";
 import transactionRouter from "../payment/transactions.routes";
 import schoolRouter from "../school/school.route";
@@ -17,9 +19,12 @@ import webHookRouter from "../payment/webhook.routes";
 import attendanceRouter from "../attendance/attendance.routes";
 import studentRoutes from "../student/student.routes";
 import expenseRoutes from "./../payment/expense.routes";
+import verifySubscription from "./../../middleware/verifySubscription";
 v1.use(authRoutes);
 v1.use(webHookRouter);
 v1.use(secured, currentTermAndYear);
+
+v1.use(asyncErrorHandler(verifySubscription));
 v1.use(secured, gradeRoutes);
 v1.use(secured, subjectRoutes);
 v1.use(secured, resultRoutes);
@@ -30,6 +35,6 @@ v1.use(secured, paymentRouter);
 v1.use(secured, transactionRouter);
 v1.use(secured, schoolRouter);
 v1.use(secured, attendanceRouter);
-v1.use(secured,expenseRoutes)
+v1.use(secured, expenseRoutes);
 v1.use(studentRoutes);
 export default v1;

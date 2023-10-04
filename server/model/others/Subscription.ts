@@ -12,6 +12,11 @@ const subscriptionSchema = new Schema({
     type: Boolean,
     required: true,
   },
+  plan: {
+    type: String,
+    required: true,
+  },
+
   expiresAt: {
     type: Number,
     required: true,

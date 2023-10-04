@@ -33,6 +33,7 @@ interface IResult extends Document {
   overallGrade?: string;
   grades?: IResultGrades[];
   status: string;
+  totalTerms?: number;
 }
 let gradesSchema = new Schema<IResultGrades>({
   CA1: Number,
@@ -100,6 +101,11 @@ let resultSchema = new Schema<IResult>({
     type: String,
     enum: ["failed", "passed"],
     default: "failed",
+  },
+  totalTerms: {
+    type: Number,
+    default:0,
+    required:true
   },
 });
 

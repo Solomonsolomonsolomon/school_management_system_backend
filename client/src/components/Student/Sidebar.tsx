@@ -44,10 +44,10 @@ const Sidebar: React.FC<ProfileProps> = ({ setView }) => {
     <nav className="">
       <button
         onClick={toggleSidebar}
-        className="m-2 absolute right-4 top-4"
+        className="m-2 absolute right-4 top-0"
         style={{
         
-          color: colors.sideBar || "#000000",
+          color:  "#000000",
         }}
       >
         <FontAwesomeIcon icon={faBars} size="xl" />

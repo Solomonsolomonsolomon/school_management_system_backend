@@ -22,7 +22,7 @@ const Profile = () => {
   let year = React.useRef<HTMLParagraphElement>(null);
   const [confirmable, setConfirmable] = React.useState<boolean>(false);
   const [confirmModal, setConfirmModal] = React.useState<boolean>(false);
-  const [loading, setLoading] = React.useState<boolean>(false);
+  // const [loading, setLoading] = React.useState<boolean>(false);
   let [themeandlogo, setthemeandlogo] = React.useState<IThemeAndLogo>({
     theme: {
       header: "#edf2f7",
@@ -73,7 +73,7 @@ const Profile = () => {
     (async () => {
       try {
         let res = await axios.get(`${schoolUrl}/logo/theme/get`);
-   
+
         setthemeandlogo({
           logo: res.data?.logo,
           theme: {
@@ -114,44 +114,56 @@ const Profile = () => {
         confirmable={setConfirmable}
         term={term}
         year={year}
-      
       />
     );
+  function getInitialsFromString(inputString: string) {
+    // Split the input string into words
+    const words = inputString.split(" ");
 
+    // Initialize an empty string to store the initials
+    let initials = "";
+
+    // Iterate through the words and extract the first letter of each word
+    for (const word of words) {
+      if (word.length > 0) {
+        initials += word[0].toUpperCase(); // Convert the first letter to uppercase
+      }
+    }
+
+    return initials;
+  }
   return (
     <section
-    
       className=" flex flex-wrap justify-between sm:my-10yy md:my-0 border-b-2  p-1  mb-1  pr-3 pt-2  w-[100%] lg:rounded-none  sm:rounded-none md:rounded-none"
       style={{
         backgroundColor: themeandlogo.theme?.header || "#4a5568",
         color: themeandlogo.theme?.headerText || "#000000",
-      
       }}
     >
       <img src={themeandlogo.logo || imgDefault} alt="" className="w-[3.4em]" />
-     
 
       <div className="lg:mr-10 md:mr-10 sm:mr-0 xl:mr-10">
         <button
-          className=" flex justify-end mt-14 md:mt-0 bg lg:mt-0 border-b-1 gap-2 border  border-gray-700 dark:border-gray-400  px-5 bg-inherit rounded-3xl cursor-pointer shadow-2xl "
+          // className=" flex justify-end mt-14 md:mt-0 bg lg:mt-0 border-b-1 gap-2  dark:border-gray-400  px-5 bg-inherit rounded-full cursor-pointer shadow-2xl "
           onClick={() => {
             toggle();
           }}
         >
           {" "}
-          <div className="mt-6 flex justify-end">
+          <div className="mt-4 flex justify-end">
             <span className="flex">
               {" "}
-              <p className="capitalize opacity-60">
-                {user?.name.substring(0, 5)}...
+              <p className="capitalize opacity-60 rounded-full bg-blue-600 text-white p-2">
+                {/* {user?.name.substring(0, 5)}... */}
+                {getInitialsFromString(user?.name)}
               </p>
             </span>
           </div>
-          <FontAwesomeIcon
+          {/* <FontAwesomeIcon
             icon={faUser}
             size="lg"
             className=" text-blue p-2  rounded-xl mt-2 "
-          />
+          /> */}
         </button>
       </div>
 

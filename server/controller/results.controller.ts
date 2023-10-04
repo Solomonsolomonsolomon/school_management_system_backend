@@ -13,6 +13,7 @@ import _, { Dictionary, result } from "lodash";
 import { CustomError } from "../middleware/decorators";
 import { previewClassResults } from "./teacher.controller";
 import student from "./student.controller";
+import { CSSParsedCounterDeclaration } from "html2canvas/dist/types/css";
 export async function calcResult(groupedData: Dictionary<any>) {
   let bulkPushOperations: any = [];
   for (const className in groupedData) {
@@ -302,46 +303,79 @@ export async function calcResultAndCummulativeAndAutoPromote(
     totalScore: number;
     studentId: string;
     name: string;
-    //average: number;
+    totalTerms: any;
+    // average: number;
     // grades: any[];
   }
   interface P {
     student: subP[];
     tracker: Map<string, number>;
   }
+  const sampleData = [
+    { totalScore: 0.85, name: "Alice", studentId: "N1", totalTerms: 0 },
+    { totalScore: 0.92, name: "Alice", studentId: "N1", totalTerms: 0 },
+    { totalScore: 0.78, name: "Alice", studentId: "N1", totalTerms: 0 },
+    { totalScore: 0.9, name: "Bob", studentId: "N2", totalTerms: 0 },
+    { totalScore: 0.88, name: "Bob", studentId: "N2", totalTerms: 0 },
+    { totalScore: 0.91, name: "Charlie", studentId: "N3", totalTerms: 0 },
+    { totalScore: 0.89, name: "David", studentId: "N4", totalTerms: 0 },
+    { totalScore: 0.76, name: "Eve", studentId: "N5", totalTerms: 0 },
+    { totalScore: 0.82, name: "Frank", studentId: "N6", totalTerms: 0 },
+    { totalScore: 0.95, name: "Grace", studentId: "N7", totalTerms: 0 },
+    { totalScore: 0.8, name: "Helen", studentId: "N8", totalTerms: 0 },
+    { totalScore: 0.87, name: "Ivy", studentId: "N9", totalTerms: 0 },
+    { totalScore: 0.93, name: "Jack", studentId: "N10", totalTerms: 0 },
+    { totalScore: 0.94, name: "Jack", studentId: "N10", totalTerms: 0 },
+    { totalScore: 0.89, name: "Jack", studentId: "N10", totalTerms: 0 },
+    { totalScore: 0.9, name: "Bob", studentId: "N2", totalTerms: 0 },
+    { totalScore: 0.87, name: "Charlie", studentId: "N3", totalTerms: 0 },
+    { totalScore: 0.79, name: "Charlie", studentId: "N3", totalTerms: 0 },
+    { totalScore: 0.85, name: "Eve", studentId: "N5", totalTerms: 0 },
+    { totalScore: 0.76, name: "Frank", studentId: "N6", totalTerms: 0 },
+  ];
 
   let cummulativeScore: subP[] = allTerms.reduce(
     (p: P, c) => {
-      const { totalScore, studentId, name, grades } = c;
+      const { totalScore, studentId, name, totalTerms } = c;
       const i = p.tracker.get(studentId);
-      if (totalScore ) {
+
+      if (totalScore) {
+        let count = 1;
         if (i) {
-          console.log("wow");
           p.student[i].totalScore += totalScore;
+          count += 1;
+          p.student[i].totalTerms += 1;
         } else {
           p.tracker.set(studentId, p.student.length);
-          p.student.push({ studentId, totalScore, name });
+          console.log(totalTerms);
+          p.student.push({
+            studentId,
+            totalScore,
+            name,
+            totalTerms: 1,
+          });
         }
       } else {
         return p;
       }
+
       return p;
     },
     {
-      student: [{ totalScore: 0, studentId: "", name: "" }],
+      student: [{ totalScore: 0.1, studentId: "", name: "", totalTerms: 0 }],
       tracker: new Map(),
     }
   ).student;
 
   cummulativeScore.shift();
   console.log(cummulativeScore);
-  cummulativeScore.map((student) => {
 
-    if (student.totalScore >= 40) {
+  cummulativeScore.map((student) => {
+    if (student.totalScore / student.totalTerms >= 40) {
       let currentClassIndex = promotionClasses.findIndex(
         (currentClass) => currentClass === teacher?.formTeacher
       );
-      currentClassIndex >= 0 &&
+      currentClassIndex > 0 &&
         studentBulkOperations.push({
           updateOne: {
             filter: { studentId: student.studentId },
@@ -353,10 +387,7 @@ export async function calcResultAndCummulativeAndAutoPromote(
                       ? currentClassIndex + 1
                       : currentClassIndex
                   ],
-                isGraduated: !!(
-                  currentClassIndex + 1 >
-                  promotionClasses.length
-                ),
+                isGraduated: currentClassIndex + 1 > promotionClasses.length,
               },
             },
           },
