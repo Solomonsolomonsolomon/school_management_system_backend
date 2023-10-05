@@ -13,7 +13,6 @@ import _, { Dictionary, result } from "lodash";
 import { CustomError } from "../middleware/decorators";
 import { previewClassResults } from "./teacher.controller";
 import student from "./student.controller";
-import { CSSParsedCounterDeclaration } from "html2canvas/dist/types/css";
 export async function calcResult(groupedData: Dictionary<any>) {
   let bulkPushOperations: any = [];
   for (const className in groupedData) {

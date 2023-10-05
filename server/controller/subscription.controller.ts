@@ -1,7 +1,9 @@
 import { Request, Response } from "express";
 import { Subscription } from "../model/others/Subscription";
 import { CustomError } from "../middleware/decorators";
-import { School } from "../model/database";
+import { Admin, Student } from "../model/database";
+
+
 class SubscriptionController {
   public async renewSubscription(req: Request, res: Response) {
     let subscription = await Subscription.findOne({
@@ -71,6 +73,21 @@ class SubscriptionController {
       msg: "subscription renewed",
       status: 200,
     });
+  }
+
+  public async isEligibleForPlan(plan: string, schoolId: string) {
+    let students = await Student.countDocuments({ schoolId });
+    let admin = await Admin.countDocuments({ schoolId });
+    if (plan === "basic" && students <= 299 && admin <= 5) {
+      return true;
+    }
+    if (plan === "standard" && students <= 399) {
+      return true;
+    }
+    if (plan === "premium") {
+      return true;
+    }
+    return false;
   }
 }
 

@@ -25,6 +25,7 @@ import { AcademicYear,IYear } from "./academic/AcademicYear";
 import { ClassLevel } from "./academic/ClassLevel";
 import { School } from "./others/School";
 import { Transaction } from "./others/Transacton";
+import { Subscription } from "./others/Subscription";
 //schemas
 export {
   Teacher,
@@ -38,6 +39,7 @@ export {
   ClassLevel,
   School,
   Transaction,
+  Subscription
 };
 export { ITeacher, IStudent,IYear,ITerm };
 
