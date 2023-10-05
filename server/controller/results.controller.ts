@@ -179,6 +179,7 @@ export async function calcResultAndCummulative(
     totalScore: number;
     studentId: string;
     name: string;
+    average: any;
   }
   interface P {
     student: subP[];
@@ -187,14 +188,14 @@ export async function calcResultAndCummulative(
 
   let cummulativeScore: subP[] = allTerms.reduce(
     (p: P, c) => {
-      const { totalScore, studentId, name } = c;
+      const { totalScore, studentId, name, average } = c;
       const i = p.tracker.get(studentId);
       if (totalScore) {
         if (i) {
           p.student[i].totalScore += totalScore;
         } else {
           p.tracker.set(studentId, p.student.length);
-          p.student.push({ studentId, totalScore, name });
+          p.student.push({ studentId, totalScore, name, average });
         }
       } else {
         return p;
@@ -203,7 +204,7 @@ export async function calcResultAndCummulative(
       return p;
     },
     {
-      student: [{ totalScore: 0, studentId: "", name: "" }],
+      student: [{ totalScore: 0, studentId: "", name: "", average:0 }],
       tracker: new Map(),
     }
   ).student;

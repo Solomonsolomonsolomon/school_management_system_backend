@@ -15,6 +15,8 @@ interface Cummulative {
   name: string;
   totalScore: number;
   studentId: string;
+  average: number;
+  totalTerms: number;
 }
 interface Preview {
   cummulativeData?: Cummulative[];
@@ -90,8 +92,8 @@ const Result = () => {
       </p> */}
       <p
         onClick={() => {
-          setMsg('')
-          setErr('')
+          setMsg("");
+          setErr("");
           setConfirmModal(true);
           setTracker(Date.now());
         }}
@@ -104,7 +106,7 @@ const Result = () => {
       {savePreview.cummulativeData?.length && (
         <>
           <p className="capitalize text-center font-bold">
-            cummulative scores(all terms sum)
+            cummulative Average(all terms Average)
           </p>
           {savePreview.cummulativeData?.map((data, i) => {
             return (
@@ -112,7 +114,14 @@ const Result = () => {
                 <p>
                   {data.name}{" "}
                   <span>
-                    {data.totalScore}
+                    <span className="font-bold px-3">{data.average}</span> :
+                    <span>
+                      {" "}
+                      <span className="opacity-50">
+                        in {data.totalTerms}
+                      </span>{" "}
+                      {data.totalTerms === 1 ? "term" : "terms"}
+                    </span>
                     <span className="text-green-500 p-2 ml-1">
                       {" "}
                       {i === 0 ? "HIGHEST" : ""}
