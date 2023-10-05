@@ -23,7 +23,6 @@ import verifySubscription from "./../../middleware/verifySubscription";
 v1.use(authRoutes);
 v1.use(webHookRouter);
 v1.use(secured, currentTermAndYear);
-
 v1.use(asyncErrorHandler(verifySubscription));
 v1.use(secured, gradeRoutes);
 v1.use(secured, subjectRoutes);

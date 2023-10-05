@@ -3,7 +3,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "../../api/axios";
 import Loading from "../Loading";
 import Button from "../Button/Button";
-import WarningComponent from "../../helpers/WarningComponent";
+import WarningComponent from "../../utils/WarningComponent";
 const YearAndTerm: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [years, setYears] = useState<any[]>([]);

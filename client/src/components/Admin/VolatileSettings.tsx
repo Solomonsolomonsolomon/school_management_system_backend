@@ -1,13 +1,13 @@
 import React from "react";
 import axios from "../../api/axios";
 import Loading from "../Loading";
-import WarningComponent from "../../helpers/WarningComponent";
+import WarningComponent from "../../utils/WarningComponent";
 const adminUrl = "/admin";
 const VolatileSettings: React.FC = () => {
   const [confirmable, setConfirmable] = React.useState<boolean>(false);
   const [confirmModal, setConfirmModal] = React.useState<boolean>(false);
   const [loading, setLoading] = React.useState<boolean>(false);
-  
+
   let msgRef = React.useRef<HTMLParagraphElement>(null);
   let [clear, setClear] = React.useState<number>(0);
   React.useEffect(() => {
@@ -72,7 +72,6 @@ const VolatileSettings: React.FC = () => {
           clear
         </button>
       </div>
-    
     </>
   );
 };

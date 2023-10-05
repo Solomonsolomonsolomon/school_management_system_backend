@@ -1,4 +1,4 @@
-import WarningComponent from "../../helpers/WarningComponent";
+import WarningComponent from "../../utils/WarningComponent";
 import Button from "../Button/Button";
 const Subscription: React.FC = () => {
   return (

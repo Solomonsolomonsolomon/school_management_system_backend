@@ -3,7 +3,7 @@ let user = sessionStorage.getItem("user");
 import axios from "../../api/axios";
 let payUrl = "/paystack";
 import { useForm, SubmitHandler } from "react-hook-form";
-import WarningComponent from "../../helpers/WarningComponent";
+import WarningComponent from "../../utils/WarningComponent";
 let details: any;
 if (user) details = JSON.parse(user);
 

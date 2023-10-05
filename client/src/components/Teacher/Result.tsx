@@ -31,6 +31,7 @@ const Result = () => {
   let [track, setTracker] = React.useState<number>(0);
 
   let [msg, setMsg] = React.useState<string>("");
+  let [err, setErr] = React.useState<string>("");
   React.useEffect(() => {
     if (confirmable) {
       console.log(confirmable);
@@ -40,6 +41,7 @@ const Result = () => {
           let res = await axios.get(`${resultUrl}/teacher/generate/${id}`);
           console.log(res);
           setMsg(res.data?.msg);
+          setErr("");
           console.log(res?.data?.results.cummulativeScore);
           setSavePreview({
             cummulativeData: res?.data?.results?.cummulativeScore?.sort(
@@ -48,7 +50,8 @@ const Result = () => {
             groupedData: Object.values(res.data?.results?.groupedData).flat(),
           });
         } catch (error: any) {
-          setMsg(error?.response?.data?.msg || error.message);
+          setErr(error?.response?.data?.msg || error.message);
+          setMsg("");
         } finally {
           setLoading(false);
           setConfirmable(false);
@@ -69,8 +72,9 @@ const Result = () => {
   return (
     <>
       <p className="uppercase font-bold text-center">Result here</p>
-      <p>{msg}</p>
-      <p
+      <p className="text-center text-green-500">{msg}</p>
+      <p className="text-center text-red-500">{err}</p>
+      {/* <p
         className="font-bold italic capitalize text-blue-500 cursor-pointer "
         onClick={() => {
           if (savePreview.groupedData?.length) {
@@ -83,15 +87,17 @@ const Result = () => {
         }}
       >
         preview results
-      </p>
+      </p> */}
       <p
         onClick={() => {
+          setMsg('')
+          setErr('')
           setConfirmModal(true);
           setTracker(Date.now());
         }}
-        className="font-bold italic capitalize text-blue-500 cursor-pointer"
+        className="font-bold  capitalize text-blue-50 cursor-pointer p-3 border bg-green-500 w-fit rounded-xl"
       >
-        compute results
+        compute and view results
       </p>
 
       {/* //preview */}
@@ -101,14 +107,16 @@ const Result = () => {
             cummulative scores(all terms sum)
           </p>
           {savePreview.cummulativeData?.map((data, i) => {
-        
             return (
               <>
                 <p>
                   {data.name}{" "}
                   <span>
                     {data.totalScore}
-                    <span className="text-green-500 p-2 ml-1"> {i === 0 ? "HIGHEST" : ""}</span>
+                    <span className="text-green-500 p-2 ml-1">
+                      {" "}
+                      {i === 0 ? "HIGHEST" : ""}
+                    </span>
                   </span>
                 </p>
               </>

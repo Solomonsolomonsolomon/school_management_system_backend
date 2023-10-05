@@ -4,7 +4,7 @@ import Loading from "../Loading";
 let payUrl = "/paystack";
 let schoolUrl = "/school";
 import { useForm, SubmitHandler } from "react-hook-form";
-import WarningComponent from "../../helpers/WarningComponent";
+import WarningComponent from "../../utils/WarningComponent";
 
 interface ITheme {
   button: string;

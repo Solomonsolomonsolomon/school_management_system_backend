@@ -4,7 +4,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import Loading from "./Loading";
 import Button from "./Button/Button";
 const getUrl = "/admin";
-import WarningComponent from "../helpers/WarningComponent";
+import WarningComponent from "../utils/WarningComponent";
 const ClassLevel: React.FC = () => {
   let [classes, setClasses] = React.useState<any[]>([]);
   let { register, handleSubmit } = useForm();
