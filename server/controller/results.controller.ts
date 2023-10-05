@@ -304,7 +304,7 @@ export async function calcResultAndCummulativeAndAutoPromote(
     studentId: string;
     name: string;
     totalTerms: any;
-    // average: number;
+    average: number;
     // grades: any[];
   }
   interface P {
@@ -336,7 +336,7 @@ export async function calcResultAndCummulativeAndAutoPromote(
 
   let cummulativeScore: subP[] = allTerms.reduce(
     (p: P, c) => {
-      const { totalScore, studentId, name, totalTerms } = c;
+      const { totalScore, studentId, name, totalTerms, average } = c;
       const i = p.tracker.get(studentId);
 
       if (totalScore) {
@@ -353,6 +353,7 @@ export async function calcResultAndCummulativeAndAutoPromote(
             totalScore,
             name,
             totalTerms: 1,
+            average: 0,
           });
         }
       } else {
@@ -362,20 +363,24 @@ export async function calcResultAndCummulativeAndAutoPromote(
       return p;
     },
     {
-      student: [{ totalScore: 0.1, studentId: "", name: "", totalTerms: 0 }],
+      student: [
+        { totalScore: 0.1, studentId: "", name: "", totalTerms: 0, average: 0 },
+      ],
       tracker: new Map(),
     }
   ).student;
-
   cummulativeScore.shift();
-  console.log(cummulativeScore);
 
   cummulativeScore.map((student) => {
-    if (student.totalScore / student.totalTerms >= 40) {
+    student.average = student.totalScore / student.totalTerms;
+    console.log(promotionClasses, teacher?.formTeacher);
+    console.log(teacher?.formTeacher.substr(0, 4));
+    if (student.average >= 40) {
       let currentClassIndex = promotionClasses.findIndex(
-        (currentClass) => currentClass === teacher?.formTeacher
+        (currentClass) => currentClass === teacher.formTeacher.substr(0, 4)
       );
-      currentClassIndex > 0 &&
+      console.log("index", currentClassIndex);
+      currentClassIndex > -1 &&
         studentBulkOperations.push({
           updateOne: {
             filter: { studentId: student.studentId },
@@ -394,6 +399,7 @@ export async function calcResultAndCummulativeAndAutoPromote(
         });
     }
   });
+  console.log(studentBulkOperations);
   await Student.bulkWrite(studentBulkOperations);
   return { groupedData, cummulativeScore };
 }
@@ -564,6 +570,9 @@ export async function teacherGenerateResult(req: Request, res: Response) {
     let groupedData = _.groupBy(gradesPipeline, (student: any) => {
       return `${student.studentId.currentClassLevel}${student.studentId.currentClassArm}`;
     });
+    let promotionClasses: string[] =
+      (await autoPromote(school, schoolId)) || [];
+
     // let results = await calcResult(groupedData);
     let results = !term.isPromotionTerm
       ? await calcResultAndCummulative(
@@ -579,7 +588,7 @@ export async function teacherGenerateResult(req: Request, res: Response) {
           year,
           schoolId,
           teacher,
-          []
+          promotionClasses
         );
     //  await pushResultsToStudents(results, year, term);
     res.status(201).json({
@@ -596,18 +605,13 @@ export async function teacherGenerateResult(req: Request, res: Response) {
   }
 }
 
-autoPromote();
-export async function autoPromote() {
-  let registeredClasses = [
-    "NUR3",
-    "PRY6",
-    "PRY4",
-    "PRY2",
-    "SS3",
-    "JSS1",
-    "NUR1",
-    "PRY5",
-  ];
+export async function autoPromote(school: string, schoolId: string) {
+  let registeredClasses = (await ClassLevel.find({ school, schoolId })).map(
+    (e) => {
+      return e.name?.substr(0, 4);
+    }
+  );
+  console.log(registeredClasses);
   let allClassesAvailable = [
     "NUR1",
     "NUR2",
@@ -632,6 +636,7 @@ export async function autoPromote() {
     }
   }
   console.log(promotionClasses);
+  return promotionClasses;
 }
 // async function pushResultsToStudents(results: any, year: any, term: any) {
 //   const result = Object.values(results);
