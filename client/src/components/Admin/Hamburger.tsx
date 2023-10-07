@@ -30,11 +30,10 @@ const Hamburger: React.FC<{
       }
     })();
   }, []);
-
   return (
     <>
       <button
-        className="fixed  lg:hidden md:hidden xl:hidden block bg-inherit text-inherit z-50 right-6 top-0 sm:top-0 p-2   cursor-pointer"
+        className="fixed  lg:hidden md:hidden xl:hidden block bg-inherit text-inherit z-50 right-6 top-4 sm:top-0 p-2   cursor-pointer"
         onClick={(_) => handleRenderNavBar()}
         style={{
           color: theme.headerText||"black",

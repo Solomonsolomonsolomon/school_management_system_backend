@@ -44,7 +44,7 @@ const Sidebar: React.FC<ProfileProps> = ({ setView }) => {
     <nav className="">
       <button
         onClick={toggleSidebar}
-        className="m-2 absolute right-4 top-0"
+        className="m-2 absolute right-4 top-4"
         style={{
         
           color:  "#000000",

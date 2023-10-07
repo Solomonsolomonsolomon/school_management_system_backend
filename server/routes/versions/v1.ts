@@ -20,8 +20,12 @@ import attendanceRouter from "../attendance/attendance.routes";
 import studentRoutes from "../student/student.routes";
 import expenseRoutes from "./../payment/expense.routes";
 import verifySubscription from "./../../middleware/verifySubscription";
+import subscriptionRoutes from "./../subscription/subscription.routes";
+import busRoutes from "../bus/bus.routes";
+import { premiumPlan, standardPlan } from "../../middleware/getPlan";
 v1.use(authRoutes);
 v1.use(webHookRouter);
+v1.use(secured, subscriptionRoutes);
 v1.use(secured, currentTermAndYear);
 v1.use(asyncErrorHandler(verifySubscription));
 v1.use(secured, gradeRoutes);
@@ -34,6 +38,12 @@ v1.use(secured, paymentRouter);
 v1.use(secured, transactionRouter);
 v1.use(secured, schoolRouter);
 v1.use(secured, attendanceRouter);
-v1.use(secured, expenseRoutes);
+
 v1.use(studentRoutes);
+//standard plans
+v1.use(asyncErrorHandler(standardPlan));
+v1.use(secured, expenseRoutes);
+//premium plans
+v1.use(asyncErrorHandler(premiumPlan));
+v1.use(secured, busRoutes);
 export default v1;

@@ -1,7 +1,7 @@
 import React from "react";
-import axios from "../../api/axios";
-import Loading from "../Loading";
-import WarningComponent from "../../utils/WarningComponent";
+import axios from "../../../api/axios";
+import Loading from "../../Loading";
+import WarningComponent from "../../../utils/WarningComponent";
 const adminUrl = "/admin";
 const VolatileSettings: React.FC = () => {
   const [confirmable, setConfirmable] = React.useState<boolean>(false);

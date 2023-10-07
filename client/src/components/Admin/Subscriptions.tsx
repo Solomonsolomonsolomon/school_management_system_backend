@@ -1,8 +1,42 @@
+import axios from "../../api/axios";
 import WarningComponent from "../../utils/WarningComponent";
 import Button from "../Button/Button";
+interface ISubDetails {
+  expiryDate: string;
+  plan: string;
+  time: string;
+}
+import React from "react";
+let subscriptionUrl = "/subscription";
+
 const Subscription: React.FC = () => {
+  let [subscriptionDetails, setSubDetails] = React.useState<ISubDetails>({
+    expiryDate: "xxxx-xx-xx",
+    plan: "",
+    time: "",
+  });
+  React.useEffect(() => {
+    (async () => {
+      try {
+        let res = await axios.get(`${subscriptionUrl}/details`);
+        console.log(res);
+        setSubDetails({
+          expiryDate: res.data?.expiryDate.split("T")[0],
+          time: res.data?.expiryDate.split("T")[1],
+          plan: res.data?.plan,
+        });
+      } catch (error) {}
+    })();
+  });
   return (
     <>
+      <div>
+        <p>Subscription Details</p>
+
+        <p>current plan:{subscriptionDetails.plan}</p>
+        <p>expiry date:{subscriptionDetails.expiryDate}</p>
+        <p>expiry time:{subscriptionDetails.time.split(".")[0]}(GMT)</p>
+      </div>
       <p className="font-bold text-center ">Renew Subscription</p>
       <form action="">
         {" "}

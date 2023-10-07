@@ -150,7 +150,7 @@ const Profile = () => {
           }}
         >
           {" "}
-          <div className="mt-4 flex justify-end">
+          <div className="mt-9 flex justify-end">
             <span className="flex">
               {" "}
               <p className="capitalize opacity-60 rounded-full bg-blue-600 text-white p-2">

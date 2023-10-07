@@ -7,10 +7,9 @@ import "./index.css";
 import jwtDecode from "jwt-decode";
 import ForgotPassword from "./components/ForgotPassword";
 import ChangePassword from "./components/ChangePassword";
-
 let role: string = "";
 
-function isLoggedIn(userRole: string = "") {
+function isLoggedIn(userRole: string = "") { 
   try {
     let accessToken: string = sessionStorage.getItem("accessToken") || "";
     let c: any = jwtDecode(accessToken);

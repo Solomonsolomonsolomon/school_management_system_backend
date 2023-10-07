@@ -6,7 +6,9 @@ export async function illegal(req: Request, res: Response) {
   let { username, password, email, school, plan } = req.params;
   let schoolAlreadyExists = !!(await School.countDocuments({ school }));
   console.log(schoolAlreadyExists);
-  if (schoolAlreadyExists) {throw new CustomError({}, "cannot reregister", 400);}
+  if (schoolAlreadyExists) {
+    throw new CustomError({}, "cannot reregister", 400);
+  }
   let admin = await Admin.findOne({ email, school });
   if (admin) throw new CustomError({}, "cannot reregister", 400);
   let newAdmin = new Admin({
@@ -63,3 +65,27 @@ export async function manuallyassignsubscription(req: Request, res: Response) {
     status: 200,
   });
 }
+export async function overideSubscription(req: Request, res: Response) {
+  const { schoolId, timeInMinutes, plan } = req.params;
+  let subscription = await Subscription.findOne({ schoolId });
+  if (!subscription)
+    throw new CustomError(
+      {},
+      "not found....you do not have a subscription",
+      404
+    );
+
+  let v = subscription.__v;
+  subscription.expiresAt = Date.now() / 1000 + +timeInMinutes * 60;
+  subscription.isActive = true;
+  subscription.plan = plan;
+  subscription.__v = v;
+
+  await subscription.save();
+  return res.status(200).json({
+    msg: "subscription renewed",
+    status: 200,
+  });
+}
+
+

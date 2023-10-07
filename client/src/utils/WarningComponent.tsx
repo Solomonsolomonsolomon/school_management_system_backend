@@ -4,7 +4,7 @@ export const WarningComponent = (props: React.PropsWithChildren) => {
   return (
     <section className="bg-yellow-300 p-4 dark:bg-orange-500">
       <FontAwesomeIcon icon={faWarning}></FontAwesomeIcon>
-      <span className="opacity-60 text-center">{props.children}</span>
+      <span className="opacity-60 text-center ml-2">{props.children}</span>
     </section>
   );
 };

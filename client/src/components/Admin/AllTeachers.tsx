@@ -4,6 +4,7 @@ import axios from "../../api/axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Modal from "react-modal";
 import { faClose } from "@fortawesome/free-solid-svg-icons";
+import NotFoundComponent from "../../utils/404Component";
 
 const customStyles = {
   content: {
@@ -256,210 +257,220 @@ const AllTeachers: React.FC = () => {
   }, []);
   if (state.loading) return <Loading />;
   return (
-    <div className="w-[200px]sm:w-[400px] lg:w-[100%] md:w-[100%] w-[350px]">
-      <h1 className="text-center font-bold">
-        {typeof state.msg == "string"
-          ? state.msg
-          : "Abnormal beaviour detected"}
-      </h1>
-      <div className="overflow-x-auto grid">
-        <input
-          type="text"
-          placeholder="Search for teachers..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className=" dark:bg-gray-900 p-2 border rounded"
-        />
-        <table className="divide-y divide-gray-200 dark:divide-gray-700 overflow-x-auto border">
-          <thead className="bg-gray-50 dark:bg-gray-700">
-            {/* table head */}
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                Name
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                Email
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                TeacherId
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                Form Students
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                Subjects Taught
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                EMPLOYMENT DATE
-              </th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-            {filtered
-              ? filtered.map((teacher: any, i: number, _array: any[]) => {
-                  return (
-                    <>
-                      <tr key={teacher._id}>
-                        <td
-                          key={i + teacher._id}
-                          className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200"
-                        >
-                          {teacher.name}
-                        </td>
+    <>
+      {state.teachers.length ? (
+        <div className="w-[200px]sm:w-[400px] lg:w-[100%] md:w-[100%] w-[350px]">
+          <h1 className="text-center font-bold">
+            {typeof state.msg == "string"
+              ? state.msg
+              : "Abnormal beaviour detected"}
+          </h1>
+          <div className="overflow-x-auto grid">
+            <input
+              type="text"
+              placeholder="Search for teachers..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className=" dark:bg-gray-900 p-2 border rounded"
+            />
+            <table className="divide-y divide-gray-200 dark:divide-gray-700 overflow-x-auto border">
+              <thead className="bg-gray-50 dark:bg-gray-700">
+                {/* table head */}
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    Name
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    Email
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    TeacherId
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    Form Students
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    Subjects Taught
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    EMPLOYMENT DATE
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                {filtered
+                  ? filtered.map((teacher: any, i: number, _array: any[]) => {
+                      return (
+                        <>
+                          <tr key={teacher._id}>
+                            <td
+                              key={i + teacher._id}
+                              className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200"
+                            >
+                              {teacher.name}
+                            </td>
 
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
-                          {teacher.email}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
-                          {teacher.teacherId}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
-                          {teacher.formTeacher || "nil"}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
-                          {[
-                            ...new Set(
-                              teacher?.subjects?.map(
-                                (subject: any) => subject?.subject
-                              )
-                            ),
-                          ]
-                            .join(",")
-                            .toLowerCase() || "nil"}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
-                          {teacher.dateEmployed || "nil"}
-                        </td>
-
-                        <td
-                          className="px-6  py-1 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200 "
-                          onClick={(_e) => {
-                            handleDelete(teacher.teacherId);
-                          }}
-                        >
-                          <a className="text-blue-600">Delete</a>
-                        </td>
-                        <td className="px-6  py-1 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200 ">
-                          <a
-                            className="text-blue-600"
-                            onClick={() => {
-                              setSelectedSubjects(
-                                Array.from(
-                                  new Set(
-                                    teacher.subjects.map((id: any) => id._id)
+                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
+                              {teacher.email}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
+                              {teacher.teacherId}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
+                              {teacher.formTeacher || "nil"}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
+                              {[
+                                ...new Set(
+                                  teacher?.subjects?.map(
+                                    (subject: any) => subject?.subject
                                   )
-                                )
-                              );
+                                ),
+                              ]
+                                .join(",")
+                                .toLowerCase() || "nil"}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
+                              {teacher.dateEmployed || "nil"}
+                            </td>
 
-                              openModal();
-                              setEditingTeacher(teacher);
-                            }}
-                          >
-                            Edit
-                          </a>
-                        </td>
-                      </tr>
-                    </>
-                  );
-                })
-              : ""}
-          </tbody>
-        </table>
-      </div>
-      <Modal
-        isOpen={modalIsOpen}
-        onAfterOpen={afterOpenModal}
-        onRequestClose={closeModal}
-        style={customStyles}
-        contentLabel="Edit teacher"
-      >
-        <h2
-          ref={(_subtitle) => (subtitle = _subtitle)}
-          className="font-bold text-center"
-        >
-          Edit Teacher
-        </h2>
-        <input
-          type="text"
-          name="name"
-          value={editingTeacher.name}
-          onChange={handleEdit}
-        />
-        <input
-          type="email"
-          name="email"
-          value={editingTeacher.email}
-          onChange={handleEdit}
-        />
-        <input
-          type="date"
-          name="dateEmployed"
-          value={editingTeacher.dateEmployed}
-          onChange={handleEdit}
-        />
-        <input
-          type="password"
-          name="password"
-          value={editingTeacher.password}
-          onChange={handleEdit}
-        />
-        <select
-          name="formTeacher"
-          value={editingTeacher.formTeacher}
-          onChange={(e) => {
-            setEditingTeacher({
-              ...editingTeacher,
-              formTeacher: e.target.value,
-            });
-          }}
-          id=""
-        >
-          <option value="">not a form teacher</option>
-          {classes.map((eachClass) => (
-            <option>{eachClass.name}</option>
-          ))}
-        </select>
+                            <td
+                              className="px-6  py-1 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200 "
+                              onClick={(_e) => {
+                                handleDelete(teacher.teacherId);
+                              }}
+                            >
+                              <a className="text-blue-600">Delete</a>
+                            </td>
+                            <td className="px-6  py-1 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200 ">
+                              <a
+                                className="text-blue-600"
+                                onClick={() => {
+                                  setSelectedSubjects(
+                                    Array.from(
+                                      new Set(
+                                        teacher.subjects.map(
+                                          (id: any) => id._id
+                                        )
+                                      )
+                                    )
+                                  );
 
-        <input
-          type="text"
-          placeholder="Filter subjects..."
-          value={subjectSearchQuery}
-          onChange={(e) => setSubjectSearchQuery(e.target.value)}
-          className="p-2 border rounded w-[100%]"
-        />
-        <div className="h-[150px] overflow-y-auto border  p-3">
-          {filteredSubjects.map((subject) => {
-            return (
-              <div className="">
-                <p
-                  className={
-                    selectedSubjects.includes(subject._id)
-                      ? "text-blue-500"
-                      : "text-black"
-                  }
-                  onClick={() => handleClickedSubjects(subject._id)}
-                >
-                  {subject.name}
-                </p>
-              </div>
-            );
-          })}
+                                  openModal();
+                                  setEditingTeacher(teacher);
+                                }}
+                              >
+                                Edit
+                              </a>
+                            </td>
+                          </tr>
+                        </>
+                      );
+                    })
+                  : ""}
+              </tbody>
+            </table>
+          </div>
+          <Modal
+            isOpen={modalIsOpen}
+            onAfterOpen={afterOpenModal}
+            onRequestClose={closeModal}
+            style={customStyles}
+            contentLabel="Edit teacher"
+          >
+            <h2
+              ref={(_subtitle) => (subtitle = _subtitle)}
+              className="font-bold text-center"
+            >
+              Edit Teacher
+            </h2>
+            <input
+              type="text"
+              name="name"
+              value={editingTeacher.name}
+              onChange={handleEdit}
+            />
+            <input
+              type="email"
+              name="email"
+              value={editingTeacher.email}
+              onChange={handleEdit}
+            />
+            <input
+              type="date"
+              name="dateEmployed"
+              value={editingTeacher.dateEmployed}
+              onChange={handleEdit}
+            />
+            <input
+              type="password"
+              name="password"
+              value={editingTeacher.password}
+              onChange={handleEdit}
+            />
+            <select
+              name="formTeacher"
+              value={editingTeacher.formTeacher}
+              onChange={(e) => {
+                setEditingTeacher({
+                  ...editingTeacher,
+                  formTeacher: e.target.value,
+                });
+              }}
+              id=""
+            >
+              <option value="">not a form teacher</option>
+              {classes.map((eachClass) => (
+                <option>{eachClass.name}</option>
+              ))}
+            </select>
+
+            <input
+              type="text"
+              placeholder="Filter subjects..."
+              value={subjectSearchQuery}
+              onChange={(e) => setSubjectSearchQuery(e.target.value)}
+              className="p-2 border rounded w-[100%]"
+            />
+            <div className="h-[150px] overflow-y-auto border  p-3">
+              {filteredSubjects.map((subject) => {
+                return (
+                  <div className="">
+                    <p
+                      className={
+                        selectedSubjects.includes(subject._id)
+                          ? "text-blue-500"
+                          : "text-black"
+                      }
+                      onClick={() => handleClickedSubjects(subject._id)}
+                    >
+                      {subject.name}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+
+            <button
+              className="bg-green-700 text-white rounded p-2 absolute right-3"
+              onClick={saveChangesClick}
+            >
+              save changes
+            </button>
+            <button
+              onClick={closeModal}
+              className="bg-red-900 p-2 rounded text-white"
+            >
+              <FontAwesomeIcon icon={faClose}></FontAwesomeIcon>
+            </button>
+          </Modal>
         </div>
-
-        <button
-          className="bg-green-700 text-white rounded p-2 absolute right-3"
-          onClick={saveChangesClick}
-        >
-          save changes
-        </button>
-        <button
-          onClick={closeModal}
-          className="bg-red-900 p-2 rounded text-white"
-        >
-          <FontAwesomeIcon icon={faClose}></FontAwesomeIcon>
-        </button>
-      </Modal>
-    </div>
+      ) : (
+        <NotFoundComponent>
+          {typeof state.msg==='string'?state.msg:"Subscription expired" || "No teachers found"}
+        </NotFoundComponent>
+      )}
+    </>
   );
 };
 export default AllTeachers;

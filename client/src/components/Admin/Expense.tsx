@@ -2,28 +2,40 @@ import axios from "../../api/axios";
 import Button from "../Button/Button";
 import React from "react";
 let expenseUrl = "/expense";
+
 const Expense: React.FC = () => {
   let [addInput, setAddInput] = React.useState<{
     name: string;
     amount: number;
   }>({ name: "", amount: 0 });
-
+  interface IMsg {
+    error: string;
+    success: string;
+  }
+  let [msg, setMsg] = React.useState<IMsg>({
+    error: "",
+    success: "",
+  });
   function handleAddInput(e: React.ChangeEvent<HTMLInputElement>) {
     setAddInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
-  function handelAddSubmit(e:React.FormEvent<HTMLFormElement>) {
-    e.preventDefault()
+  function handelAddSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     let controller = new AbortController();
     (async () => {
-     try {
-         let res = await axios.post(`${expenseUrl}/new`, addInput, {
-           signal: controller.signal,
-         });
-         console.log(res);
-         setAddInput({ name: "", amount: 0 });
-     } catch (error) {
-        
-     }
+      try {
+        let res = await axios.post(`${expenseUrl}/new`, addInput, {
+          signal: controller.signal,
+        });
+        setMsg({ error: "", success: res.data?.msg });
+        console.log(res);
+        setAddInput({ name: "", amount: 0 });
+      } catch (error: any) {
+        setMsg({
+          error: error?.response?.data?.msg || error?.message,
+          success: "",
+        });
+      }
     })();
     return () => {
       controller.abort();
@@ -33,14 +45,18 @@ const Expense: React.FC = () => {
     <>
       <p>Welcome to the Expense Tracker</p>
       <p>Track your expense and monitor your spending</p>
-      <form onSubmit={handelAddSubmit} className="grid justify-center  p-5 gap-2">
+      <p className="text-red-500 text-center">{msg.error}</p>
+      <p className="text-green-500 text-center">{msg.success}</p>
+      <form
+        onSubmit={handelAddSubmit}
+        className="grid justify-center  p-5 gap-2"
+      >
         <input
           type="text"
           name="name"
           onChange={handleAddInput}
           className="bg-inherit p-1 border rounded w-fit"
           placeholder="expense name "
-          
           value={addInput.name}
         />
         <input

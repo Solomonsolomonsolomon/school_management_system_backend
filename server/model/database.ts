@@ -20,12 +20,13 @@ import { Student, IStudent } from "./academic/Student";
 import { Grades } from "./academic/Grades";
 import { Result } from "./academic/Result";
 import { Subject } from "./academic/Subject";
-import { AcademicTerm ,ITerm} from "./academic/AcademicTerm";
-import { AcademicYear,IYear } from "./academic/AcademicYear";
+import { AcademicTerm, ITerm } from "./academic/AcademicTerm";
+import { AcademicYear, IYear } from "./academic/AcademicYear";
 import { ClassLevel } from "./academic/ClassLevel";
 import { School } from "./others/School";
 import { Transaction } from "./others/Transacton";
 import { Subscription } from "./others/Subscription";
+import { Bus } from "./others/Bus";
 //schemas
 export {
   Teacher,
@@ -39,8 +40,9 @@ export {
   ClassLevel,
   School,
   Transaction,
-  Subscription
+  Subscription,
+  Bus,
 };
-export { ITeacher, IStudent,IYear,ITerm };
+export { ITeacher, IStudent, IYear, ITerm };
 
 export default connectDB;

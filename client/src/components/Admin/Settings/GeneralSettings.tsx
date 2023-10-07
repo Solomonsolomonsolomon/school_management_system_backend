@@ -1,10 +1,10 @@
 import React from "react";
-import axios from "../../api/axios";
-import Loading from "../Loading";
+import axios from "../../../api/axios";
+import Loading from "../../Loading";
 let payUrl = "/paystack";
 let schoolUrl = "/school";
 import { useForm, SubmitHandler } from "react-hook-form";
-import WarningComponent from "../../utils/WarningComponent";
+import WarningComponent from "../../../utils/WarningComponent";
 
 interface ITheme {
   button: string;

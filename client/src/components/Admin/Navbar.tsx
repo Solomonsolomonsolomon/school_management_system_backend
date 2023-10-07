@@ -3,6 +3,8 @@ import axios from "./../../api/axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBook,
+  faBus,
+  faCrown,
   faGear,
   faHouseMedical,
   faMoneyBillAlt,
@@ -246,6 +248,20 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
               <span className="md:hidden lg:inline xl:inline sm:inline mr-2">
                 {" "}
                 Expenses
+              </span>
+            </li>
+            <li
+              onClick={() => {
+                setComponent("busmanagement");
+              }}
+              className="cursor-pointer hover:shadow-lg hover:transition mr-10 hover:bg-slate-300 p-5 py-1"
+            >
+              <FontAwesomeIcon icon={faCrown} size="sm" className="text-orange-400" />
+              <FontAwesomeIcon icon={faBus} size="lg" />
+
+              <span className="md:hidden lg:inline xl:inline sm:inline mr-2">
+                {" "}
+                Bus Management
               </span>
             </li>
             <li

@@ -8,6 +8,7 @@ interface IExpense {
   year: Types.ObjectId;
   term: Types.ObjectId;
   month: number;
+  fees: number;
 }
 let instance: any;
 
@@ -50,6 +51,10 @@ class ExpenseSchema {
         month: {
           type: Number,
           default: new Date().getMonth(),
+        },
+        fees: {
+          type: Number,
+          default: 0,
         },
       },
       {
