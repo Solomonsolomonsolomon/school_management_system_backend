@@ -15,8 +15,7 @@ const BusNavBar: React.FC<ReactProps> = ({ setView }) => {
         Register School's bus Details
       </p>
       <p>Check Student Bus Eligibility</p>
-      <p>Reset All Bus Fees (new Term)</p>
-      <p>Set Bus Fee</p>
+  
     </section>
   );
 };

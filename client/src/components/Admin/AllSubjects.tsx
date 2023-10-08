@@ -113,7 +113,9 @@ const AllSubjects: React.FC = () => {
           please note subjects are view-only you cannot edit or delete
         </p> */}
 
-        <p className="text-center  capitalize font-bold mt-2">all subjects sorted by class</p>
+        <p className="text-center  capitalize font-bold mt-2">
+          all subjects sorted by class
+        </p>
         <p className="text-center font-bold">{state.msg}</p>
         {/* Table */}
         {Object.entries(state.data).map<any>((_, index, arr: any[]) => {
@@ -132,34 +134,30 @@ const AllSubjects: React.FC = () => {
                   </thead>
                   <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                     {arr[index][1]
-                      ? arr[index][1].map(
-                          (subject: any) => {
-                            return (
-                              <>
-                                {" "}
-                                <tr
-                                  key={subject._id}
-                                  className="flex items-center justify-between h-5"
-                                >
-                                 
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
-                                      {subject.subject}
-                                    </td>
-                                
+                      ? arr[index][1].map((subject: any) => {
+                          return (
+                            <>
+                              {" "}
+                              <tr
+                                key={subject._id}
+                                className="flex items-center justify-between h-5"
+                              >
+                                <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
+                                  {subject.subject}
+                                </td>
 
-                                  <td
-                                    className="px-6  py-1 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200 "
-                                    onClick={() => {
-                                      handleSubjectDeletion(subject._id);
-                                    }}
-                                  >
-                                    <a className="text-blue-600">Delete</a>
-                                  </td>
-                                </tr>
-                              </>
-                            );
-                          }
-                        )
+                                <td
+                                  className="px-6  py-1 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200 "
+                                  onClick={() => {
+                                    handleSubjectDeletion(subject._id);
+                                  }}
+                                >
+                                  <a className="text-blue-600">Delete</a>
+                                </td>
+                              </tr>
+                            </>
+                          );
+                        })
                       : ""}
                   </tbody>
                 </table>

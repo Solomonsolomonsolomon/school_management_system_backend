@@ -1,6 +1,6 @@
 require("dotenv").config();
 import express, { Application } from "express";
-import database, { School } from "./model/database";
+import database, { Bus, School } from "./model/database";
 import compression from "compression";
 import path from "path";
 import { Admin } from "./model/database";
@@ -20,5 +20,5 @@ app.use(routes);
 //app.use(express.static(path.join(__dirname, "..", "clients", "dist")));
 app.use(express.static(path.join(__dirname, "view")));
 app.use(express.static(path.join(__dirname)));
-app.use(express.urlencoded({ extended: true, limit: "25mb" }));
+app.use(express.urlencoded({ extended: true, limit: "15mb" }));
 export default app;

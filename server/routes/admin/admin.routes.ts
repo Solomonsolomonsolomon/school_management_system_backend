@@ -33,6 +33,7 @@ const {
   getAllTerms,
   getCurrentTerm,
   setPromotionTerm,
+  ResetAllTransactionsOnTermChange,
 } = term;
 const {
   addAcademicYear,
@@ -84,6 +85,10 @@ adminRouter.get("/admin/term/get/current", asyncErrorHandler(getCurrentTerm));
 adminRouter.put(
   "/admin/term/:id/set/promotion",
   asyncErrorHandler(setPromotionTerm)
+);
+adminRouter.put(
+  "/admin/term/transactions/reset",
+  asyncErrorHandler(ResetAllTransactionsOnTermChange)
 );
 //# year
 adminRouter.post("/admin/year/add", asyncErrorHandler(addAcademicYear));

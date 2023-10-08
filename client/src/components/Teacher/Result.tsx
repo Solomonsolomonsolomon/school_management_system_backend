@@ -131,6 +131,54 @@ const Result = () => {
               </>
             );
           })}
+          {/* terms result */}
+          {savePreview.groupedData?.map<any>((_, index: number, arr: any[]) => {
+            // console.log(arr[index]);
+            return (
+              <>
+                <div className="overflow-x-auto">
+                  <table className="divide-y divide-gray-200 dark:divide-gray-700 overflow-x-auto border">
+                    <thead className="bg-gray-50 dark:bg-gray-700">
+                      {/* table head */}
+                      <tr>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                          {arr[index]?.studentId?.name}
+                        </th>
+                        {arr[index]?.grades?.map((grade:any,index:number) => {
+                          return (
+                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                              {/* {arr[index].subjectId[]} */}
+                            </th>
+                          );
+                        })}
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+                      {/* {arr[index][1]
+                        ? arr[index][1].map((subject: any) => {
+                            return (
+                              <>
+                                {" "}
+                                <tr
+                                  key={subject._id}
+                                  className="flex items-center justify-between h-5"
+                                >
+                                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
+                                    {subject.subject}
+                                  </td>
+
+                                 
+                                </tr>
+                              </>
+                            );
+                          })
+                        : ""} */}
+                    </tbody>
+                  </table>
+                </div>
+              </>
+            );
+          })}
         </>
       )}
     </>

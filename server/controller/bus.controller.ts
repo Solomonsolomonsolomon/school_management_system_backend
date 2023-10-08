@@ -13,7 +13,7 @@ class BusController {
   public async registerForBus(req: Request, res: Response) {
     let school = req.user?.school;
     let schoolId = req.user?.schoolId;
-    let { studentId } = req.params;
+    let { studentId } = req.body;
     let isValidStudentId = !!(await Student.countDocuments({ studentId }));
     if (!isValidStudentId)
       throw new CustomError({}, "Enter valid student id", 400);
@@ -129,13 +129,38 @@ class BusController {
   public async getAllStudentsTakingBus(req: Request, res: Response) {
     let school = req.user?.school;
     let schoolId = req.user?.schoolId;
-    let allStudents = await Bus.find({ school, schoolId });
-    if (!allStudents.length)
+    // let allStudents = await Bus.find({ school, schoolId });
+    let totalStudents = await Bus.countDocuments({ school, schoolId });
+    if (!totalStudents)
       throw new CustomError({}, "No students added to bus line", 400);
+    const page = parseInt(req.query.page as string) || 1;
+    const pageSize = parseInt(req.query.pageSize as string) || 10;
+    const skip = (page - 1) * pageSize;
+    const totalPages = Math.ceil(totalStudents / pageSize);
+    const students = await Bus.find({ school, schoolId })
+      .skip(skip)
+      .limit(pageSize)
+      .populate("id")
+      .sort({ id: 1 })
+      .exec();
+
     res.status(200).json({
       msg: "Students taking the bus",
-      bus: allStudents,
+      bus: students,
       status: 200,
+      page,
+      pageSize,
+      totalPages,
+      totalStudents,
+    });
+  }
+  public async deleteSingleStudent(req: Request, res: Response) {
+    let { studentId } = req.params;
+    let bus = await Bus.findOneAndDelete({ studentId });
+    if (!bus) throw new CustomError({}, "couldnt delete", 400);
+    res.status(200).json({
+      status: 200,
+      msg: "deleted successfully",
     });
   }
 }

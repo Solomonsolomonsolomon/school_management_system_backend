@@ -22,5 +22,9 @@ router.put(
   "/bus/modify/student/details/:studentId",
   asyncErrorHandler(bus.editStudentBusDetails)
 );
+router.delete(
+  "/bus/delete/:studentId",
+  asyncErrorHandler(bus.deleteSingleStudent)
+);
 router.get("/bus/students/all", asyncErrorHandler(bus.getAllStudentsTakingBus));
 export default router;
