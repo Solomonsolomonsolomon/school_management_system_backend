@@ -167,7 +167,7 @@ class AcademicTermController {
     let allStudents = await Student.find({
       school: req.user?.school,
       schoolId: req.user?.schoolId,
-    });
+    }); 
     let allStudentsInBus = await Bus.find({
       school: req.user?.school,
       schoolId: req.user?.schoolId,

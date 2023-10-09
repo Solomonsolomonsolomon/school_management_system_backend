@@ -431,7 +431,7 @@ studentSchema.pre("save", async function (this: IStudent, next) {
 
     const total = classLevel.price;
     //excess balance
-   // 0.0125 * this.balance + 100 ;
+   // 0.0150 * this.balance + 100 ;
     if (this.amount > this.balance ) {
       throw new CustomError(
         {},

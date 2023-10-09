@@ -48,8 +48,8 @@ const PayFees: React.FC = () => {
           type="number"
           placeholder="amount"
           defaultValue={
-            0.0125 * details?.balance + 100 <= 2000
-              ? 0.0125 * details?.balance + 100 + details?.balance
+            Math.ceil(0.015 * details?.balance + 100) <= 2000
+              ? Math.floor(0.015 * details?.balance + 100) + details?.balance
               : 2000 + details?.balance
           }
           {...register("amount")}

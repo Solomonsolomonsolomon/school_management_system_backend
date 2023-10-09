@@ -132,7 +132,7 @@ busSchema.pre("save", async function (next) {
   if (this.isDirectModified("amountPaid")) {
     const total = bus.price;
     //excess balance
-    // 0.0125 * this.balance + 100 ;
+    // 0.0150 * this.balance + 100 ;
     if (this.amountPaid > this.balance) {
       throw new CustomError(
         {},
