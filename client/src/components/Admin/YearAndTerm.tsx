@@ -3,10 +3,16 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "../../api/axios";
 import Loading from "../Loading";
 import Button from "../Button/Button";
+import WarningComponent from "../../utils/WarningComponent";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faRobot } from "@fortawesome/free-solid-svg-icons";
 const YearAndTerm: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [years, setYears] = useState<any[]>([]);
   const [terms, setTerms] = useState<any[]>([]);
+  let [confirmModal, setConfirmModal] = React.useState<boolean>(false);
+  let [confirmed, setConfirmable] = React.useState<boolean>(false);
+  let [tracker, setTracker] = React.useState<number>(0);
   const { register: yearRegister, handleSubmit: handleYearSubmit } = useForm();
   const {
     register: termRegister,
@@ -102,13 +108,33 @@ const YearAndTerm: React.FC = () => {
         return term;
       });
       setYears(refreshAfterSettingTerm);
+      setConfirmModal(true);
+      setTracker(Date.now());
     } catch (error: any) {
       console.log(error);
     } finally {
       setLoading(false);
     }
   };
+  const handleSetPromotionTerm = async (termId: string) => {
+    try {
+      setLoading(true);
+      const res = await axios.put(`${postUrl}/term/${termId}/set/promotion`);
+      console.log(res);
+      // Implement logic to update UI or refetch terms data
+      const refreshAfterSettingTerm = terms.map((term) => {
+        if (term.isCurrent == true) term.isCurrent = false;
+        if (term._id === termId) term.isPromotionTerm = true;
 
+        return term;
+      });
+      setYears(refreshAfterSettingTerm);
+    } catch (error: any) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
   const handleDeleteYear = async (yearId: string) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to delete this year? This action is permanent."
@@ -194,8 +220,24 @@ const YearAndTerm: React.FC = () => {
     };
   }, []);
 
+  React.useEffect(() => {
+    async function clearAllTransactions() {
+      if (confirmed) {
+        try {
+          let res = await axios.put(`${postUrl}/term/transactions/reset`);
+          console.log(res);
+        } catch (error) {}
+      } else {
+        console.log("canceled by user");
+      }
+    }
+    clearAllTransactions();
+  }, [confirmed, tracker]);
   if (loading) return <Loading />;
-
+  if (confirmModal)
+    return (
+      <PopUpBot confirmModal={setConfirmModal} confirmable={setConfirmable} />
+    );
   return (
     <>
       {/* Year Form */}
@@ -303,7 +345,9 @@ const YearAndTerm: React.FC = () => {
               </tbody>
             </table>
           </div>
-
+          <WarningComponent>
+            If you do not set a Promotion term ,Auto promotion is Disabled
+          </WarningComponent>
           {/* Display List of Terms */}
           <div className="dark:bg-gray-900 w-[200px] sm:w-[400px] lg:w-[100%] md:w-[100%] w-[350px] h-[400px] overflow-y-auto">
             <h1 className="dark:bg-gray-900 text-center font-bold">
@@ -319,6 +363,9 @@ const YearAndTerm: React.FC = () => {
                   <th className="dark:bg-gray-900 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                     Current Term
                   </th>
+                  <th className="dark:bg-gray-900 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                    Promotion Term
+                  </th>
                   <th className="dark:bg-gray-900 px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
                     Actions
                   </th>
@@ -330,12 +377,19 @@ const YearAndTerm: React.FC = () => {
                     {/* ... Your terms table cells ... */}
                     <td>{term.name}</td>
                     <td>{`${term.isCurrent}`}</td>
-
+                    <td>{`${term.isPromotionTerm}`}</td>
                     <td
                       className="dark:bg-gray-900 px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-blue-500 hover:text-blue-700 cursor-pointer"
                       onClick={() => handleSetCurrentTerm(term._id)}
                     >
                       Set Current
+                    </td>
+
+                    <td
+                      className="dark:bg-gray-900 px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-blue-500 hover:text-blue-700 cursor-pointer"
+                      onClick={() => handleSetPromotionTerm(term._id)}
+                    >
+                      Set As Promotion Term
                     </td>
                     <td
                       className="dark:bg-gray-900 px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-blue-500 hover:text-blue-700 cursor-pointer"
@@ -355,3 +409,47 @@ const YearAndTerm: React.FC = () => {
 };
 
 export default YearAndTerm;
+
+const PopUpBot: React.FC<{
+  confirmable: React.SetStateAction<any>;
+  confirmModal: React.SetStateAction<any>;
+}> = ({ confirmable, confirmModal }) => {
+  return (
+    <>
+      {/* to use pass 2 set states confirm modal and confirmable */}
+      <div className="w-full absolute z-[10]  inset-1  overflow-hidden grid bg-inherit  justify-center items-center h-[100vh] dark:bg-gray-800 bg-white ">
+        <div className="border relative opacity-100 dark:bg-gray-800 bg-gray-50 rounded-2xl shadow-2xl h-fit box-border p-20">
+          <h1 className="p-5 capitalize">
+            Hey there.👋.It's me solaceBot{" "}
+            <FontAwesomeIcon icon={faRobot} className="text-blue-600 mx-2" />
+            ,I noticed you just set current term,will you like to reset all
+            transaction(school fees,bus fees,etc) in prep for the new term
+          </h1>
+          <span className="absolute right-2">
+            <button
+              className="bg-blue-700 p-3 z-10 text-white rounded"
+              onClick={() => {
+                confirmable(true);
+                confirmModal(false);
+              }}
+            >
+              Yes
+            </button>
+          </span>
+          <span className="absolute left-2">
+            {" "}
+            <button
+              className="bg-red-700 p-3 z-10 text-white rounded"
+              onClick={() => {
+                confirmable(false);
+                confirmModal(false);
+              }}
+            >
+              No
+            </button>
+          </span>
+        </div>
+      </div>
+    </>
+  );
+};

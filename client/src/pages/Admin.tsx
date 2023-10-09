@@ -13,6 +13,9 @@ import AddAdmin from "../components/Admin/AddAdmin";
 import AllAdmin from "../components/Admin/AllAdmin";
 import Settings from "../components/Admin/Settings";
 import Hamburger from "../components/Admin/Hamburger";
+import Expense from "../components/Admin/Expense";
+import Subscription from "../components/Admin/Subscriptions";
+import Bus from "../components/Admin/BusMangement";
 //const GET_URL = "/admin";
 let components: any = {
   subadmin: SubAdmin,
@@ -26,6 +29,9 @@ let components: any = {
   addadmin: AddAdmin,
   alladmin: AllAdmin,
   settings: Settings,
+  expenses: Expense,
+  subscription:Subscription,
+  busmanagement:Bus
 };
 const Admin = () => {
   let [view, setView] = React.useState("subadmin");
@@ -36,16 +42,16 @@ const Admin = () => {
     <>
       <div
         id="adminpage"
-        className="grid md:grid-cols-[24%_75%] lg:grid-cols-[23%_77%] xl:grid-cols-[18%_82%] w-full overflow-y-hidden"
+        className="grid  md:grid-cols-[12%_87%] lg:grid-cols-[23%_77%] xl:grid-cols-[18%_82%] w-full overflow-y-hidden"
       >
-        <div className="mx-1 hidden lg:block md:block xl:block">
+        <div className="mx-1  hidden lg:block md:block xl:block relative">
           {" "}
           <Navbar setView={setView} />
         </div>
         <main className="container">
-          <section className="overflow-y-auto h-[100vh] flex flex-col">
-            <header className="bg-white border-b-2 border-gray-200 py-4 shadow ">
-              <div className="container mx-auto px-4  ">
+          <section className="overflow-y-auto h-[100vh] flex flex-col  ">
+            <header className=" border-b-2 border-gray-200 py-4 shadow  ">
+              <div className=" mx-auto px-2 py-0  w-full  ">
                 <Profile />
               </div>
             </header>

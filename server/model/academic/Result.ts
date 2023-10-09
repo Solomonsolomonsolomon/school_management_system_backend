@@ -24,13 +24,16 @@ interface IResult extends Document {
   id?: Types.ObjectId;
   totalScore?: number;
   position?: number;
+  school?: string;
+  schoolId?: string;
   year?: PopulatedDoc<IYear & Document>;
   term?: PopulatedDoc<ITerm & Document>;
   class?: string;
   average?: number;
   overallGrade?: string;
-  grades?: IResultGrades;
+  grades?: IResultGrades[];
   status: string;
+  totalTerms?: number;
 }
 let gradesSchema = new Schema<IResultGrades>({
   CA1: Number,
@@ -63,8 +66,17 @@ let resultSchema = new Schema<IResult>({
   position: {
     type: Number,
   },
+
   class: {
     type: String,
+  },
+  school: {
+    type: String,
+    required: true,
+  },
+  schoolId: {
+    type: String,
+    required: true,
   },
   year: {
     type: Schema.Types.ObjectId,
@@ -89,6 +101,11 @@ let resultSchema = new Schema<IResult>({
     type: String,
     enum: ["failed", "passed"],
     default: "failed",
+  },
+  totalTerms: {
+    type: Number,
+    default:0,
+    required:true
   },
 });
 

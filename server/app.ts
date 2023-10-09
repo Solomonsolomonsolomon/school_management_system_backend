@@ -2,7 +2,7 @@ import app from "./server";
 import cron from "node-cron";
 import global from "./global";
 import express from "express";
-import { Admin, Student, Teacher, AcademicYear } from "./model/database";
+import { Admin, Student, Teacher, AcademicYear, Bus } from "./model/database";
 import { createServer } from "http";
 import apiv1 from "./routes/versions/v1";
 import path from "path";
@@ -13,9 +13,9 @@ import { ErrorHandler } from "./middleware/globalErrorHandler";
 app.get("/", (req: express.Request, res) => {
   res.json({
     status: "success",
-    msg: "test end point hit", 
+    msg: "test end point hit",
   });
-});                
+});
 app.get("/frontend", (req, res) => {
   app.use(express.static(path.join(__dirname, "..", "clients", "dist")));
   res.sendFile(path.join(__dirname, "..", "client", "dist", "index.html"));

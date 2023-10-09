@@ -56,7 +56,7 @@ export default function Login() {
         });
         // let path = location.pathname;
         // if (path !== "/" && path !== "/login") window.location.reload();
-        window.location.href = `/${details.role}/dashboard`;
+        window.location.reload();
       } catch (error: any) {
         //go back to select on fail
         if (error.name == "AbortError" || error.name == "CanceledError") return;
@@ -83,7 +83,6 @@ export default function Login() {
   React.useEffect(() => {
     let path = location.pathname;
     if (path !== "/" && path !== "/login") {
-
       window.location.href = "/";
     }
     if (isLoggedIn()) {
@@ -116,7 +115,7 @@ export default function Login() {
       <h1 className="text-center font-bold">
         SOLACE School Management Systems.Login to continue
       </h1>
-      <div className="flex justify-items-center place-content-center">
+      <div className="flex  justify-items-center place-content-center">
         <img src={svg1} className="absolute  z-[-100] h-[97vh]" alt="" />
       </div>
 
@@ -124,7 +123,7 @@ export default function Login() {
         <p></p>
         <form
           onSubmit={handleSubmit}
-          className="grid g dark:text-gray-900ap-1 border border-black bg-white h-fit p-6 rounded "
+          className="grid g dark:text-gray-900  gap-2 p border border-black bg-white h-fit p-7 rounded "
         >
           <p
             ref={msgRef}
@@ -163,7 +162,9 @@ export default function Login() {
             <option value="student">student</option>
             <option value="teacher">teacher</option>
           </select>
-         <Link to="forgot-password" className="text-blue-800">Forgot password?</Link>
+          <Link to="forgot-password" className="text-blue-800">
+            Forgot password?
+          </Link>
           <button
             onClick={() => {
               setClicked(clicked + 1);

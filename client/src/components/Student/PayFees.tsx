@@ -3,6 +3,7 @@ let user = sessionStorage.getItem("user");
 import axios from "../../api/axios";
 let payUrl = "/paystack";
 import { useForm, SubmitHandler } from "react-hook-form";
+import WarningComponent from "../../utils/WarningComponent";
 let details: any;
 if (user) details = JSON.parse(user);
 
@@ -41,17 +42,25 @@ const PayFees: React.FC = () => {
           placeholder="email"
           defaultValue={details?.email}
           {...register("email")}
-          className="border border-l-0 border-r-0 border-t-0 border-black border-bottom-2"
+          className="border border-l-0 border-r-0 border-t-0 border-black border-bottom-2 bg-inherit"
         />
         <input
           type="number"
           placeholder="amount"
-          defaultValue={details?.balance}
+          defaultValue={
+            Math.ceil(0.015 * details?.balance + 100) <= 2000
+              ? Math.floor(0.015 * details?.balance + 100) + details?.balance
+              : 2000 + details?.balance
+          }
           {...register("amount")}
-          className="border border-l-0 border-r-0 border-t-0 border-black border-bottom-2"
+          className="border border-l-0 border-r-0 border-t-0 border-black border-bottom-2 bg-inherit"
         />
         <button className="bg-gray-900 p-2 rounded text-white">Proceed</button>
       </form>
+      <WarningComponent>
+        please note that our payment provider includes a transaction charge of
+        1.25% +100#
+      </WarningComponent>
     </div>
   );
 };

@@ -47,7 +47,7 @@ const Sidebar: React.FC<ProfileProps> = ({ setView }) => {
         className="m-2 absolute right-4 top-4"
         style={{
         
-          color: colors.sideBar || "#000000",
+          color:  "#000000",
         }}
       >
         <FontAwesomeIcon icon={faBars} size="xl" />

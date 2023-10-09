@@ -1,7 +1,8 @@
 import { CustomError } from "../middleware/decorators";
-import { AcademicTerm } from "../model/database";
+import { AcademicTerm, Student, ClassLevel, Bus } from "../model/database";
 import mongoose from "mongoose";
 import express from "express";
+import { schoolBus } from "../model/others/SchoolBus";
 
 //#please note that the routes for this controller are in admin.routes not academicTerm
 class AcademicTermController {
@@ -10,6 +11,8 @@ class AcademicTermController {
    * addATerm
    * setCurrentTerm
    * deleteATerm
+   * setPromotionTerm
+   * ResetAllTransactionsOnTermChange
    */
   public async getAllTerms(req: express.Request, res: express.Response) {
     let school = req.user?.school;
@@ -115,6 +118,102 @@ class AcademicTermController {
         message: "current term found",
         currentTerm,
       });
+    });
+  }
+
+  public async setPromotionTerm(req: express.Request, res: express.Response) {
+    let { id } = req.params;
+    let _id = await new mongoose.Types.ObjectId(id);
+    let school = req.user?.school;
+    let schoolId = req.user?.schoolId;
+    let previous = await AcademicTerm.findOne({
+      isPromotionTerm: true,
+      school,
+      schoolId,
+    });
+
+    if (previous) {
+      previous.isPromotionTerm = false;
+      await previous.save().catch((err) => {
+        throw new CustomError(err, err.message, 400);
+      });
+    }
+
+    let current = await AcademicTerm.findOne({ _id });
+
+    current!.isPromotionTerm = true;
+    current!.updatedBy = req.user?._id;
+    await current!
+      .save()
+      .then((current) => {
+        console.log("here");
+        res.status(200).json({
+          status: 200,
+          msg: "current set",
+          current,
+        });
+      })
+      .catch((err) => {
+        throw new CustomError({}, err.message, 400);
+      });
+  }
+
+  public async ResetAllTransactionsOnTermChange(
+    req: express.Request,
+    res: express.Response
+  ) {
+    const bulkOperations: any[] = [];
+    const busBulkOperations: any[] = [];
+    let allStudents = await Student.find({
+      school: req.user?.school,
+      schoolId: req.user?.schoolId,
+    }); 
+    let allStudentsInBus = await Bus.find({
+      school: req.user?.school,
+      schoolId: req.user?.schoolId,
+    });
+    for (let i = 0; i <= allStudents.length - 1; i++) {
+      let cl = await ClassLevel.findOne({ name: allStudents[i].className });
+      console.log(allStudents[i]._id, cl?.price);
+      bulkOperations.push({
+        updateOne: {
+          filter: {
+            school: req.user?.school,
+            schoolId: req.user?.schoolId,
+            _id: allStudents[i]._id,
+          },
+          update: {
+            $set: { isPaid: false, balance: cl?.price, percentagePaid: 0 },
+          },
+        },
+      });
+      
+    }
+    for (let i = 0; i <= allStudentsInBus.length - 1; i++) {
+      let cl = await schoolBus.findOne({
+        school: req.user?.school,
+        schoolId: req.user?.schoolId,
+      });
+      i;
+     busBulkOperations.push({
+        updateOne: {
+          filter: {
+            school: req.user?.school,
+            schoolId: req.user?.schoolId,
+            studentId: allStudentsInBus[i].studentId,
+          },
+          update: {
+            $set: { isPaid: false, balance: cl!.price, percentagePaid: 0 },
+          },
+        },
+      });
+    }
+
+    await Student.bulkWrite(bulkOperations);
+    await Bus.bulkWrite(busBulkOperations);
+    return res.status(200).json({
+      msg: 200,
+      status: "successful ",
     });
   }
 }

@@ -4,13 +4,17 @@ import { faUserGroup } from "@fortawesome/free-solid-svg-icons";
 import { faUserTie } from "@fortawesome/free-solid-svg-icons";
 import { faMoneyBill1 } from "@fortawesome/free-solid-svg-icons";
 import EarningChart from "./charts/EarningChart";
-import ExpenseChart from "./charts/ExpenseChart";
+import banner from "./../../assets/undraw_pair_programming_re_or4x.svg";
+// import ExpenseChart from "./charts/ExpenseChart";
 // import { useNavigate , useLocation} from 'react-router-dom'
 import React, { useEffect, useRef, useState } from "react";
 // import AuthContext from '../context/AuthProvider'
 // import { Link } from 'react-router-dom';
 import axios from "../../api/axios";
 import Loading from "../Loading";
+
+import DoughnutChart from "./charts/RatioChart";
+import EarningsTOExpense from "./charts/EarningsToExpense";
 
 const POST_URL = "/admin";
 let transactionUrl = "/transaction";
@@ -40,7 +44,7 @@ const SubAdmin: React.FC = () => {
         parentsCount.current
           ? (parentsCount.current.textContent = number?.totalStudents)
           : "";
-        console.log(number);
+      
       } catch (error: any) {
         console.error(error);
         noOfStudents.current ? (noOfStudents.current.textContent = "xxx") : "";
@@ -103,11 +107,25 @@ const SubAdmin: React.FC = () => {
   });
   if (isLoading) return <Loading />;
   return (
-    <div className="lg:p-10  md:p-2 sm:p-1  border-slate-200 shadow-2xl box-border grid gap-10 w-[99%] ">
-      <h1 className="text-sm text-gray-500 font-bold box-border shadow-gray-600 text-left shadow-sm p-1 m-0 border-gray-300">
-        Admin Dashboard
-      </h1>
-      <section className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mt-0 h-auto  ">
+    <div className="lg:p-10  md:p-2 sm:p-1  border-slate-200 shadow-2xl box-border grid gap-10 w-full ">
+      <h1 className="text-2xl ">Admin Dashboard</h1>
+
+      <div
+        className="w-full flex justify-center flex-wrap 
+      bg-gray-200 dark:bg-gray-700 p-5 rounded-2xl"
+      >
+        <div className="flex flex-col justify-center flex-wrap opacity-60">
+          <p className="uppercase ">
+            Manage and Monitor your entire school's activites
+          </p>
+          <p className="uppercase "> from anywhere</p>
+          <p>Never be out of the loop again</p>
+        </div>
+
+        <img src={banner} alt="" className="h-[250px] z-4" />
+      </div>
+
+      <section className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3 mt-0 h-auto  ">
         <div className=" p-10 shadow-gray-500 shadow-lg border  box-content flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
           <div className="flex border "></div>
           <section className="bg-green-100 p-5 rounded-full">
@@ -169,21 +187,29 @@ const SubAdmin: React.FC = () => {
             </p>
           </section>
         </div>
+        <div className=" p-10 shadow-gray-500 shadow-lg border  box-content flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
+          <section className="mt-3">
+            <DoughnutChart />
+          </section>
+        </div>
+        <div className=" p-10 shadow-gray-500 shadow-lg border  box-content flex gap-5 rounded cursor-pointer transition ease-in delay-150 hover:-translate-y-3 duration-300 ">
+          <section className="mt-3">
+            <EarningsTOExpense />
+          </section>
+        </div>
       </section>
-   
-      <section className="grid   gap-4 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1  ">
+
+      <section className="grid  gap-4 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-1  ">
         <div className=" shadow-lg p-5 grid grid-rows-[5%_95%] gap-5">
-          <h2>Earnings</h2>
+          <h2>Finances</h2>
           <div className="w-[99%]">
             <EarningChart />
           </div>
         </div>
 
-        <div className=" p-5 shadow-2xl grid grid-rows-[5%_95%] gap-5">
+        <div className="shadow-lg p-5 grid grid-rows-[5%_95%] gap-5">
           <h2>Expenses</h2>
-          <div>
-            <ExpenseChart />
-          </div>
+          <div className="w-[99%]"></div>
         </div>
       </section>
     </div>

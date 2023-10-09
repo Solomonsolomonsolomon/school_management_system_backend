@@ -29,4 +29,8 @@ transactionRouter.get(
   "/transaction/monthly",
   asyncErrorHandler(transaction.getTotalAmountAndMonthPaid)
 );
+transactionRouter.get(
+  "/transaction/ratio/earnings/expense",
+  transaction.getRatioOfEarningsToExpense
+);
 export default transactionRouter;

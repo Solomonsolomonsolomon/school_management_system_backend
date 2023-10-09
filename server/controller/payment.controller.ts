@@ -10,7 +10,7 @@ const initializeTransaction = async (req: Request, res: Response) => {
       throw new Error("enter email and amount");
     }
 
-    if (amount > req.user?.balance)
+    if (amount > req.user?.balance + 0.015 * req.user?.balance + 100)
       throw new Error(`your balance is ${req.user?.balance} not ${amount}`);
     let subaccount = await School.findOne({ schoolId: req.user?.schoolId });
     if (!subaccount)
@@ -21,7 +21,7 @@ const initializeTransaction = async (req: Request, res: Response) => {
       email,
       amount: amount * 100,
       subaccount: subaccount.subaccount_code,
-      transaction_charge: 100 * 100,
+      transaction_charge:  0,
       bearer: "subaccount",
     });
 

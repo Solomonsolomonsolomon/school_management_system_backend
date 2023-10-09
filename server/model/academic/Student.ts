@@ -426,12 +426,13 @@ studentSchema.pre("save", async function (this: IStudent, next) {
     }
   }
   if (this.isDirectModified("amount")) {
-    console.log("1");
+    
     console.log(this.amount);
 
     const total = classLevel.price;
     //excess balance
-    if (this.amount > this.balance) {
+   // 0.0150 * this.balance + 100 ;
+    if (this.amount > this.balance ) {
       throw new CustomError(
         {},
         `Cannot deposit amount greater than school fees`,

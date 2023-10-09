@@ -5,6 +5,7 @@ import {
   Grades,
   AcademicTerm,
   AcademicYear,
+  Result,
 } from "../model/database";
 import asyncErrorHandler from "../middleware/globalErrorHandler";
 import { CustomError } from "../middleware/decorators";
@@ -106,6 +107,7 @@ export async function getStudentsTaught(req: Request, res: Response) {
           year: currentYear,
           term: currentTerm,
           school,
+          className: student.className,
           schoolId,
         });
 
@@ -153,4 +155,23 @@ function getGradeForSubject(student: any, subject: any, exam: any) {
     grade.subjectId.equals(subject._id)
   );
   return subjectGrades ? subjectGrades[exam] : 0;
+}
+
+export async function previewClassResults(req: Request, res: Response) {
+  let { id } = req.params;
+  let teacher = await Teacher.findById(id);
+  const school = req.user?.school;
+  let schoolId = req.user?.schoolId;
+  if (!teacher || !teacher?.formTeacher)
+    throw new CustomError(
+      {},
+      "you arent authorized to view this resource",
+      401
+    );
+  let results = await Result.find({
+    class: teacher.formTeacher,
+    school,
+    schoolId,
+  });
+  console.log(results);
 }

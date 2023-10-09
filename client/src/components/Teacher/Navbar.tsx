@@ -13,7 +13,7 @@ interface ProfileProps {
 const Sidebar: React.FC<ProfileProps> = ({ setView }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [colors, setColors] = useState<any>({
-    sideBar: "000000",
+    sideBar: "rgb(31 41 55)",
     sideBarText: "#ffffff",
   });
   const [loading, setLoading] = useState<boolean>(true);
@@ -48,18 +48,17 @@ const Sidebar: React.FC<ProfileProps> = ({ setView }) => {
     <>
       <button
         onClick={toggleSidebar}
-        className="m-2 absolute right-4 top-4"
+        className="m-2 absolute right-4 top-3"
         style={{
-   
-          color: colors?.sideBar || "#ffffff",
+          color: /*colors?.sideBar || */ "black",
         }}
       >
         <FontAwesomeIcon icon={faBars} size="2x" />
       </button>
       <div
         style={{
-          backgroundColor: colors.sideBar || "rgb(31 41 55)",
-          color: colors?.sideBarText || "#ffffff",
+          backgroundColor: colors.sideBar || "rgb(31 41 55) ",
+          color: colors?.sideBarText || "black",
         }}
         className={`fixed h-full left-0 top-0 bg-gray-800 text-white transition-transform transform ${
           isOpen ? "translate-x-0 sm:w-full" : "-translate-x-full"
@@ -113,6 +112,15 @@ const Sidebar: React.FC<ProfileProps> = ({ setView }) => {
               }}
             >
               <a className="block  hover:text-white">Compute Attendance</a>
+            </li>
+            <li
+              className="mb-2"
+              onClick={() => {
+                setView("computeresult");
+                setIsOpen(false);
+              }}
+            >
+              <a className="block  hover:text-white">Results</a>
             </li>
           </ul>
         </div>

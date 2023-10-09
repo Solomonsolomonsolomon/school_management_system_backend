@@ -1,4 +1,4 @@
-import express, { Router,Request,Response } from "express";
+import express, { Router, Request, Response } from "express";
 const adminRouter: Router = Router();
 const app = express();
 import asyncErrorHandler from "../../middleware/globalErrorHandler";
@@ -23,11 +23,18 @@ import {
   countTeachers,
   editStudent,
   editTeacher,
+  resetSchoolTransaction,
 } from "../../controller/admin.controller";
 
-
-const { addATerm, deleteTerm, setCurrentTerm, getAllTerms, getCurrentTerm } =
-  term;
+const {
+  addATerm,
+  deleteTerm,
+  setCurrentTerm,
+  getAllTerms,
+  getCurrentTerm,
+  setPromotionTerm,
+  ResetAllTransactionsOnTermChange,
+} = term;
 const {
   addAcademicYear,
   addYearAutomatically,
@@ -36,7 +43,12 @@ const {
   deleteYear,
   setCurrentYear,
 } = year;
-const { createClassLevel, deleteClassLevel, getAllClassLevels } = classLevel;
+const {
+  createClassLevel,
+  deleteClassLevel,
+  getAllClassLevels,
+  editClassPrice,
+} = classLevel;
 //#adding users
 adminRouter.post("/admin/add/admin", addAdmin);
 adminRouter.post("/admin/add/teacher", asyncErrorHandler(addTeacher));
@@ -70,7 +82,14 @@ adminRouter.post(
 );
 adminRouter.delete("/admin/term/:id/delete", asyncErrorHandler(deleteTerm));
 adminRouter.get("/admin/term/get/current", asyncErrorHandler(getCurrentTerm));
-
+adminRouter.put(
+  "/admin/term/:id/set/promotion",
+  asyncErrorHandler(setPromotionTerm)
+);
+adminRouter.put(
+  "/admin/term/transactions/reset",
+  asyncErrorHandler(ResetAllTransactionsOnTermChange)
+);
 //# year
 adminRouter.post("/admin/year/add", asyncErrorHandler(addAcademicYear));
 //addYearAutomatically(); //automatically adds Year first of september
@@ -89,5 +108,13 @@ adminRouter.delete(
   "/admin/class/:id/delete",
   asyncErrorHandler(deleteClassLevel)
 );
+adminRouter.put(
+  "/admin/class/price/edit/:id/",
+  asyncErrorHandler(editClassPrice)
+);
 
+adminRouter.get(
+  "/admin/reset/student/transaction/",
+  asyncErrorHandler(resetSchoolTransaction)
+);
 export default adminRouter;

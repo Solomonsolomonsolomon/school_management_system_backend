@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { CustomError } from "../middleware/decorators";
 import { Transaction, Student } from "../model/database";
+import { Expense } from "../model/others/Expense";
 
 class TransactionController {
   constructor() {}
@@ -116,16 +117,64 @@ class TransactionController {
       },
       [{ amount: 0, month: 0 }]
     );
+    let total = completedTransactions.reduce(
+      (p: any, c) => {
+        const { amountPaid, month } = c;
+        const i = p.tracker.get(month);
+        if (amountPaid) {
+          if (i) {
+            p.total[i].amount += amountPaid;
+          } else {
+            p.tracker.set(month, p.total.length);
+            p.total.push({ month, amount: amountPaid });
+          }
+        } else {
+          return p;
+        }
+
+        return p;
+      },
+      {
+        total: [{ amount: 0, month: 0 }],
+        tracker: new Map(),
+      }
+    ).total;
+    console.log(total);
     let months = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    for (let i = 0; i <= totalAmount.length - 1; i++) {
-      months[totalAmount[i]?.month] = totalAmount[i]?.amount || 0;
-      console.log(totalAmount[i]?.month);
+    for (let i = 0; i <= total.length - 1; i++) {
+      months[total[i]?.month] = total[i]?.amount || 0;
+      console.log(total[i]?.month);
     }
 
     res.status(200).json({
       status: 200,
       msg: "total transaction amount fetched successfully",
       label: months,
+    });
+  };
+  getRatioOfEarningsToExpense = async (req: Request, res: Response) => {
+    let school = req.user?.school;
+    let schoolId = req.user?.schoolId;
+    const completedTransactions = await Transaction.find({
+      status: "success",
+      school,
+      schoolId,
+    });
+    let allExpenses = await Expense.find({});
+    // Calculate the total amount
+    const totalAmount: number = completedTransactions.reduce(
+      (sum, transaction) => sum + transaction.amountPaid,
+      0
+    );
+    const totalExpenses: number = allExpenses.reduce(
+      (sum, expense) => sum + expense.amountPaid,
+      0
+    );
+
+    res.status(200).json({
+      status: 200,
+      msg: "total transaction amount fetched successfully",
+      ratio: [totalAmount, totalExpenses],
     });
   };
 }

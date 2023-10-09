@@ -12,9 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.signOut = exports.signIn = void 0;
+exports.resetPassword = exports.changePassword = exports.signOut = exports.signIn = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const database_1 = require("./../model/database");
+const decorators_1 = require("../middleware/decorators");
 function signIn(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const { email, password, role } = req.body;
@@ -109,3 +110,40 @@ function signOut(req, res, next) {
     });
 }
 exports.signOut = signOut;
+function changePassword(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const { email, oldPassword, newPassword, role, passwordRepeat } = req.body;
+        if (!email || !oldPassword || !newPassword || !role)
+            throw new decorators_1.CustomError({}, "required fields", 400);
+        if (newPassword !== passwordRepeat)
+            throw new decorators_1.CustomError({}, "passwords dont match", 400);
+        const roles = ["admin", "teacher", "student"];
+        let index = roles.indexOf(role);
+        let Model = database_1.Admin;
+        index === 0
+            ? (Model = database_1.Admin)
+            : index === 1
+                ? (Model = database_1.Teacher)
+                : index === 2
+                    ? (Model = database_1.Student)
+                    : (Model = database_1.Admin);
+        let user = yield Model.findOne({ email });
+        let version = user.__v;
+        if (!user)
+            throw new decorators_1.CustomError({}, "email not found in database", 404);
+        if (!(yield user.verifiedPassword(oldPassword)))
+            throw new decorators_1.CustomError({}, "old password is incorrect ", 404);
+        user.password = newPassword;
+        user.__v = version;
+        yield user.save();
+        return res.status(200).json({
+            msg: "password change successful",
+            status: 200,
+        });
+    });
+}
+exports.changePassword = changePassword;
+function resetPassword(req, res) {
+    return __awaiter(this, void 0, void 0, function* () { });
+}
+exports.resetPassword = resetPassword;

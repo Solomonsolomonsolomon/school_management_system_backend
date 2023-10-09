@@ -12,7 +12,7 @@ const Hamburger: React.FC<{
     headerText: string;
   }
   let [renderNavBar, setRenderNavBar] = React.useState<boolean>(false);
-  const [theme, settheme] = React.useState<Color>({ headerText: "#ffffff" });
+  const [theme, settheme] = React.useState<Color>({ headerText: "#000000" });
   const handleRenderNavBar = () => {
     setRenderNavBar(!renderNavBar);
     console.log(renderNavBar);
@@ -21,7 +21,7 @@ const Hamburger: React.FC<{
     (async () => {
       try {
         let res = await axios.get(`${schoolUrl}/logo/theme/get`);
-        console.log(res);
+ 
         settheme({
           headerText: res?.data?.themes?.headerText,
         });
@@ -30,11 +30,10 @@ const Hamburger: React.FC<{
       }
     })();
   }, []);
-
   return (
     <>
       <button
-        className="fixed lg:hidden md:hidden xl:hidden block bg-inherit text-inherit z-50 right-6 top-6 p-2 border  cursor-pointer"
+        className="fixed  lg:hidden md:hidden xl:hidden block bg-inherit text-inherit z-50 right-6 top-4 sm:top-0 p-2   cursor-pointer"
         onClick={(_) => handleRenderNavBar()}
         style={{
           color: theme.headerText||"black",

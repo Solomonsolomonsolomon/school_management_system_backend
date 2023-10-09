@@ -11,6 +11,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Result = void 0;
 const mongoose_1 = require("mongoose");
+let gradesSchema = new mongoose_1.Schema({
+    CA1: Number,
+    CA2: Number,
+    CA3: Number,
+    examScore: Number,
+    total: Number,
+    subjectId: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        ref: "Subject",
+    },
+    letterGrade: String,
+});
 let resultSchema = new mongoose_1.Schema({
     name: {
         type: String,
@@ -44,7 +56,11 @@ let resultSchema = new mongoose_1.Schema({
     average: {
         type: Number,
     },
-    grades: [{}],
+    grades: [
+        {
+            type: gradesSchema,
+        },
+    ],
     overallGrade: {
         type: String,
     },

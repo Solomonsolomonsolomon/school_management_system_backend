@@ -60,7 +60,6 @@ class ClassLevelController {
       },
     ])
       .then((result) => {
-     
         res.status(200).json({
           status: 200,
           msg: "success",
@@ -77,7 +76,7 @@ class ClassLevelController {
   }
   public async createClassLevel(req: express.Request, res: express.Response) {
     let { name, price } = req.body;
-   
+
     let school = req.user?.school;
     let schoolId = req.user?.schoolId;
     let classLevel = await ClassLevel.findOne({ name, school, schoolId });
@@ -100,7 +99,7 @@ class ClassLevelController {
   }
   public async deleteClassLevel(req: express.Request, res: express.Response) {
     let { id } = req.params;
- 
+
     let school = req.user?.school;
     let schoolId = req.user?.schoolId;
     let _id = new mongoose.Types.ObjectId(id);
@@ -121,6 +120,20 @@ class ClassLevelController {
     res.status(200).json({
       status: 200,
       msg: "deleted successfully",
+    });
+  }
+  public async editClassPrice(req: express.Request, res: express.Response) {
+    const { id } = req.params;
+    let { price } = req.body;
+    let classToEdit = await ClassLevel.findById(id);
+    if (!classToEdit) throw new Error("cannot find class");
+    let version = classToEdit.__v;
+    classToEdit.price = price;
+    classToEdit.__v = version;
+    await classToEdit.save();
+    return res.status(200).json({
+      msg: "edit successful",
+      status: 200,
     });
   }
 }

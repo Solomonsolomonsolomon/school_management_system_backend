@@ -13,6 +13,7 @@ interface INestedgrades extends Document {
 }
 interface IGrades extends Document {
   studentId: Types.ObjectId;
+  className?: string;
   year: mongoose.Types.ObjectId;
   term: mongoose.Types.ObjectId;
   school: string;
@@ -25,6 +26,9 @@ let gradesSchema = new Schema<IGrades>({
     type: mongoose.Schema.Types.ObjectId,
     required: true,
     ref: "Student",
+  },
+  className: {
+    type: String,
   },
   year: {
     type: mongoose.Schema.Types.ObjectId,

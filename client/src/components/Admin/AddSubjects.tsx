@@ -44,6 +44,8 @@ const AddSubject: React.FC = () => {
         type: "msg",
         msg: "failed to get please contact the developer or try again later",
       });
+    } finally {
+      dispatch({ type: "stopLoading" });
     }
     return () => {
       controller.abort();
@@ -78,7 +80,6 @@ const AddSubject: React.FC = () => {
     <>
       <p className="dark:bg-gray-900 text-center font-bold">{state.msg}</p>
       <div className="dark:bg-gray-900 w-[200px]sm:w-[400px] lg:w-[100%] md:w-[100%] w-[350px]">
-        
         <div className="dark:bg-gray-900 grid gap-0 justify-items-center">
           <form
             onSubmit={handleSubmit(handleFormSubmit)}
@@ -92,7 +93,9 @@ const AddSubject: React.FC = () => {
               placeholder="subject name"
               className="dark:bg-gray-900 placeholder:text-center border p-1 border-black border-x-0 border-t-0 border-b-[2px] "
             />
-            <label className="dark:bg-gray-900 text-center font-bold">Select Class</label>
+            <label className="dark:bg-gray-900 text-center font-bold">
+              Select Class
+            </label>
             <label className="dark:bg-gray-900 text-center font-bold opacity-[0.5]">
               You can select multiple
             </label>

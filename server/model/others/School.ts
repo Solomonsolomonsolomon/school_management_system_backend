@@ -23,6 +23,7 @@ const schoolSchema = new mongoose.Schema({
   schoolId: String,
   account_number: String,
   subaccount_code: String,
+  busfees: { type: Number, default: 0  },
   themes: {
     type: themeSchema,
     default: {

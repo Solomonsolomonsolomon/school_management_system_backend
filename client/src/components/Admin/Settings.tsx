@@ -1,5 +1,5 @@
-import GeneralSettings from "./GeneralSettings";
-import VolatileSettings from "./VolatileSettings";
+import GeneralSettings from "./Settings/GeneralSettings";
+import VolatileSettings from "./Settings/VolatileSettings";
 
 const Settings = () => {
   return (

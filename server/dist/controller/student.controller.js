@@ -47,6 +47,7 @@ class StudentController {
         });
     }
     getSingleResult(req, res) {
+        var _a;
         return __awaiter(this, void 0, void 0, function* () {
             let { id, year, term } = req.params;
             console.log(req.params);
@@ -54,13 +55,14 @@ class StudentController {
                 term,
                 year,
                 id,
-            });
+            }).populate("grades.subjectId");
             if (!result)
                 throw new decorators_1.CustomError({}, "no result details found", 404);
             res.status(200).json({
                 msg: "result ",
                 status: 200,
                 result,
+                school: (_a = req.user) === null || _a === void 0 ? void 0 : _a.school,
             });
         });
     }

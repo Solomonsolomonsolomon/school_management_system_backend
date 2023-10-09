@@ -5,11 +5,13 @@ import React from "react";
 import RegisterClass from "../components/Teacher/RegisterSubject";
 import Dashboard from "../components/Teacher/Dashboard";
 import AttendanceManagement from "../components/Teacher/Attendance";
+import Result from "../components/Teacher/Result";
 let components: any = {
   dashboard: Dashboard,
   addstudent: AddStudent,
   registerclass: RegisterClass,
-  computeattendance:AttendanceManagement
+  computeattendance:AttendanceManagement,
+  computeresult:Result
 };
 function Teacher() {
   let [view, setView] = React.useState("dashboard");

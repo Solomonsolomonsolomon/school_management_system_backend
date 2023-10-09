@@ -1,10 +1,11 @@
 import React from "react";
-import axios from "../../api/axios";
-import Loading from "../Loading";
+import axios from "../../../api/axios";
+import Loading from "../../Loading";
 let payUrl = "/paystack";
 let schoolUrl = "/school";
 import { useForm, SubmitHandler } from "react-hook-form";
-import Button from "../Button/Button";
+import WarningComponent from "../../../utils/WarningComponent";
+
 interface ITheme {
   button: string;
   buttonText: string;
@@ -410,7 +411,10 @@ const GeneralSettings = () => {
           </div>
         </div>
       </div>
-
+      <WarningComponent>
+        Please Auto promotion only works when current term is promotion term and
+        teacher generates result{" "}
+      </WarningComponent>
       {/* generate results */}
       <button
         className="bg-blue-500 mt-5 hover:bg-blue-600 hover:text-gray-500  p-[1.0em] text-white  hover:text "
@@ -431,8 +435,8 @@ const ConfirmModal: React.FC<{
   return (
     <>
       {/* to use pass 2 set states confirm modal and confirmable */}
-      <div className="w-full relative z-[10]  overflow-hidden grid bg-inherit  justify-center items-center h-[70vh] opacity-2">
-        <div className="border relative  rounded-2xl shadow-2xl h-fit box-border p-20">
+      <div className="w-full absolute z-[10]  inset-1  overflow-hidden grid bg-inherit  justify-center items-center h-[100vh] dark:bg-gray-800 bg-white ">
+        <div className="border relative opacity-100 dark:bg-gray-800 bg-gray-200 rounded-2xl shadow-2xl h-fit box-border p-20">
           <h1 className="p-5 ">Are you sure you want to generate Results</h1>
           <span className="absolute right-2">
             <button
