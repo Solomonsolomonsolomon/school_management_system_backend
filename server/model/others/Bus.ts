@@ -108,7 +108,9 @@ busSchema.pre("save", async function (next) {
       let bulkOperations: any[] = [];
       this.percentagePaid = 0;
       this.isPaid = false;
+
       this.balance = bus.price;
+      console.log(this.balance);
       let deduct = await Transaction.find({});
       deduct.map((_) => {
         bulkOperations.push({
@@ -134,6 +136,7 @@ busSchema.pre("save", async function (next) {
     //excess balance
     // 0.0150 * this.balance + 100 ;
     if (this.amountPaid > this.balance) {
+      console.log(this.balance, this.amountPaid);
       throw new CustomError(
         {},
         `Cannot deposit amount greater than bus fees balance`,

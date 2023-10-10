@@ -377,7 +377,7 @@ const YearAndTerm: React.FC = () => {
                     {/* ... Your terms table cells ... */}
                     <td>{term.name}</td>
                     <td>{`${term.isCurrent}`}</td>
-                    <td>{`${term.isPromotionTerm}`}</td>
+                    <td>{`${term.isPromotionTerm}`}</td> 
                     <td
                       className="dark:bg-gray-900 px-6 py-4 whitespace-nowrap text-right text-sm font-medium text-blue-500 hover:text-blue-700 cursor-pointer"
                       onClick={() => handleSetCurrentTerm(term._id)}
@@ -419,7 +419,7 @@ const PopUpBot: React.FC<{
       {/* to use pass 2 set states confirm modal and confirmable */}
       <div className="w-full absolute z-[10]  inset-1  overflow-hidden grid bg-inherit  justify-center items-center h-[100vh] dark:bg-gray-800 bg-white ">
         <div className="border relative opacity-100 dark:bg-gray-800 bg-gray-50 rounded-2xl shadow-2xl h-fit box-border p-20">
-          <h1 className="p-5 capitalize">
+          <h1 className="p-5 text-sm">
             Hey there.👋.It's me solaceBot{" "}
             <FontAwesomeIcon icon={faRobot} className="text-blue-600 mx-2" />
             ,I noticed you just set current term,will you like to reset all

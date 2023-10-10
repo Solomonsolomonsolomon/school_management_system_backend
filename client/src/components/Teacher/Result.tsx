@@ -144,7 +144,7 @@ const Result = () => {
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                           {arr[index]?.studentId?.name}
                         </th>
-                        {arr[index]?.grades?.map((grade:any,index:number) => {
+                        {arr[index]?.grades?.map((_:any,_index:number) => {
                           return (
                             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                               {/* {arr[index].subjectId[]} */}

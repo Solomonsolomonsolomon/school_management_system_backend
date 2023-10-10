@@ -11,7 +11,7 @@ import {
   faNetworkWired,
   faStopwatch,
 } from "@fortawesome/free-solid-svg-icons";
-import { faChalkboardUser } from "@fortawesome/free-solid-svg-icons";
+
 import {
   faAdd,
   faUserPlus,
@@ -256,7 +256,11 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
               }}
               className="cursor-pointer hover:shadow-lg hover:transition mr-10 hover:bg-slate-300 p-5 py-1"
             >
-              <FontAwesomeIcon icon={faCrown} size="sm" className="text-orange-400" />
+              <FontAwesomeIcon
+                icon={faCrown}
+                size="sm"
+                className="text-orange-400"
+              />
               <FontAwesomeIcon icon={faBus} size="lg" />
 
               <span className="md:hidden lg:inline xl:inline sm:inline mr-2">
