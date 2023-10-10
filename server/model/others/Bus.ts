@@ -103,6 +103,7 @@ busSchema.pre("save", async function (next) {
         payerId: student._id,
         year: currentAcademicYear._id,
         term: currentAcademicTerm._id,
+        name: "Bus Fees",
       }).save();
     } else {
       let bulkOperations: any[] = [];
@@ -161,6 +162,7 @@ busSchema.pre("save", async function (next) {
       payerId: student._id,
       year: currentAcademicYear,
       term: currentAcademicTerm,
+      name:"Bus Fees"
     }).save();
     this.amountPaid = 0;
     next();

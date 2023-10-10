@@ -31,6 +31,7 @@ class TransactionController {
   getAllTransactions = async (req: Request, res: Response): Promise<any> => {
     let school = req.user?.school;
     let schoolId = req.user?.schoolId;
+    const {term}=req.params;
     const transactions = await Transaction.find({ school, schoolId });
     if (!transactions.length)
       throw new CustomError({}, "no transactions found", 404);

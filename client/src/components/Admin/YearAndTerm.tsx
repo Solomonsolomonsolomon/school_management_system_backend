@@ -307,16 +307,16 @@ const YearAndTerm: React.FC = () => {
               List of Years
             </h1>
             <table className="dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700 overflow-x-auto border">
-              <thead className="dark:bg-gray-900 bg-gray-500">
+              <thead className="dark:bg-gray-900 ">
                 <tr>
                   {/* <th className="dark:bg-gray-900 py-3 px-4 pr-0">Checkbox input</th> */}
-                  <th className="dark:bg-gray-900 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  <th className="dark:bg-gray-900 px-6 py-3  text-left text-xs font-medium text-gray-500 uppercase">
                     Year Name
                   </th>
-                  <th className="dark:bg-gray-900 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  <th className="dark:bg-gray-900 px-6 py-3  text-left text-xs font-medium text-gray-500 uppercase">
                     IS CURRENT
                   </th>
-                  <th className="dark:bg-gray-900 px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
+                  <th className="dark:bg-gray-900 px-6 py-3  text-right text-xs font-medium text-gray-500 uppercase">
                     Actions
                   </th>
                 </tr>
@@ -357,16 +357,16 @@ const YearAndTerm: React.FC = () => {
               <thead className="dark:bg-gray-900 bg-gray-50">
                 <tr>
                   {/* ... Your terms table headers ... */}
-                  <th className="dark:bg-gray-900 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  <th className="dark:bg-gray-900 px-6 py-3  text-left text-xs font-medium text-gray-500 uppercase">
                     Term Name
                   </th>
-                  <th className="dark:bg-gray-900 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  <th className="dark:bg-gray-900 px-6 py-3  text-left text-xs font-medium text-gray-500 uppercase">
                     Current Term
                   </th>
-                  <th className="dark:bg-gray-900 px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                  <th className="dark:bg-gray-900 px-6 py-3  text-left text-xs font-medium text-gray-500 uppercase">
                     Promotion Term
                   </th>
-                  <th className="dark:bg-gray-900 px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">
+                  <th className="dark:bg-gray-900 px-6 py-3  text-right text-xs font-medium text-gray-500 uppercase">
                     Actions
                   </th>
                 </tr>

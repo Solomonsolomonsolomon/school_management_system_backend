@@ -97,13 +97,13 @@ const Result = () => {
           setConfirmModal(true);
           setTracker(Date.now());
         }}
-        className="font-bold  capitalize text-blue-50 cursor-pointer p-3 border bg-green-500 w-fit rounded-xl"
+        className="font-bold  capitalize text-blue-50 cursor-pointer p-3 border bg-blue-500 w-fit rounded"
       >
         compute and view results
       </p>
 
       {/* //preview */}
-      {savePreview.cummulativeData?.length && (
+      {savePreview.cummulativeData?.length ? (
         <>
           <p className="capitalize text-center font-bold">
             cummulative Average(all terms Average)
@@ -144,11 +144,18 @@ const Result = () => {
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                           {arr[index]?.studentId?.name}
                         </th>
-                        {arr[index]?.grades?.map((_:any,_index:number) => {
+                        {arr[index]?.grades?.map((_: any, _index: number) => {
                           return (
-                            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                              {/* {arr[index].subjectId[]} */}
-                            </th>
+                            <>
+                              {arr[index]?.subjectId?.map((subject: any) => {
+                                return (
+                                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+                                    {subject.subject}{" "}
+                                  </th>
+                                );
+                              })}
+                              {index}
+                            </>
                           );
                         })}
                       </tr>
@@ -180,6 +187,8 @@ const Result = () => {
             );
           })}
         </>
+      ) : (
+        ""
       )}
     </>
   );
