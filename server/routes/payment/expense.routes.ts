@@ -7,4 +7,5 @@ router.get(
   "/expense/monthly",
   asyncErrorHandler(expense.getExpenseCountMonthly)
 );
+router.get("/expense/school", asyncErrorHandler(expense.getAllSchoolExpenses));
 export default router;

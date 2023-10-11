@@ -28,4 +28,5 @@ router.delete(
 );
 router.get("/bus/students/all", asyncErrorHandler(bus.getAllStudentsTakingBus));
 router.get("/bus/school/details", asyncErrorHandler(bus.getSchoolDetails));
+router.get("/bus/search", asyncErrorHandler(bus.searchBusStudent));
 export default router;

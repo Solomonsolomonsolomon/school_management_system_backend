@@ -1,6 +1,7 @@
 import axios from "../../api/axios";
 import Button from "../Button/Button";
 import React from "react";
+import AllExpenses from "./Expense/AllExpenses";
 let expenseUrl = "/expense";
 
 const Expense: React.FC = () => {
@@ -16,6 +17,7 @@ const Expense: React.FC = () => {
     error: "",
     success: "",
   });
+  const [trigger, setRetrigger] = React.useState<number>(0);
   function handleAddInput(e: React.ChangeEvent<HTMLInputElement>) {
     setAddInput((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   }
@@ -30,6 +32,7 @@ const Expense: React.FC = () => {
         setMsg({ error: "", success: res.data?.msg });
         console.log(res);
         setAddInput({ name: "", amount: 0 });
+        setRetrigger(Date.now())
       } catch (error: any) {
         setMsg({
           error: error?.response?.data?.msg || error?.message,
@@ -43,8 +46,10 @@ const Expense: React.FC = () => {
   }
   return (
     <>
-      <p>Welcome to the Expense Tracker</p>
-      <p>Track your expense and monitor your spending</p>
+      <p className="text-center text-xl">Welcome to the Expense Tracker</p>
+      <p className="text-center ">
+        Track your expense and monitor your spending
+      </p>
       <p className="text-red-500 text-center">{msg.error}</p>
       <p className="text-green-500 text-center">{msg.success}</p>
       <form
@@ -72,6 +77,11 @@ const Expense: React.FC = () => {
 
         <Button buttontype={0}>Add Expense</Button>
       </form>
+
+      <div>
+        
+        <AllExpenses retrigger={trigger} />
+      </div>
     </>
   );
 };

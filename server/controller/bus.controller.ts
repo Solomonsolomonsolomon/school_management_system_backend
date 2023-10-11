@@ -178,6 +178,22 @@ class BusController {
       schoolDetails,
     });
   }
+  public async searchBusStudent(req: Request, res: Response) {
+    let school = req.user?.school;
+    let schoolId = req.user?.schoolId;
+    let { query } = req.query;
+    let allStudents = await Bus.find({
+      school,
+      schoolId,
+      studentId: { $regex: `(.*)${query}(.*)` },
+    });
+
+    return res.status(200).json({
+      msg: "srarch results",
+      filtered: allStudents,
+      status: 200,
+    });
+  }
 }
 
 export default Object.freeze(new BusController());

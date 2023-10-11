@@ -161,6 +161,11 @@ const AllStudentsTakingBus: React.FC<any> = ({ setView }) => {
 
         <div className="w-[380px] lg:w-full md:w-full sm:w-full mb-10">
           <div className="overflow-x-auto w-full rounded">
+            <div className="search ">
+              <input type="search" name="" id="" className="border p-3 border-gray-600  bg-inherit w-[80%]"  />
+              <button className="bg-blue-400 p-3 rounded text-white w-fit">Search</button>
+            </div>
+
             <table className="divide-y divide-gray-200 dark:divide-gray-700 overflow-x-auto border rounded">
               <thead className="bg-gray-50 dark:bg-gray-700 rounded border">
                 <tr>
@@ -499,6 +504,7 @@ const BusFees: React.FC<{
           <h1 className="p-5 ">Pay school fees for {selected?.id?.name}</h1>
           <p className="px-5 pb-2 ">balance:{selected?.balance}</p>
           <span className="absolute right-2"></span>
+
           <form action="" className="  border-black w-full" onSubmit={PayFees}>
             <input
               type="number"
