@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Transaction = void 0;
+exports.Expense = void 0;
 const mongoose_1 = require("mongoose");
 let instance;
-class TransactionSchema {
+class ExpenseSchema {
     constructor() {
         if (instance)
             return instance;
@@ -11,8 +11,8 @@ class TransactionSchema {
     }
     schema() {
         return new mongoose_1.Schema({
-            payerId: {
-                type: mongoose_1.Schema.Types.ObjectId,
+            name: {
+                type: String,
             },
             amountPaid: {
                 type: Number,
@@ -20,11 +20,10 @@ class TransactionSchema {
             },
             school: String,
             schoolId: String,
-            name: String,
             status: {
                 type: String,
                 enum: ["success", "failed", "pending", "reversed", "complete"],
-                default: "pending",
+                default: "success",
             },
             year: {
                 type: mongoose_1.Schema.Types.ObjectId,
@@ -36,14 +35,23 @@ class TransactionSchema {
                 ref: "AcademicTerm",
                 required: true,
             },
+            createdBy: {
+                type: mongoose_1.Schema.Types.ObjectId,
+                ref: "Admin",
+            },
             month: {
                 type: Number,
                 default: new Date().getMonth(),
+            },
+            fees: {
+                type: Number,
+                default: 0,
             },
         }, {
             timestamps: true,
         });
     }
 }
-let Transaction = (0, mongoose_1.model)("Transaction", new TransactionSchema().schema());
-exports.Transaction = Transaction;
+let Expense = (0, mongoose_1.model)("Expense", new ExpenseSchema().schema());
+exports.Expense = Expense;
+Expense.syncIndexes();

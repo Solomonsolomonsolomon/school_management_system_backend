@@ -373,6 +373,7 @@ studentSchema.pre("save", function (next) {
                     payerId: this._id,
                     year: this.academicYear,
                     term: this.currentAcademicTerm,
+                    name: "School Fees",
                 }).save();
             }
             else {
@@ -401,10 +402,10 @@ studentSchema.pre("save", function (next) {
             }
         }
         if (this.isDirectModified("amount")) {
-            console.log("1");
             console.log(this.amount);
             const total = classLevel.price;
             //excess balance
+            // 0.0150 * this.balance + 100 ;
             if (this.amount > this.balance) {
                 throw new decorators_1.CustomError({}, `Cannot deposit amount greater than school fees`, 400);
             }
@@ -428,6 +429,7 @@ studentSchema.pre("save", function (next) {
                 payerId: this._id,
                 year: this.academicYear,
                 term: this.currentAcademicTerm,
+                name: "School Fees",
             }).save();
             this.amount = 0;
             next();

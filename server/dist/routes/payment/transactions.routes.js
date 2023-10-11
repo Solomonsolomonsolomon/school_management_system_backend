@@ -14,4 +14,5 @@ transactionRouter.get("/transaction/get/student/:_id", (0, globalErrorHandler_1.
 transactionRouter.get("/transaction/get/total", (0, globalErrorHandler_1.default)(transaction.getTotalAmountFromCompletedTransactions));
 transactionRouter.get("transaction/complete", (0, globalErrorHandler_1.default)(transaction.getAllCompletedTransactions));
 transactionRouter.get("/transaction/monthly", (0, globalErrorHandler_1.default)(transaction.getTotalAmountAndMonthPaid));
+transactionRouter.get("/transaction/ratio/earnings/expense", transaction.getRatioOfEarningsToExpense);
 exports.default = transactionRouter;

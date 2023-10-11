@@ -102,6 +102,7 @@ const paystack = (() => {
                     let student = yield database_1.Student.findOne({
                         email: event.data.customer.email,
                     });
+                    console.log(event.data);
                     if (student) {
                         student.amount = ((_b = (_a = event.data) === null || _a === void 0 ? void 0 : _a.fees_split) === null || _b === void 0 ? void 0 : _b.subaccount) / 100;
                         yield student.save();

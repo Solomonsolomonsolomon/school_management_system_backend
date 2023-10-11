@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.countParents = exports.editTeacher = exports.editStudent = exports.countTeachers = exports.getGenderDivide = exports.getAllTeachers = exports.getAllStudents = exports.getAllAdmin = exports.deleteTeacher = exports.deleteStudent = exports.deleteAdmin = exports.addStudent = exports.addTeacher = exports.addAdmin = void 0;
+exports.resetSchoolTransaction = exports.countParents = exports.editTeacher = exports.editStudent = exports.countTeachers = exports.getGenderDivide = exports.getAllTeachers = exports.getAllStudents = exports.getAllAdmin = exports.deleteTeacher = exports.deleteStudent = exports.deleteAdmin = exports.addStudent = exports.addTeacher = exports.addAdmin = void 0;
 const decorators_1 = require("../middleware/decorators");
 const database_1 = require("./../model/database");
 function addAdmin(req, res, next) {
@@ -324,6 +324,7 @@ function getGenderDivide(req, res) {
                 females,
                 males,
                 totalStudents: totalStudents.length,
+                ratio: [males, females],
             });
         }
         catch (error) {
@@ -410,3 +411,35 @@ function countParents(req, res) {
     });
 }
 exports.countParents = countParents;
+function resetSchoolTransaction(req, res) {
+    var _a, _b, _c, _d;
+    return __awaiter(this, void 0, void 0, function* () {
+        const bulkOperations = [];
+        let allStudents = yield database_1.Student.find({
+            school: (_a = req.user) === null || _a === void 0 ? void 0 : _a.school,
+            schoolId: (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId,
+        });
+        for (let i = 0; i <= allStudents.length - 1; i++) {
+            let cl = yield database_1.ClassLevel.findOne({ name: allStudents[i].className });
+            bulkOperations.push({
+                updateOne: {
+                    filter: {
+                        school: (_c = req.user) === null || _c === void 0 ? void 0 : _c.school,
+                        schoolId: (_d = req.user) === null || _d === void 0 ? void 0 : _d.schoolId,
+                        _id: allStudents[i]._id,
+                    },
+                    update: {
+                        $set: { isPaid: false, balance: cl === null || cl === void 0 ? void 0 : cl.price, percentagePaid: 0 },
+                    },
+                },
+            });
+        }
+        console.log(bulkOperations);
+        yield database_1.Student.bulkWrite(bulkOperations);
+        return res.status(200).json({
+            msg: 200,
+            status: "successful ",
+        });
+    });
+}
+exports.resetSchoolTransaction = resetSchoolTransaction;

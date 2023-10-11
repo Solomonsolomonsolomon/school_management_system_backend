@@ -42,6 +42,11 @@ const academicTermSchema = new mongoose_1.Schema({
         default: false,
         required: true,
     },
+    isPromotionTerm: {
+        type: Boolean,
+        default: false,
+        required: true,
+    },
     createdBy: {
         type: mongoose_1.default.Schema.Types.ObjectId,
         ref: "Admin",
@@ -52,7 +57,7 @@ const academicTermSchema = new mongoose_1.Schema({
     },
     schoolId: {
         type: String,
-        required: true
+        required: true,
     },
     plan: {
         type: String,

@@ -136,5 +136,22 @@ class ClassLevelController {
             });
         });
     }
+    editClassPrice(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const { id } = req.params;
+            let { price } = req.body;
+            let classToEdit = yield database_1.ClassLevel.findById(id);
+            if (!classToEdit)
+                throw new Error("cannot find class");
+            let version = classToEdit.__v;
+            classToEdit.price = price;
+            classToEdit.__v = version;
+            yield classToEdit.save();
+            return res.status(200).json({
+                msg: "edit successful",
+                status: 200,
+            });
+        });
+    }
 }
 exports.default = ClassLevelController;

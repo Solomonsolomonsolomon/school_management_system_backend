@@ -37,9 +37,9 @@ let term = new academicterm_controller_1.default();
 let year = new academicyear_controller_1.default();
 let classLevel = new classLevel_controller_1.default();
 const admin_controller_1 = require("../../controller/admin.controller");
-const { addATerm, deleteTerm, setCurrentTerm, getAllTerms, getCurrentTerm } = term;
+const { addATerm, deleteTerm, setCurrentTerm, getAllTerms, getCurrentTerm, setPromotionTerm, ResetAllTransactionsOnTermChange, } = term;
 const { addAcademicYear, addYearAutomatically, getAllYears, getCurrentYear, deleteYear, setCurrentYear, } = year;
-const { createClassLevel, deleteClassLevel, getAllClassLevels } = classLevel;
+const { createClassLevel, deleteClassLevel, getAllClassLevels, editClassPrice, } = classLevel;
 //#adding users
 adminRouter.post("/admin/add/admin", admin_controller_1.addAdmin);
 adminRouter.post("/admin/add/teacher", (0, globalErrorHandler_1.default)(admin_controller_1.addTeacher));
@@ -65,6 +65,8 @@ adminRouter.post("/admin/term/add", (0, globalErrorHandler_1.default)(addATerm))
 adminRouter.post("/admin/term/:id/set/current", (0, globalErrorHandler_1.default)(setCurrentTerm));
 adminRouter.delete("/admin/term/:id/delete", (0, globalErrorHandler_1.default)(deleteTerm));
 adminRouter.get("/admin/term/get/current", (0, globalErrorHandler_1.default)(getCurrentTerm));
+adminRouter.put("/admin/term/:id/set/promotion", (0, globalErrorHandler_1.default)(setPromotionTerm));
+adminRouter.put("/admin/term/transactions/reset", (0, globalErrorHandler_1.default)(ResetAllTransactionsOnTermChange));
 //# year
 adminRouter.post("/admin/year/add", (0, globalErrorHandler_1.default)(addAcademicYear));
 //addYearAutomatically(); //automatically adds Year first of september
@@ -76,4 +78,6 @@ adminRouter.post("/admin/year/:id/set/current", (0, globalErrorHandler_1.default
 adminRouter.get("/admin/class/get/all", (0, globalErrorHandler_1.default)(getAllClassLevels));
 adminRouter.post("/admin/class/new", (0, globalErrorHandler_1.default)(createClassLevel));
 adminRouter.delete("/admin/class/:id/delete", (0, globalErrorHandler_1.default)(deleteClassLevel));
+adminRouter.put("/admin/class/price/edit/:id/", (0, globalErrorHandler_1.default)(editClassPrice));
+adminRouter.get("/admin/reset/student/transaction/", (0, globalErrorHandler_1.default)(admin_controller_1.resetSchoolTransaction));
 exports.default = adminRouter;

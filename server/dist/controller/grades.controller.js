@@ -23,6 +23,7 @@ function addGrades(req, res) {
             const { studentId } = req.params;
             const studentID = new mongoose_1.Types.ObjectId(studentId);
             const subjectID = new mongoose_1.Types.ObjectId(subjectId);
+            const className = yield database_1.Student.findById(studentID);
             let currentTerm = yield database_1.AcademicTerm.findOne({
                 school,
                 schoolId,
@@ -47,6 +48,7 @@ function addGrades(req, res) {
                 studentId,
                 year: currentYear,
                 term: currentTerm,
+                className: className === null || className === void 0 ? void 0 : className.className,
                 school,
                 schoolId,
             });
@@ -55,6 +57,7 @@ function addGrades(req, res) {
                 //create new grade
                 const newGradesObject = new database_1.Grades({
                     studentId: studentID,
+                    className: className === null || className === void 0 ? void 0 : className.className,
                     year: currentYear,
                     term: currentTerm,
                     school,
