@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { CustomError } from "../middleware/decorators";
-import { Transaction, Student } from "../model/database";
+import { Transaction, Student, AcademicTerm } from "../model/database";
 import { Expense } from "../model/others/Expense";
 
 class TransactionController {
@@ -29,10 +29,25 @@ class TransactionController {
   };
   // Get all transactions
   getAllTransactions = async (req: Request, res: Response): Promise<any> => {
+    interface IFilter {
+      school: string;
+      term?: any;
+      schoolId?: string;
+    }
     let school = req.user?.school;
     let schoolId = req.user?.schoolId;
-    const {term}=req.params;
-    const transactions = await Transaction.find({ school, schoolId });
+    const { term } = req.params;
+    const filter: IFilter = { school, schoolId };
+    if (term) {
+      let filterTerm = await AcademicTerm.findOne({
+        school,
+        schoolId,
+        isCurrent: true,
+      });
+      if (!filterTerm) throw new CustomError({}, "term not found", 500);
+      filter.term = filterTerm._id;
+    }
+    const transactions = await Transaction.find(filter);
     if (!transactions.length)
       throw new CustomError({}, "no transactions found", 404);
     return res.status(200).json({ msg: "all transactions", transactions });
@@ -43,7 +58,27 @@ class TransactionController {
     res: Response
   ): Promise<any> => {
     const { _id } = req.params;
-    const transactions = await Transaction.find({ payerId: _id });
+    let { term, status } = req.query;
+    interface Ifilter {
+      payerId: any;
+      term?: any;
+      status?: any;
+    }
+    const filter: Ifilter = { payerId: _id };
+    let school = req.user?.school;
+    let schoolId = req.user?.schoolId;
+    if (term) {
+      let filterTerm = await AcademicTerm.findOne({
+        school,
+        schoolId,
+        isCurrent: true,
+      });
+
+      if (!filterTerm) throw new Error("current term not found");
+      filter.term = filterTerm._id;
+    }
+    if (status) filter.status = status;
+    const transactions = await Transaction.find(filter);
     res.status(200).json({
       msg: "completed transactions",
       status: 200,
@@ -79,6 +114,7 @@ class TransactionController {
       school,
       schoolId,
     });
+
     // Calculate the total amount
     const totalAmount: number = completedTransactions.reduce(
       (sum, transaction) => sum + transaction.amountPaid,

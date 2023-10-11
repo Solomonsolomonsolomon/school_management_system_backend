@@ -1,6 +1,7 @@
 import React from "react";
 import Loading from "../Loading";
 import { noTimeOutInstance as axios } from "../../api/axios";
+import WarningComponent from "../../utils/WarningComponent";
 let resultUrl = "/result";
 
 let parsed: any = {
@@ -45,6 +46,7 @@ const Result = () => {
           setMsg(res.data?.msg);
           setErr("");
           console.log(res?.data?.results.cummulativeScore);
+          console.log(res?.data)
           setSavePreview({
             cummulativeData: res?.data?.results?.cummulativeScore?.sort(
               (a: any, b: any) => b.totalScore - a.totalScore
@@ -97,7 +99,7 @@ const Result = () => {
           setConfirmModal(true);
           setTracker(Date.now());
         }}
-        className="font-bold  capitalize text-blue-50 cursor-pointer p-3 border bg-blue-500 w-fit rounded"
+        className="font-bold mt-2 capitalize text-blue-50 cursor-pointer p-3 border bg-blue-500 w-fit rounded"
       >
         compute and view results
       </p>
@@ -105,59 +107,148 @@ const Result = () => {
       {/* //preview */}
       {savePreview.cummulativeData?.length ? (
         <>
-          <p className="capitalize text-center font-bold">
+          <p className="capitalize text-center font-bold mt-2">
             cummulative Average(all terms Average)
           </p>
-          {savePreview.cummulativeData?.map((data, i) => {
-            return (
-              <>
-                <p>
-                  {data.name}{" "}
-                  <span>
-                    <span className="font-bold px-3">{data.average}</span> :
+          <WarningComponent>
+            the average below is a combination of all terms not just the current
+            term
+          </WarningComponent>
+          <div className="mt-2">
+            {savePreview.cummulativeData?.map((data, i) => {
+              return (
+                <>
+                  <p>
+                    {data.name}{" "}
                     <span>
-                      {" "}
-                      <span className="opacity-50">
-                        in {data.totalTerms}
-                      </span>{" "}
-                      {data.totalTerms === 1 ? "term" : "terms"}
+                      <span className="font-bold px-3 ">{data.average}</span> :
+                      <span>
+                        {" "}
+                        <span className="opacity-50">
+                          in {data.totalTerms}
+                        </span>{" "}
+                        {data.totalTerms === 1 ? "term" : "terms"}
+                      </span>
+                      <span className="text-green-500 p-2 ml-1">
+                        {" "}
+                        {i === 0 ? "HIGHEST" : ""}
+                      </span>
                     </span>
-                    <span className="text-green-500 p-2 ml-1">
-                      {" "}
-                      {i === 0 ? "HIGHEST" : ""}
-                    </span>
-                  </span>
-                </p>
-              </>
-            );
-          })}
+                  </p>
+                </>
+              );
+            })}
+          </div>
+          <p className="bg-blue-300 p-2 text-center text-white mb-2 ">
+            Preview
+          </p>
           {/* terms result */}
           {savePreview.groupedData?.map<any>((_, index: number, arr: any[]) => {
             // console.log(arr[index]);
+
             return (
               <>
                 <div className="overflow-x-auto">
                   <table className="divide-y divide-gray-200 dark:divide-gray-700 overflow-x-auto border">
                     <thead className="bg-gray-50 dark:bg-gray-700">
                       {/* table head */}
+                      <p>overall grade:{arr[index]?.overallGrade}</p>
+                      <p>position:{arr[index]?.position}</p>
                       <tr>
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                           {arr[index]?.studentId?.name}
                         </th>
-                        {arr[index]?.grades?.map((_: any, _index: number) => {
-                          return (
-                            <>
-                              {arr[index]?.subjectId?.map((subject: any) => {
-                                return (
-                                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                                    {subject.subject}{" "}
-                                  </th>
-                                );
-                              })}
-                              {index}
-                            </>
-                          );
-                        })}
+                        {arr[index]?.subjectId
+                          .slice() // Create a copy of the subjectId array for sorting
+                          .sort((a: any, b: any) => a._id.localeCompare(b._id))
+                          .map((subject: any) => (
+                            <th
+                              key={subject._id} // It's a good practice to provide a unique key for React
+                              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"
+                            >
+                              {subject.subject}
+                            </th>
+                          ))}
+                      </tr>
+                      <tr>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
+                          CA1
+                        </td>
+                        {arr[index]?.grades
+                          .slice() // Create a copy of the subjectId array for sorting
+                          .sort((a: any, b: any) => a._id.localeCompare(b._id))
+                          .map((subject: any) => (
+                            <th
+                              key={subject?._id} // It's a good practice to provide a unique key for React
+                              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"
+                            >
+                              {subject?.CA1}
+                            </th>
+                          ))}
+                      </tr>
+                      <tr>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
+                          CA2
+                        </td>
+                        {arr[index]?.grades
+                          .slice() // Create a copy of the subjectId array for sorting
+                          .sort((a: any, b: any) => a._id.localeCompare(b._id))
+                          .map((subject: any) => (
+                            <th
+                              key={subject._id + "CA2"} // It's a good practice to provide a unique key for React
+                              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"
+                            >
+                              {subject?.CA2}
+                            </th>
+                          ))}
+                      </tr>
+                      <tr>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
+                          CA3
+                        </td>
+                        {arr[index]?.grades
+                          .slice() // Create a copy of the subjectId array for sorting
+                          .sort((a: any, b: any) => a._id.localeCompare(b._id))
+                          .map((subject: any) => (
+                            <th
+                              key={subject._id + "CA2"} // It's a good practice to provide a unique key for React
+                              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"
+                            >
+                              {subject?.CA3}
+                            </th>
+                          ))}
+                      </tr>
+                      <tr>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
+                          EXAMS
+                        </td>
+                        {arr[index]?.grades
+                          .slice() // Create a copy of the subjectId array for sorting
+                          .sort((a: any, b: any) => a._id.localeCompare(b._id))
+                          .map((subject: any) => (
+                            <th
+                              key={subject._id + "CA2"} // It's a good practice to provide a unique key for React
+                              className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase"
+                            >
+                              {subject?.examScore}
+                            </th>
+                          ))}
+                      </tr>
+                      <tr>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200 bg-blue-300">
+                          TOTAL
+                        </td>
+                        {arr[index]?.grades
+                          .slice() // Create a copy of the subjectId array for sorting
+                          .sort((a: any, b: any) => a._id.localeCompare(b._id))
+                          .map((subject: any) => (
+                            <th
+                              key={subject._id + "total"} // It's a good practice to provide a unique key for React
+                              className="px-6 py-3 bg-blue-300 text-left text-xs font-medium text-gray-500 uppercase"
+                            >
+                              {subject?.total}
+                            </th>
+                          ))}
                       </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
