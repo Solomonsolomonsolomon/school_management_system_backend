@@ -15,4 +15,8 @@ router.put(
   "/attendance/edit/:id/:className",
   asyncErrorHandler(attendance.EditAttendanceDetails)
 );
+router.get(
+  "/attendance/percentage/:id",
+  asyncErrorHandler(attendance.getAttendancePercentage)
+);
 export default router;

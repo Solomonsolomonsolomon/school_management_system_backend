@@ -38,7 +38,7 @@ const AllStudentsTakingBus: React.FC<any> = ({ setView }) => {
       try {
         setLoading(true);
         let res = await axios.get(
-          `${busUrl}/students/all?pageSize=4&page=${page}`,
+          `${busUrl}/students/all?pageSize=7&page=${page}`,
           {
             signal: controller.signal,
           }

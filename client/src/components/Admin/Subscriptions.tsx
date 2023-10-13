@@ -27,7 +27,7 @@ const Subscription: React.FC = () => {
         });
       } catch (error) {}
     })();
-  });
+  },[]);
   return (
     <>
       <div>

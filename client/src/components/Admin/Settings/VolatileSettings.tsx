@@ -2,11 +2,15 @@ import React from "react";
 import axios from "../../../api/axios";
 import Loading from "../../Loading";
 import WarningComponent from "../../../utils/WarningComponent";
+import Button from "../../Button/Button";
 const adminUrl = "/admin";
+import DeleteGrade from "../DeleteGrade";
 const VolatileSettings: React.FC = () => {
   const [confirmable, setConfirmable] = React.useState<boolean>(false);
   const [confirmModal, setConfirmModal] = React.useState<boolean>(false);
   const [loading, setLoading] = React.useState<boolean>(false);
+  let [openDeleteGradeModal, setOpenDeleteGradeModal] =
+    React.useState<boolean>(false);
 
   let msgRef = React.useRef<HTMLParagraphElement>(null);
   let [clear, setClear] = React.useState<number>(0);
@@ -47,8 +51,10 @@ const VolatileSettings: React.FC = () => {
       <ClearModal confirmable={setConfirmable} confirmModal={setConfirmModal} />
     );
   if (loading) return <Loading />;
+  if(openDeleteGradeModal)return <DeleteGrade setOpenDeleteGradeModal={setOpenDeleteGradeModal}/>
   return (
-    <>
+    <div className="ml-2">
+    
       <h1 className="text-red-800 font-bold uppercase text-center">
         Volatile Settings
       </h1>
@@ -72,7 +78,20 @@ const VolatileSettings: React.FC = () => {
           clear
         </button>
       </div>
-    </>
+      <div>
+        <label htmlFor="" className="mr-2">
+          Delete Student Grade
+        </label>
+        <Button
+          buttontype={2}
+          onClick={() => {
+            setOpenDeleteGradeModal(true);
+          }}
+        >
+          Delete
+        </Button>
+      </div>
+    </div>
   );
 };
 

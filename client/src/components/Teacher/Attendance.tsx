@@ -159,16 +159,15 @@ const AttendanceManagement: React.FC = () => {
   if (isLoading) return <Loading />;
   return (
     <div>
-      <h1 className="text-center font-bold">Attendance Management</h1>
-      <p ref={msgRef} className="font-bold text-center capitalize"></p>
+      <h1 className="text-center font-bold text-2xl text-gray-700">
+        Attendance Management System..please select student
+      </h1>
+      {/* <p ref={msgRef} className="font-bold text-center capitalize"></p> */}
       <p className="font-bold text-center capitalize text-sm ">{msg}</p>
       <div>
-        <h2 className="text-center italic font-bold text-xs">
-          Select a Student
-        </h2>
         <input
           type="search"
-          className="border dark:bg-gray-900 border-black  rounded-2xl p-2 w-full"
+          className="border dark:bg-gray-900 border-black   p-3 w-full rounded"
           value={query}
           onChange={(e) => {
             setQuery(e.target.value);
@@ -177,9 +176,15 @@ const AttendanceManagement: React.FC = () => {
           placeholder={`search student...`}
           ref={focusRef}
         />
+
         <ul className="mt-4">
+          <p>Students</p>
           {filtered.map((student) => (
-            <li key={student._id} onClick={() => handleStudentSelect(student)}>
+            <li
+              className="text-blue-500 cursor-pointer"
+              key={student._id}
+              onClick={() => handleStudentSelect(student)}
+            >
               {student.name}
             </li>
           ))}
@@ -240,7 +245,7 @@ const AttendanceManagement: React.FC = () => {
                       <div className="rounded h-[200px]">
                         <div className="overflow-x-auto  rounded bg-white">
                           <table className="divide-y divide-gray-200 dark:divide-gray-700 overflow-x-auto border rounded">
-                            <thead className="bg-gray-50 dark:bg-gray-700 rounded border">
+                            <thead className=" dark:bg-gray-700 rounded border">
                               <tr>
                                 <th className="py-3 px-4 pr-0">
                                   {/* Checkbox input */}

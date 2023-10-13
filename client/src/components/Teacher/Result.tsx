@@ -2,6 +2,7 @@ import React from "react";
 import Loading from "../Loading";
 import { noTimeOutInstance as axios } from "../../api/axios";
 import WarningComponent from "../../utils/WarningComponent";
+import DeleteResult from "./DeleteResult";
 let resultUrl = "/result";
 
 let parsed: any = {
@@ -32,7 +33,8 @@ const Result = () => {
     groupedData: [],
   });
   let [track, setTracker] = React.useState<number>(0);
-
+  let [openDeleteResultModal, setOpenDeleteResultModal] =
+    React.useState<boolean>(false);
   let [msg, setMsg] = React.useState<string>("");
   let [err, setErr] = React.useState<string>("");
   React.useEffect(() => {
@@ -46,7 +48,7 @@ const Result = () => {
           setMsg(res.data?.msg);
           setErr("");
           console.log(res?.data?.results.cummulativeScore);
-          console.log(res?.data)
+          console.log(res?.data);
           setSavePreview({
             cummulativeData: res?.data?.results?.cummulativeScore?.sort(
               (a: any, b: any) => b.totalScore - a.totalScore
@@ -66,6 +68,7 @@ const Result = () => {
     }
   }, [confirmable, track]);
   if (loading) return <Loading />;
+  if(openDeleteResultModal)return <DeleteResult setOpenDeleteResultModal={setOpenDeleteResultModal}/>
   if (confirmModal)
     return (
       <ConfirmModal
@@ -103,7 +106,17 @@ const Result = () => {
       >
         compute and view results
       </p>
-
+      <p
+        onClick={() => {
+          setMsg("");
+          setErr("");
+          setSavePreview({ cummulativeData: [], groupedData: [] });
+           setOpenDeleteResultModal(true)
+        }}
+        className="font-bold mt-2 capitalize text-blue-50 cursor-pointer p-3 border bg-red-500 w-fit rounded"
+      >
+        Delete A Result
+      </p>
       {/* //preview */}
       {savePreview.cummulativeData?.length ? (
         <>

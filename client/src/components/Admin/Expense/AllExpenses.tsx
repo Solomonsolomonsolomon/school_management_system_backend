@@ -7,22 +7,44 @@ const expenseUrl = "/expense";
 
 const AllExpenses: React.FC<IExpenses> = ({ retrigger }) => {
   let [expenses, setExpenses] = React.useState<any[]>([]);
+  let [page, setCurrentPage] = React.useState<number>(1);
+  let [totalPages, setTotalPages] = React.useState<number>(1);
+  function pagesRender() {
+    let el = [];
+    for (let i = 1; i <= totalPages; i++) {
+      el.push(
+        <span
+          key={i}
+          className={`1ml-2  px-2 ${
+            page === i ? "bg-blue-900 text-white" : ""
+          } bg-blue-50  rounded-full`}
+          onClick={() => {
+            setCurrentPage(i);
+          }}
+        >
+          {i}
+        </span>
+      );
+    }
+    return el;
+  }
   React.useEffect(() => {
     (async () => {
       try {
+        console.log(page)
         let res = await axios.get(
-          `${expenseUrl}/school?month=true&term=true&year=true`
+          `${expenseUrl}/school?month=true&term=true&year=true&pageSize=5&page=${page}`
         );
-
+        setTotalPages(res?.data?.totalPages);
         setExpenses(res?.data?.expenses);
       } catch (error) {}
     })();
-  }, [retrigger]);
+  }, [retrigger,page]);
   return (
     <>
-      <h1 className="font-bold text-center text-xl">All Expenses</h1>
-      <div className="rounded ">
-        <div className="overflow-x-auto w-full rounded">
+      <h1 className="font-bold text-center text-xl ">All Expenses</h1>
+      <div className="rounded mb-20 ">
+        <div className="overflow-x-auto w-[100vw] rounded relative">
           <table className="divide-y divide-gray-200 dark:divide-gray-700 overflow-x-auto border rounded">
             <thead className="bg-gray-50 dark:bg-gray-700 rounded border">
               <tr>
@@ -66,6 +88,10 @@ const AllExpenses: React.FC<IExpenses> = ({ retrigger }) => {
             </tbody>
           </table>
         </div>
+        <section className="flex flex-wrap justify-start mt-20 gap-4 bg-white dark:bg-gray-900 p-4  absolute bottom-0 ">
+          {" "}
+          pages:{pagesRender()}
+        </section>
       </div>
     </>
   );
