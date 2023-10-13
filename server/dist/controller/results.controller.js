@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.autoPromote = exports.teacherGenerateResult = exports.genResult = exports.calcResultAndCummulativeAndAutoPromote = exports.calcResultAndCummulative = exports.calcResult = void 0;
+exports.DeleteResult = exports.autoPromote = exports.teacherGenerateResult = exports.genResult = exports.calcResultAndCummulativeAndAutoPromote = exports.calcResultAndCummulative = exports.calcResult = void 0;
 const database_1 = require("../model/database");
 const lodash_1 = __importDefault(require("lodash"));
 const decorators_1 = require("../middleware/decorators");
@@ -614,3 +614,40 @@ exports.autoPromote = autoPromote;
 //   console.error("Error updating examResults:", err);
 // }
 //}
+function DeleteResult(req, res) {
+    var _a, _b, _c;
+    return __awaiter(this, void 0, void 0, function* () {
+        let { id } = req.params;
+        const className = ((_a = req.user) === null || _a === void 0 ? void 0 : _a.formTeacher) || "not a form teacher";
+        const school = (_b = req.user) === null || _b === void 0 ? void 0 : _b.school;
+        let schoolId = (_c = req.user) === null || _c === void 0 ? void 0 : _c.schoolId;
+        let currentYear = yield database_1.AcademicYear.findOne({
+            school,
+            schoolId,
+            isCurrent: true,
+        });
+        let currentTerm = yield database_1.AcademicTerm.findOne({
+            school,
+            schoolId,
+            isCurrent: true,
+        });
+        if (!currentTerm || !currentYear)
+            throw new decorators_1.CustomError({}, "either current term or current term not set", 400);
+        // console.log(,"6512473a6402d7f6a807af3b", student?._id,);
+        let result = yield database_1.Result.deleteMany({
+            school,
+            schoolId,
+            year: currentYear === null || currentYear === void 0 ? void 0 : currentYear._id,
+            // term: currentTerm?._id,
+            studentId: id,
+            class: className,
+        });
+        if (!result)
+            throw new decorators_1.CustomError({}, "Result not found  for student for current year ", 404);
+        return res.status(200).json({
+            msg: "successful deletion ",
+            status: 200,
+        });
+    });
+}
+exports.DeleteResult = DeleteResult;

@@ -122,5 +122,52 @@ class ExpenseController {
             });
         });
     }
+    getAllSchoolExpenses(req, res) {
+        var _a, _b, _c, _d;
+        return __awaiter(this, void 0, void 0, function* () {
+            const { term, month, year } = req.query;
+            const school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
+            let schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
+            const totalExpenses = yield Expense_1.Expense.countDocuments({ school, schoolId });
+            const page = parseInt(req.query.page) || 1;
+            const pageSize = parseInt(req.query.pageSize) || 10;
+            const skip = (page - 1) * pageSize;
+            const totalPages = Math.ceil(totalExpenses / pageSize);
+            const filter = {
+                school: (_c = req.user) === null || _c === void 0 ? void 0 : _c.school,
+                schoolId: (_d = req.user) === null || _d === void 0 ? void 0 : _d.schoolId,
+            };
+            if (term) {
+                const currentTerm = yield database_1.AcademicTerm.findOne({
+                    school,
+                    schoolId,
+                    isCurrent: true,
+                });
+                filter.term = currentTerm === null || currentTerm === void 0 ? void 0 : currentTerm._id;
+            }
+            if (year) {
+                const currentYear = yield database_1.AcademicYear.findOne({
+                    school,
+                    schoolId,
+                    isCurrent: true,
+                });
+                filter.year = currentYear === null || currentYear === void 0 ? void 0 : currentYear._id;
+            }
+            if (month)
+                filter.month = new Date().getMonth();
+            let expenses = yield Expense_1.Expense.find(filter)
+                .skip(skip)
+                .limit(pageSize)
+                .populate("createdBy")
+                .select("name amountPaid createdAt.name school");
+            return res.status(200).json({
+                msg: "all students",
+                status: 200,
+                expenses,
+                totalPages,
+                page,
+            });
+        });
+    }
 }
 exports.default = Object.freeze(new ExpenseController());

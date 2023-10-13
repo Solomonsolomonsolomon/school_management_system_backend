@@ -28,7 +28,7 @@ function managedStudents(req, res, next) {
             className: formTeacher,
             school,
             schoolId,
-        }).select("name _id formTeacher school email age className studentId gender parent ");
+        }).select("name _id formTeacher school email age className studentId gender parent isPaid balance percentagePaid ");
         if (!formStudents.length)
             throw new decorators_1.CustomError({}, "NO students yet..When registered they will be assigned to you", 404);
         res.status(200).json({

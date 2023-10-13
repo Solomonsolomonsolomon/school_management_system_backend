@@ -67,7 +67,7 @@ class AttendanceController {
                 schoolId,
                 isCurrent: true,
             });
-            let term = yield database_1.AcademicYear.findOne({
+            let term = yield database_1.AcademicTerm.findOne({
                 school,
                 schoolId,
                 isCurrent: true,
@@ -147,6 +147,50 @@ class AttendanceController {
             });
         });
     }
+    getAttendancePercentage(req, res) {
+        var _a, _b;
+        return __awaiter(this, void 0, void 0, function* () {
+            let { id } = req.params;
+            let school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
+            let schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
+            let year = yield database_1.AcademicYear.findOne({
+                school,
+                schoolId,
+                isCurrent: true,
+            });
+            let term = yield database_1.AcademicTerm.findOne({
+                school,
+                schoolId,
+                isCurrent: true,
+            });
+            if (!year || !term)
+                throw new decorators_1.CustomError({}, "set current year and term", 400);
+            let attendance = yield Attendance_1.default.findOne({
+                school,
+                schoolId,
+                studentId: id,
+                year: year._id,
+                //term: term._id,
+            });
+            let attendancePercentage = 0;
+            let completed = 0;
+            if (!attendance) {
+                attendancePercentage = 100;
+            }
+            else {
+                for (let record of attendance.attendanceDetails) {
+                    if (record.status === "present" || record.status === "excused")
+                        completed++;
+                }
+                attendancePercentage =
+                    (completed / attendance.attendanceDetails.length) * 100;
+            }
+            return res
+                .status(200)
+                .json({ msg: "", percentage: attendancePercentage, status: 200 });
+        });
+    }
 }
 let attendance = Object.freeze(new AttendanceController());
 exports.attendance = attendance;
+/* 5/10 *100*/

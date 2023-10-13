@@ -16,4 +16,5 @@ router.put("/bus/modify/student/details/:studentId", (0, globalErrorHandler_1.de
 router.delete("/bus/delete/:studentId", (0, globalErrorHandler_1.default)(bus_controller_1.default.deleteSingleStudent));
 router.get("/bus/students/all", (0, globalErrorHandler_1.default)(bus_controller_1.default.getAllStudentsTakingBus));
 router.get("/bus/school/details", (0, globalErrorHandler_1.default)(bus_controller_1.default.getSchoolDetails));
+router.get("/bus/search", (0, globalErrorHandler_1.default)(bus_controller_1.default.searchBusStudent));
 exports.default = router;

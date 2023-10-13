@@ -9,4 +9,5 @@ const expense_controller_1 = __importDefault(require("./../../controller/expense
 const globalErrorHandler_1 = __importDefault(require("../../middleware/globalErrorHandler"));
 router.post("/expense/new", (0, globalErrorHandler_1.default)(expense_controller_1.default.addExpense));
 router.get("/expense/monthly", (0, globalErrorHandler_1.default)(expense_controller_1.default.getExpenseCountMonthly));
+router.get("/expense/school", (0, globalErrorHandler_1.default)(expense_controller_1.default.getAllSchoolExpenses));
 exports.default = router;

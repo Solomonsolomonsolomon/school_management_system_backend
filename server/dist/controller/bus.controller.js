@@ -209,5 +209,23 @@ class BusController {
             });
         });
     }
+    searchBusStudent(req, res) {
+        var _a, _b;
+        return __awaiter(this, void 0, void 0, function* () {
+            let school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
+            let schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
+            let { query } = req.query;
+            let allStudents = yield database_1.Bus.find({
+                school,
+                schoolId,
+                studentId: { $regex: `(.*)${query}(.*)` },
+            });
+            return res.status(200).json({
+                msg: "srarch results",
+                filtered: allStudents,
+                status: 200,
+            });
+        });
+    }
 }
 exports.default = Object.freeze(new BusController());
