@@ -122,6 +122,15 @@ const Sidebar: React.FC<ProfileProps> = ({ setView }) => {
             >
               <a className="block  hover:text-white">Results</a>
             </li>
+            <li
+              className="mb-2"
+              onClick={() => {
+                setView("computeresult");
+                setIsOpen(false);
+              }}
+            >
+              <a className="block  hover:text-white">Message</a>
+            </li>
           </ul>
         </div>
       </div>

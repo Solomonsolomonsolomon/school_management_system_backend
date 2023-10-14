@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "./../../api/axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -7,13 +7,13 @@ import {
   faCrown,
   faGear,
   faHouseMedical,
+  faMessage,
   faMoneyBillAlt,
   faNetworkWired,
   faStopwatch,
 } from "@fortawesome/free-solid-svg-icons";
 
 import {
-  faAdd,
   faUserPlus,
   faUserFriends,
   faSchoolCircleCheck,
@@ -297,14 +297,17 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
                 Subscription
               </span>
             </li>
-            <li className="cursor-pointer hover:shadow-lg hover:transition hover:bg-slate-300 p-5">
-              <NavLink to="/admin/messages">
-                <FontAwesomeIcon icon={faAdd} size="2xl" className="mr-2" />
-                <span className="md:hidden lg:inline xl:inline sm:inline">
+            <li
+              className="cursor-pointer hover:shadow-lg hover:transition hover:bg-slate-300 p-5"
+              onClick={() => setComponent("messages")}
+            >
+              <span>
+                <FontAwesomeIcon icon={faMessage} size="2xl" className="mr-2" />
+                <Link  to='/messages' className="md:hidden lg:inline xl:inline sm:inline">
                   {" "}
                   Messages
-                </span>
-              </NavLink>
+                </Link>
+              </span>
             </li>
           </ul>
         </section>
