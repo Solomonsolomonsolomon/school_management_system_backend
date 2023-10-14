@@ -3,7 +3,7 @@ import axios from "../../../api/axios";
 import Loading from "../../Loading";
 import NotFoundComponent from "../../../utils/404Component";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft, faTimes } from "@fortawesome/free-solid-svg-icons";
 import Button from "../../Button/Button";
 let busUrl = "/bus";
 
@@ -21,7 +21,8 @@ const AllStudentsTakingBus: React.FC<any> = ({ setView }) => {
   let [Deletemodal, setDeletemodal] = React.useState<boolean>(false); //for delete
   let [confirmable, setConfirmable] = React.useState<boolean>(false);
   let [retrigger, setRetrigger] = React.useState<number>(0);
-
+  let [payFeesModal, setPayFeesModal] = React.useState<boolean>(false);
+  let [_confirmablePay, setConfirmablePay] = React.useState<boolean>(false);
   interface IMsg {
     error: string;
     success: string;
@@ -37,7 +38,7 @@ const AllStudentsTakingBus: React.FC<any> = ({ setView }) => {
       try {
         setLoading(true);
         let res = await axios.get(
-          `${busUrl}/students/all?pageSize=4&page=${page}`,
+          `${busUrl}/students/all?pageSize=7&page=${page}`,
           {
             signal: controller.signal,
           }
@@ -136,6 +137,15 @@ const AllStudentsTakingBus: React.FC<any> = ({ setView }) => {
         selected={selected}
       />
     );
+  if (payFeesModal)
+    return (
+      <BusFees
+        confirmablePay={setConfirmablePay}
+        payFeesModal={setPayFeesModal}
+        selected={selected}
+        retrigger={setRetrigger}
+      />
+    );
   return (
     <>
       {" "}
@@ -151,6 +161,11 @@ const AllStudentsTakingBus: React.FC<any> = ({ setView }) => {
 
         <div className="w-[380px] lg:w-full md:w-full sm:w-full mb-10">
           <div className="overflow-x-auto w-full rounded">
+            <div className="search ">
+              <input type="search" name="" id="" className="border p-3 border-gray-600  bg-inherit w-[80%]"  />
+              <button className="bg-blue-400 p-3 rounded text-white w-fit">Search</button>
+            </div>
+
             <table className="divide-y divide-gray-200 dark:divide-gray-700 overflow-x-auto border rounded">
               <thead className="bg-gray-50 dark:bg-gray-700 rounded border">
                 <tr>
@@ -211,6 +226,15 @@ const AllStudentsTakingBus: React.FC<any> = ({ setView }) => {
                       className="px-6 py-4 whitespace-nowrap text-sm dark:text-blue-900 text-blue-500"
                     >
                       edit
+                    </td>
+                    <td
+                      className="px-6 py-4 whitespace-nowrap text-sm dark:text-blue-900 text-blue-500"
+                      onClick={() => {
+                        setPayFeesModal(true);
+                        setSelected(student);
+                      }}
+                    >
+                      pay fees
                     </td>
                     <td
                       className="px-6 py-4 whitespace-nowrap text-sm dark:text-blue-900 text-blue-500"
@@ -411,6 +435,121 @@ const DeleteModal: React.FC<{
               }}
             >
               Cancel
+            </button>
+          </span>
+        </div>
+      </div>
+    </>
+  );
+};
+
+//payfees
+const BusFees: React.FC<{
+  confirmablePay: React.SetStateAction<any>;
+  payFeesModal: React.SetStateAction<any>;
+  selected: any;
+  retrigger: React.SetStateAction<any>;
+}> = ({ confirmablePay, payFeesModal, selected, retrigger }) => {
+  interface Iform {
+    isPaid: string;
+    amountPaid: number;
+  }
+  let [details, setDetails] = React.useState<Iform>({
+    isPaid: "",
+    amountPaid: 0,
+  });
+  interface IMsg {
+    error: string;
+    success: string;
+  }
+  let [msg, setMsg] = React.useState<IMsg>({
+    error: "",
+    success: "",
+  });
+
+  async function PayFees(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    try {
+      let res = await axios.put(
+        `${busUrl}/pay/fees/${selected.studentId}`,
+        details
+      );
+      setMsg({ error: "", success: res.data?.msg });
+
+      setDetails({ amountPaid: 0, isPaid: "" });
+      payFeesModal(false);
+      retrigger(Date.now());
+    } catch (error: any) {
+      setMsg({
+        error: error?.response?.data?.msg || error?.message,
+        success: "",
+      });
+    }
+  }
+  function handleFormInput(
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) {
+    setDetails((prev) => {
+      return { ...prev, [e.target.name]: e.target.value };
+    });
+  }
+  return (
+    <>
+      {/* to use pass 2 set states confirm modal and confirmable */}
+
+      <div className="w-full absolute z-[10]  inset-1  overflow-hidden grid bg-inherit  justify-center items-center h-[100vh] dark:bg-gray-800 bg-white ">
+        <div className="border relative opacity-100 dark:bg-gray-800 bg-gray-200 rounded-2xl shadow-2xl h-fit box-border p-20">
+          <p className="text-green-600 text-center">{msg.success}</p>
+          <p className="text-red-500 text-center">{msg.error}</p>
+          <h1 className="p-5 ">Pay school fees for {selected?.id?.name}</h1>
+          <p className="px-5 pb-2 ">balance:{selected?.balance}</p>
+          <span className="absolute right-2"></span>
+
+          <form action="" className="  border-black w-full" onSubmit={PayFees}>
+            <input
+              type="number"
+              name="amountPaid"
+              placeholder=" amount deposited"
+              className="bg-inherit border  p-2 rounded border-b-4 border-y-0 border-r-0 border-l-0 border-black"
+              value={details.amountPaid}
+              onChange={handleFormInput}
+            />
+            <div>
+              <label htmlFor="" className="w-full mr-1">
+                Or Toggle Pay
+              </label>
+              <select
+                name="isPaid"
+                onChange={handleFormInput}
+                value={details.isPaid}
+                id=""
+                className="bg-inherit border border-black p-1 rounded mt-2"
+                // onChange={}
+              >
+                <option value="">select</option>
+                <option value="true" className="bg-inherit dark:bg-gray-900">
+                  paid
+                </option>
+                <option value="false" className="bg-inherit dark:bg-gray-900">
+                  unpaid
+                </option>
+              </select>
+            </div>
+            <div className="flex justify-center mt-2">
+              <Button buttontype={3}>Submit</Button>
+            </div>
+          </form>
+
+          <span className="absolute right-[85%] top-2">
+            {" "}
+            <button
+              className="bg-red-700 p-3 z-10  text-white rounded"
+              onClick={() => {
+                confirmablePay(false);
+                payFeesModal(false);
+              }}
+            >
+              <FontAwesomeIcon icon={faTimes} />
             </button>
           </span>
         </div>

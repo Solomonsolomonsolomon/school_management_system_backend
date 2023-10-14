@@ -143,7 +143,7 @@ const ClassLevel: React.FC = () => {
         please make sure you edit price before the term begins as prices updated
         mid-term may not reflect in the students school fees
       </WarningComponent>
-      <div className="flex flex-col border p-10 ">
+      <div className="flex flex-col border p-2 ">
         {/* Search bar */}
 
         <p ref={errRef}></p>
@@ -156,7 +156,7 @@ const ClassLevel: React.FC = () => {
             onChange={(e) => {
               setSearchQuery(e.target.value);
             }}
-            className="p-2 dark:bg-gray-900 border rounded  w-[45%]"
+            className="p-2 dark:bg-gray-900 border rounded  w-[80dvw]"
           />
           <table className="divide-y divide-gray-200 dark:divide-gray-700 overflow-x-auto border">
             <thead className="bg-gray-50 dark:bg-gray-900">

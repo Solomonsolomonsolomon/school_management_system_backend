@@ -4,15 +4,19 @@ import axios from "../../api/axios";
 let payUrl = "/paystack";
 import { useForm, SubmitHandler } from "react-hook-form";
 import WarningComponent from "../../utils/WarningComponent";
+import Loading from "../Loading";
 let details: any;
 if (user) details = JSON.parse(user);
 
 const PayFees: React.FC = () => {
   const { register, handleSubmit } = useForm();
+
   let [msg, setMsg] = React.useState<string>("");
+  let [loading, setLoading] = React.useState<boolean>(false);
   const onsubmit: SubmitHandler<any> = async (data) => {
     let controller = new AbortController();
     try {
+      setLoading(true);
       let res = await axios.post(`${payUrl}/pay`, data, {
         signal: controller.signal,
       });
@@ -23,12 +27,15 @@ const PayFees: React.FC = () => {
         error?.response?.data?.message ||
           "An error Occured,confirm details and try again"
       );
+    } finally {
+      setLoading(false);
     }
 
     return () => {
       controller.abort();
     };
   };
+  if (loading) return <Loading />;
   return (
     <div>
       <p className="font-bold text-center">{msg}</p>

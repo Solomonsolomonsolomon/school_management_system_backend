@@ -42,6 +42,9 @@ let gradesSchema = new mongoose_1.Schema({
         required: true,
         ref: "Student",
     },
+    className: {
+        type: String,
+    },
     year: {
         type: mongoose_1.default.Schema.Types.ObjectId,
         ref: "AcademicYear",

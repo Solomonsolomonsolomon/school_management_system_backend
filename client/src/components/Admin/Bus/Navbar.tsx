@@ -12,9 +12,9 @@ const BusNavBar: React.FC<ReactProps> = ({ setView }) => {
       </p>
       <p onClick={() => setComponent("allstudentstakingbus")}>All Students</p>
       <p onClick={() => setComponent("registerschooldetails")}>
-        Register School's bus Details
+        School's bus Details
       </p>
-      <p>Check Student Bus Eligibility</p>
+    
   
     </section>
   );

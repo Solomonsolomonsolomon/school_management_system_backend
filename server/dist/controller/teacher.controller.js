@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getStudentsTaught = exports.managedStudents = void 0;
+exports.previewClassResults = exports.getStudentsTaught = exports.managedStudents = void 0;
 const database_1 = require("../model/database");
 const decorators_1 = require("../middleware/decorators");
 function managedStudents(req, res, next) {
@@ -28,7 +28,7 @@ function managedStudents(req, res, next) {
             className: formTeacher,
             school,
             schoolId,
-        }).select("name _id formTeacher school email age className studentId gender parent ");
+        }).select("name _id formTeacher school email age className studentId gender parent isPaid balance percentagePaid ");
         if (!formStudents.length)
             throw new decorators_1.CustomError({}, "NO students yet..When registered they will be assigned to you", 404);
         res.status(200).json({
@@ -81,6 +81,7 @@ function getStudentsTaught(req, res) {
                     year: currentYear,
                     term: currentTerm,
                     school,
+                    className: student.className,
                     schoolId,
                 });
                 return Object.assign(Object.assign({}, student.toObject()), { grades: grades ? grades.grades : [] });
@@ -118,3 +119,21 @@ function getGradeForSubject(student, subject, exam) {
     const subjectGrades = student.grades.find((grade) => grade.subjectId.equals(subject._id));
     return subjectGrades ? subjectGrades[exam] : 0;
 }
+function previewClassResults(req, res) {
+    var _a, _b;
+    return __awaiter(this, void 0, void 0, function* () {
+        let { id } = req.params;
+        let teacher = yield database_1.Teacher.findById(id);
+        const school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
+        let schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
+        if (!teacher || !(teacher === null || teacher === void 0 ? void 0 : teacher.formTeacher))
+            throw new decorators_1.CustomError({}, "you arent authorized to view this resource", 401);
+        let results = yield database_1.Result.find({
+            class: teacher.formTeacher,
+            school,
+            schoolId,
+        });
+        console.log(results);
+    });
+}
+exports.previewClassResults = previewClassResults;

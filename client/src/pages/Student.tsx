@@ -5,12 +5,16 @@ import Results from "../components/Student/Results";
 import PayFees from "../components/Student/PayFees";
 import SubStudent from "../components/Student/Substudent";
 import AllResults from "../components/Student/AllResults";
+import Transaction from "../components/Student/Transactions";
+import Attendance from "../components/Student/Attendance";
 
 let components: any = {
   dashboard: SubStudent,
   viewresult: Results,
   payfees: PayFees,
   allresults: AllResults,
+  transactions:Transaction,
+  attendance:Attendance
 };
 
 function Student() {

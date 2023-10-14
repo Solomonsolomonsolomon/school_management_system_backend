@@ -44,13 +44,15 @@ class BusController {
   }
   public async payBusFees(req: Request, res: Response) {
     const { studentId } = req.params;
-    let { price } = req.body;
+    let { amountPaid } = req.body;
     let bus = await Bus.findOne({ studentId });
     if (!bus) throw new CustomError({}, "student details not found ", 500);
-    bus.amountPaid = price;
+
+    bus.amountPaid = amountPaid;
+    req.body.isPaid ? (bus.isPaid = req.body.isPaid) : "";
     await bus.save();
     return res.status(200).json({
-      msg: "successfult payment",
+      msg: "successful payment",
       status: 200,
     });
   }
@@ -161,6 +163,35 @@ class BusController {
     res.status(200).json({
       status: 200,
       msg: "deleted successfully",
+    });
+  }
+  public async getSchoolDetails(req: Request, res: Response) {
+    let schoolDetails = await schoolBus.findOne({
+      school: req.user?.school,
+      schoolId: req.user?.schoolId,
+    });
+    if (!schoolDetails)
+      throw new CustomError({}, "school bus details not registered", 400);
+    res.status(200).json({
+      msg: "school details",
+      status: 200,
+      schoolDetails,
+    });
+  }
+  public async searchBusStudent(req: Request, res: Response) {
+    let school = req.user?.school;
+    let schoolId = req.user?.schoolId;
+    let { query } = req.query;
+    let allStudents = await Bus.find({
+      school,
+      schoolId,
+      studentId: { $regex: `(.*)${query}(.*)` },
+    });
+
+    return res.status(200).json({
+      msg: "srarch results",
+      filtered: allStudents,
+      status: 200,
     });
   }
 }

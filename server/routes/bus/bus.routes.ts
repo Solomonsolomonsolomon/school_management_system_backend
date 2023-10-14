@@ -13,9 +13,9 @@ router.post(
   "/bus/transaction/reset",
   asyncErrorHandler(bus.resetAllBusDetails)
 );
-router.post("/bus/pay/fees", asyncErrorHandler(bus.payBusFees));
+router.put("/bus/pay/fees/:studentId", asyncErrorHandler(bus.payBusFees));
 router.put(
-  "/bus/modify/schoolDetails",
+  "/bus/modify/school_details",
   asyncErrorHandler(bus.editSchoolBusDetails)
 );
 router.put(
@@ -27,4 +27,6 @@ router.delete(
   asyncErrorHandler(bus.deleteSingleStudent)
 );
 router.get("/bus/students/all", asyncErrorHandler(bus.getAllStudentsTakingBus));
+router.get("/bus/school/details", asyncErrorHandler(bus.getSchoolDetails));
+router.get("/bus/search", asyncErrorHandler(bus.searchBusStudent));
 export default router;

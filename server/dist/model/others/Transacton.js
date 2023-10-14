@@ -20,6 +20,7 @@ class TransactionSchema {
             },
             school: String,
             schoolId: String,
+            name: String,
             status: {
                 type: String,
                 enum: ["success", "failed", "pending", "reversed", "complete"],

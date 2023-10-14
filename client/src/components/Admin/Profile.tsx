@@ -20,7 +20,7 @@ let schoolUrl = "/school";
 const Profile = () => {
   let term = React.useRef<HTMLParagraphElement>(null);
   let year = React.useRef<HTMLParagraphElement>(null);
-  const [confirmable, setConfirmable] = React.useState<boolean>(false);
+  const [_confirmable, setConfirmable] = React.useState<boolean>(false);
   const [confirmModal, setConfirmModal] = React.useState<boolean>(false);
   // const [loading, setLoading] = React.useState<boolean>(false);
   let [themeandlogo, setthemeandlogo] = React.useState<IThemeAndLogo>({

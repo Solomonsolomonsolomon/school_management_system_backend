@@ -100,7 +100,7 @@ function AllStudents() {
   return (
     <>
       {students.length ? (
-        <div className="dark:bg-gray-900 border  w-[200px]sm:w-[400px] lg:w-[100%] md:w-[100%] w-[390px]">
+        <div className="dark:bg-gray-900 border w-[100vw]">
           {/* Edit Modal */}
           {isEditModalOpen && editingStudent && (
             <div className="dark:bg-gray-900  border-gray-200 fixed inset-0 flex justify-center items-center bg-black bg-opacity-50">

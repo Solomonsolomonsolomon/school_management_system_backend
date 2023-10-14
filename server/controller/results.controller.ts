@@ -204,7 +204,7 @@ export async function calcResultAndCummulative(
       return p;
     },
     {
-      student: [{ totalScore: 0, studentId: "", name: "", average:0 }],
+      student: [{ totalScore: 0, studentId: "", name: "", average: 0 }],
       tracker: new Map(),
     }
   ).student;
@@ -671,3 +671,47 @@ export async function autoPromote(school: string, schoolId: string) {
 //   console.error("Error updating examResults:", err);
 // }
 //}
+
+export async function DeleteResult(req: Request, res: Response) {
+  let { id } = req.params;
+  const className = req.user?.formTeacher || "not a form teacher";
+  const school = req.user?.school;
+  let schoolId = req.user?.schoolId;
+  let currentYear = await AcademicYear.findOne({
+    school,
+    schoolId,
+    isCurrent: true,
+  });
+  let currentTerm = await AcademicTerm.findOne({
+    school,
+    schoolId,
+    isCurrent: true,
+  });
+
+  if (!currentTerm || !currentYear)
+    throw new CustomError(
+      {},
+      "either current term or current term not set",
+      400
+    );
+  // console.log(,"6512473a6402d7f6a807af3b", student?._id,);
+
+  let result = await Result.deleteMany({
+    school,
+    schoolId,
+    year: currentYear?._id,
+    // term: currentTerm?._id,
+    studentId: id,
+    class: className,
+  });
+  if (!result)
+    throw new CustomError(
+      {},
+      "Result not found  for student for current year ",
+      404
+    );
+  return res.status(200).json({
+    msg: "successful deletion ",
+    status: 200,
+  });
+}

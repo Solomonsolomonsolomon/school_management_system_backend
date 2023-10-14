@@ -103,12 +103,15 @@ busSchema.pre("save", async function (next) {
         payerId: student._id,
         year: currentAcademicYear._id,
         term: currentAcademicTerm._id,
+        name: "Bus Fees",
       }).save();
     } else {
       let bulkOperations: any[] = [];
       this.percentagePaid = 0;
       this.isPaid = false;
+
       this.balance = bus.price;
+      console.log(this.balance);
       let deduct = await Transaction.find({});
       deduct.map((_) => {
         bulkOperations.push({
@@ -134,6 +137,7 @@ busSchema.pre("save", async function (next) {
     //excess balance
     // 0.0150 * this.balance + 100 ;
     if (this.amountPaid > this.balance) {
+      console.log(this.balance, this.amountPaid);
       throw new CustomError(
         {},
         `Cannot deposit amount greater than bus fees balance`,
@@ -158,6 +162,7 @@ busSchema.pre("save", async function (next) {
       payerId: student._id,
       year: currentAcademicYear,
       term: currentAcademicTerm,
+      name:"Bus Fees"
     }).save();
     this.amountPaid = 0;
     next();

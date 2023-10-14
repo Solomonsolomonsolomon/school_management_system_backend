@@ -1,6 +1,10 @@
 import { Router } from "express";
 const router: Router = Router();
-import { addGrades } from "./../../controller/grades.controller";
+import grade from "./../../controller/grades.controller";
 import asyncErrorHandler from "../../middleware/globalErrorHandler";
-router.post("/grades/add/:studentId", asyncErrorHandler(addGrades));
+router.post("/grades/add/:studentId", asyncErrorHandler(grade.addGrades));
+router.delete(
+  "/grades/delete/:id/:className",
+  asyncErrorHandler(grade.deleteGrades)
+);
 export default router;

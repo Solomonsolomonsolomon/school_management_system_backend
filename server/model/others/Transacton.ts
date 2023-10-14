@@ -5,6 +5,7 @@ interface ITransaction {
   school: string;
   schoolId: string;
   status: string;
+  name:String;
   year: Types.ObjectId;
   term: Types.ObjectId;
   month: number;
@@ -28,6 +29,7 @@ class TransactionSchema {
         },
         school: String,
         schoolId: String,
+        name:String,
         status: {
           type: String,
           enum: ["success", "failed", "pending", "reversed", "complete"],

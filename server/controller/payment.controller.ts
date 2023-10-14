@@ -21,7 +21,7 @@ const initializeTransaction = async (req: Request, res: Response) => {
       email,
       amount: amount * 100,
       subaccount: subaccount.subaccount_code,
-      transaction_charge:  0,
+      transaction_charge: 0,
       bearer: "subaccount",
     });
 
@@ -66,7 +66,7 @@ const subAccount = async (req: Request, res: Response) => {
     console.log(req.body);
     let response: any = await paystack.createSubAccount(res, {
       ...body,
-      percentage_charge: 0.02,
+      percentage_charge: 0.0,
     });
 
     const bulkWriteOps = [];

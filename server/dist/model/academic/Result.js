@@ -45,6 +45,14 @@ let resultSchema = new mongoose_1.Schema({
     class: {
         type: String,
     },
+    school: {
+        type: String,
+        required: true,
+    },
+    schoolId: {
+        type: String,
+        required: true,
+    },
     year: {
         type: mongoose_1.Schema.Types.ObjectId,
         ref: "AcademicYear",
@@ -68,6 +76,11 @@ let resultSchema = new mongoose_1.Schema({
         type: String,
         enum: ["failed", "passed"],
         default: "failed",
+    },
+    totalTerms: {
+        type: Number,
+        default: 0,
+        required: true
     },
 });
 resultSchema.pre("save", function (next) {

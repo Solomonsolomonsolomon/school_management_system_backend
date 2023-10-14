@@ -111,6 +111,60 @@ class ExpenseController {
       label: months,
     });
   }
+  public async getAllSchoolExpenses(req: Req, res: Res) {
+    const { term, month, year } = req.query;
+
+    const school = req.user?.school;
+    let schoolId = req.user?.schoolId;
+    const totalExpenses = await Expense.countDocuments({ school, schoolId });
+    const page = parseInt(req.query.page as string) || 1;
+    const pageSize = parseInt(req.query.pageSize as string) || 10;
+    const skip = (page - 1) * pageSize;
+    const totalPages = Math.ceil(totalExpenses / pageSize);
+    /* 2 skip 2-1 * 10 */
+
+    interface IFilter {
+      school: string;
+      schoolId: string;
+      term?: any;
+      month?: number;
+      year?: any;
+    }
+    const filter: IFilter = {
+      school: req.user?.school,
+      schoolId: req.user?.schoolId,
+    };
+
+    if (term) {
+      const currentTerm = await AcademicTerm.findOne({
+        school,
+        schoolId,
+        isCurrent: true,
+      });
+      filter.term = currentTerm?._id;
+    }
+    if (year) {
+      const currentYear = await AcademicYear.findOne({
+        school,
+        schoolId,
+        isCurrent: true,
+      });
+      filter.year = currentYear?._id;
+    }
+    if (month) filter.month = new Date().getMonth();
+    let expenses = await Expense.find(filter)
+      .skip(skip)
+      .limit(pageSize)
+      .populate("createdBy")
+      .select("name amountPaid createdAt.name school");
+    return res.status(200).json({
+      msg: "all students",
+      status: 200,
+      expenses,
+      totalPages,
+      page,
+    });
+  }
 }
 
 export default Object.freeze(new ExpenseController());

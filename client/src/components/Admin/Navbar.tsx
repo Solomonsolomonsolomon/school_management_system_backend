@@ -11,7 +11,7 @@ import {
   faNetworkWired,
   faStopwatch,
 } from "@fortawesome/free-solid-svg-icons";
-import { faChalkboardUser } from "@fortawesome/free-solid-svg-icons";
+
 import {
   faAdd,
   faUserPlus,
@@ -120,7 +120,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
             >
               <FontAwesomeIcon icon={faUserPlus} size="lg" />
 
-              <span className="md:hidden lg:inline xl:inline sm:inline mr-2 text-md">
+              <span className="md:hidden lg:inline xl:inline sm:inline mr-2 ml-1 text-md">
                 {" "}
                 Add student
               </span>
@@ -134,7 +134,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
             >
               <FontAwesomeIcon icon={faUserPlus} size="lg" />
 
-              <span className="md:hidden lg:inline xl:inline sm:inline mr-2 text-md">
+              <span className="md:hidden lg:inline xl:inline sm:inline mr-2 ml-1 text-md">
                 {" "}
                 Add Admin
               </span>
@@ -148,7 +148,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
             >
               <FontAwesomeIcon icon={faUserFriends} size="lg" />
 
-              <span className="md:hidden lg:inline xl:inline sm:inline mr-2 text-md">
+              <span className="md:hidden lg:inline xl:inline sm:inline mr-2 ml-1 text-md">
                 {" "}
                 All Admin
               </span>
@@ -162,7 +162,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
             >
               <FontAwesomeIcon icon={faUserFriends} size="lg" />
 
-              <span className="md:hidden lg:inline xl:inline sm:inline mr-2">
+              <span className="md:hidden lg:inline xl:inline sm:inline mr-2 ml-1">
                 {" "}
                 All students
               </span>
@@ -176,7 +176,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
             >
               <FontAwesomeIcon icon={faSchoolCircleCheck} size="lg" />
 
-              <span className="md:hidden lg:inline xl:inline sm:inline mr-2">
+              <span className="md:hidden lg:inline xl:inline sm:inline mr-2 ml-1">
                 {" "}
                 Class level
               </span>
@@ -190,7 +190,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
             >
               <FontAwesomeIcon icon={faUserPlus} size="lg" />
 
-              <span className="md:hidden lg:inline xl:inline sm:inline mr-2">
+              <span className="md:hidden lg:inline xl:inline sm:inline mr-2 ml-1">
                 {" "}
                 Add Teacher
               </span>
@@ -204,7 +204,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
             >
               <FontAwesomeIcon icon={faUserFriends} size="lg" />
 
-              <span className="md:hidden lg:inline xl:inline sm:inline mr-2">
+              <span className="md:hidden lg:inline xl:inline sm:inline mr-2 ml-1">
                 {" "}
                 All Teachers
               </span>
@@ -218,7 +218,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
             >
               <FontAwesomeIcon icon={faStopwatch} size="lg" />
 
-              <span className="md:hidden lg:inline xl:inline sm:inline mr-2">
+              <span className="md:hidden lg:inline xl:inline sm:inline mr-2 ml-1">
                 {" "}
                 Year and Term
               </span>
@@ -232,7 +232,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
             >
               <FontAwesomeIcon icon={faBook} size="lg" />
 
-              <span className="md:hidden lg:inline xl:inline sm:inline mr-2">
+              <span className="md:hidden lg:inline xl:inline sm:inline mr-2 ml-1">
                 {" "}
                 Subjects
               </span>
@@ -245,7 +245,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
             >
               <FontAwesomeIcon icon={faMoneyBillAlt} size="lg" />
 
-              <span className="md:hidden lg:inline xl:inline sm:inline mr-2">
+              <span className="md:hidden lg:inline xl:inline sm:inline mr-2 ml-1">
                 {" "}
                 Expenses
               </span>
@@ -256,10 +256,14 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
               }}
               className="cursor-pointer hover:shadow-lg hover:transition mr-10 hover:bg-slate-300 p-5 py-1"
             >
-              <FontAwesomeIcon icon={faCrown} size="sm" className="text-orange-400" />
+              <FontAwesomeIcon
+                icon={faCrown}
+                size="sm"
+                className="text-orange-400"
+              />
               <FontAwesomeIcon icon={faBus} size="lg" />
 
-              <span className="md:hidden lg:inline xl:inline sm:inline mr-2">
+              <span className="md:hidden lg:inline xl:inline sm:inline mr-2 ml-1">
                 {" "}
                 Bus Management
               </span>
@@ -272,7 +276,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
             >
               <FontAwesomeIcon icon={faGear} size="lg" />
 
-              <span className="md:hidden lg:inline xl:inline sm:inline mr-2">
+              <span className="md:hidden lg:inline xl:inline sm:inline mr-2 ml-1">
                 {" "}
                 Settings
               </span>

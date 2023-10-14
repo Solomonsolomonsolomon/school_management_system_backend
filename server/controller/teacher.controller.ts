@@ -41,7 +41,7 @@ export async function managedStudents(
     school,
     schoolId,
   }).select(
-    "name _id formTeacher school email age className studentId gender parent "
+    "name _id formTeacher school email age className studentId gender parent isPaid balance percentagePaid "
   );
   if (!formStudents.length)
     throw new CustomError(
