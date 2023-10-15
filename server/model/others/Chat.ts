@@ -8,6 +8,8 @@ class ChatSchema {
   public schema() {
     return new Schema(
       {
+        school:String,
+        schoolId:String,
         chatName: {
           type: String,
           trim: true,
@@ -29,6 +31,7 @@ class ChatSchema {
           type: Schema.Types.ObjectId,
           ref: "Messages",
         },
+
       },
 
       {

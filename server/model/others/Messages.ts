@@ -8,6 +8,8 @@ class MessagesSchema {
   public schema() {
     return new Schema(
       {
+        school: String,
+        schoolId: String,
         sender: { type: Schema.Types.ObjectId, ref: "User" },
         content: String,
         recipient: { type: Schema.Types.ObjectId, ref: "User" },

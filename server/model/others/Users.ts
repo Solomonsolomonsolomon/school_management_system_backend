@@ -8,6 +8,8 @@ class UserSchema {
 
   public schema() {
     return new Schema({
+      school: String,
+      schoolId: String,
       userId: Schema.Types.ObjectId,
       role: String,
       name: String,
