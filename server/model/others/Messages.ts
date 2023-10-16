@@ -10,9 +10,11 @@ class MessagesSchema {
       {
         school: String,
         schoolId: String,
-        sender: { type: Schema.Types.ObjectId, ref: "User" },
+        sender: { type: Schema.Types.ObjectId },
+        senderRole: String,
         content: String,
-        recipient: { type: Schema.Types.ObjectId, ref: "User" },
+        recipient: { type: Schema.Types.ObjectId },
+        recipientRole: String,
         chat: {
           type: Schema.Types.ObjectId,
           ref: "Chat",

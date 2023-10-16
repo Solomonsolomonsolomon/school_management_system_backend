@@ -1,15 +1,24 @@
-import { model, Schema } from "mongoose";
+import { model, Schema, Types } from "mongoose";
 let instance: any;
+interface User {
+  role: string;
+  id: Types.ObjectId;
+}
+let userSchema = new Schema<User>({
+  id: Schema.Types.ObjectId,
+  role: String,
+});
 class ChatSchema {
   constructor() {
     if (instance) return instance;
     instance = this;
   }
+
   public schema() {
     return new Schema(
       {
-        school:String,
-        schoolId:String,
+        school: String,
+        schoolId: String,
         chatName: {
           type: String,
           trim: true,
@@ -17,12 +26,7 @@ class ChatSchema {
         isGroupChat: {
           type: Boolean,
         },
-        users: [
-          {
-            type: Schema.Types.ObjectId,
-            ref: "User",
-          },
-        ],
+        users: [userSchema],
         groupAdmin: {
           type: Schema.Types.ObjectId,
           ref: "User",
@@ -31,7 +35,6 @@ class ChatSchema {
           type: Schema.Types.ObjectId,
           ref: "Messages",
         },
-
       },
 
       {
