@@ -14,20 +14,16 @@ function AllStudents() {
   const [editingStudent, setEditingStudent] = useState<any>(null);
   let [updateUI, setUpdateUI] = useState<number>(0);
   let errRef = React.useRef<HTMLParagraphElement>(null);
-
   useEffect(() => {
     const controller = new AbortController();
-
     async function fetchStudents() {
       try {
         setLoading(true);
         const studentResponse = await axios.get(`/admin/get/student`, {
           signal: controller.signal,
         });
-
         setStudents(studentResponse?.data?.student);
         errRef.current ? (errRef.current.textContent = "") : "";
-
         setLoading(false);
       } catch (error: any) {
         console.log(error);
@@ -48,6 +44,7 @@ function AllStudents() {
   }, [updateUI]);
 
   const filteredStudents = students.filter((student: any) => {
+    console.log(student?.studentId);
     const searchTerm = searchQuery.toLowerCase();
     return (
       student.name.toLowerCase().includes(searchTerm) ||
@@ -57,7 +54,8 @@ function AllStudents() {
       student.currentClassArm.toLowerCase().includes(searchTerm) ||
       `${student.currentClassLevel.toLowerCase()}${student.currentClassArm.toLowerCase()}`.includes(
         searchTerm
-      )
+      ) ||
+      student.studentId.toLowerCase().includes(searchTerm)
     );
   });
 
@@ -300,7 +298,7 @@ function AllStudents() {
             here you can view all students,search for particular student or
             groups,edit or delete
           </p>
-          <div className="dark:bg-gray-900  flex flex-col border p-3 ">
+          <div className="dark:bg-gray-900  flex flex-col border p-3 lg:w-[80vw] sm:w-full">
             {/* Search bar */}
             <input
               type="text"
@@ -311,8 +309,8 @@ function AllStudents() {
             />
             <p ref={errRef}></p>
             {/* Table */}
-            <div className="dark:bg-gray-900  overflow-x-auto">
-              <table className="dark:bg-gray-900  divide-y divide-gray-200 dark:divide-gray-700 overflow-x-auto border">
+            <div className="dark:bg-gray-900  overflow-x-auto overflow-visible ">
+              <table className="dark:bg-gray-900  divide-y divide-gray-200 dark:divide-gray-700 overflow-x-auto border ">
                 <thead className="dark:bg-gray-900  bg-gray-50">
                   <tr>
                     <th className="dark:bg-gray-900  py-3 px-4 pr-0">

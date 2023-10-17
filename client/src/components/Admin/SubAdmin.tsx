@@ -206,12 +206,16 @@ const SubAdmin: React.FC = () => {
             <EarningChart />
           </div>
         </div>
-
+        {/* 
         <div className="shadow-lg p-5 grid grid-rows-[5%_95%] gap-5">
           <h2>Expenses</h2>
           <div className="w-[99%]"></div>
-        </div>
+        </div> */}
       </section>
+      <footer className="bg-slate-200 grid justify-center p-4 opacity-80 ">
+        <p>copyright &copy; 2023</p>
+        <p>All rights Reserved</p>
+      </footer>
     </div>
   );
 };
