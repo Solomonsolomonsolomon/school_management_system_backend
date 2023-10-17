@@ -7,9 +7,11 @@ import "./index.css";
 import jwtDecode from "jwt-decode";
 import ForgotPassword from "./components/ForgotPassword";
 import ChangePassword from "./components/ChangePassword";
+import AppProvider from "./context/AppProvider";
+import Messages from "./components/Messages";
 let role: string = "";
 
-function isLoggedIn(userRole: string = "") { 
+function isLoggedIn(userRole: string = "") {
   try {
     let accessToken: string = sessionStorage.getItem("accessToken") || "";
     let c: any = jwtDecode(accessToken);
@@ -24,34 +26,39 @@ function isLoggedIn(userRole: string = "") {
 
 function App() {
   return (
-    <div className="h-[100%] dark:bg-gray-900  dark:text-white font-montserrat">
-      <Routes>
-        <Route path="/" element={<Login />}></Route>
-        <Route path="/login" element={<Login />}></Route>
-        <Route
-          path="/admin/dashboard"
-          element={isLoggedIn("admin") ? <Admin /> : <Login />}
-        ></Route>
-        <Route
-          path="/student/dashboard"
-          element={isLoggedIn("student") ? <Student /> : <Login />}
-        ></Route>
-        <Route
-          path="/teacher/dashboard"
-          element={isLoggedIn("teacher") ? <Teacher /> : <Login />}
-        ></Route>
-        <Route path="/forgot-password" element={<ForgotPassword />}></Route>
-        <Route path="/change-password" element={<ChangePassword/>} />
-        {/* catch all */}
-        <Route path="*" element={<Login />}></Route>
-      </Routes>
-      {/* <Routes>
+    <AppProvider>
+      <div className="h-[100%] dark:bg-gray-900  dark:text-white font-montserrat">
+        <Routes>
+          <Route path="/" element={<Login />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route
+            path="/admin/dashboard"
+            element={isLoggedIn("admin") ? <Admin /> : <Login />}
+          ></Route>
+          <Route
+            path="/student/dashboard"
+            element={isLoggedIn("student") ? <Student /> : <Login />}
+          ></Route>
+          <Route
+            path="/teacher/dashboard"
+            element={isLoggedIn("teacher") ? <Teacher /> : <Login />}
+          ></Route>
+          <Route path="/forgot-password" element={<ForgotPassword />}></Route>
+          <Route path="/change-password" element={<ChangePassword />} />
+          <Route
+            path="/messages"
+            element={isLoggedIn() ? <Messages /> : <Login />}
+          ></Route>
+          {/* catch all */}
+          <Route path="*" element={<Login />}></Route>
+        </Routes>
+        {/* <Routes>
         <Route path='/' element={<Layout />}>
           {/* public routes */}
-      {/* <Route path="/" element={<Login />} /> */}
-      {/* <Route path="forgotPassword" element={<Login />} /> */}
-      {/* protected routes */}
-      {/* <Route element={<RequireAuth />}>
+        {/* <Route path="/" element={<Login />} /> */}
+        {/* <Route path="forgotPassword" element={<Login />} /> */}
+        {/* protected routes */}
+        {/* <Route element={<RequireAuth />}>
           <Route path="/admin" element={<Admin />} />
           <Route path="admin/student" element={<AdminStudent />} />
           <Route path="admin/teacher" element={<AdminTeacher />} />
@@ -59,11 +66,12 @@ function App() {
           <Route path="teacher" element={<Teacher />} />
         </Route> */}
 
-      {/* {/* catch all */}
-      {/* <Route path="*" element={<h1>Not Found</h1>} />
+        {/* {/* catch all */}
+        {/* <Route path="*" element={<h1>Not Found</h1>} />
         </Route> */}
-      {/* </Routes> */}
-    </div>
+        {/* </Routes> */}
+      </div>
+    </AppProvider>
   );
 }
 export { isLoggedIn };

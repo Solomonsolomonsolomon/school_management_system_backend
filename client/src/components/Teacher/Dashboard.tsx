@@ -57,7 +57,6 @@ const Dashboard: React.FC<{
           ? (ref.current.textContent = res.data?.msg || "Form Students here")
           : "";
         setFormStudents(res.data?.formStudents);
-        
       } catch (error: any) {
         console.log(error);
         ref.current

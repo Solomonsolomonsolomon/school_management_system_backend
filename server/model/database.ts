@@ -27,6 +27,10 @@ import { School } from "./others/School";
 import { Transaction } from "./others/Transacton";
 import { Subscription } from "./others/Subscription";
 import { Bus } from "./others/Bus";
+import { Chat } from "./others/Chat";
+import User from "./others/Users";
+import { Messages } from "./others/Messages";
+
 //schemas
 export {
   Teacher,
@@ -42,6 +46,9 @@ export {
   Transaction,
   Subscription,
   Bus,
+  Messages,
+  Chat,
+  
 };
 export { ITeacher, IStudent, IYear, ITerm };
 
