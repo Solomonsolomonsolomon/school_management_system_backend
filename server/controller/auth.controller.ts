@@ -7,14 +7,20 @@ export async function signIn(req: Request, res: Response) {
   let roles: string[] = ["student", "admin", "teacher"];
   let index: number = roles.indexOf(role);
   let user: any = null;
-
+  console.log(email, "is here");
   try {
     if (!email || !password || !role) {
       throw new Error("enter email and password");
     }
     let Model: any =
       index == 0 ? Student : index == 1 ? Admin : index == 2 ? Teacher : Admin;
-    await Model.findOne({ email })
+    await Model.findOne({
+      $or: [
+        { studentId: email },
+        { email: email.toLowerCase() },
+        { teacherId: email },
+      ],
+    })
       .select(
         "name accessToken role className password currentClassLevel currentClassArm schoolId school balance subjects email _id className formTeacher"
       )

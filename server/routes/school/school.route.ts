@@ -10,4 +10,6 @@ router.post("/school/theme/set", asyncErrorHandler(school.changeTheme));
 router.post("/school/logo/insert", asyncErrorHandler(school.insertLogo));
 router.get("/school/logo/current", asyncErrorHandler(school.getLogo));
 router.get("/school/logo/theme/get", asyncErrorHandler(school.logoAndThemes));
+router.get("/school/get/gradePoint", asyncErrorHandler(school.getGradePoints));
+router.put("/school/set/gradePoint", asyncErrorHandler(school.setGradePoints));
 export default router;

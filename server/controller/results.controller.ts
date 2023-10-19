@@ -13,7 +13,13 @@ import _, { Dictionary, result } from "lodash";
 import { CustomError } from "../middleware/decorators";
 import { previewClassResults } from "./teacher.controller";
 import student from "./student.controller";
-export async function calcResult(groupedData: Dictionary<any>) {
+export async function calcResult(
+  groupedData: Dictionary<any>,
+  school: string,
+  schoolId: string
+) {
+  let _school = await School.findOne({ school, schoolId });
+
   let bulkPushOperations: any = [];
   for (const className in groupedData) {
     const students = groupedData[className];
@@ -37,13 +43,13 @@ export async function calcResult(groupedData: Dictionary<any>) {
       if (averageMarks === -1) {
         overallGrade = "N/A";
       }
-      if (averageMarks >= 75) {
+      if (averageMarks >= (_school?.gradePoints?.A || 75)) {
         overallGrade = "A";
-      } else if (averageMarks >= 60) {
+      } else if (averageMarks >= (_school?.gradePoints?.B || 60)) {
         overallGrade = "B";
-      } else if (averageMarks >= 50) {
+      } else if (averageMarks >= (_school?.gradePoints?.C || 50)) {
         overallGrade = "C";
-      } else if (averageMarks >= 40) {
+      } else if (averageMarks >= (_school?.gradePoints?.D || 40)) {
         overallGrade = "D";
       } else {
         overallGrade = "F";
@@ -97,7 +103,7 @@ export async function calcResultAndCummulative(
   teacher: any
 ) {
   let bulkPushOperations: any = [];
-
+  let _school = await School.findOne({ school, schoolId });
   for (const className in groupedData) {
     const students = groupedData[className];
     for (const student of students) {
@@ -120,13 +126,13 @@ export async function calcResultAndCummulative(
       if (averageMarks === -1) {
         overallGrade = "N/A";
       }
-      if (averageMarks >= 75) {
+      if (averageMarks >= (_school?.gradePoints?.A || 75)) {
         overallGrade = "A";
-      } else if (averageMarks >= 60) {
+      } else if (averageMarks >= (_school?.gradePoints?.B || 60)) {
         overallGrade = "B";
-      } else if (averageMarks >= 50) {
+      } else if (averageMarks >= (_school?.gradePoints?.C || 50)) {
         overallGrade = "C";
-      } else if (averageMarks >= 40) {
+      } else if (averageMarks >= (_school?.gradePoints?.D || 40)) {
         overallGrade = "D";
       } else {
         overallGrade = "F";
@@ -222,6 +228,7 @@ export async function calcResultAndCummulativeAndAutoPromote(
 ) {
   let bulkPushOperations: any = [];
   let studentBulkOperations: any[] = [];
+  let _school = await School.findOne({ school, schoolId });
   for (const className in groupedData) {
     const students = groupedData[className];
     for (const student of students) {
@@ -244,13 +251,13 @@ export async function calcResultAndCummulativeAndAutoPromote(
       if (averageMarks === -1) {
         overallGrade = "N/A";
       }
-      if (averageMarks >= 75) {
+      if (averageMarks >= (_school?.gradePoints?.A || 75)) {
         overallGrade = "A";
-      } else if (averageMarks >= 60) {
+      } else if (averageMarks >= (_school?.gradePoints?.B || 60)) {
         overallGrade = "B";
-      } else if (averageMarks >= 50) {
+      } else if (averageMarks >= (_school?.gradePoints?.C || 50)) {
         overallGrade = "C";
-      } else if (averageMarks >= 40) {
+      } else if (averageMarks >= (_school?.gradePoints?.D || 40)) {
         overallGrade = "D";
       } else {
         overallGrade = "F";
@@ -377,7 +384,7 @@ export async function calcResultAndCummulativeAndAutoPromote(
     console.log(student.average);
     student.average = student.average / student.totalTerms;
     console.log(student.average, student.name);
-    if (student.average >= 40) {
+    if (student.average >= (_school?.gradePoints?.D || 40)) {
       let currentClassIndex = promotionClasses.findIndex(
         (currentClass) => currentClass === teacher.formTeacher.substr(0, 4)
       );
@@ -501,7 +508,7 @@ export async function genResult(req: Request, res: Response) {
     let groupedData = _.groupBy(gradesPipeline, (student: any) => {
       return `${student.studentId.currentClassLevel}${student.studentId.currentClassArm}`;
     });
-    let results = await calcResult(groupedData);
+    let results = await calcResult(groupedData, school, schoolId);
     //  await pushResultsToStudents(results, year, term);
     res.status(201).json({
       status: 201,

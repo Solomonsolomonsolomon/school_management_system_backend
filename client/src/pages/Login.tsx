@@ -135,7 +135,7 @@ export default function Login() {
           ></p>
           <input
             type="text"
-            placeholder="email"
+            placeholder="email or id"
             name="email"
             value={details.email}
             onChange={handleInput}
