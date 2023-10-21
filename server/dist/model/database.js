@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Bus = exports.Subscription = exports.Transaction = exports.School = exports.ClassLevel = exports.AcademicYear = exports.AcademicTerm = exports.Subject = exports.Result = exports.Grades = exports.Student = exports.Admin = exports.Teacher = void 0;
+exports.Chat = exports.Messages = exports.Bus = exports.Subscription = exports.Transaction = exports.School = exports.ClassLevel = exports.AcademicYear = exports.AcademicTerm = exports.Subject = exports.Result = exports.Grades = exports.Student = exports.Admin = exports.Teacher = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 function connectDB() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -55,4 +55,8 @@ const Subscription_1 = require("./others/Subscription");
 Object.defineProperty(exports, "Subscription", { enumerable: true, get: function () { return Subscription_1.Subscription; } });
 const Bus_1 = require("./others/Bus");
 Object.defineProperty(exports, "Bus", { enumerable: true, get: function () { return Bus_1.Bus; } });
+const Chat_1 = require("./others/Chat");
+Object.defineProperty(exports, "Chat", { enumerable: true, get: function () { return Chat_1.Chat; } });
+const Messages_1 = require("./others/Messages");
+Object.defineProperty(exports, "Messages", { enumerable: true, get: function () { return Messages_1.Messages; } });
 exports.default = connectDB;

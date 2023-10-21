@@ -22,12 +22,19 @@ function signIn(req, res) {
         let roles = ["student", "admin", "teacher"];
         let index = roles.indexOf(role);
         let user = null;
+        console.log(email, "is here");
         try {
             if (!email || !password || !role) {
                 throw new Error("enter email and password");
             }
             let Model = index == 0 ? database_1.Student : index == 1 ? database_1.Admin : index == 2 ? database_1.Teacher : database_1.Admin;
-            yield Model.findOne({ email })
+            yield Model.findOne({
+                $or: [
+                    { studentId: email },
+                    { email: email.toLowerCase() },
+                    { teacherId: email },
+                ],
+            })
                 .select("name accessToken role className password currentClassLevel currentClassArm schoolId school balance subjects email _id className formTeacher")
                 .then((user) => __awaiter(this, void 0, void 0, function* () {
                 if (!user)

@@ -41,6 +41,7 @@ function illegal(req, res) {
             schoolId: newAdmin.schoolId,
         });
         yield newAdmin.save();
+        let registerSchool = new database_1.School({ school: newAdmin.school, schoolId: newAdmin.schoolId, gradePoints: {} });
         yield assignSubscriptionToStudents
             .save()
             .then((e) => {

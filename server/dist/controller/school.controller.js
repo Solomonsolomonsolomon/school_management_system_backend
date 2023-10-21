@@ -21,8 +21,13 @@ let oldThemes = {
     loginImg: "#ffffff",
     buttonText: "#ffffff",
 };
+let instance;
 class SchoolController {
-    constructor() { }
+    constructor() {
+        if (instance)
+            return instance;
+        instance = this;
+    }
     changeTheme(req, res) {
         var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {
@@ -125,6 +130,43 @@ class SchoolController {
                 status: 200,
                 logo: sch.logo,
                 themes: sch.themes,
+            });
+        });
+    }
+    setGradePoints(req, res) {
+        var _a, _b;
+        return __awaiter(this, void 0, void 0, function* () {
+            let school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
+            let schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
+            let schools = yield database_1.School.findOne({ school, schoolId });
+            if (!schools) {
+                schools = yield database_1.School.create({ school, schoolId });
+            }
+            if (!Object.keys((schools === null || schools === void 0 ? void 0 : schools.gradePoints) || {}).length) {
+                throw new decorators_1.CustomError({}, "grade points not found", 400);
+            }
+            Object.assign(schools === null || schools === void 0 ? void 0 : schools.gradePoints, req.body);
+            yield schools.save();
+            return res.status(200).json({
+                msg: "successfully set",
+                status: 200,
+            });
+        });
+    }
+    getGradePoints(req, res) {
+        var _a, _b;
+        return __awaiter(this, void 0, void 0, function* () {
+            let school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
+            let schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
+            let schools = yield database_1.School.findOne({ school, schoolId });
+            console.log(schools === null || schools === void 0 ? void 0 : schools.gradePoints);
+            if (!Object.keys((schools === null || schools === void 0 ? void 0 : schools.gradePoints) || {}).length) {
+                throw new decorators_1.CustomError({}, "grade points not found", 400);
+            }
+            return res.status(200).json({
+                gradePoints: schools === null || schools === void 0 ? void 0 : schools.gradePoints,
+                msg: "grade points fetched ",
+                status: 200,
             });
         });
     }
