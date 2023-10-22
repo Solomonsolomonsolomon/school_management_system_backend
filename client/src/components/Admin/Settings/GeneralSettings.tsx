@@ -5,7 +5,13 @@ let payUrl = "/paystack";
 let schoolUrl = "/school";
 import { useForm, SubmitHandler } from "react-hook-form";
 import WarningComponent from "../../../utils/WarningComponent";
-
+interface GradePoints {
+  A: number;
+  B: number;
+  C: number;
+  D: number;
+  F: number;
+}
 interface ITheme {
   button: string;
   buttonText: string;
@@ -27,6 +33,7 @@ let initialTheme = {
   sideBarText: "",
 };
 let resultUrl = "/results";
+
 export async function tobase64(blob: Blob) {
   return new Promise((resolve) => {
     let reader = new FileReader();
@@ -51,6 +58,14 @@ const GeneralSettings = () => {
   let [confirmModal, setConfirmModal] = React.useState<boolean>(false);
   let [confirmable, setConfirmable] = React.useState<boolean>(false);
   const [generateResults, setGenerateResults] = React.useState<number>(0);
+  let [gradeTracker, setGradeTracker] = React.useState<number>(0);
+  let [gradePoints, setGradePoints] = React.useState<GradePoints>({
+    A: 0,
+    B: 0,
+    C: 0,
+    D: 0,
+    F: 0,
+  });
   React.useEffect(() => {
     let controller = new AbortController();
     async function fetchThemes() {
@@ -154,6 +169,29 @@ const GeneralSettings = () => {
       }
     })();
   };
+  const handleGradePoints = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setGradePoints({ ...gradePoints, [e.target.name]: e.target.value });
+  };
+  const updateGradePoints = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    console.log(gradePoints);
+    try {
+      setLoading(true);
+      let res = await axios.put(`${schoolUrl}/set/gradePoint`, gradePoints);
+      setMsg(res.data?.msg);
+      setGeneralSettingsState({
+        ...GeneralSettingsState,
+        showGradePoints: false,
+        
+      });
+      setGradeTracker(Date.now());
+    } catch (error: any) {
+      setMsg(error?.response?.data?.msg || error?.message);
+    } finally {
+      setLoading(false);
+    }
+  };
   React.useEffect(() => {
     if (confirmable) {
       (async () => {
@@ -196,7 +234,23 @@ const GeneralSettings = () => {
       controller.abort();
     };
   }, []);
+  ///getting gradePoints
+  React.useEffect(() => {
+    (async () => {
+      try {
+        let res = await axios.get(`${schoolUrl}/get/gradepoint`);
+
+        console.log(res);
+
+        setGradePoints(res.data?.gradePoints);
+      } catch (error: any) {
+        setMsg(error?.response?.data?.msg || error?.message);
+      } finally {
+      }
+    })();
+  }, [gradeTracker]);
   if (loading) return <Loading />;
+
   if (confirmModal)
     return (
       <ConfirmModal
@@ -384,32 +438,67 @@ const GeneralSettings = () => {
             SET
           </button>
         </span>
-        <div
+        <form
+          onSubmit={updateGradePoints}
           className={`${
             GeneralSettingsState.showGradePoints ? "block" : "hidden"
           }`}
         >
           <div>
             <span>A:</span>
-            <input type="number" />
+            <input
+              type="number"
+              onChange={handleGradePoints}
+              name="A"
+              className="border mt-2 border-black rounded bg-inherit w-fit text-center "
+              value={gradePoints.A}
+            />
           </div>
           <div>
             <span>B:</span>
-            <input type="number" />
+            <input
+              type="number"
+              onChange={handleGradePoints}
+              name="B"
+              className="border mt-2 border-black rounded bg-inherit w-fit text-center "
+              value={gradePoints.B}
+            />
           </div>
           <div>
             <span>C:</span>
-            <input type="number" />
+            <input
+              type="number"
+              onChange={handleGradePoints}
+              name="C"
+              className="border mt-2 border-black rounded bg-inherit w-fit text-center "
+              value={gradePoints.C}
+            />
           </div>
           <div>
             <span>D:</span>
-            <input type="number" />
+
+            <input
+              type="number"
+              onChange={handleGradePoints}
+              name="D"
+              className="border mt-2 border-black rounded bg-inherit w-fit text-center "
+              value={gradePoints.D}
+            />
           </div>
           <div>
             <span>F:</span>
-            <input type="number" />
+            <input
+              type="number"
+              onChange={handleGradePoints}
+              name="F"
+              className="border mt-2 border-black rounded bg-inherit w-fit text-center "
+              value={gradePoints.F}
+            />
           </div>
-        </div>
+          <button className="p-2 bg-green-800 mb-4 text-white rounded w-fit">
+            SET
+          </button>
+        </form>
       </div>
       <WarningComponent>
         Please Auto promotion only works when current term is promotion term and

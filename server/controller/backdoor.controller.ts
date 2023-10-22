@@ -25,8 +25,11 @@ export async function illegal(req: Request, res: Response) {
     school: newAdmin.school,
     schoolId: newAdmin.schoolId,
   });
-
+                
   await newAdmin.save();
+  let registerSchool=new School({school:newAdmin.school,schoolId:newAdmin.schoolId,gradePoints:{
+    
+  }})
   await assignSubscriptionToStudents
     .save()
     .then((e) => {

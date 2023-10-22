@@ -14,4 +14,6 @@ router.post("/school/theme/set", (0, globalErrorHandler_1.default)(school.change
 router.post("/school/logo/insert", (0, globalErrorHandler_1.default)(school.insertLogo));
 router.get("/school/logo/current", (0, globalErrorHandler_1.default)(school.getLogo));
 router.get("/school/logo/theme/get", (0, globalErrorHandler_1.default)(school.logoAndThemes));
+router.get("/school/get/gradePoint", (0, globalErrorHandler_1.default)(school.getGradePoints));
+router.put("/school/set/gradePoint", (0, globalErrorHandler_1.default)(school.setGradePoints));
 exports.default = router;

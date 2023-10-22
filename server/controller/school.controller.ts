@@ -11,8 +11,12 @@ let oldThemes = {
   loginImg: "#ffffff",
   buttonText: "#ffffff",
 };
+let instance: any;
 class SchoolController {
-  constructor() {}
+  constructor() {
+    if (instance) return instance;
+    instance = this;
+  }
   public async changeTheme(req: express.Request, res: express.Response) {
     let schoolId = req.user?.schoolId;
     let school = req.user?.school;
@@ -97,6 +101,37 @@ class SchoolController {
       status: 200,
       logo: sch.logo,
       themes: sch.themes,
+    });
+  }
+  public async setGradePoints(req: express.Request, res: express.Response) {
+    let school = req.user?.school;
+    let schoolId = req.user?.schoolId;
+    let schools = await School.findOne({ school, schoolId });
+    if (!schools) {
+      schools = await School.create({ school, schoolId });
+    }
+    if (!Object.keys(schools?.gradePoints || {}).length) {
+      throw new CustomError({}, "grade points not found", 400);
+    }
+    Object.assign(schools?.gradePoints, req.body);
+    await schools.save();
+    return res.status(200).json({
+      msg: "successfully set",
+      status: 200,
+    });
+  }
+  public async getGradePoints(req: express.Request, res: express.Response) {
+    let school = req.user?.school;
+    let schoolId = req.user?.schoolId;
+    let schools = await School.findOne({ school, schoolId });
+    console.log(schools?.gradePoints);
+    if (!Object.keys(schools?.gradePoints || {}).length) {
+      throw new CustomError({}, "grade points not found", 400);
+    }
+    return res.status(200).json({
+      gradePoints: schools?.gradePoints,
+      msg: "grade points fetched ",
+      status: 200,
     });
   }
 }

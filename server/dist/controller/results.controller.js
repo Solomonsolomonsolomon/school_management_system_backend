@@ -16,8 +16,10 @@ exports.DeleteResult = exports.autoPromote = exports.teacherGenerateResult = exp
 const database_1 = require("../model/database");
 const lodash_1 = __importDefault(require("lodash"));
 const decorators_1 = require("../middleware/decorators");
-function calcResult(groupedData) {
+function calcResult(groupedData, school, schoolId) {
+    var _a, _b, _c, _d;
     return __awaiter(this, void 0, void 0, function* () {
+        let _school = yield database_1.School.findOne({ school, schoolId });
         let bulkPushOperations = [];
         for (const className in groupedData) {
             const students = groupedData[className];
@@ -37,16 +39,16 @@ function calcResult(groupedData) {
                 if (averageMarks === -1) {
                     overallGrade = "N/A";
                 }
-                if (averageMarks >= 75) {
+                if (averageMarks >= (((_a = _school === null || _school === void 0 ? void 0 : _school.gradePoints) === null || _a === void 0 ? void 0 : _a.A) || 75)) {
                     overallGrade = "A";
                 }
-                else if (averageMarks >= 60) {
+                else if (averageMarks >= (((_b = _school === null || _school === void 0 ? void 0 : _school.gradePoints) === null || _b === void 0 ? void 0 : _b.B) || 60)) {
                     overallGrade = "B";
                 }
-                else if (averageMarks >= 50) {
+                else if (averageMarks >= (((_c = _school === null || _school === void 0 ? void 0 : _school.gradePoints) === null || _c === void 0 ? void 0 : _c.C) || 50)) {
                     overallGrade = "C";
                 }
-                else if (averageMarks >= 40) {
+                else if (averageMarks >= (((_d = _school === null || _school === void 0 ? void 0 : _school.gradePoints) === null || _d === void 0 ? void 0 : _d.D) || 40)) {
                     overallGrade = "D";
                 }
                 else {
@@ -94,8 +96,10 @@ function calcResult(groupedData) {
 }
 exports.calcResult = calcResult;
 function calcResultAndCummulative(groupedData, school, year, schoolId, teacher) {
+    var _a, _b, _c, _d;
     return __awaiter(this, void 0, void 0, function* () {
         let bulkPushOperations = [];
+        let _school = yield database_1.School.findOne({ school, schoolId });
         for (const className in groupedData) {
             const students = groupedData[className];
             for (const student of students) {
@@ -114,16 +118,16 @@ function calcResultAndCummulative(groupedData, school, year, schoolId, teacher) 
                 if (averageMarks === -1) {
                     overallGrade = "N/A";
                 }
-                if (averageMarks >= 75) {
+                if (averageMarks >= (((_a = _school === null || _school === void 0 ? void 0 : _school.gradePoints) === null || _a === void 0 ? void 0 : _a.A) || 75)) {
                     overallGrade = "A";
                 }
-                else if (averageMarks >= 60) {
+                else if (averageMarks >= (((_b = _school === null || _school === void 0 ? void 0 : _school.gradePoints) === null || _b === void 0 ? void 0 : _b.B) || 60)) {
                     overallGrade = "B";
                 }
-                else if (averageMarks >= 50) {
+                else if (averageMarks >= (((_c = _school === null || _school === void 0 ? void 0 : _school.gradePoints) === null || _c === void 0 ? void 0 : _c.C) || 50)) {
                     overallGrade = "C";
                 }
-                else if (averageMarks >= 40) {
+                else if (averageMarks >= (((_d = _school === null || _school === void 0 ? void 0 : _school.gradePoints) === null || _d === void 0 ? void 0 : _d.D) || 40)) {
                     overallGrade = "D";
                 }
                 else {
@@ -197,9 +201,11 @@ function calcResultAndCummulative(groupedData, school, year, schoolId, teacher) 
 }
 exports.calcResultAndCummulative = calcResultAndCummulative;
 function calcResultAndCummulativeAndAutoPromote(groupedData, school, year, schoolId, teacher, promotionClasses) {
+    var _a, _b, _c, _d;
     return __awaiter(this, void 0, void 0, function* () {
         let bulkPushOperations = [];
         let studentBulkOperations = [];
+        let _school = yield database_1.School.findOne({ school, schoolId });
         for (const className in groupedData) {
             const students = groupedData[className];
             for (const student of students) {
@@ -218,16 +224,16 @@ function calcResultAndCummulativeAndAutoPromote(groupedData, school, year, schoo
                 if (averageMarks === -1) {
                     overallGrade = "N/A";
                 }
-                if (averageMarks >= 75) {
+                if (averageMarks >= (((_a = _school === null || _school === void 0 ? void 0 : _school.gradePoints) === null || _a === void 0 ? void 0 : _a.A) || 75)) {
                     overallGrade = "A";
                 }
-                else if (averageMarks >= 60) {
+                else if (averageMarks >= (((_b = _school === null || _school === void 0 ? void 0 : _school.gradePoints) === null || _b === void 0 ? void 0 : _b.B) || 60)) {
                     overallGrade = "B";
                 }
-                else if (averageMarks >= 50) {
+                else if (averageMarks >= (((_c = _school === null || _school === void 0 ? void 0 : _school.gradePoints) === null || _c === void 0 ? void 0 : _c.C) || 50)) {
                     overallGrade = "C";
                 }
-                else if (averageMarks >= 40) {
+                else if (averageMarks >= (((_d = _school === null || _school === void 0 ? void 0 : _school.gradePoints) === null || _d === void 0 ? void 0 : _d.D) || 40)) {
                     overallGrade = "D";
                 }
                 else {
@@ -334,10 +340,11 @@ function calcResultAndCummulativeAndAutoPromote(groupedData, school, year, schoo
         }).student;
         cummulativeScore.shift();
         cummulativeScore.map((student) => {
+            var _a;
             console.log(student.average);
             student.average = student.average / student.totalTerms;
             console.log(student.average, student.name);
-            if (student.average >= 40) {
+            if (student.average >= (((_a = _school === null || _school === void 0 ? void 0 : _school.gradePoints) === null || _a === void 0 ? void 0 : _a.D) || 40)) {
                 let currentClassIndex = promotionClasses.findIndex((currentClass) => currentClass === teacher.formTeacher.substr(0, 4));
                 currentClassIndex > -1 &&
                     studentBulkOperations.push({
@@ -456,7 +463,7 @@ function genResult(req, res) {
             let groupedData = lodash_1.default.groupBy(gradesPipeline, (student) => {
                 return `${student.studentId.currentClassLevel}${student.studentId.currentClassArm}`;
             });
-            let results = yield calcResult(groupedData);
+            let results = yield calcResult(groupedData, school, schoolId);
             //  await pushResultsToStudents(results, year, term);
             res.status(201).json({
                 status: 201,
