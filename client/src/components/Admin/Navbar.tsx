@@ -19,7 +19,8 @@ import {
   faSchoolCircleCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import Loading from "../Loading";
-import React from "react";
+import React, { useContext } from "react";
+import { AppContext } from "../../context/AppProvider";
 interface ProfileProps {
   setView: any;
   isOpen?: any;
@@ -27,6 +28,8 @@ interface ProfileProps {
 const schoolUrl = "/school";
 
 const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
+  const context = useContext(AppContext);
+
   let parsed: any = {
     school: "",
   };
@@ -70,8 +73,9 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
     <div className="px-0 lg:py-0 scrollbar-hide sm:py-1 md:py-0  bg-gray-50 sm:block lg:flex  md:flex justify-center">
       <nav
         style={{
-          backgroundColor: `${colors.sideBar}`,
-          color: `${colors.sideBarText}`,
+          backgroundColor:
+            context.theme === "dark" ? "dark-blue" : `${colors.sideBar}`,
+          color: context.theme==='dark'?"white":`${colors.sideBarText}`,
         }}
         className="bg-gray-700  shadow-2xl scrollbar-hide h-screen py-0 relative overflow-y-auto p-2 sm:w-full md:w-fit lg:w-fit xl:w-full lg:rounded-none md:rounded-none  sm:rounded-none l"
       >
@@ -303,7 +307,10 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
             >
               <span>
                 <FontAwesomeIcon icon={faMessage} size="2xl" className="mr-2" />
-                <Link  to='/messages' className="md:hidden lg:inline xl:inline sm:inline">
+                <Link
+                  to="/messages"
+                  className="md:hidden lg:inline xl:inline sm:inline"
+                >
                   {" "}
                   Messages
                 </Link>
