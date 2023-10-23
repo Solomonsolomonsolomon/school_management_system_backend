@@ -124,7 +124,7 @@ class SchoolController {
     let school = req.user?.school;
     let schoolId = req.user?.schoolId;
     let schools = await School.findOne({ school, schoolId });
-    console.log(schools?.gradePoints);
+
     if (!Object.keys(schools?.gradePoints || {}).length) {
       throw new CustomError({}, "grade points not found", 400);
     }
