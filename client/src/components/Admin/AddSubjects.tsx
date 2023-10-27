@@ -79,45 +79,49 @@ const AddSubject: React.FC = () => {
   return (
     <>
       <p className="dark:bg-gray-900 text-center font-bold">{state.msg}</p>
-      <div className="dark:bg-gray-900 w-[200px]sm:w-[400px] lg:w-[100%] md:w-[100%] w-[350px]">
-        <div className="dark:bg-gray-900 grid gap-0 justify-items-center">
-          <form
-            onSubmit={handleSubmit(handleFormSubmit)}
-            className="dark:bg-gray-900 border grid justify-items-center p-4 
+      {!classes.length ? (
+        <p className="text-center text-red-300">Please register at least one class to add subjects</p>
+      ) : (
+        <div className="dark:bg-gray-900 w-[200px]sm:w-[400px] lg:w-[100%] md:w-[100%] w-[350px]">
+          <div className="dark:bg-gray-900 grid gap-0 justify-items-center">
+            <form
+              onSubmit={handleSubmit(handleFormSubmit)}
+              className="dark:bg-gray-900 border grid justify-items-center p-4 
              border-gray-500 placeholder:text-center gap-0 rounded-lg w-fit"
-          >
-            <input
-              type="text"
-              {...register("subject")}
-              required
-              placeholder="subject name"
-              className="dark:bg-gray-900 placeholder:text-center border p-1 border-black border-x-0 border-t-0 border-b-[2px] "
-            />
-            <label className="dark:bg-gray-900 text-center font-bold">
-              Select Class
-            </label>
-            <label className="dark:bg-gray-900 text-center font-bold opacity-[0.5]">
-              You can select multiple
-            </label>
-            <select
-              multiple
-              {...register("className")}
-              required
-              className="dark:bg-gray-900 placeholder:text-center border-y border-black "
             >
-              {classes.map((classLevel, index) => {
-                return (
-                  <option key={index} value={classLevel.name}>
-                    {classLevel.name}
-                  </option>
-                );
-              })}
-            </select>
+              <input
+                type="text"
+                {...register("subject")}
+                required
+                placeholder="subject name"
+                className="dark:bg-gray-900 placeholder:text-center border p-1 border-black border-x-0 border-t-0 border-b-[2px] "
+              />
+              <label className="dark:bg-gray-900 text-center font-bold">
+                Select Class
+              </label>
+              <label className="dark:bg-gray-900 text-center font-bold opacity-[0.5]">
+                You can select multiple
+              </label>
+              <select
+                multiple
+                {...register("className")}
+                required
+                className="dark:bg-gray-900 placeholder:text-center border-y border-black "
+              >
+                {classes.map((classLevel, index) => {
+                  return (
+                    <option key={index} value={classLevel.name}>
+                      {classLevel.name}
+                    </option>
+                  );
+                })}
+              </select>
 
-            <Button buttontype={0}>ADD SUBJECT</Button>
-          </form>
+              <Button buttontype={0}>ADD SUBJECT</Button>
+            </form>
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 };
