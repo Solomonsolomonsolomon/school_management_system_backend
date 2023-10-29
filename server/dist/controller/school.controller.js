@@ -159,7 +159,6 @@ class SchoolController {
             let school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
             let schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
             let schools = yield database_1.School.findOne({ school, schoolId });
-            console.log(schools === null || schools === void 0 ? void 0 : schools.gradePoints);
             if (!Object.keys((schools === null || schools === void 0 ? void 0 : schools.gradePoints) || {}).length) {
                 throw new decorators_1.CustomError({}, "grade points not found", 400);
             }
