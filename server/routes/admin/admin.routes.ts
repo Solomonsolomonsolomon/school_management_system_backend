@@ -24,6 +24,7 @@ import {
   editStudent,
   editTeacher,
   resetSchoolTransaction,
+  searchStudent,
 } from "../../controller/admin.controller";
 
 const {
@@ -63,6 +64,12 @@ adminRouter.delete("/admin/delete/student/:studentId", deleteStudent);
 adminRouter.get("/admin/get/admin", getAllAdmin);
 adminRouter.get("/admin/get/student", getAllStudents);
 adminRouter.get("/admin/get/teacher", getAllTeachers);
+
+//# searching
+adminRouter.get(
+  "/admin/search/student/:searchParams",
+  asyncErrorHandler(searchStudent)
+);
 //#editing users
 adminRouter.put(
   "/admin/edit/student/:studentId",
@@ -90,6 +97,7 @@ adminRouter.put(
   "/admin/term/transactions/reset",
   asyncErrorHandler(ResetAllTransactionsOnTermChange)
 );
+
 //# year
 adminRouter.post("/admin/year/add", asyncErrorHandler(addAcademicYear));
 //addYearAutomatically(); //automatically adds Year first of september
