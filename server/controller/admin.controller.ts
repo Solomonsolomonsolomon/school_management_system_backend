@@ -301,15 +301,17 @@ export async function searchStudent(req: Request, res: Response) {
     const page = parseInt(req.query.page as string) || 1;
     const pageSize = parseInt(req.query.pageSize as string) || 10;
     const skip = (page - 1) * pageSize;
-    const {searchParams} = req.params;
+    const { searchParams } = req.params;
     const totalPages = Math.ceil(totalStudents / pageSize);
     await Student.find({
       school: req.user?.school,
       schoolId,
       $or: [
         { name: { $regex: new RegExp(searchParams, "i") } }, // 'i' for case-insensitive search
-        {email:{ $regex: new RegExp(searchParams, "i") } }
-      
+        { email: { $regex: new RegExp(searchParams, "i") } },
+        { className: { $regex: new RegExp(searchParams, "i") } },
+        { studentId: { $regex: new RegExp(searchParams, "i") } },
+        
       ],
     })
       .sort({ name: 1 })
