@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.resetSchoolTransaction = exports.countParents = exports.editTeacher = exports.editStudent = exports.countTeachers = exports.getGenderDivide = exports.getAllTeachers = exports.getAllStudents = exports.getAllAdmin = exports.deleteTeacher = exports.deleteStudent = exports.deleteAdmin = exports.addStudent = exports.addTeacher = exports.addAdmin = void 0;
+exports.resetSchoolTransaction = exports.countParents = exports.editTeacher = exports.editStudent = exports.countTeachers = exports.getGenderDivide = exports.getAllTeachers = exports.searchStudent = exports.getAllStudents = exports.getAllAdmin = exports.deleteTeacher = exports.deleteStudent = exports.deleteAdmin = exports.addStudent = exports.addTeacher = exports.addAdmin = void 0;
 const decorators_1 = require("../middleware/decorators");
 const database_1 = require("./../model/database");
 function addAdmin(req, res, next) {
@@ -248,12 +248,22 @@ function getAllAdmin(req, res) {
 }
 exports.getAllAdmin = getAllAdmin;
 function getAllStudents(req, res) {
-    var _a, _b;
+    var _a, _b, _c;
     return __awaiter(this, void 0, void 0, function* () {
         try {
             let schoolId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.schoolId;
-            yield database_1.Student.find({ school: (_b = req.user) === null || _b === void 0 ? void 0 : _b.school, schoolId })
+            const totalStudents = yield database_1.Student.countDocuments({
+                school: (_b = req.user) === null || _b === void 0 ? void 0 : _b.school,
+                schoolId,
+            });
+            const page = parseInt(req.query.page) || 1;
+            const pageSize = parseInt(req.query.pageSize) || 10;
+            const skip = (page - 1) * pageSize;
+            const totalPages = Math.ceil(totalStudents / pageSize);
+            yield database_1.Student.find({ school: (_c = req.user) === null || _c === void 0 ? void 0 : _c.school, schoolId })
                 .sort({ name: 1 })
+                .skip(skip)
+                .limit(pageSize)
                 .then((student) => {
                 if (student.length < 1)
                     throw new Error("No student found");
@@ -261,6 +271,8 @@ function getAllStudents(req, res) {
                     status: 200,
                     msg: "all students fetched successfully",
                     student,
+                    page,
+                    totalPages,
                 });
             });
         }
@@ -275,6 +287,56 @@ function getAllStudents(req, res) {
     });
 }
 exports.getAllStudents = getAllStudents;
+function searchStudent(req, res) {
+    var _a, _b, _c;
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            let schoolId = (_a = req.user) === null || _a === void 0 ? void 0 : _a.schoolId;
+            const totalStudents = yield database_1.Student.countDocuments({
+                school: (_b = req.user) === null || _b === void 0 ? void 0 : _b.school,
+                schoolId,
+            });
+            const page = parseInt(req.query.page) || 1;
+            const pageSize = parseInt(req.query.pageSize) || 10;
+            const skip = (page - 1) * pageSize;
+            const { searchParams } = req.params;
+            const totalPages = Math.ceil(totalStudents / pageSize);
+            yield database_1.Student.find({
+                school: (_c = req.user) === null || _c === void 0 ? void 0 : _c.school,
+                schoolId,
+                $or: [
+                    { name: { $regex: new RegExp(searchParams, "i") } },
+                    { email: { $regex: new RegExp(searchParams, "i") } },
+                    { className: { $regex: new RegExp(searchParams, "i") } },
+                    { studentId: { $regex: new RegExp(searchParams, "i") } },
+                ],
+            })
+                .sort({ name: 1 })
+                .skip(skip)
+                .limit(pageSize)
+                .then((student) => {
+                if (student.length < 1)
+                    throw new Error("No student found");
+                res.status(200).json({
+                    status: 200,
+                    msg: "all students fetched successfully",
+                    student,
+                    page,
+                    totalPages,
+                });
+            });
+        }
+        catch (error) {
+            res.status(500).json({
+                status: 500,
+                msg: error.message,
+                error,
+                err: error.message,
+            });
+        }
+    });
+}
+exports.searchStudent = searchStudent;
 function getAllTeachers(req, res) {
     var _a, _b;
     return __awaiter(this, void 0, void 0, function* () {

@@ -38,10 +38,10 @@ const Subscription: React.FC = () => {
         <p>expiry time:{subscriptionDetails.time.split(".")[0]}(GMT)</p>
       </div>
       <p className="font-bold text-center ">Renew Subscription</p>
-      <form action="">
+      <form action="" className="sm:flex md:inline lg:inline justify-around">
         {" "}
         <label htmlFor="">Enter plan to renew</label>
-        <select className="bg-inherit mb-3 border">
+        <select className="bg-inherit mb-3 border ">
           <option className="dark:bg-gray-900" value="basic">
             basic
           </option>

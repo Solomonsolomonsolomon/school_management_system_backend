@@ -52,6 +52,8 @@ adminRouter.delete("/admin/delete/student/:studentId", admin_controller_1.delete
 adminRouter.get("/admin/get/admin", admin_controller_1.getAllAdmin);
 adminRouter.get("/admin/get/student", admin_controller_1.getAllStudents);
 adminRouter.get("/admin/get/teacher", admin_controller_1.getAllTeachers);
+//# searching
+adminRouter.get("/admin/search/student/:searchParams", (0, globalErrorHandler_1.default)(admin_controller_1.searchStudent));
 //#editing users
 adminRouter.put("/admin/edit/student/:studentId", (0, globalErrorHandler_1.default)(admin_controller_1.editStudent));
 adminRouter.put("/admin/edit/teacher/:id", (0, globalErrorHandler_1.default)(admin_controller_1.editTeacher));

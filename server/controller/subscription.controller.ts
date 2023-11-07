@@ -2,8 +2,12 @@ import { Request, Response } from "express";
 import { Subscription } from "../model/others/Subscription";
 import { CustomError } from "../middleware/decorators";
 import { Admin, Student } from "../model/database";
-
+let instance: any;
 class SubscriptionController {
+  constructor() {
+    if (instance) return instance;
+    instance = this;
+  }
   public async renewSubscription(req: Request, res: Response) {
     let subscription = await Subscription.findOne({
       school: req.user?.school,

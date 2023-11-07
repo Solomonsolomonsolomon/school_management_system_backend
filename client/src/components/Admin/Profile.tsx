@@ -4,10 +4,11 @@ import { faGear } from "@fortawesome/free-solid-svg-icons";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import imgDefault from "./../../assets/undraw_real_time_sync_re_nky7.svg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useContext } from "react";
 import axios from "../../api/axios";
 import { useNavigate, Link } from "react-router-dom";
 import Button from "../Button/Button";
+import { AppContext } from "../../context/AppProvider";
 interface ITheme {
   header: string;
   headerText: string;
@@ -18,6 +19,8 @@ interface IThemeAndLogo {
 }
 let schoolUrl = "/school";
 const Profile = () => {
+  const context = useContext(AppContext);
+
   let term = React.useRef<HTMLParagraphElement>(null);
   let year = React.useRef<HTMLParagraphElement>(null);
   const [_confirmable, setConfirmable] = React.useState<boolean>(false);
@@ -136,8 +139,14 @@ const Profile = () => {
     <section
       className=" flex flex-wrap justify-between sm:my-10yy md:my-0 border-b-2  p-1  mb-1  pr-3 pt-2  w-[100%] lg:rounded-none  sm:rounded-none md:rounded-none"
       style={{
-        backgroundColor: themeandlogo.theme?.header || "#4a5568",
-        color: themeandlogo.theme?.headerText || "#000000",
+        backgroundColor:
+          context.theme === "dark"
+            ? "bg-gray-900"
+            : themeandlogo.theme?.header || "#4a5568",
+        color:
+          context.theme === "dark"
+            ? "text-white"
+            : themeandlogo.theme?.headerText || "#000000",
       }}
     >
       <img src={themeandlogo.logo || imgDefault} alt="" className="w-[3.4em]" />

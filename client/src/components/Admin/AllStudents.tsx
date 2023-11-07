@@ -13,16 +13,42 @@ function AllStudents() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editingStudent, setEditingStudent] = useState<any>(null);
   let [updateUI, setUpdateUI] = useState<number>(0);
+  let [page, setPage] = React.useState<number>(1);
   let errRef = React.useRef<HTMLParagraphElement>(null);
+  let [totalPages, setTotalPages] = React.useState<number>(1);
+  function pagesRender() {
+    let el = [];
+    for (let i = 1; i <= totalPages; i++) {
+      el.push(
+        <span
+          key={i}
+          className={`1ml-2  px-2 ${
+            page === i ? "bg-blue-900 text-white" : ""
+          } bg-blue-50  rounded-full`}
+          onClick={() => {
+            setPage(i);
+          }}
+        >
+          {i}
+        </span>
+      );
+    }
+    return el;
+  }
+
   useEffect(() => {
     const controller = new AbortController();
     async function fetchStudents() {
       try {
         setLoading(true);
-        const studentResponse = await axios.get(`/admin/get/student`, {
-          signal: controller.signal,
-        });
+        const studentResponse = await axios.get(
+          `/admin/get/student?pageSize=2&page=${page}`,
+          {
+            signal: controller.signal,
+          }
+        );
         setStudents(studentResponse?.data?.student);
+        setTotalPages(studentResponse?.data?.totalPages);
         errRef.current ? (errRef.current.textContent = "") : "";
         setLoading(false);
       } catch (error: any) {
@@ -41,7 +67,7 @@ function AllStudents() {
     return () => {
       controller.abort();
     };
-  }, [updateUI]);
+  }, [updateUI, page]);
 
   const filteredStudents = students.filter((student: any) => {
     console.log(student?.studentId);
@@ -300,13 +326,17 @@ function AllStudents() {
           </p>
           <div className="dark:bg-gray-900  flex flex-col border p-3 lg:w-[80vw] sm:w-full">
             {/* Search bar */}
-            <input
-              type="text"
-              placeholder="Search for students..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="dark:bg-gray-900  p-2 border rounded"
-            />
+            <form action="">
+              <input
+                type="search"
+                placeholder="Search for students..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="dark:bg-gray-900  p-2 border rounded"
+              />
+              <Button buttontype={3}>Search</Button>
+            </form>
+
             <p ref={errRef}></p>
             {/* Table */}
             <div className="dark:bg-gray-900  overflow-x-auto overflow-visible ">
@@ -432,6 +462,10 @@ function AllStudents() {
                 </tbody>
               </table>
             </div>
+            <section className="flex flex-wrap justify-start mt-20 gap-4 bg-white dark:bg-gray-900 p-4  absolute bottom-0 ">
+              {" "}
+              pages:{pagesRender()}
+            </section>
           </div>
         </div>
       ) : (

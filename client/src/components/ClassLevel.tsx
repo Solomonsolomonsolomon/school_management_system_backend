@@ -14,7 +14,6 @@ const ClassLevel: React.FC = () => {
   let [searchQuery, setSearchQuery] = React.useState<any>("");
   const [confirmable, setConfirmable] = React.useState<boolean>(false);
   const [confirmModal, setConfirmModal] = React.useState<boolean>(false);
-
   let [selectedClass, setSelectedClass] = React.useState<any>({ id: "" });
 
   React.useEffect(() => {

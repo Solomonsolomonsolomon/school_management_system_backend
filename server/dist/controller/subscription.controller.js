@@ -12,7 +12,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const Subscription_1 = require("../model/others/Subscription");
 const decorators_1 = require("../middleware/decorators");
 const database_1 = require("../model/database");
+let instance;
 class SubscriptionController {
+    constructor() {
+        if (instance)
+            return instance;
+        instance = this;
+    }
     renewSubscription(req, res) {
         var _a, _b;
         return __awaiter(this, void 0, void 0, function* () {

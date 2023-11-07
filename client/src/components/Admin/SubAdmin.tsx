@@ -212,7 +212,7 @@ const SubAdmin: React.FC = () => {
           <div className="w-[99%]"></div>
         </div> */}
       </section>
-      <footer className="bg-slate-200 grid justify-center p-4 opacity-80 ">
+      <footer className="bg-slate-200 dark:bg-gray-900 dark:border grid justify-center p-4 opacity-80 ">
         <p>copyright &copy; 2023</p>
         <p>All rights Reserved</p>
       </footer>
