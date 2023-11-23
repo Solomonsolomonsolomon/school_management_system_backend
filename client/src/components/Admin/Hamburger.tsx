@@ -13,10 +13,12 @@ const Hamburger: React.FC<{
   }
   let [renderNavBar, setRenderNavBar] = React.useState<boolean>(false);
   const [theme, settheme] = React.useState<Color>({ headerText: "#000000" });
+
   const handleRenderNavBar = () => {
     setRenderNavBar(!renderNavBar);
     console.log(renderNavBar);
   };
+
   React.useEffect(() => {
     (async () => {
       try {
@@ -30,6 +32,7 @@ const Hamburger: React.FC<{
       }
     })();
   }, []);
+  
   return (
     <>
       <button
