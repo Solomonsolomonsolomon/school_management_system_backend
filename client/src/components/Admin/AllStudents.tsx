@@ -4,6 +4,7 @@ import Loading from "../Loading";
 //import { tobase64 } from "./AddStudent";
 import Button from "../Button/Button";
 import NotFoundComponent from "../../utils/404Component";
+import PaginationController from "../../utils/PaginationController";
 
 const postUrl = "/admin";
 function AllStudents() {
@@ -16,26 +17,7 @@ function AllStudents() {
   let [page, setPage] = React.useState<number>(1);
   let errRef = React.useRef<HTMLParagraphElement>(null);
   let [totalPages, setTotalPages] = React.useState<number>(1);
-  function pagesRender() {
-    let el = [];
-    for (let i = 1; i <= totalPages; i++) {
-      el.push(
-        <span
-          key={i}
-          className={`1ml-2  px-2 ${
-            page === i ? "bg-blue-900 text-white" : ""
-          } bg-blue-50  rounded-full`}
-          onClick={() => {
-            setPage(i);
-          }}
-        >
-          {i}
-        </span>
-      );
-    }
-    return el;
-  }
-
+ 
   useEffect(() => {
     const controller = new AbortController();
     async function fetchStudents() {
@@ -462,10 +444,11 @@ function AllStudents() {
                 </tbody>
               </table>
             </div>
-            <section className="flex flex-wrap justify-start mt-20 gap-4 bg-white dark:bg-gray-900 p-4  absolute bottom-0 ">
-              {" "}
-              pages:{pagesRender()}
-            </section>
+            <PaginationController
+              page={page}
+              setPage={setPage}
+              totalPages={totalPages}
+            />
           </div>
         </div>
       ) : (

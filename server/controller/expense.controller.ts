@@ -2,6 +2,8 @@ import { CustomError } from "../middleware/decorators";
 import { AcademicTerm, AcademicYear } from "../model/database";
 import { Expense } from "../model/others/Expense";
 import { Request as Req, Response as Res } from "express";
+import helper from "../helpers/helper";
+const { paginate } = helper;
 class ExpenseController {
   public async addExpense(req: Req, res: Res) {
     let term = await AcademicTerm.findOne({
@@ -116,11 +118,7 @@ class ExpenseController {
 
     const school = req.user?.school;
     let schoolId = req.user?.schoolId;
-    const totalExpenses = await Expense.countDocuments({ school, schoolId });
-    const page = parseInt(req.query.page as string) || 1;
-    const pageSize = parseInt(req.query.pageSize as string) || 10;
-    const skip = (page - 1) * pageSize;
-    const totalPages = Math.ceil(totalExpenses / pageSize);
+    //const totalPages = Math.ceil(totalStudents / pageSize);
     /* 2 skip 2-1 * 10 */
 
     interface IFilter {
@@ -152,18 +150,40 @@ class ExpenseController {
       filter.year = currentYear?._id;
     }
     if (month) filter.month = new Date().getMonth();
-    let expenses = await Expense.find(filter)
-      .skip(skip)
-      .limit(pageSize)
-      .populate("createdBy")
-      .select("name amountPaid createdAt.name school");
-    return res.status(200).json({
+
+    const totalExpenses = await Expense.countDocuments(filter);
+    console.log(totalExpenses);
+    const page = parseInt(req.query.page as string) || 1;
+    const pageSize = parseInt(req.query.pageSize as string) || 10;
+    const skip = (page - 1) * pageSize;
+    let result = await paginate(
+      Expense,
+      totalExpenses,
+      filter,
+      pageSize,
+      page,
+      "createdBy",
+      "name amountPaid createdAt.name school"
+    );
+    return res.json({
       msg: "all students",
       status: 200,
-      expenses,
-      totalPages,
-      page,
+      expenses: result?.model,
+      totalPages: result.totalPages,
+      page: result.page,
     });
+    // let expenses = await Expense.find(filter)
+    //   .skip(skip)
+    //   .limit(pageSize)
+    //   .populate("createdBy")
+    //   .select("name amountPaid createdAt.name school");
+    // return res.status(200).json({
+    //   msg: "all students",
+    //   status: 200,
+    //   expenses,
+    //   totalPages,
+    //   page,
+    // });
   }
 }
 

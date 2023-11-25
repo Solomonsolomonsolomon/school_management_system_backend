@@ -9,8 +9,11 @@ import {
   ClassLevel,
   AcademicTerm,
 } from "./../model/database";
+import helper from "../helpers/helper";
+const { paginate } = helper;
 import { NextFunction, Request, Response } from "express";
 import student from "./student.controller";
+import { populate } from "dotenv";
 
 export async function addAdmin(
   req: Request,
@@ -263,24 +266,41 @@ export async function getAllStudents(req: Request, res: Response) {
       school: req.user?.school,
       schoolId,
     });
+
     const page = parseInt(req.query.page as string) || 1;
     const pageSize = parseInt(req.query.pageSize as string) || 10;
     const skip = (page - 1) * pageSize;
     const totalPages = Math.ceil(totalStudents / pageSize);
-    await Student.find({ school: req.user?.school, schoolId })
-      .sort({ name: 1 })
-      .skip(skip)
-      .limit(pageSize)
-      .then((student) => {
-        if (student.length < 1) throw new Error("No student found");
-        res.status(200).json({
-          status: 200,
-          msg: "all students fetched successfully",
-          student,
-          page,
-          totalPages,
-        });
-      });
+    let result = await paginate(
+      Student,
+      totalStudents,
+      { school: req.user?.school, schoolId },
+      pageSize,
+      page,
+      null,
+      null
+    );
+    // await Student.find({ school: req.user?.school, schoolId })
+    //   .sort({ name: 1 })
+    //   .skip(skip)
+    //   .limit(pageSize)
+    //   .then((student) => {
+    //     if (student.length < 1) throw new Error("No student found");
+    //     res.status(200).json({
+    //       status: 200,
+    //       msg: "all students fetched successfully",
+    //       student,
+    //       page,
+    //       totalPages,
+    //     });
+    //   });
+    return res.json({
+      status: 200,
+      msg: "all students fetched successfully",
+      student: result?.model,
+      page: result?.page,
+      totalPages: result?.totalPages,
+    });
   } catch (error: any) {
     res.status(500).json({
       status: 500,
@@ -311,7 +331,6 @@ export async function searchStudent(req: Request, res: Response) {
         { email: { $regex: new RegExp(searchParams, "i") } },
         { className: { $regex: new RegExp(searchParams, "i") } },
         { studentId: { $regex: new RegExp(searchParams, "i") } },
-        
       ],
     })
       .sort({ name: 1 })

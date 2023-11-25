@@ -2,6 +2,7 @@ import jwt, { Secret } from "jsonwebtoken";
 import { Admin, Student, Teacher } from "./../model/database";
 import { NextFunction, Request, Response } from "express";
 import { CustomError } from "../middleware/decorators";
+
 export async function signIn(req: Request, res: Response) {
   const { email, password, role } = req.body;
   let roles: string[] = ["student", "admin", "teacher"];
@@ -110,7 +111,7 @@ export async function changePassword(req: Request, res: Response) {
   if (!email || !oldPassword || !newPassword || !role)
     throw new CustomError({}, "required fields", 400);
   if (newPassword !== passwordRepeat)
-    throw new CustomError({}, "passwords dont match", 400);
+    throw new CustomError({}, "passwords don't match", 400);
   const roles: any[] = ["admin", "teacher", "student"];
   let index = roles.indexOf(role);
   let Model: any = Admin;
