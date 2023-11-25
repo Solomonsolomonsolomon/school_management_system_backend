@@ -15,7 +15,7 @@ const AllExpenses: React.FC<IExpenses> = ({ retrigger }) => {
       try {
         console.log(page);
         let res = await axios.get(
-          `${expenseUrl}/school?month=true&term=true&year=true&pageSize=5&page=${page}`
+          `${expenseUrl}/school?month=true&term=true&year=true&pageSize=2&page=${page}`
         );
         console.log(res.data.totalPages);
         setTotalPages(res?.data?.totalPages);
