@@ -275,6 +275,7 @@ export async function getAllStudents(req: Request, res: Response) {
       Student,
       totalStudents,
       { school: req.user?.school, schoolId },
+      {name:1},
       pageSize,
       page,
       null,

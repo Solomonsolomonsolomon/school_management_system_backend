@@ -74,8 +74,9 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
       <nav
         style={{
           backgroundColor:
-            context.theme === "dark" ? "dark-blue" : `${colors.sideBar}`,
-          color: context.theme==='dark'?"white":`${colors.sideBarText}`,
+            context.theme === "dark" ? "rgb(17 24 39)" : `${colors.sideBar}`,
+          color: context.theme === "dark" ? "white" : `${colors.sideBarText}`,
+          borderRight:context.theme==='dark'?'.2px solid gray':"none"
         }}
         className="bg-gray-700  shadow-2xl scrollbar-hide h-screen py-0 relative overflow-y-auto p-2 sm:w-full md:w-fit lg:w-fit xl:w-full lg:rounded-none md:rounded-none  sm:rounded-none l"
       >

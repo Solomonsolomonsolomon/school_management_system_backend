@@ -44,7 +44,7 @@ const AddAdmin = () => {
         } text-center w-[100%]`}
       ></p>
       <div className="justify-items-center grid rounded ">
-        <div className="grid grid-cols-1 justify-center justify-items-center self-center place-content-center border bg-gray w-fit">
+        <div className="grid grid-cols-1 justify-center justify-items-center self-center place-content-center  border-gray-600 border rounded-lg bg-gray w-fit">
           <form
             className="grid grid-cols-1 sm:w-[100%] md:w-fit lg:w-fit p-5 rounded "
             action=""

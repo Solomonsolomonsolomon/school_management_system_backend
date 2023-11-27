@@ -160,6 +160,7 @@ class ExpenseController {
       Expense,
       totalExpenses,
       filter,
+      null,
       pageSize,
       page,
       "createdBy",

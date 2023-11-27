@@ -1,3 +1,5 @@
+import { Student } from "../model/database";
+
 let instance: any = null;
 class Helper {
   constructor() {
@@ -8,6 +10,7 @@ class Helper {
     Model: any,
     totalAmount: number,
     filter: any,
+    sort: any,
     pageSize: number,
     page: number,
     populate: any,
@@ -16,7 +19,7 @@ class Helper {
     const skip = (page - 1) * pageSize;
     const totalPages = Math.ceil(totalAmount / pageSize);
     let model = await Model.find(filter)
-      .sort({ name: 1 })
+      .sort(sort ? sort : {})
       .skip(skip)
       .limit(pageSize)
       .populate(populate ? populate : "")

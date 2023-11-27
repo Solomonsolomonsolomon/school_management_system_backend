@@ -1,4 +1,4 @@
-import { faLongArrowLeft, faUser } from "@fortawesome/free-solid-svg-icons";
+import {  faUser } from "@fortawesome/free-solid-svg-icons";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { faGear } from "@fortawesome/free-solid-svg-icons";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
@@ -9,6 +9,7 @@ import axios from "../../api/axios";
 import { useNavigate, Link } from "react-router-dom";
 import Button from "../Button/Button";
 import { AppContext } from "../../context/AppProvider";
+import ProfileModal from "./ProfileModal";
 interface ITheme {
   header: string;
   headerText: string;
@@ -181,14 +182,14 @@ const Profile = () => {
         //className="absolute hidden transition-opacity duration-500  right-[14%] top-[15%] p-6 shadow-lg w-fit =z-20 bg-inherit"
         className="w-full hidden"
       >
-        <ul className="grid gap-3  justify-center m-0 p-0">
+        <ul className="grid gap-3  justify-center m-0 p-0 cursor-pointer ">
           <li>
             <FontAwesomeIcon
               icon={faUser}
-              className="mt-3 mr-2 font-bold hover:text-blue-800"
+              className="mt-3 mr-2 font-bold hover:text-blue-800 dark:text-white text-gray-900"
             />
             <span
-              className="text-xl font-bold"
+              className="text-xl font-bold hover:text-blue-800 dark:text-white text-gray-900 cursor-pointer"
               onClick={() => {
                 setConfirmModal(true);
               }}
@@ -197,14 +198,16 @@ const Profile = () => {
             </span>
           </li>
           <li>
-            <FontAwesomeIcon icon={faGear} className="mt-3  mr-2" />
-            <span className="text-xl  font-bold">Settings</span>
+            <FontAwesomeIcon icon={faGear} className="mt-3  mr-2  dark:text-white text-gray-900" />
+            <span className="text-xl  font-bold hover:text-blue-800 dark:text-white text-gray-900">
+              Settings
+            </span>
           </li>
           <li>
-            <FontAwesomeIcon icon={faUserPlus} className="mt-3  mr-2" />
+            <FontAwesomeIcon icon={faUserPlus} className="mt-3  mr-2  dark:text-white text-gray-900 " />
             <Link
               to="/change-password"
-              className="text-xl    font-bold hover:text-blue-800"
+              className="text-xl e font-bold hover:text-blue-800 dark:text-white text-gray-900"
             >
               Change Password
             </Link>
@@ -225,78 +228,4 @@ const Profile = () => {
 
 export default Profile;
 
-const ProfileModal: React.FC<{
-  confirmable: React.SetStateAction<any>;
-  confirmModal: React.SetStateAction<any>;
-  term: any;
-  year: any;
-}> = ({ confirmable, confirmModal, term, year }) => {
-  const getUserData = (user: any) => {
-    const data = sessionStorage.getItem(user);
-    if (!data) {
-      return {};
-    }
-    return JSON.parse(data);
-  };
-  const user = getUserData("user");
 
-  return (
-    <>
-      {/* to use pass 2 set states confirm modal and confirmable */}
-      {/* const [confirmable,setConfirmable]=React.useState<boolean>(false);
-    const [confirmModal,setConfirmModal]=React.useState<boolean>(false); */}
-
-      <div className="w-full absolute z-[10]  inset-1  overflow-hidden grid bg-inherit  justify-center items-center h-[100vh]  ">
-        <div className="border relative opacity-100 dark:bg-gray-800 bg-gray-200 rounded-2xl shadow-2xl h-fit box-border p-20">
-          <h1 className="p-5 ">your profile details</h1>
-          <section className="grid gap-5 flex-wrap-reverse justify-end">
-            <h1 className="text-sm font-bold capitalize ">{user.name}</h1>
-            {/* <p className="text-sm font-bold text-white">{user.role}</p>
-             */}
-            <h1 className="text-sm  ">
-              <span className="capitalize font-xs opacity-[0.6]">school</span>:
-              <span className="capitalize">{user.school}</span>
-            </h1>
-            <p className=" text-sm capitalize" ref={term}>
-              current Term:not set
-            </p>
-            <p ref={year} className="text-sm capitalize">
-              current Academic Year:not set
-            </p>
-            <p>
-              <span>{user?.className ? "class:" : ""}</span>
-              {user?.classNname}
-            </p>
-            <p>
-              <span>{user?.formTeacher ? "FormTeacher:" : ""}</span>
-              {user?.formTeacher}
-            </p>
-          </section>
-          <span className="absolute left-2 top-2">
-            <button
-              className="bg-blue-700 p-3 z-10 text-white rounded"
-              onClick={() => {
-                confirmable(true);
-                confirmModal(false);
-              }}
-            >
-              <FontAwesomeIcon icon={faLongArrowLeft}></FontAwesomeIcon>
-            </button>
-          </span>
-          {/* <span className="absolute left-2">
-            {" "}
-            <button
-              className="bg-red-700 p-3 z-10 text-white rounded"
-              onClick={() => {
-                confirmable(false);
-                confirmModal(false);
-              }}
-            >
-              Cancel
-            </button>
-          </span> */}
-        </div>
-      </div>
-    </>
-  );
-};
