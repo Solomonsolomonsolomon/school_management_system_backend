@@ -1,14 +1,23 @@
+import React, { Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
-import Admin from "./pages/Admin";
-import Student from "./pages/Student";
-import Teacher from "./pages/Teacher";
+//import Admin from "./pages/Admin";
+//import Student from "./pages/Student";
+//import Teacher from "./pages/Teacher";
 import "./index.css";
 import jwtDecode from "jwt-decode";
-import ForgotPassword from "./components/ForgotPassword";
-import ChangePassword from "./components/ChangePassword";
+//import ForgotPassword from "./components/ForgotPassword";
+//import ChangePassword from "./components/ChangePassword";
 import AppProvider from "./context/AppProvider";
-import Messages from "./components/Messages";
+//import Messages from "./components/Messages";
+import Loading from "./components/Loading";
+
+const Admin = React.lazy(() => import("./pages/Admin"));
+const ForgotPassword = React.lazy(() => import("./components/ForgotPassword"));
+const ChangePassword = React.lazy(() => import("./components/ChangePassword"));
+const Student = React.lazy(() => import("./pages/Student"));
+const Teacher = React.lazy(() => import("./pages/Teacher"));
+const Messages = React.lazy(() => import("./components/Messages"));
 let role: string = "";
 
 function isLoggedIn(userRole: string = "") {
@@ -33,18 +42,56 @@ function App() {
           <Route path="/login" element={<Login />}></Route>
           <Route
             path="/admin/dashboard"
-            element={isLoggedIn("admin") ? <Admin /> : <Login />}
+            element={
+              isLoggedIn("admin") ? (
+                <Suspense fallback={<Loading />}>
+                  <Admin />{" "}
+                </Suspense>
+              ) : (
+                <Login />
+              )
+            }
           ></Route>
           <Route
             path="/student/dashboard"
-            element={isLoggedIn("student") ? <Student /> : <Login />}
+            element={
+              isLoggedIn("student") ? (
+                <Suspense fallback={<Loading />}>
+                  <Student />
+                </Suspense>
+              ) : (
+                <Login />
+              )
+            }
           ></Route>
           <Route
             path="/teacher/dashboard"
-            element={isLoggedIn("teacher") ? <Teacher /> : <Login />}
+            element={
+              isLoggedIn("teacher") ? (
+                <Suspense fallback={<Loading />}>
+                  <Teacher />
+                </Suspense>
+              ) : (
+                <Login />
+              )
+            }
           ></Route>
-          <Route path="/forgot-password" element={<ForgotPassword />}></Route>
-          <Route path="/change-password" element={<ChangePassword />} />
+          <Route
+            path="/forgot-password"
+            element={
+              <Suspense fallback={<Loading />}>
+                <ForgotPassword />
+              </Suspense>
+            }
+          ></Route>
+          <Route
+            path="/change-password"
+            element={
+              <Suspense fallback={<Loading />}>
+                <ChangePassword />
+              </Suspense>
+            }
+          />
           <Route
             path="/messages"
             element={isLoggedIn() ? <Messages /> : <Login />}

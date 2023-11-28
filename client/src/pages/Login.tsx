@@ -1,11 +1,11 @@
 import React, { useRef } from "react";
-
 import { useNavigate, useLocation } from "react-router-dom";
 import { AxiosLoginInstance } from "../api/axios";
-import { Link } from "react-router-dom";
 const LOGIN_URL = "/auth";
-import svg1 from "../assets/undraw_before_dawn_re_hp4m.svg";
+import svg1 from "../assets/undraw_pair_programming_re_or4x.svg";
 import { isLoggedIn } from "../App";
+import LoginForm from "../components/Login/LoginForm";
+
 
 export default function Login() {
   interface IDetails {
@@ -110,72 +110,52 @@ export default function Login() {
     }
   }, []);
 
-  return (
-    <div className="h-full overflow-x-hidden overflow-y-hidden">
-      <h1 className="text-center font-bold">
-        SOLACE School Management Systems.Login to continue
-      </h1>
-      <div className="flex  justify-items-center place-content-center">
-        <img src={svg1} className="absolute  z-[-100] h-[97vh]" alt="" />
-      </div>
+  // return (
+  //   <div className="h-full overflow-x-hidden overflow-y-hidden">
+  //     <h1 className="text-center font-bold">
+  //       SOLACE School Management Systems.Login to continue
+  //     </h1>
 
-      <div className=" grid justify-center justify-items-center h-full grid-cols-1">
-        <p></p>
-        <form
-          onSubmit={handleSubmit}
-          className="grid g dark:text-gray-900  gap-2 p border border-black bg-white h-fit p-7 rounded "
-        >
-          <p
-            ref={msgRef}
-            className={`w-[10 dark:text-gray-9000%] text-center ${
-              msgRef.current?.textContent === "successful_login"
-                ? "text-green-800"
-                : "text-[red]"
-            }`}
-          ></p>
-          <input
-            type="text"
-            placeholder="email or id"
-            name="email"
-            value={details.email}
-            onChange={handleInput}
-            className="border dark:text-gray-900 border-black border-t-0 border-b-2 border-l-0 border-r-0 rounded "
-          />
-          <input
-            type="password"
-            placeholder="password"
-            name="password"
-            value={details.password}
-            onChange={handleInput}
-            className="border dark:text-gray-900 border-black border-t-0 border-b-2 border-l-0 border-r-0 rounded"
-          />
-          <select
-            name="role"
-            id=""
-            value={details.role}
-            required
-            onChange={handleInput}
-            className="border dark:text-gray-900 border-black border-t-0 border-b-2 border-l-0 border-r-0 rounded"
-          >
-            <option value="">SELECT</option>
-            <option value="admin">admin</option>
-            <option value="student">student</option>
-            <option value="teacher">teacher</option>
-          </select>
-          <Link to="forgot-password" className="text-blue-800">
-            Forgot password?
-          </Link>
-          <button
-            onClick={() => {
-              setClicked(clicked + 1);
-            }}
-            className="bg-gray-900 p-2 rounded text-white"
-          >
-            LOGIN
-          </button>
-        </form>
+  //     <div className="flex  justify-items-center place-content-center">
+  //       <img src={svg1} className="absolute  z-[-100] h-[97vh]" alt="" />
+  //     </div>
+
+  //     <div className=" grid justify-center justify-items-center h-full grid-cols-1">
+  //       <p></p>
+  //       <LoginForm
+  //         details={details}
+  //         handleInput={handleInput}
+  //         handleSubmit={handleSubmit}
+  //         msgRef={msgRef}
+  //         setClicked={setClicked}
+  //       />
+  //     </div>
+  //   </div>
+  // );
+  return (
+    <>
+      <div className="relative">
+        <div className="grid grid-cols-[40%_60%]">
+          <div className="m-auto">
+            <span className="text-center dark:text-white text-gray-900">
+              Solace School Management systems..
+            </span>
+            <div className="mt-10 z-10 ">
+              <LoginForm
+                details={details}
+                handleInput={handleInput}
+                handleSubmit={handleSubmit}
+                msgRef={msgRef}
+                setClicked={setClicked}
+              />
+            </div>
+          </div>
+          <div className="flex justify-center h-[100dvh] lg:z-10 md:z-10 sm:z-[-10]  rounded-l-3xl bg-slate-400 dark:bg-gray-950 ">
+            <img src={svg1} className="w-[50%] relative " alt="" />
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 // import { useRef, useState, useEffect } from "react";

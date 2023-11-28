@@ -4,42 +4,30 @@ interface IExpenses {
 import React from "react";
 import axios from "../../../api/axios";
 const expenseUrl = "/expense";
-
+import PaginationController from "../../../utils/PaginationController";
 const AllExpenses: React.FC<IExpenses> = ({ retrigger }) => {
   let [expenses, setExpenses] = React.useState<any[]>([]);
   let [page, setCurrentPage] = React.useState<number>(1);
   let [totalPages, setTotalPages] = React.useState<number>(1);
-  function pagesRender() {
-    let el = [];
-    for (let i = 1; i <= totalPages; i++) {
-      el.push(
-        <span
-          key={i}
-          className={`1ml-2  px-2 ${
-            page === i ? "bg-blue-900 text-white" : ""
-          } bg-blue-50  rounded-full`}
-          onClick={() => {
-            setCurrentPage(i);
-          }}
-        >
-          {i}
-        </span>
-      );
-    }
-    return el;
-  }
+
   React.useEffect(() => {
     (async () => {
       try {
-        console.log(page)
+        console.log(page);
         let res = await axios.get(
-          `${expenseUrl}/school?month=true&term=true&year=true&pageSize=5&page=${page}`
+          `${expenseUrl}/school?month=true&term=true&year=true&pageSize=2&page=${page}`
         );
+        console.log(res.data.totalPages);
         setTotalPages(res?.data?.totalPages);
         setExpenses(res?.data?.expenses);
-      } catch (error) {}
+        console.log(res.data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        console.log(expenses);
+      }
     })();
-  }, [retrigger,page]);
+  }, [retrigger, page]);
   return (
     <>
       <h1 className="font-bold text-center text-xl ">All Expenses</h1>
@@ -88,10 +76,11 @@ const AllExpenses: React.FC<IExpenses> = ({ retrigger }) => {
             </tbody>
           </table>
         </div>
-        <section className="flex flex-wrap justify-start mt-20 gap-4 bg-white dark:bg-gray-900 p-4  absolute bottom-0 ">
-          {" "}
-          pages:{pagesRender()}
-        </section>
+        <PaginationController
+          page={page}
+          setPage={setCurrentPage}
+          totalPages={totalPages}
+        />
       </div>
     </>
   );
