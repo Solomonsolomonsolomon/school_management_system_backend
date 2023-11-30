@@ -123,7 +123,7 @@ function changePassword(req, res) {
         if (!email || !oldPassword || !newPassword || !role)
             throw new decorators_1.CustomError({}, "required fields", 400);
         if (newPassword !== passwordRepeat)
-            throw new decorators_1.CustomError({}, "passwords dont match", 400);
+            throw new decorators_1.CustomError({}, "passwords don't match", 400);
         const roles = ["admin", "teacher", "student"];
         let index = roles.indexOf(role);
         let Model = database_1.Admin;

@@ -6,7 +6,6 @@ import svg1 from "../assets/undraw_pair_programming_re_or4x.svg";
 import { isLoggedIn } from "../App";
 import LoginForm from "../components/Login/LoginForm";
 
-
 export default function Login() {
   interface IDetails {
     email?: string;
@@ -135,7 +134,7 @@ export default function Login() {
   return (
     <>
       <div className="relative">
-        <div className="grid grid-cols-[40%_60%]">
+        <div className="grid grid-cols-[40%_60%] ">
           <div className="m-auto">
             <span className="text-center dark:text-white text-gray-900">
               Solace School Management systems..
