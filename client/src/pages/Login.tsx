@@ -6,7 +6,6 @@ import svg1 from "../assets/undraw_pair_programming_re_or4x.svg";
 import { isLoggedIn } from "../App";
 import LoginForm from "../components/Login/LoginForm";
 
-
 export default function Login() {
   interface IDetails {
     email?: string;
@@ -134,9 +133,9 @@ export default function Login() {
   // );
   return (
     <>
-      <div className="relative">
-        <div className="grid grid-cols-[40%_60%]">
-          <div className="m-auto">
+      <div className="relative w-[100vw] h-[100vh] ">
+        <div className="w-[100vw] border h-[100vh] grid grid-cols-1   md:grid-cols-[40%_60%] lg:grid-cols-[40%_60%]  ">
+          <div className="w-fit m-auto">
             <span className="text-center dark:text-white text-gray-900">
               Solace School Management systems..
             </span>
@@ -150,7 +149,7 @@ export default function Login() {
               />
             </div>
           </div>
-          <div className="flex justify-center h-[100dvh] lg:z-10 md:z-10 sm:z-[-10]  rounded-l-3xl bg-slate-400 dark:bg-gray-950 ">
+          <div className="hidden md:flex lg:flex justify-center h-[100dvh] lg:z-10 md:z-10 sm:z-[-10]  rounded-l-3xl bg-slate-400 dark:bg-gray-950 ">
             <img src={svg1} className="w-[50%] relative " alt="" />
           </div>
         </div>
@@ -164,7 +163,7 @@ export default function Login() {
 
 // const LOGIN_URL = "/auth";
 
-// function Login() {
+// function Login() {`
 //   const navigate = useNavigate();
 //   const location = useLocation();
 //   const from = location.state?.from.pathname || "/";

@@ -8,10 +8,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const decorators_1 = require("../middleware/decorators");
 const database_1 = require("../model/database");
 const Expense_1 = require("../model/others/Expense");
+const helper_1 = __importDefault(require("../helpers/helper"));
+const { paginate } = helper_1.default;
 class ExpenseController {
     addExpense(req, res) {
         var _a, _b, _c, _d, _e, _f, _g, _h;
@@ -128,11 +133,6 @@ class ExpenseController {
             const { term, month, year } = req.query;
             const school = (_a = req.user) === null || _a === void 0 ? void 0 : _a.school;
             let schoolId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId;
-            const totalExpenses = yield Expense_1.Expense.countDocuments({ school, schoolId });
-            const page = parseInt(req.query.page) || 1;
-            const pageSize = parseInt(req.query.pageSize) || 10;
-            const skip = (page - 1) * pageSize;
-            const totalPages = Math.ceil(totalExpenses / pageSize);
             const filter = {
                 school: (_c = req.user) === null || _c === void 0 ? void 0 : _c.school,
                 schoolId: (_d = req.user) === null || _d === void 0 ? void 0 : _d.schoolId,
@@ -155,17 +155,18 @@ class ExpenseController {
             }
             if (month)
                 filter.month = new Date().getMonth();
-            let expenses = yield Expense_1.Expense.find(filter)
-                .skip(skip)
-                .limit(pageSize)
-                .populate("createdBy")
-                .select("name amountPaid createdAt.name school");
-            return res.status(200).json({
+            const totalExpenses = yield Expense_1.Expense.countDocuments(filter);
+            console.log(totalExpenses);
+            const page = parseInt(req.query.page) || 1;
+            const pageSize = parseInt(req.query.pageSize) || 10;
+            const skip = (page - 1) * pageSize;
+            let result = yield paginate(Expense_1.Expense, totalExpenses, filter, null, pageSize, page, "createdBy", "name amountPaid createdAt.name school");
+            return res.json({
                 msg: "all students",
                 status: 200,
-                expenses,
-                totalPages,
-                page,
+                expenses: result === null || result === void 0 ? void 0 : result.model,
+                totalPages: result.totalPages,
+                page: result.page,
             });
         });
     }

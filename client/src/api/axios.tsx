@@ -1,15 +1,5 @@
-import React from "react";
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
-import { AppContext } from "../context/AppProvider";
-
 let baseURL = `http://localhost:2020/v1`;
-
-export const AxiosController = () => {
-  let context = React.useContext(AppContext);
-  console.log(context.baseUrl);
-  baseURL = `${context.baseUrl}/v1`;
-  return <></>;
-};
 //let baseURL = "https://solacebackend.onrender.com/v1";
 const instance = axios.create({
   baseURL: baseURL,
@@ -97,5 +87,5 @@ export const AxiosLoginInstance = axios.create({
   timeout: 10000,
   headers: { "X-Custom-Header": "foobar", "Content-Type": "application/json" },
 });
-console.log(baseURL)
+console.log(baseURL);
 export default instance;

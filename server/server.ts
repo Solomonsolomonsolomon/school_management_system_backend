@@ -22,3 +22,4 @@ app.use(express.static(path.join(__dirname, "view")));
 app.use(express.static(path.join(__dirname)));
 app.use(express.urlencoded({ extended: true, limit: "15mb" }));
 export default app;
+

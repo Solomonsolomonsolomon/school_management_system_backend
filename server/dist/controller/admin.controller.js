@@ -8,10 +8,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.resetSchoolTransaction = exports.countParents = exports.editTeacher = exports.editStudent = exports.countTeachers = exports.getGenderDivide = exports.getAllTeachers = exports.searchStudent = exports.getAllStudents = exports.getAllAdmin = exports.deleteTeacher = exports.deleteStudent = exports.deleteAdmin = exports.addStudent = exports.addTeacher = exports.addAdmin = void 0;
 const decorators_1 = require("../middleware/decorators");
 const database_1 = require("./../model/database");
+const helper_1 = __importDefault(require("../helpers/helper"));
+const { paginate } = helper_1.default;
 function addAdmin(req, res, next) {
     var _a, _b, _c;
     return __awaiter(this, void 0, void 0, function* () {
@@ -260,20 +265,27 @@ function getAllStudents(req, res) {
             const pageSize = parseInt(req.query.pageSize) || 10;
             const skip = (page - 1) * pageSize;
             const totalPages = Math.ceil(totalStudents / pageSize);
-            yield database_1.Student.find({ school: (_c = req.user) === null || _c === void 0 ? void 0 : _c.school, schoolId })
-                .sort({ name: 1 })
-                .skip(skip)
-                .limit(pageSize)
-                .then((student) => {
-                if (student.length < 1)
-                    throw new Error("No student found");
-                res.status(200).json({
-                    status: 200,
-                    msg: "all students fetched successfully",
-                    student,
-                    page,
-                    totalPages,
-                });
+            let result = yield paginate(database_1.Student, totalStudents, { school: (_c = req.user) === null || _c === void 0 ? void 0 : _c.school, schoolId }, { name: 1 }, pageSize, page, null, null);
+            // await Student.find({ school: req.user?.school, schoolId })
+            //   .sort({ name: 1 })
+            //   .skip(skip)
+            //   .limit(pageSize)
+            //   .then((student) => {
+            //     if (student.length < 1) throw new Error("No student found");
+            //     res.status(200).json({
+            //       status: 200,
+            //       msg: "all students fetched successfully",
+            //       student,
+            //       page,
+            //       totalPages,
+            //     });
+            //   });
+            return res.json({
+                status: 200,
+                msg: "all students fetched successfully",
+                student: result === null || result === void 0 ? void 0 : result.model,
+                page: result === null || result === void 0 ? void 0 : result.page,
+                totalPages: result === null || result === void 0 ? void 0 : result.totalPages,
             });
         }
         catch (error) {
