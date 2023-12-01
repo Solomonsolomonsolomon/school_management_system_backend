@@ -1,5 +1,5 @@
 import React, { ReactNode, createContext } from "react";
-import axios from "./../api/axios";
+// import axios from "./../api/axios";
 interface AppProviderProps {
   children: ReactNode;
 }
