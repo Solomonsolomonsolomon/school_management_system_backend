@@ -41,7 +41,7 @@ class ClassLevelController {
                                 $match: {
                                     $expr: {
                                         $and: [
-                                            { $eq: ["$className", "$$className"] },
+                                            { $eq: ["$className", "$$className"] }, // Match students with the same class name.
                                             { $eq: ["$schoolId", (_b = req.user) === null || _b === void 0 ? void 0 : _b.schoolId] }, // Match students from the specific school.
                                         ],
                                     },
@@ -67,7 +67,7 @@ class ClassLevelController {
                     $project: {
                         name: "$name",
                         numberOfStudents: 1,
-                        _id: 1,
+                        _id: 1, // Exclude the "_id" field.
                         price: "$price",
                     },
                 },

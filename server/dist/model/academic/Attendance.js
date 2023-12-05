@@ -8,7 +8,7 @@ const { Schema } = mongoose_1.default;
 const attendanceSchema = new Schema({
     studentId: {
         type: mongoose_1.default.Schema.Types.ObjectId,
-        ref: "Student",
+        ref: "Student", // Reference to the Student model
         required: true,
     },
     studentName: {
