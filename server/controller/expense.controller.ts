@@ -149,10 +149,11 @@ class ExpenseController {
       });
       filter.year = currentYear?._id;
     }
+    console.log(filter)
     if (month) filter.month = new Date().getMonth();
 
     const totalExpenses = await Expense.countDocuments(filter);
-    console.log(totalExpenses);
+    console.log(totalExpenses,'sd');
     const page = parseInt(req.query.page as string) || 1;
     const pageSize = parseInt(req.query.pageSize as string) || 10;
     const skip = (page - 1) * pageSize;
@@ -164,7 +165,7 @@ class ExpenseController {
       pageSize,
       page,
       "createdBy",
-      "name amountPaid createdAt.name school"
+      "name amountPaid createdAt school"
     );
     return res.json({
       msg: "all students",

@@ -10,12 +10,49 @@ const themeSchema = new mongoose.Schema({
   background: String,
   headerText: String,
 });
-const gradePoint = new mongoose.Schema({
+const gradeSchema = new mongoose.Schema({
+  // base but e is omitted in default
   A: Number,
   B: Number,
   C: Number,
   D: Number,
+  E: Number,
   F: Number,
+  //WAEC standard 
+  A1: Number,
+  A2: Number,
+  B3: Number,
+  B2: Number,
+  B1: Number,
+  C3: Number,
+  C4: Number,
+  C5: Number,
+  C6: Number,
+  D7: Number,
+  E8: Number,
+  F9: Number,
+  // Additional variations
+  A_p: Number,
+  B_p: Number,
+  C_p: Number,
+  D_p: Number,
+  E_p: Number,
+  F_p: Number,
+  //Minuses
+  A_m: Number,
+  B_m: Number,
+  C_m: Number,
+  D_m: Number,
+  E_m: Number,
+  F_m: Number,
+  // Additional variations with extra plus
+  A_pp: Number,
+  B_pp: Number,
+  C_pp: Number,
+  D_pp: Number,
+  E_pp: Number,
+  F_pp: Number,
+  // Add more grades as needed
 });
 const schoolSchema = new mongoose.Schema({
   name: String,
@@ -23,15 +60,15 @@ const schoolSchema = new mongoose.Schema({
   schoolId: String,
   account_number: String,
   subaccount_code: String,
-  busfees: { type: Number, default: 0  },
+  busfees: { type: Number, default: 0 },
   themes: {
     type: themeSchema,
     default: {
       button: "#4B5563",
       header: "#4a5568",
       text: "#000000",
-      sideBar: "#4a5568",
-      sideBarText: "#ffffff",
+      sideBar: "#ffffff",
+      sideBarText: "#404040",
       background: "#ffffff",
       headerText: "#000000",
       buttonText: "#ffffff",
@@ -45,18 +82,25 @@ const schoolSchema = new mongoose.Schema({
   plan: String,
   isPaid: Boolean,
   isSuspended: Boolean,
-  gradePoints: {
-    type: gradePoint,
-    default: {
-      A: 75,
+  gradePoints: gradeSchema,
+});
+schoolSchema.pre("save", function (next) {
+  if (this.isNew) {
+    this.gradePoints = {
+      A: 70,
       B: 60,
       C: 50,
       D: 40,
       F: 0,
-    },
-  },
-});
+    };
+  }
 
+  if (this.isModified("gradePoints")) {
+    console.log("gradepoint was modified ");
+  }
+  next();
+  //manually changing the gradepoints,this is not redundant code,it doesnt edit
+});
 const School = mongoose.model("School", schoolSchema);
 School.syncIndexes();
 export { School };

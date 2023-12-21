@@ -17,6 +17,7 @@ class SchoolController {
     if (instance) return instance;
     instance = this;
   }
+
   public async changeTheme(req: express.Request, res: express.Response) {
     let schoolId = req.user?.schoolId;
     let school = req.user?.school;
@@ -113,8 +114,14 @@ class SchoolController {
     if (!Object.keys(schools?.gradePoints || {}).length) {
       throw new CustomError({}, "grade points not found", 400);
     }
-    Object.assign(schools?.gradePoints, req.body);
-    await schools.save();
+    let v = schools.__v;
+    Object.assign(schools?.gradePoints || {}, req.body);
+    console.log(schools?.gradePoints, req.body);
+    schools.__v = v;
+    await schools.save().then((e) => {
+      console.log(e.gradePoints);
+    });
+
     return res.status(200).json({
       msg: "successfully set",
       status: 200,
@@ -123,7 +130,7 @@ class SchoolController {
   public async getGradePoints(req: express.Request, res: express.Response) {
     let school = req.user?.school;
     let schoolId = req.user?.schoolId;
-    let schools = await School.findOne({ school, schoolId });
+    let schools = await School.findOne({ school, schoolId }).sort({});
 
     if (!Object.keys(schools?.gradePoints || {}).length) {
       throw new CustomError({}, "grade points not found", 400);
@@ -134,5 +141,42 @@ class SchoolController {
       status: 200,
     });
   }
+  public async addGradePoints(req: express.Request, res: express.Response) {
+    let school = req.user?.school;
+    let schoolId = req.user?.schoolId;
+    const { grades } = req.body;
+
+    let schoolToUpdate = await School.findOne({ school, schoolId });
+    if (!schoolToUpdate) throw new CustomError({}, "school not found", 400);
+    if (schoolToUpdate.gradePoints) {
+      schoolToUpdate.gradePoints = {
+        ...(schoolToUpdate?.gradePoints || {}),
+        ...grades,
+      };
+    }
+    await schoolToUpdate.save();
+    return res.json({
+      status: 200,
+      msg: "updated grade points",
+      gradePoints: schoolToUpdate?.gradePoints,
+    });
+  }
+
+  public async deleteGradePoint(req: express.Request, res: express.Response) {
+    interface IGrade {
+      grade: string | undefined;
+    }
+    // let school = req.user?.school;
+    // let schoolId = req.user?.schoolId;
+    // let { grade }: IGrade = req.body;
+    // if (!grade) throw new CustomError({}, "grade not found", 404);
+    // let schoolToUpdate = await School.findOne({ school, schoolId });
+    // if (!schoolToUpdate) throw new CustomError({}, "school not found", 400);
+    // delete schoolToUpdate.gradePoints[grade];
+    // await schoolToUpdate.save();
+    // return res.status(204);
+  }
+
+  //add and remove grade points
 }
 export default SchoolController;

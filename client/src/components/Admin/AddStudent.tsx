@@ -81,7 +81,7 @@ const AddStudent = () => {
 
   return (
     <>
-      <h1 className="text-center text-[20px] font-bold">Add Students</h1>
+      <h1 className="text-center text-[20px] font-bold">Add Student</h1>
       <p
         ref={msgRef}
         className={`${
@@ -92,7 +92,7 @@ const AddStudent = () => {
         } text-center w-[100%]`}
       ></p>
       <div className="justify-items-center grid rounded ">
-        <div className="grid grid-cols-1 justify-center justify-items-center self-center place-content-center border bg-gray w-fit">
+        <div className="grid grid-cols-1 justify-center justify-items-center self-center place-content-center border bg-gray w-fit p-3 border-black shadow-lg shadow-blue-900 rounded-lg box-border ">
           <form
             className="grid grid-cols-1 sm:w-[100%] md:w-fit lg:w-fit p-5 rounded "
             action=""

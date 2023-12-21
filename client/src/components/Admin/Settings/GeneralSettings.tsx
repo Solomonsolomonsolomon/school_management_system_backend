@@ -5,23 +5,12 @@ let payUrl = "/paystack";
 let schoolUrl = "/school";
 import { useForm, SubmitHandler } from "react-hook-form";
 import WarningComponent from "../../../utils/WarningComponent";
-interface GradePoints {
-  A: number;
-  B: number;
-  C: number;
-  D: number;
-  F: number;
-}
-interface ITheme {
-  button: string;
-  buttonText: string;
-  header: string;
-  text: string;
-  sideBar: string;
-  background: string;
-  headerText: string;
-  sideBarText: string;
-}
+import {
+  // GradePoints,
+  ITheme,
+} from "./../../../interfaces/generalSettingsInterface";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 let initialTheme = {
   button: "",
   buttonText: "",
@@ -59,13 +48,14 @@ const GeneralSettings = () => {
   let [confirmable, setConfirmable] = React.useState<boolean>(false);
   const [generateResults, setGenerateResults] = React.useState<number>(0);
   let [gradeTracker, setGradeTracker] = React.useState<number>(0);
-  let [gradePoints, setGradePoints] = React.useState<GradePoints>({
-    A: 0,
-    B: 0,
-    C: 0,
-    D: 0,
-    F: 0,
+  let [gradePoints, setGradePoints] = React.useState<any>({
+    // A: 0,
+    // B: 0,
+    // C: 0,
+    // D: 0,
+    // F: 0,
   });
+
   React.useEffect(() => {
     let controller = new AbortController();
     async function fetchThemes() {
@@ -170,24 +160,24 @@ const GeneralSettings = () => {
     })();
   };
   const handleGradePoints = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setGradePoints({ ...gradePoints, [e.target.name]: e.target.value });
+    setGradePoints({ ...gradePoints, [e.target.name]: +e.target.value });
   };
   const updateGradePoints = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log(gradePoints);
     try {
       setLoading(true);
       let res = await axios.put(`${schoolUrl}/set/gradePoint`, gradePoints);
       setMsg(res.data?.msg);
+      console.log(gradePoints);
       setGeneralSettingsState({
         ...GeneralSettingsState,
         showGradePoints: false,
-        
       });
       setGradeTracker(Date.now());
     } catch (error: any) {
       setMsg(error?.response?.data?.msg || error?.message);
+      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -331,7 +321,7 @@ const GeneralSettings = () => {
             </label>
             <input
               type="color"
-              defaultValue={themeData.sideBar || "#4a5568"}
+              defaultValue={themeData.sideBar || "#ffffff"}
               {...register("sideBar")}
               className="dark:bg-gray-900"
             />
@@ -340,7 +330,7 @@ const GeneralSettings = () => {
             </label>
             <input
               type="color"
-              defaultValue={themeData.sideBarText || "#ffffff"}
+              defaultValue={themeData.sideBarText || "#454545"}
               {...register("sideBarText")}
               className="dark:bg-gray-900"
             />
@@ -376,7 +366,7 @@ const GeneralSettings = () => {
             </label>
             <input
               type="color"
-              defaultValue={themeData.header || "#aaaaaa"}
+              defaultValue={themeData.header || "#4a5568"}
               {...register("header")}
               className="dark:bg-gray-900 border"
             />
@@ -423,7 +413,7 @@ const GeneralSettings = () => {
       </div>
       <div className="mt-2">
         <span>
-          set grade points{" "}
+          grade points
           <button
             className="capitalize bg-gray-900 w-[100px] text-white p-2 rounded border"
             onClick={() => {
@@ -444,58 +434,25 @@ const GeneralSettings = () => {
             GeneralSettingsState.showGradePoints ? "block" : "hidden"
           }`}
         >
-          <div>
-            <span>A:</span>
-            <input
-              type="number"
-              onChange={handleGradePoints}
-              name="A"
-              className="border mt-2 border-black rounded bg-inherit w-fit text-center "
-              value={gradePoints.A}
-            />
-          </div>
-          <div>
-            <span>B:</span>
-            <input
-              type="number"
-              onChange={handleGradePoints}
-              name="B"
-              className="border mt-2 border-black rounded bg-inherit w-fit text-center "
-              value={gradePoints.B}
-            />
-          </div>
-          <div>
-            <span>C:</span>
-            <input
-              type="number"
-              onChange={handleGradePoints}
-              name="C"
-              className="border mt-2 border-black rounded bg-inherit w-fit text-center "
-              value={gradePoints.C}
-            />
-          </div>
-          <div>
-            <span>D:</span>
+          {Object.entries(gradePoints).map((grade: any[]) => {
+            if (grade[0] === "_id") return;
+            return (
+              <p>
+                {grade[0]}:{" "}
+                <input
+                  type="number"
+                  value={+gradePoints[grade["0"]]}
+                  name={grade[0]}
+                  onChange={handleGradePoints}
+                />
+              </p>
+            );
+          })}
 
-            <input
-              type="number"
-              onChange={handleGradePoints}
-              name="D"
-              className="border mt-2 border-black rounded bg-inherit w-fit text-center "
-              value={gradePoints.D}
-            />
-          </div>
-          <div>
-            <span>F:</span>
-            <input
-              type="number"
-              onChange={handleGradePoints}
-              name="F"
-              className="border mt-2 border-black rounded bg-inherit w-fit text-center "
-              value={gradePoints.F}
-            />
-          </div>
-          <button className="p-2 bg-green-800 mb-4 text-white rounded w-fit">
+          <span className="cursor-pointer">
+            <FontAwesomeIcon icon={faPlus} color="green" size="xl" />
+          </span>
+          <button className=" ml-3 p-2 bg-green-800 mb-4 text-white rounded w-fit">
             SET
           </button>
         </form>

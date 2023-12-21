@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { AxiosLoginInstance } from "../api/axios";
 const LOGIN_URL = "/auth";
 import svg1 from "../assets/undraw_pair_programming_re_or4x.svg";
+import svg2 from "./../assets/undraw_real_time_sync_re_nky7.svg";
 import { isLoggedIn } from "../App";
 import LoginForm from "../components/Login/LoginForm";
 
@@ -134,7 +135,7 @@ export default function Login() {
   return (
     <>
       <div className="relative w-[100vw] h-[100vh] ">
-        <div className="w-[100vw] border h-[100vh] grid grid-cols-1   md:grid-cols-[40%_60%] lg:grid-cols-[40%_60%]  ">
+        <div className="w-[100vw] border h-[100vh] grid grid-cols-1   md:grid-cols-[40%_60%] lg:grid-cols-[40%_60%] shadow-lg shadow-blue-500 ">
           <div className="w-fit m-auto">
             <span className="text-center dark:text-white text-gray-900">
               Solace School Management systems..
@@ -149,8 +150,13 @@ export default function Login() {
               />
             </div>
           </div>
+          <div className=" sm:absolute top-[40%] z-[-10] m-auto absolute sm:block lg:hidden md:hidden">
+            <img src={svg1} alt=""  className="w-full p-3 opacity-1 text-blue-600" />
+          </div>
+          {/* slanting in mobile view */}
+          
           <div className="hidden md:flex lg:flex justify-center h-[100dvh] lg:z-10 md:z-10 sm:z-[-10]  rounded-l-3xl bg-slate-400 dark:bg-gray-950 ">
-            <img src={svg1} className="w-[50%] relative " alt="" />
+            <img src={svg1} className="w-[50%] relative  " alt="" />
           </div>
         </div>
       </div>

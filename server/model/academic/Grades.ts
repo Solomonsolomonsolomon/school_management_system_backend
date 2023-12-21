@@ -97,10 +97,10 @@ gradesSchema.pre("save", async function (this: IGrades, next) {
     ]);
     grade.total = total;
     console.log(grade.total);
-    let A = schoolToCompare.gradePoints.A || 75;
-    let B = schoolToCompare.gradePoints.B || 60;
-    let C = schoolToCompare.gradePoints.C || 50;
-    let D = schoolToCompare.gradePoints.D || 40;
+    let A = schoolToCompare.gradePoints?.A || 75;
+    let B = schoolToCompare.gradePoints?.B || 60;
+    let C = schoolToCompare.gradePoints?.C || 50;
+    let D = schoolToCompare.gradePoints?.D || 40;
     if (grade!.total >= A) {
       grade!.letterGrade = "A";
     } else if (grade!.total >= B) {
