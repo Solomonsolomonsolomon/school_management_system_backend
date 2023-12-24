@@ -9,7 +9,7 @@ import {
   ClassLevel,
   AcademicTerm,
 } from "./../model/database";
-import helper from "../helpers/helper";
+import helper from "../utils/helper";
 const { paginate } = helper;
 import { NextFunction, Request, Response } from "express";
 import student from "./student.controller";
@@ -269,7 +269,7 @@ export async function getAllStudents(req: Request, res: Response) {
 
     const page = parseInt(req.query.page as string) || 1;
     const pageSize = parseInt(req.query.pageSize as string) || 10;
-    
+
     const skip = (page - 1) * pageSize;
     const totalPages = Math.ceil(totalStudents / pageSize);
     let result = await paginate(
@@ -317,7 +317,7 @@ export async function searchStudent(req: Request, res: Response) {
   try {
     let schoolId = req.user?.schoolId;
     const { searchParams } = req.params;
-  
+
     let query = {
       school: req.user?.school,
       schoolId,
@@ -332,7 +332,7 @@ export async function searchStudent(req: Request, res: Response) {
     const page = parseInt(req.query.page as string) || 1;
     const pageSize = parseInt(req.query.pageSize as string) || 10;
 
-console.log(page,pageSize)
+    console.log(page, pageSize);
     let sort = { name: 1 };
     let result = await paginate(
       Student,
@@ -344,7 +344,7 @@ console.log(page,pageSize)
       null,
       null
     );
-console.log(result)
+    console.log(result);
     return res.json({
       status: 200,
       msg: "all students fetched successfully",

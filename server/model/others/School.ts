@@ -18,7 +18,7 @@ const gradeSchema = new mongoose.Schema({
   D: Number,
   E: Number,
   F: Number,
-  //WAEC standard 
+  //WAEC standard
   A1: Number,
   A2: Number,
   B3: Number,
@@ -83,7 +83,13 @@ const schoolSchema = new mongoose.Schema({
   isPaid: Boolean,
   isSuspended: Boolean,
   gradePoints: gradeSchema,
+  gradeStyle: {
+    type: String,
+    enum: ["Tertiary", "US", "WAEC"],
+    default: "Tertiary",
+  },
 });
+
 schoolSchema.pre("save", function (next) {
   if (this.isNew) {
     this.gradePoints = {
@@ -95,8 +101,8 @@ schoolSchema.pre("save", function (next) {
     };
   }
 
-  if (this.isModified("gradePoints")) {
-    console.log("gradepoint was modified ");
+  if (this.isModified("gradeStyle")) {
+   
   }
   next();
   //manually changing the gradepoints,this is not redundant code,it doesnt edit

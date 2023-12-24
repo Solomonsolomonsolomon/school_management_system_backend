@@ -2,7 +2,7 @@ import { CustomError } from "../middleware/decorators";
 import { AcademicTerm, AcademicYear } from "../model/database";
 import { Expense } from "../model/others/Expense";
 import { Request as Req, Response as Res } from "express";
-import helper from "../helpers/helper";
+import helper from "../utils/helper";
 const { paginate } = helper;
 class ExpenseController {
   public async addExpense(req: Req, res: Res) {
@@ -149,11 +149,11 @@ class ExpenseController {
       });
       filter.year = currentYear?._id;
     }
-    console.log(filter)
+    console.log(filter);
     if (month) filter.month = new Date().getMonth();
 
     const totalExpenses = await Expense.countDocuments(filter);
-    console.log(totalExpenses,'sd');
+    console.log(totalExpenses, "sd");
     const page = parseInt(req.query.page as string) || 1;
     const pageSize = parseInt(req.query.pageSize as string) || 10;
     const skip = (page - 1) * pageSize;
