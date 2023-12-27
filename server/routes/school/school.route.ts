@@ -17,4 +17,6 @@ router.put(
   "/school/delete/gradepoint",
   asyncErrorHandler(school.deleteGradePoint)
 );
+router.get("/school/get/gradestyle", asyncErrorHandler(school.getGradeStyle));
+router.put("/school/set/gradestyle", asyncErrorHandler(school.setGradeStyle));
 export default router;

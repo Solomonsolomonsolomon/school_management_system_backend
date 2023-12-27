@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "../../../api/axios";
 import Loading from "../../Loading";
-let payUrl = "/paystack";
+import ConfirmModal from "./ConfigureModal";
 let schoolUrl = "/school";
 import { useForm, SubmitHandler } from "react-hook-form";
 import WarningComponent from "../../../utils/WarningComponent";
@@ -9,8 +9,11 @@ import {
   // GradePoints,
   ITheme,
 } from "./../../../interfaces/generalSettingsInterface";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+
+import AddColors from "./AddColors";
+import InsetLogo from "./InsetLogo";
+import GradePointsComponent from "./GradePointsComponent";
+import ConfigureBankDetails from "./ConfigureBankDetails";
 let initialTheme = {
   button: "",
   buttonText: "",
@@ -36,7 +39,7 @@ const GeneralSettings = () => {
   let [allBanks, setAllBanks] = React.useState<any[]>([]);
   let [msg, setMsg] = React.useState<string>("");
   let [loading, setLoading] = React.useState<boolean>(true);
-  const { register, reset, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm();
   let [themeData, setThemeData] = React.useState<ITheme>(initialTheme);
   let [GeneralSettingsState, setGeneralSettingsState] = React.useState<any>({
     configureVisibility: false,
@@ -75,74 +78,6 @@ const GeneralSettings = () => {
     };
   }, []);
 
-  const submitThemeColor: SubmitHandler<any> = async (data: any) => {
-    const controller = new AbortController();
-    const { sideBar, sideBarText, header, button, buttonText, headerText } =
-      data;
-
-    async function submitColors() {
-      try {
-        const colors = {
-          sideBar,
-          sideBarText,
-          header,
-          button,
-          headerText,
-          buttonText,
-        };
-        console.log(colors);
-        const res = await axios.post(`${schoolUrl}/theme/set`, colors, {
-          signal: controller.signal,
-        });
-        setMsg(res.data?.msg + " ,refresh to see changes");
-        setGeneralSettingsState({
-          ...GeneralSettingsState,
-          showThemes: !GeneralSettingsState.showThemes,
-        });
-      } catch (error: any) {
-        if (
-          error.name == "AbortController" ||
-          error.name == "CanceledController"
-        )
-          return;
-        setMsg(
-          error?.response?.data?.msg ||
-            error?.message ||
-            "error updating themes"
-        );
-      }
-    }
-    submitColors();
-    return () => {
-      controller.abort();
-    };
-  };
-  const submitBankConfigData: SubmitHandler<any> = async (data) => {
-    let controller = new AbortController();
-
-    try {
-      let bankData = {
-        account_number: data?.account_number,
-        business_name: data?.business_name,
-        settlement_bank: data?.settlement_bank,
-      };
-      let res = await axios.post(`${payUrl}/create/subaccount`, bankData, {
-        signal: controller.signal,
-      });
-      reset();
-      setGeneralSettingsState({
-        ...GeneralSettingsState,
-        configureVisibility: false,
-      });
-      setMsg(res.data?.msg || "successful");
-    } catch (error: any) {
-      console.log(error);
-      setMsg(error.response?.data?.message || "error in configuring");
-    }
-    return () => {
-      controller.abort();
-    };
-  };
   const submitLogoData: SubmitHandler<any> = async (data) => {
     let { logo } = data;
     if (!logo[0].type.startsWith("image")) return setMsg("please select image");
@@ -159,29 +94,7 @@ const GeneralSettings = () => {
       }
     })();
   };
-  const handleGradePoints = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setGradePoints({ ...gradePoints, [e.target.name]: +e.target.value });
-  };
-  const updateGradePoints = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
 
-    try {
-      setLoading(true);
-      let res = await axios.put(`${schoolUrl}/set/gradePoint`, gradePoints);
-      setMsg(res.data?.msg);
-      console.log(gradePoints);
-      setGeneralSettingsState({
-        ...GeneralSettingsState,
-        showGradePoints: false,
-      });
-      setGradeTracker(Date.now());
-    } catch (error: any) {
-      setMsg(error?.response?.data?.msg || error?.message);
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
   React.useEffect(() => {
     if (confirmable) {
       (async () => {
@@ -209,21 +122,6 @@ const GeneralSettings = () => {
     }
   }, [generateResults, confirmable]);
 
-  React.useEffect(() => {
-    let controller = new AbortController();
-    async function getBanks() {
-      let res = await axios.get(`${payUrl}/get/bank`, {
-        signal: controller.signal,
-      });
-      console.log(res?.data.banks);
-      setAllBanks(res.data?.banks);
-    }
-
-    getBanks();
-    return () => {
-      controller.abort();
-    };
-  }, []);
   ///getting gradePoints
   React.useEffect(() => {
     (async () => {
@@ -251,212 +149,40 @@ const GeneralSettings = () => {
   return (
     <div className="mx-3">
       <p className="font-bold text-center italic">{msg}</p>
-      <span>Configure Payment Info</span>
-      <button
-        onClick={() => {
-          setGeneralSettingsState({
-            ...GeneralSettingsState,
-            configureVisibility: !GeneralSettingsState.configureVisibility,
-          });
-          setMsg("");
-        }}
-        className="border m-2 p-2 bg-gray-900 text-white text-sm rounded"
-      >
-        configure
-      </button>
-      <div
-        className={`${
-          GeneralSettingsState.configureVisibility ? "border" : "hidden"
-        }`}
-      >
-        <form
-          action=""
-          className="dark:bg-gray-900 grid gap-3  justify-center p-2 border rounded  "
-          onSubmit={handleSubmit(submitBankConfigData)}
-        >
-          <input
-            type="text"
-            {...register("business_name")}
-            placeholder="enter business name"
-            className="dark:bg-gray-900 border  border-t-0 border-l-0 border-r-0 border-b-2 border-black"
-          />
-          <input
-            type="text"
-            {...register("account_number")}
-            placeholder="enter Account number "
-            className="dark:bg-gray-900 border  border-t-0 border-l-0 border-r-0 border-b-2 border-black"
-          />
-          <label htmlFor="">Select Bank</label>
-          <select {...register("settlement_bank")} className="dark:bg-gray-900">
-            {allBanks.map((bank) => {
-              return <option value={bank?.code}>{bank?.name}</option>;
-            })}
-          </select>
-          <button className="p-2 bg-green-800 text-white rounded w-fit">
-            save
-          </button>
-        </form>
-      </div>
+      <ConfigureBankDetails
+        GeneralSettingsState={GeneralSettingsState}
+        allBanks={allBanks}
+        setAllBanks={setAllBanks}
+        setGeneralSettingsState={setGeneralSettingsState}
+        setMsg={setMsg}
+      />
+      <AddColors
+        GeneralSettingsState={GeneralSettingsState}
+        handleSubmit={handleSubmit}
+        register={register}
+        setGeneralSettingsState={setGeneralSettingsState}
+        setMsg={setMsg}
+        themeData={themeData}
+        
+      />
 
-      <div>
-        <span>set themes</span>{" "}
-        <button
-          onClick={() => {
-            setGeneralSettingsState({
-              ...GeneralSettingsState,
-              showThemes: !GeneralSettingsState.showThemes,
-            });
-            setMsg("");
-          }}
-          className="border m-2 p-2 w-[90px] bg-gray-900 text-white text-sm rounded"
-        >
-          SET
-        </button>
-        <div
-          className={`${GeneralSettingsState.showThemes ? "border" : "hidden"}`}
-        >
-          <form onSubmit={handleSubmit(submitThemeColor)}>
-            <label htmlFor="" className="block">
-              Sidebar
-            </label>
-            <input
-              type="color"
-              defaultValue={themeData.sideBar || "#ffffff"}
-              {...register("sideBar")}
-              className="dark:bg-gray-900"
-            />
-            <label htmlFor="" className="block">
-              Sidebar text
-            </label>
-            <input
-              type="color"
-              defaultValue={themeData.sideBarText || "#454545"}
-              {...register("sideBarText")}
-              className="dark:bg-gray-900"
-            />
-            <label htmlFor="" className="block">
-              Buttons
-            </label>
-            <input
-              type="color"
-              defaultValue={themeData.button || "#4B5563"}
-              {...register("button")}
-              className="dark:bg-gray-900"
-            />
-            <label htmlFor="" className="block">
-              header text
-            </label>
-            <input
-              type="color"
-              defaultValue={themeData.headerText || "#000000"}
-              {...register("headerText")}
-              className="dark:bg-gray-900 border"
-            />
-            <label htmlFor="" className="block">
-              Text
-            </label>
-            <input
-              type="color"
-              defaultValue={themeData.text || "#000000"}
-              {...register("text")}
-              className="dark:bg-gray-900 border"
-            />
-            <label htmlFor="" className="block">
-              Header
-            </label>
-            <input
-              type="color"
-              defaultValue={themeData.header || "#4a5568"}
-              {...register("header")}
-              className="dark:bg-gray-900 border"
-            />
-            <button className="p-2 bg-green-800 mb-4 text-white rounded w-fit">
-              APPLY
-            </button>
-          </form>
-        </div>
-      </div>
-      <div>
-        <span>
-          insert logo{" "}
-          <button
-            className="capitalize bg-gray-900 w-[100px] text-white p-2 rounded border"
-            onClick={() => {
-              setGeneralSettingsState({
-                ...GeneralSettingsState,
-                showInsertLogo: !GeneralSettingsState.showInsertLogo,
-              });
-
-              setMsg("");
-            }}
-          >
-            insert
-          </button>
-        </span>
-        <div
-          className={`${
-            GeneralSettingsState.showInsertLogo ? "block" : "hidden"
-          }`}
-        >
-          <form onSubmit={handleSubmit(submitLogoData)}>
-            <input
-              type="file"
-              {...register("logo")}
-              className="dark:bg-gray-900"
-              required
-            />
-            <button className="p-2 bg-green-800 text-white rounded w-fit border">
-              save
-            </button>
-          </form>
-        </div>
-      </div>
-      <div className="mt-2">
-        <span>
-          grade points
-          <button
-            className="capitalize bg-gray-900 w-[100px] text-white p-2 rounded border"
-            onClick={() => {
-              setGeneralSettingsState({
-                ...GeneralSettingsState,
-                showGradePoints: !GeneralSettingsState.showGradePoints,
-              });
-
-              setMsg("");
-            }}
-          >
-            SET
-          </button>
-        </span>
-        <form
-          onSubmit={updateGradePoints}
-          className={`${
-            GeneralSettingsState.showGradePoints ? "block" : "hidden"
-          }`}
-        >
-          {Object.entries(gradePoints).map((grade: any[]) => {
-            if (grade[0] === "_id") return;
-            return (
-              <p>
-                {grade[0]}:{" "}
-                <input
-                  type="number"
-                  value={+gradePoints[grade["0"]]}
-                  name={grade[0]}
-                  onChange={handleGradePoints}
-                />
-              </p>
-            );
-          })}
-
-          <span className="cursor-pointer">
-            <FontAwesomeIcon icon={faPlus} color="green" size="xl" />
-          </span>
-          <button className=" ml-3 p-2 bg-green-800 mb-4 text-white rounded w-fit">
-            SET
-          </button>
-        </form>
-      </div>
+      <InsetLogo
+        GeneralSettingsState={GeneralSettingsState}
+        handleSubmit={handleSubmit}
+        register={register}
+        setMsg={setMsg}
+        setGeneralSettingsState={setGeneralSettingsState}
+        submitLogoData={submitLogoData}
+      />
+      <GradePointsComponent
+        GeneralSettingsState={GeneralSettingsState}
+        gradePoints={gradePoints}
+        setGeneralSettingsState={setGeneralSettingsState}
+        setGradePoints={setGradePoints}
+        setGradeTracker={setGradeTracker}
+        setLoading={setLoading}
+        setMsg={setMsg}
+      />
       <WarningComponent>
         Please Auto promotion only works when current term is promotion term and
         teacher generates result{" "}
@@ -472,44 +198,6 @@ const GeneralSettings = () => {
         Generate Results
       </button>
     </div>
-  );
-};
-const ConfirmModal: React.FC<{
-  confirmable: React.SetStateAction<any>;
-  confirmModal: React.SetStateAction<any>;
-}> = ({ confirmable, confirmModal }) => {
-  return (
-    <>
-      {/* to use pass 2 set states confirm modal and confirmable */}
-      <div className="w-full absolute z-[10]  inset-1  overflow-hidden grid bg-inherit  justify-center items-center h-[100vh] dark:bg-gray-800 bg-white ">
-        <div className="border relative opacity-100 dark:bg-gray-800 bg-gray-200 rounded-2xl shadow-2xl h-fit box-border p-20">
-          <h1 className="p-5 ">Are you sure you want to generate Results</h1>
-          <span className="absolute right-2">
-            <button
-              className="bg-blue-700 p-3 z-10 text-white rounded"
-              onClick={() => {
-                confirmable(true);
-                confirmModal(false);
-              }}
-            >
-              Continue
-            </button>
-          </span>
-          <span className="absolute left-2">
-            {" "}
-            <button
-              className="bg-red-700 p-3 z-10 text-white rounded"
-              onClick={() => {
-                confirmable(false);
-                confirmModal(false);
-              }}
-            >
-              Cancel
-            </button>
-          </span>
-        </div>
-      </div>
-    </>
   );
 };
 export default GeneralSettings;

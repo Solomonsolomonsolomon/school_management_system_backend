@@ -176,7 +176,44 @@ class SchoolController {
     // await schoolToUpdate.save();
     // return res.status(204);
   }
-
+  public async setGradeStyle(req: express.Request, res: express.Response) {
+    let school = req.user?.school;
+    let schoolId = req.user?.schoolId;
+    let schoolDetails = await School.findOne({ school, schoolId });
+    if (!schoolDetails) {
+      return await School.create({
+        school,
+        schoolId,
+        gradeStyle: req.body?.gradeStyle,
+      });
+    }
+    //if(!schoolDetails?.gradeStyle)schoolDetails.gradeStyle='Tertiary'
+    schoolDetails.gradeStyle = req.body?.gradeStyle;
+    await schoolDetails.save();
+    return res.status(200).json({
+      msg: "updated gradepoint successfully",
+      status: 200,
+    });
+  }
+  public async getGradeStyle(req: express.Request, res: express.Response) {
+    let school = req.user?.school;
+    let schoolId = req.user?.schoolId;
+    let schoolDetails = await School.findOne({ school, schoolId });
+    if (!schoolDetails) {
+      await School.create({
+        school,
+        schoolId,
+        gradeStyle: "Tertiary",
+      }).then((schoolDetail) => {
+        return res.status(200).json({
+          gradeStyle: schoolDetail.gradeStyle,
+        });
+      });
+    }
+    return res.status(200).json({
+      gradeStyle: schoolDetails?.gradeStyle,
+    });
+  }
   //add and remove grade points
 }
 export default SchoolController;

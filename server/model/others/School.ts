@@ -87,11 +87,12 @@ const schoolSchema = new mongoose.Schema({
     type: String,
     enum: ["Tertiary", "US", "WAEC"],
     default: "Tertiary",
+    required: true,
   },
 });
-
 schoolSchema.pre("save", function (next) {
   if (this.isNew) {
+    this.gradeStyle = "Tertiary";
     this.gradePoints = {
       A: 70,
       B: 60,
@@ -100,9 +101,45 @@ schoolSchema.pre("save", function (next) {
       F: 0,
     };
   }
-
-  if (this.isModified("gradeStyle")) {
-   
+  //changing the gradePoint to match gradeStyle
+  if (this.isDirectModified("gradeStyle")) {
+    if (this.gradeStyle === "Tertiary") {
+      this.gradePoints = {
+        A: 70,
+        B: 60,
+        C: 50,
+        D: 40,
+        F: 0,
+      };
+    } else if (this.gradeStyle === "US") {
+      this.gradePoints = {
+        A_pp: 95,
+        A_p: 90,
+        A: 85,
+        A_m: 80,
+        B_p: 75,
+        B: 70,
+        B_m: 65,
+        C_p: 60,
+        C: 55,
+        C_m: 50,
+        D: 40,
+        D_m: 35,
+        F: 0,
+      };
+    } else {
+      this.gradePoints = {
+        A1: 80,
+        B2: 70,
+        B3: 65,
+        C4: 60,
+        C5: 55,
+        C6: 50,
+        D7: 45,
+        E8: 35,
+        F9: 0,
+      };
+    }
   }
   next();
   //manually changing the gradepoints,this is not redundant code,it doesnt edit
