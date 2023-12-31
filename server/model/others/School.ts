@@ -1,5 +1,46 @@
 import mongoose from "mongoose";
-
+interface IGradeSchema {
+  A?: number;
+  B?: number;
+  C?: number;
+  D?: number;
+  E?: number;
+  F?: number;
+  //WAEC standard
+  A1?: number;
+  A2?: number;
+  B3?: number;
+  B2?: number;
+  B1?: number;
+  C3?: number;
+  C4?: number;
+  C5?: number;
+  C6?: number;
+  D7?: number;
+  E8?: number;
+  F9?: number;
+  // Additional variations
+  A_p?: number;
+  B_p?: number;
+  C_p?: number;
+  D_p?: number;
+  E_p?: number;
+  F_p?: number;
+  //Minuses
+  A_m?: number;
+  B_m?: number;
+  C_m?: number;
+  D_m?: number;
+  E_m?: number;
+  F_m?: number;
+  // Additional variations with extra plus
+  A_pp?: number;
+  B_pp?: number;
+  C_pp?: number;
+  D_pp?: number;
+  E_pp?: number;
+  F_pp?: number;
+}
 const themeSchema = new mongoose.Schema({
   button: String,
   buttonText: String,
@@ -10,7 +51,7 @@ const themeSchema = new mongoose.Schema({
   background: String,
   headerText: String,
 });
-const gradeSchema = new mongoose.Schema({
+const gradeSchema = new mongoose.Schema<IGradeSchema>({
   // base but e is omitted in default
   A: Number,
   B: Number,
@@ -54,7 +95,23 @@ const gradeSchema = new mongoose.Schema({
   F_pp: Number,
   // Add more grades as needed
 });
-const schoolSchema = new mongoose.Schema({
+
+interface ISchool {
+  name: string;
+  school: string;
+  schoolId: string;
+  account_number: string;
+  subaccount_code: string;
+  busfees: number;
+  themes: any;
+  logo: string;
+  plan: string;
+  isPaid: boolean;
+  isSuspended: boolean;
+  gradePoints: IGradeSchema; //gradeSchema;
+  gradeStyle: string;
+}
+const schoolSchema = new mongoose.Schema<ISchool>({
   name: String,
   school: String,
   schoolId: String,
@@ -146,4 +203,4 @@ schoolSchema.pre("save", function (next) {
 });
 const School = mongoose.model("School", schoolSchema);
 School.syncIndexes();
-export { School };
+export { School, ISchool };

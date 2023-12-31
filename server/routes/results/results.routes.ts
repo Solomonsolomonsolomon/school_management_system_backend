@@ -1,13 +1,10 @@
 import { Router } from "express";
 
 const router: Router = Router();
-import {
-  genResult,
-  teacherGenerateResult,
-  DeleteResult,
-} from "../../controller/results.controller";
+import result from "./../../controller/results.controller";
+
 import asyncErrorHandler from "../../middleware/globalErrorHandler";
-router.get("/results/generate", genResult);
-router.get("/result/teacher/generate/:id", teacherGenerateResult);
-router.delete("/result/delete/:id", asyncErrorHandler(DeleteResult));
+router.get("/results/generate", result.genResult);
+router.get("/result/teacher/generate/:id", result.teacherGenerateResult);
+router.delete("/result/delete/:id", asyncErrorHandler(result.DeleteResult));
 export default router;

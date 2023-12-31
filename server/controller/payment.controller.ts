@@ -109,7 +109,6 @@ const getBank = async (req: Request, res: Response) => {
       banks: simplifiedData,
     });
   } catch (error) {
-    console.error(error);
     res.status(400).json(error);
   }
 };
