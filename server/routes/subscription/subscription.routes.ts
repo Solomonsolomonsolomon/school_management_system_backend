@@ -1,6 +1,6 @@
 import { Router } from "express";
 const router: Router = Router();
-import asyncErrorHandler from "../../middleware/globalErrorHandler";
+import asyncErrorHandler from "../../utils/globalErrorHandler";
 import subscription from "../../controller/subscription.controller";
 import student from "../../controller/student.controller";
 router.get(

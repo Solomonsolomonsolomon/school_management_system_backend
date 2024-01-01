@@ -191,7 +191,7 @@ class SchoolController {
     schoolDetails.gradeStyle = req.body?.gradeStyle;
     await schoolDetails.save();
     return res.status(200).json({
-      msg: "updated gradepoint successfully",
+      msg: "updated gradestyle successfully",
       status: 200,
     });
   }
@@ -209,10 +209,11 @@ class SchoolController {
           gradeStyle: schoolDetail.gradeStyle,
         });
       });
+    } else {
+      return res.status(200).json({
+        gradeStyle: schoolDetails?.gradeStyle,
+      });
     }
-    return res.status(200).json({
-      gradeStyle: schoolDetails?.gradeStyle,
-    });
   }
   //add and remove grade points
 }

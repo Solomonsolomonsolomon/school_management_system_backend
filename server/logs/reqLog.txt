@@ -13438,3 +13438,1068 @@ LOGID1704045525828 "2023-12-31 17:58:45.828Z" ::1 GET /school/get/gradestyle 304
 LOGID1704045525892 "2023-12-31 17:58:45.892Z" ::1 GET /school/theme/current 304 0.0822106s  
       82ms
        
+LOGID1704046287019 "2023-12-31 18:11:27.019Z" ::1 POST /auth/signin 200 0.2173327s  
+      217ms
+       
+LOGID1704046290640 "2023-12-31 18:11:30.640Z" ::1 GET /term/get/current 304 0.3427627s  
+      342ms
+       
+LOGID1704046290650 "2023-12-31 18:11:30.650Z" ::1 GET /year/get/current 304 0.3469273s  
+      347ms
+       
+LOGID1704046290986 "2023-12-31 18:11:30.986Z" ::1 GET /admin/gender/divide 304 0.6899371s  
+      690ms
+       
+LOGID1704046291177 "2023-12-31 18:11:31.177Z" ::1 GET /school/theme/current 304 0.9157106s  
+      916ms
+       
+LOGID1704046291184 "2023-12-31 18:11:31.183Z" ::1 GET /school/logo/theme/get 304 0.8820967s  
+      882ms
+       
+LOGID1704046291204 "2023-12-31 18:11:31.204Z" ::1 GET /admin/get/count/teachers 200 0.5716s  
+      572ms
+       
+LOGID1704046291344 "2023-12-31 18:11:31.344Z" ::1 GET /transaction/get/total 200 0.6837965s  
+      684ms
+       
+LOGID1704046291426 "2023-12-31 18:11:31.426Z" ::1 GET /transaction/monthly 304 0.7636256s  
+      764ms
+       
+LOGID1704046291581 "2023-12-31 18:11:31.581Z" ::1 GET /term/get/current 304 0.1255132s  
+      126ms
+       
+LOGID1704046291720 "2023-12-31 18:11:31.720Z" ::1 GET /admin/gender/divide 304 0.4748943s  
+      475ms
+       
+LOGID1704046291847 "2023-12-31 18:11:31.847Z" ::1 GET /expense/monthly 304 0.8292836s  
+      829ms
+       
+LOGID1704046291890 "2023-12-31 18:11:31.890Z" ::1 GET /transaction/ratio/earnings/expense 304 0.6455111s  
+      645ms
+       
+LOGID1704046291930 "2023-12-31 18:11:31.930Z" ::1 GET /school/theme/current 304 0.6819372s  
+      681ms
+       
+LOGID1704046292165 "2023-12-31 18:11:32.165Z" ::1 GET /school/logo/theme/get 304 0.812017s  
+      812ms
+       
+LOGID1704046292291 "2023-12-31 18:11:32.291Z" ::1 GET /transaction/monthly 304 0.6784642s  
+      678ms
+       
+LOGID1704046292475 "2023-12-31 18:11:32.475Z" ::1 GET /school/theme/current 304 0.5060999s  
+      506ms
+       
+LOGID1704046292493 "2023-12-31 18:11:32.492Z" ::1 GET /expense/monthly 304 0.6121385s  
+      613ms
+       
+LOGID1704046292530 "2023-12-31 18:11:32.530Z" ::1 GET /school/logo/theme/get 304 0.3516354s  
+      352ms
+       
+LOGID1704046292633 "2023-12-31 18:11:32.633Z" ::1 GET /term/get/current 304 0.0789829s  
+      79ms
+       
+LOGID1704046292717 "2023-12-31 18:11:32.717Z" ::1 GET /school/theme/current 304 0.2201448s  
+      220ms
+       
+LOGID1704046292777 "2023-12-31 18:11:32.777Z" ::1 GET /school/logo/theme/get 304 0.2431078s  
+      243ms
+       
+LOGID1704046292867 "2023-12-31 18:11:32.867Z" ::1 GET /school/theme/current 304 0.1449477s  
+      145ms
+       
+LOGID1704046292986 "2023-12-31 18:11:32.986Z" ::1 GET /school/theme/current 304 0.1169792s  
+      117ms
+       
+LOGID1704046294870 "2023-12-31 18:11:34.870Z" ::1 GET /term/get/current 304 0.0665371s  
+      67ms
+       
+LOGID1704046295012 "2023-12-31 18:11:35.012Z" ::1 GET /school/theme/current 304 0.2066236s  
+      207ms
+       
+LOGID1704046295016 "2023-12-31 18:11:35.016Z" ::1 GET /school/get/gradepoint 304 0.1973558s  
+      197ms
+       
+LOGID1704046295591 "2023-12-31 18:11:35.591Z" ::1 GET /paystack/get/bank 400 0.4961347s  
+      496ms
+       
+LOGID1704046295615 "2023-12-31 18:11:35.615Z" ::1 GET /school/theme/current 304 0.5965114s  
+      596ms
+       
+LOGID1704046295618 "2023-12-31 18:11:35.618Z" ::1 GET /school/get/gradepoint 304 0.5987211s  
+      598ms
+       
+LOGID1704046295663 "2023-12-31 18:11:35.663Z" ::1 GET /school/get/gradestyle 304 0.582622s  
+      583ms
+       
+LOGID1704046296090 "2023-12-31 18:11:36.090Z" ::1 GET /school/get/gradestyle 304 0.3953045s  
+      395ms
+       
+LOGID1704046296101 "2023-12-31 18:11:36.100Z" ::1 GET /school/theme/current 304 0.4645036s  
+      464ms
+       
+LOGID1704046296183 "2023-12-31 18:11:36.183Z" ::1 GET /school/theme/current 304 0.0799915s  
+      80ms
+       
+LOGID1704046298070 "2023-12-31 18:11:38.061Z" ::1 GET /results/generate 201 0.2325182s  
+      233ms
+       
+LOGID1704046298120 "2023-12-31 18:11:38.120Z" ::1 GET /school/get/gradestyle 304 0.3043927s  
+      305ms
+       
+LOGID1704046298288 "2023-12-31 18:11:38.288Z" ::1 GET /paystack/get/bank 400 0.1876882s  
+      188ms
+       
+LOGID1704046298328 "2023-12-31 18:11:38.328Z" ::1 GET /school/get/gradestyle 304 0.2002989s  
+      201ms
+       
+LOGID1704046298447 "2023-12-31 18:11:38.447Z" ::1 GET /school/get/gradestyle 304 0.1156842s  
+      116ms
+       
+LOGID1704046298556 "2023-12-31 18:11:38.556Z" ::1 GET /school/get/gradestyle 304 0.1068924s  
+      107ms
+       
+LOGID1704053922398 "2023-12-31 20:18:42.398Z" ::1 GET /paystack/get/bank 401 0.0676901s  
+      68ms
+       
+LOGID1704053922478 "2023-12-31 20:18:42.478Z" ::ffff:127.0.0.1 GET /school/get/gradestyle 401 0.1454222s  
+      145ms
+       
+LOGID1704053923437 "2023-12-31 20:18:43.437Z" ::ffff:127.0.0.1 POST /auth/signin 401 0.0021878s  
+      2ms
+       
+LOGID1704053923444 "2023-12-31 20:18:43.444Z" ::1 POST /auth/signin 401 0.000897s  
+      1ms
+       
+LOGID1704053933942 "2023-12-31 20:18:53.942Z" ::ffff:127.0.0.1 POST /auth/signin 401 0.0017301s  
+      2ms
+       
+LOGID1704053933961 "2023-12-31 20:18:53.961Z" ::ffff:127.0.0.1 POST /auth/signin 401 0.0028269s  
+      3ms
+       
+LOGID1704053943708 "2023-12-31 20:19:03.708Z" ::1 POST /auth/signin 200 0.1425061s  
+      142ms
+       
+LOGID1704053945473 "2023-12-31 20:19:05.473Z" ::1 GET /year/get/current 304 0.3683251s  
+      368ms
+       
+LOGID1704053945521 "2023-12-31 20:19:05.521Z" ::1 GET /term/get/current 304 0.3132781s  
+      313ms
+       
+LOGID1704053945743 "2023-12-31 20:19:05.743Z" ::1 GET /admin/gender/divide 304 0.6146828s  
+      615ms
+       
+LOGID1704053945810 "2023-12-31 20:19:05.810Z" ::1 GET /admin/get/count/teachers 200 0.5347677s  
+      535ms
+       
+LOGID1704053945875 "2023-12-31 20:19:05.875Z" ::1 GET /school/logo/theme/get 304 0.7498038s  
+      750ms
+       
+LOGID1704053945879 "2023-12-31 20:19:05.879Z" ::1 GET /school/theme/current 304 0.7553565s  
+      755ms
+       
+LOGID1704053945962 "2023-12-31 20:19:05.962Z" ::1 GET /transaction/get/total 200 0.4838757s  
+      484ms
+       
+LOGID1704053946138 "2023-12-31 20:19:06.138Z" ::1 GET /transaction/monthly 304 0.587459s  
+      588ms
+       
+LOGID1704053946429 "2023-12-31 20:19:06.429Z" ::1 GET /term/get/current 304 0.2688293s  
+      268ms
+       
+LOGID1704053946905 "2023-12-31 20:19:06.905Z" ::1 GET /admin/gender/divide 304 0.9862135s  
+      986ms
+       
+LOGID1704053946950 "2023-12-31 20:19:06.950Z" ::1 GET /transaction/ratio/earnings/expense 304 1000000.1158644s  
+      1116ms
+       
+LOGID1704053946995 "2023-12-31 20:19:06.995Z" ::1 GET /expense/monthly 304 1000000.2279775s  
+      1228ms
+       
+LOGID1704053947024 "2023-12-31 20:19:07.024Z" ::1 GET /school/logo/theme/get 304 1000000.103663s  
+      1103ms
+       
+LOGID1704053947055 "2023-12-31 20:19:07.055Z" ::1 GET /school/theme/current 304 1000000.0757513s  
+      1076ms
+       
+LOGID1704053947141 "2023-12-31 20:19:07.141Z" ::1 GET /transaction/monthly 304 0.7068528s  
+      707ms
+       
+LOGID1704053947271 "2023-12-31 20:19:07.271Z" ::1 GET /school/logo/theme/get 304 0.2356743s  
+      235ms
+       
+LOGID1704053947295 "2023-12-31 20:19:07.295Z" ::1 GET /expense/monthly 304 0.2941961s  
+      294ms
+       
+LOGID1704053947310 "2023-12-31 20:19:07.310Z" ::1 GET /school/theme/current 304 0.2341693s  
+      234ms
+       
+LOGID1704053947357 "2023-12-31 20:19:07.356Z" ::1 GET /term/get/current 304 0.0671801s  
+      67ms
+       
+LOGID1704053947449 "2023-12-31 20:19:07.449Z" ::1 GET /school/logo/theme/get 304 0.1721774s  
+      172ms
+       
+LOGID1704053947463 "2023-12-31 20:19:07.463Z" ::1 GET /school/theme/current 304 0.1458688s  
+      146ms
+       
+LOGID1704053947587 "2023-12-31 20:19:07.587Z" ::1 GET /school/theme/current 304 0.1152417s  
+      115ms
+       
+LOGID1704053947680 "2023-12-31 20:19:07.676Z" ::1 GET /school/theme/current 304 0.078811s  
+      79ms
+       
+LOGID1704053954207 "2023-12-31 20:19:14.207Z" ::1 GET /term/get/current 304 0.1075328s  
+      108ms
+       
+LOGID1704053954299 "2023-12-31 20:19:14.299Z" ::1 GET /school/get/gradepoint 304 0.1918654s  
+      192ms
+       
+LOGID1704053954311 "2023-12-31 20:19:14.309Z" ::1 GET /school/theme/current 304 0.2020181s  
+      202ms
+       
+LOGID1704053954452 "2023-12-31 20:19:14.451Z" ::1 GET /school/get/gradepoint 304 0.1389859s  
+      139ms
+       
+LOGID1704053954459 "2023-12-31 20:19:14.459Z" ::1 GET /school/theme/current 304 0.1444438s  
+      144ms
+       
+LOGID1704053954810 "2023-12-31 20:19:14.810Z" ::1 GET /school/theme/current 304 0.3492099s  
+      349ms
+       
+LOGID1704053954814 "2023-12-31 20:19:14.814Z" ::1 GET /paystack/get/bank 400 0.3006005s  
+      301ms
+       
+LOGID1704053954835 "2023-12-31 20:19:14.835Z" ::1 GET /school/get/gradestyle 304 0.3208557s  
+      321ms
+       
+LOGID1704053954960 "2023-12-31 20:19:14.960Z" ::1 GET /school/theme/current 304 0.1389972s  
+      139ms
+       
+LOGID1704053954974 "2023-12-31 20:19:14.974Z" ::1 GET /school/get/gradestyle 304 0.1252229s  
+      125ms
+       
+LOGID1704053958453 "2023-12-31 20:19:18.453Z" ::1 PUT /school/set/gradestyle 200 0.0783039s  
+      78ms
+       
+LOGID1704053958731 "2023-12-31 20:19:18.731Z" ::1 GET /paystack/get/bank 400 0.2449378s  
+      245ms
+       
+LOGID1704053958762 "2023-12-31 20:19:18.762Z" ::1 GET /school/get/gradepoint 200 0.2796626s  
+      280ms
+       
+LOGID1704053958773 "2023-12-31 20:19:18.773Z" ::1 GET /school/get/gradestyle 200 0.2917453s  
+      291ms
+       
+LOGID1704053958849 "2023-12-31 20:19:18.849Z" ::1 GET /school/get/gradestyle 304 0.0659294s  
+      66ms
+       
+LOGID1704054006847 "2023-12-31 20:20:06.847Z" ::1 GET /term/get/current 304 0.0414202s  
+      41ms
+       
+LOGID1704054006925 "2023-12-31 20:20:06.924Z" ::1 GET /admin/get/student?pageSize=2&page=1 200 0.1040667s  
+      104ms
+       
+LOGID1704054007035 "2023-12-31 20:20:07.035Z" ::1 GET /school/theme/current 304 0.0920754s  
+      92ms
+       
+LOGID1704054007130 "2023-12-31 20:20:07.130Z" ::1 GET /school/theme/current 304 0.0925312s  
+      93ms
+       
+LOGID1704054051072 "2023-12-31 20:20:51.072Z" ::1 GET /term/get/current 304 0.1272648s  
+      128ms
+       
+LOGID1704054051398 "2023-12-31 20:20:51.398Z" ::1 GET /admin/gender/divide 304 0.438051s  
+      438ms
+       
+LOGID1704054051498 "2023-12-31 20:20:51.498Z" ::1 GET /admin/get/count/teachers 200 0.4479196s  
+      448ms
+       
+LOGID1704054051550 "2023-12-31 20:20:51.550Z" ::1 GET /transaction/get/total 200 0.4811389s  
+      481ms
+       
+LOGID1704054051566 "2023-12-31 20:20:51.566Z" ::1 GET /transaction/monthly 304 0.4962992s  
+      497ms
+       
+LOGID1704054051650 "2023-12-31 20:20:51.650Z" ::1 GET /transaction/ratio/earnings/expense 304 0.4941781s  
+      494ms
+       
+LOGID1704054051714 "2023-12-31 20:20:51.714Z" ::1 GET /expense/monthly 304 0.6390011s  
+      639ms
+       
+LOGID1704054051733 "2023-12-31 20:20:51.733Z" ::1 GET /admin/gender/divide 304 0.3197018s  
+      319ms
+       
+LOGID1704054051823 "2023-12-31 20:20:51.823Z" ::1 GET /transaction/monthly 304 0.189175s  
+      189ms
+       
+LOGID1704054051885 "2023-12-31 20:20:51.885Z" ::1 GET /expense/monthly 304 0.1501753s  
+      151ms
+       
+LOGID1704054055404 "2023-12-31 20:20:55.404Z" ::1 GET /term/get/current 304 0.0601152s  
+      61ms
+       
+LOGID1704054055527 "2023-12-31 20:20:55.527Z" ::1 GET /v1/school/theme/current 404 0.1686304s  
+      169ms
+       
+LOGID1704054055611 "2023-12-31 20:20:55.611Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=1 200 0.251336s  
+      252ms
+       
+LOGID1704054055712 "2023-12-31 20:20:55.711Z" ::1 GET /v1/school/theme/current 404 0.1684963s  
+      168ms
+       
+LOGID1704054055778 "2023-12-31 20:20:55.778Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=1 304 0.1623382s  
+      163ms
+       
+LOGID1704054063830 "2023-12-31 20:21:03.830Z" ::1 GET /term/get/current 304 0.0910582s  
+      91ms
+       
+LOGID1704054063836 "2023-12-31 20:21:03.836Z" ::1 GET /year/get/current 304 0.0956963s  
+      96ms
+       
+LOGID1704054064027 "2023-12-31 20:21:04.027Z" ::1 GET /admin/gender/divide 304 0.2815606s  
+      282ms
+       
+LOGID1704054064083 "2023-12-31 20:21:04.083Z" ::1 GET /transaction/monthly 304 0.3269617s  
+      327ms
+       
+LOGID1704054064126 "2023-12-31 20:21:04.126Z" ::1 GET /v1/school/theme/current 404 0.4131753s  
+      414ms
+       
+LOGID1704054064129 "2023-12-31 20:21:04.129Z" ::1 GET /v1/school/logo/theme/get 404 0.414783s  
+      415ms
+       
+LOGID1704054064170 "2023-12-31 20:21:04.170Z" ::1 GET /admin/get/count/teachers 304 0.3253706s  
+      326ms
+       
+LOGID1704054064363 "2023-12-31 20:21:04.363Z" ::1 GET /expense/monthly 304 0.5162872s  
+      519ms
+       
+LOGID1704054064457 "2023-12-31 20:21:04.457Z" ::1 GET /transaction/get/total 304 0.4139293s  
+      414ms
+       
+LOGID1704054064499 "2023-12-31 20:21:04.499Z" ::1 GET /admin/gender/divide 304 0.3343908s  
+      334ms
+       
+LOGID1704054064560 "2023-12-31 20:21:04.560Z" ::1 GET /transaction/monthly 304 0.3946598s  
+      395ms
+       
+LOGID1704054064585 "2023-12-31 20:21:04.585Z" ::1 GET /transaction/ratio/earnings/expense 304 0.4805985s  
+      481ms
+       
+LOGID1704054064610 "2023-12-31 20:21:04.610Z" ::1 GET /v1/school/theme/current 404 0.4196501s  
+      420ms
+       
+LOGID1704054064819 "2023-12-31 20:21:04.816Z" ::1 GET /v1/school/logo/theme/get 404 0.4319643s  
+      432ms
+       
+LOGID1704054064991 "2023-12-31 20:21:04.991Z" ::1 GET /expense/monthly 304 0.5246568s  
+      525ms
+       
+LOGID1704054065046 "2023-12-31 20:21:05.045Z" ::1 GET /v1/school/theme/current 404 0.4210714s  
+      421ms
+       
+LOGID1704054065271 "2023-12-31 20:21:05.271Z" ::1 GET /v1/school/logo/theme/get 404 0.4393736s  
+      439ms
+       
+LOGID1704054065428 "2023-12-31 20:21:05.427Z" ::1 GET /v1/school/theme/current 404 0.3771063s  
+      377ms
+       
+LOGID1704054065607 "2023-12-31 20:21:05.607Z" ::1 GET /v1/school/logo/theme/get 404 0.3302698s  
+      330ms
+       
+LOGID1704054065727 "2023-12-31 20:21:05.727Z" ::1 GET /v1/school/theme/current 404 0.2842712s  
+      284ms
+       
+LOGID1704054065865 "2023-12-31 20:21:05.865Z" ::1 GET /v1/school/theme/current 404 0.1357054s  
+      136ms
+       
+LOGID1704054083964 "2023-12-31 20:21:23.964Z" ::1 GET /term/get/current 304 0.0291635s  
+      29ms
+       
+LOGID1704054084068 "2023-12-31 20:21:24.068Z" ::1 GET /v1/school/theme/current 404 0.131812s  
+      132ms
+       
+LOGID1704054084084 "2023-12-31 20:21:24.084Z" ::1 GET /v1/school/get/gradepoint 400 0.1441893s  
+      144ms
+       
+LOGID1704054084352 "2023-12-31 20:21:24.352Z" ::1 GET /v1/school/theme/current 404 0.2742941s  
+      274ms
+       
+LOGID1704054084357 "2023-12-31 20:21:24.357Z" ::1 GET /v1/school/get/gradepoint 400 0.2681955s  
+      268ms
+       
+LOGID1704054084642 "2023-12-31 20:21:24.642Z" ::1 GET /paystack/get/bank 400 0.2511752s  
+      251ms
+       
+LOGID1704054084663 "2023-12-31 20:21:24.663Z" ::1 GET /v1/school/theme/current 404 0.3095632s  
+      309ms
+       
+LOGID1704054288734 "2023-12-31 20:24:48.734Z" ::1 PUT /school/set/gradePoint 200 0.1300675s  
+      130ms
+       
+LOGID1704054289122 "2023-12-31 20:24:49.122Z" ::1 GET /paystack/get/bank 400 0.3440153s  
+      344ms
+       
+LOGID1704054289141 "2023-12-31 20:24:49.141Z" ::1 GET /school/get/gradestyle 304 0.3714971s  
+      372ms
+       
+LOGID1704054289172 "2023-12-31 20:24:49.172Z" ::1 GET /school/get/gradepoint 200 0.3937018s  
+      394ms
+       
+LOGID1704054289327 "2023-12-31 20:24:49.327Z" ::1 GET /school/get/gradestyle 304 0.1803335s  
+      180ms
+       
+LOGID1704054312484 "2023-12-31 20:25:12.484Z" ::1 GET /term/get/current 304 0.1192923s  
+      119ms
+       
+LOGID1704054312547 "2023-12-31 20:25:12.547Z" ::1 GET /year/get/current 304 0.1588979s  
+      159ms
+       
+LOGID1704054312773 "2023-12-31 20:25:12.773Z" ::1 GET /admin/gender/divide 304 0.3841956s  
+      384ms
+       
+LOGID1704054312835 "2023-12-31 20:25:12.835Z" ::1 GET /v1/school/logo/theme/get 404 0.4773979s  
+      477ms
+       
+LOGID1704054312871 "2023-12-31 20:25:12.871Z" ::1 GET /transaction/monthly 304 0.4806469s  
+      481ms
+       
+LOGID1704054312962 "2023-12-31 20:25:12.962Z" ::1 GET /v1/school/theme/current 404 0.6067807s  
+      606ms
+       
+LOGID1704054313016 "2023-12-31 20:25:13.016Z" ::1 GET /admin/get/count/teachers 304 0.4371883s  
+      437ms
+       
+LOGID1704054313199 "2023-12-31 20:25:13.199Z" ::1 GET /expense/monthly 304 0.6760929s  
+      676ms
+       
+LOGID1704054313388 "2023-12-31 20:25:13.388Z" ::1 GET /transaction/get/total 304 0.596673s  
+      596ms
+       
+LOGID1704054313392 "2023-12-31 20:25:13.392Z" ::1 GET /admin/gender/divide 304 0.4164436s  
+      417ms
+       
+LOGID1704054313477 "2023-12-31 20:25:13.477Z" ::1 GET /transaction/monthly 304 0.4509424s  
+      451ms
+       
+LOGID1704054313493 "2023-12-31 20:25:13.493Z" ::1 GET /transaction/ratio/earnings/expense 304 0.5376735s  
+      538ms
+       
+LOGID1704054313524 "2023-12-31 20:25:13.523Z" ::1 GET /v1/school/logo/theme/get 404 0.5224948s  
+      522ms
+       
+LOGID1704054313661 "2023-12-31 20:25:13.661Z" ::1 GET /v1/school/theme/current 404 0.4143323s  
+      414ms
+       
+LOGID1704054313835 "2023-12-31 20:25:13.835Z" ::1 GET /expense/monthly 304 0.4349125s  
+      435ms
+       
+LOGID1704054313900 "2023-12-31 20:25:13.900Z" ::1 GET /v1/school/logo/theme/get 404 0.3606762s  
+      361ms
+       
+LOGID1704054314047 "2023-12-31 20:25:14.046Z" ::1 GET /v1/school/theme/current 404 0.3763834s  
+      376ms
+       
+LOGID1704054314222 "2023-12-31 20:25:14.222Z" ::1 GET /v1/school/logo/theme/get 404 0.3051576s  
+      306ms
+       
+LOGID1704054314269 "2023-12-31 20:25:14.269Z" ::1 GET /v1/school/theme/current 404 0.2090444s  
+      209ms
+       
+LOGID1704054314433 "2023-12-31 20:25:14.433Z" ::1 GET /v1/school/theme/current 404 0.1610291s  
+      161ms
+       
+LOGID1704054314538 "2023-12-31 20:25:14.538Z" ::1 GET /v1/school/theme/current 404 0.1026352s  
+      102ms
+       
+LOGID1704054321686 "2023-12-31 20:25:21.686Z" ::1 GET /term/get/current 304 0.0400318s  
+      40ms
+       
+LOGID1704054321793 "2023-12-31 20:25:21.792Z" ::1 GET /v1/school/theme/current 404 0.1511106s  
+      151ms
+       
+LOGID1704054321808 "2023-12-31 20:25:21.808Z" ::1 GET /v1/school/get/gradepoint 400 0.1665949s  
+      167ms
+       
+LOGID1704054322168 "2023-12-31 20:25:22.168Z" ::1 GET /v1/school/theme/current 404 0.3728023s  
+      373ms
+       
+LOGID1704054322171 "2023-12-31 20:25:22.171Z" ::1 GET /paystack/get/bank 400 0.2938434s  
+      293ms
+       
+LOGID1704054322206 "2023-12-31 20:25:22.205Z" ::1 GET /v1/school/get/gradepoint 400 0.3948276s  
+      395ms
+       
+LOGID1704054664999 "2023-12-31 20:31:04.999Z" ::1 GET /term/get/current 304 0.074603s  
+      75ms
+       
+LOGID1704054665060 "2023-12-31 20:31:05.060Z" ::1 GET /admin/get/student?pageSize=2&page=1 304 0.1398597s  
+      140ms
+       
+LOGID1704054665191 "2023-12-31 20:31:05.191Z" ::1 GET /school/theme/current 200 0.1139988s  
+      114ms
+       
+LOGID1704054665274 "2023-12-31 20:31:05.274Z" ::1 GET /school/theme/current 304 0.079372s  
+      79ms
+       
+LOGID1704054673332 "2023-12-31 20:31:13.332Z" ::1 GET /term/get/current 304 0.0428015s  
+      42ms
+       
+LOGID1704054673462 "2023-12-31 20:31:13.462Z" ::1 GET /school/theme/current 304 0.1695984s  
+      169ms
+       
+LOGID1704054673501 "2023-12-31 20:31:13.500Z" ::1 GET /school/get/gradepoint 200 0.2017098s  
+      201ms
+       
+LOGID1704054674087 "2023-12-31 20:31:14.087Z" ::1 GET /paystack/get/bank 400 0.5589578s  
+      559ms
+       
+LOGID1704054674108 "2023-12-31 20:31:14.108Z" ::1 GET /school/get/gradestyle 304 0.5854834s  
+      586ms
+       
+LOGID1704054674131 "2023-12-31 20:31:14.130Z" ::1 GET /school/theme/current 304 0.6531062s  
+      653ms
+       
+LOGID1704054674152 "2023-12-31 20:31:14.152Z" ::1 GET /school/get/gradepoint 304 0.6241779s  
+      624ms
+       
+LOGID1704054674372 "2023-12-31 20:31:14.372Z" ::1 GET /school/get/gradestyle 304 0.2277969s  
+      228ms
+       
+LOGID1704054674392 "2023-12-31 20:31:14.392Z" ::1 GET /school/theme/current 304 0.2253514s  
+      225ms
+       
+LOGID1704054674490 "2023-12-31 20:31:14.490Z" ::1 GET /school/theme/current 304 0.092677s  
+      93ms
+       
+LOGID1704054718910 "2023-12-31 20:31:58.910Z" ::1 GET /paystack/get/bank 400 0.1451492s  
+      145ms
+       
+LOGID1704054718930 "2023-12-31 20:31:58.930Z" ::1 GET /school/get/gradestyle 304 0.1612613s  
+      161ms
+       
+LOGID1704054719007 "2023-12-31 20:31:59.007Z" ::1 GET /school/get/gradestyle 304 0.0747417s  
+      75ms
+       
+LOGID1704054722407 "2023-12-31 20:32:02.407Z" ::1 GET /term/get/current 304 0.0375406s  
+      38ms
+       
+LOGID1704054722477 "2023-12-31 20:32:02.477Z" ::1 GET /school/theme/current 304 0.1093919s  
+      109ms
+       
+LOGID1704054722571 "2023-12-31 20:32:02.571Z" ::1 GET /school/theme/current 304 0.0910262s  
+      91ms
+       
+LOGID1704054728216 "2023-12-31 20:32:08.215Z" ::1 GET /term/get/current 304 0.0487145s  
+      48ms
+       
+LOGID1704054728354 "2023-12-31 20:32:08.352Z" ::1 GET /school/get/gradepoint 304 0.1697646s  
+      170ms
+       
+LOGID1704054728367 "2023-12-31 20:32:08.367Z" ::1 GET /school/theme/current 304 0.1868295s  
+      187ms
+       
+LOGID1704054728704 "2023-12-31 20:32:08.704Z" ::1 GET /school/get/gradepoint 304 0.3404094s  
+      341ms
+       
+LOGID1704054728740 "2023-12-31 20:32:08.740Z" ::1 GET /school/theme/current 304 0.3684581s  
+      369ms
+       
+LOGID1704054728759 "2023-12-31 20:32:08.759Z" ::1 GET /paystack/get/bank 400 0.3361005s  
+      336ms
+       
+LOGID1704054728769 "2023-12-31 20:32:08.769Z" ::1 GET /school/get/gradestyle 304 0.3509098s  
+      351ms
+       
+LOGID1704054728951 "2023-12-31 20:32:08.951Z" ::1 GET /school/theme/current 304 0.2011797s  
+      201ms
+       
+LOGID1704054728969 "2023-12-31 20:32:08.969Z" ::1 GET /school/get/gradestyle 304 0.1869685s  
+      187ms
+       
+LOGID1704054729039 "2023-12-31 20:32:09.039Z" ::1 GET /school/theme/current 304 0.0741062s  
+      74ms
+       
+LOGID1704054758529 "2023-12-31 20:32:38.529Z" ::1 GET /term/get/current 304 0.0337171s  
+      34ms
+       
+LOGID1704054758578 "2023-12-31 20:32:38.578Z" ::1 GET /admin/get/admin 200 0.0815686s  
+      82ms
+       
+LOGID1704054768598 "2023-12-31 20:32:48.598Z" ::1 GET /subscription/details 304 0.0287963s  
+      29ms
+       
+LOGID1704054768617 "2023-12-31 20:32:48.617Z" ::1 GET /term/get/current 304 0.0461892s  
+      46ms
+       
+LOGID1704054768641 "2023-12-31 20:32:48.641Z" ::1 GET /subscription/details 304 0.025189s  
+      25ms
+       
+LOGID1704054768697 "2023-12-31 20:32:48.697Z" ::1 GET /v1/school/theme/current 404 0.1309924s  
+      131ms
+       
+LOGID1704054768786 "2023-12-31 20:32:48.786Z" ::1 GET /v1/school/theme/current 404 0.08617s  
+      86ms
+       
+LOGID1704054780153 "2023-12-31 20:33:00.153Z" ::1 GET /term/get/current 304 0.0453141s  
+      46ms
+       
+LOGID1704054780243 "2023-12-31 20:33:00.242Z" ::1 GET /v1/school/theme/current 404 0.1358291s  
+      135ms
+       
+LOGID1704054780277 "2023-12-31 20:33:00.277Z" ::1 GET /v1/school/get/gradepoint 400 0.1701052s  
+      170ms
+       
+LOGID1704054780570 "2023-12-31 20:33:00.570Z" ::1 GET /paystack/get/bank 400 0.2699521s  
+      269ms
+       
+LOGID1704054780591 "2023-12-31 20:33:00.591Z" ::1 GET /v1/school/get/gradepoint 400 0.3043473s  
+      304ms
+       
+LOGID1704108566874 "2024-01-01 11:29:26.874Z" ::1 POST /auth/signin 200 0.16984s  
+      170ms
+       
+LOGID1704108568060 "2024-01-01 11:29:28.060Z" ::1 GET /term/get/current 304 0.2270157s  
+      227ms
+       
+LOGID1704108568222 "2024-01-01 11:29:28.222Z" ::1 GET /year/get/current 304 0.401439s  
+      401ms
+       
+LOGID1704108568506 "2024-01-01 11:29:28.506Z" ::1 GET /admin/gender/divide 304 0.6650046s  
+      665ms
+       
+LOGID1704108568547 "2024-01-01 11:29:28.547Z" ::1 GET /admin/get/count/teachers 200 0.5322557s  
+      532ms
+       
+LOGID1704108568607 "2024-01-01 11:29:28.606Z" ::1 GET /v1/school/logo/theme/get 404 0.7843855s  
+      784ms
+       
+LOGID1704108568647 "2024-01-01 11:29:28.647Z" ::1 GET /v1/school/theme/current 404 0.8553547s  
+      855ms
+       
+LOGID1704108568730 "2024-01-01 11:29:28.729Z" ::1 GET /transaction/get/total 200 0.5768383s  
+      577ms
+       
+LOGID1704108568796 "2024-01-01 11:29:28.796Z" ::1 GET /transaction/monthly 304 0.5135001s  
+      514ms
+       
+LOGID1704108569186 "2024-01-01 11:29:29.186Z" ::1 GET /admin/gender/divide 304 0.5522067s  
+      552ms
+       
+LOGID1704108569231 "2024-01-01 11:29:29.231Z" ::1 GET /transaction/ratio/earnings/expense 304 0.6650162s  
+      665ms
+       
+LOGID1704108569272 "2024-01-01 11:29:29.272Z" ::1 GET /expense/monthly 304 0.7461692s  
+      747ms
+       
+LOGID1704108569296 "2024-01-01 11:29:29.296Z" ::1 GET /v1/school/logo/theme/get 404 0.6274373s  
+      628ms
+       
+LOGID1704108569372 "2024-01-01 11:29:29.363Z" ::1 GET /transaction/monthly 304 0.5470649s  
+      547ms
+       
+LOGID1704108569396 "2024-01-01 11:29:29.396Z" ::1 GET /v1/school/theme/current 404 0.651989s  
+      652ms
+       
+LOGID1704108569649 "2024-01-01 11:29:29.649Z" ::1 GET /v1/school/logo/theme/get 404 0.3341543s  
+      334ms
+       
+LOGID1704108569688 "2024-01-01 11:29:29.687Z" ::1 GET /expense/monthly 304 0.4065429s  
+      407ms
+       
+LOGID1704108569708 "2024-01-01 11:29:29.708Z" ::1 GET /v1/school/theme/current 404 0.3081808s  
+      308ms
+       
+LOGID1704108569841 "2024-01-01 11:29:29.841Z" ::1 GET /v1/school/logo/theme/get 404 0.1888163s  
+      189ms
+       
+LOGID1704108569893 "2024-01-01 11:29:29.893Z" ::1 GET /v1/school/theme/current 404 0.1797375s  
+      179ms
+       
+LOGID1704108570029 "2024-01-01 11:29:30.029Z" ::1 GET /v1/school/theme/current 404 0.1289675s  
+      129ms
+       
+LOGID1704108570191 "2024-01-01 11:29:30.191Z" ::1 GET /v1/school/theme/current 404 0.1528816s  
+      153ms
+       
+LOGID1704108571411 "2024-01-01 11:29:31.411Z" ::1 GET /term/get/current 304 0.0414394s  
+      41ms
+       
+LOGID1704108571520 "2024-01-01 11:29:31.520Z" ::1 GET /v1/school/theme/current 404 0.1488156s  
+      149ms
+       
+LOGID1704108571591 "2024-01-01 11:29:31.591Z" ::1 GET /v1/school/get/gradepoint 400 0.2087283s  
+      209ms
+       
+LOGID1704108572027 "2024-01-01 11:29:32.027Z" ::1 GET /paystack/get/bank 400 0.442378s  
+      443ms
+       
+LOGID1704108781349 "2024-01-01 11:33:01.349Z" ::1 GET /term/get/current 304 0.0860182s  
+      86ms
+       
+LOGID1704108781434 "2024-01-01 11:33:01.434Z" ::1 GET /subject/get/all/json 200 0.1457043s  
+      146ms
+       
+LOGID1704108781516 "2024-01-01 11:33:01.516Z" ::1 GET /admin/class/get/all 200 0.2281586s  
+      228ms
+       
+LOGID1704108781538 "2024-01-01 11:33:01.538Z" ::1 GET /admin/get/teacher 200 0.2507219s  
+      251ms
+       
+LOGID1704108793396 "2024-01-01 11:33:13.396Z" ::1 GET /term/get/current 304 0.0412687s  
+      42ms
+       
+LOGID1704108793535 "2024-01-01 11:33:13.535Z" ::1 GET /v1/school/get/gradepoint 400 0.1798164s  
+      180ms
+       
+LOGID1704108793566 "2024-01-01 11:33:13.566Z" ::1 GET /v1/school/theme/current 404 0.2104541s  
+      210ms
+       
+LOGID1704108793729 "2024-01-01 11:33:13.729Z" ::1 GET /v1/school/get/gradepoint 400 0.1807011s  
+      180ms
+       
+LOGID1704108793769 "2024-01-01 11:33:13.769Z" ::1 GET /v1/school/theme/current 404 0.185887s  
+      186ms
+       
+LOGID1704108794187 "2024-01-01 11:33:14.187Z" ::1 GET /paystack/get/bank 400 0.3719934s  
+      372ms
+       
+LOGID1704108794218 "2024-01-01 11:33:14.218Z" ::1 GET /v1/school/theme/current 404 0.4237128s  
+      424ms
+       
+LOGID1704108827854 "2024-01-01 11:33:47.854Z" ::ffff:127.0.0.1 GET /term/get/current 304 0.0653472s  
+      66ms
+       
+LOGID1704108827957 "2024-01-01 11:33:47.957Z" ::1 GET /subject/get/all/json 304 0.1292698s  
+      129ms
+       
+LOGID1704108828051 "2024-01-01 11:33:48.050Z" ::1 GET /admin/class/get/all 200 0.2236931s  
+      223ms
+       
+LOGID1704108828165 "2024-01-01 11:33:48.165Z" ::ffff:127.0.0.1 GET /v1/school/theme/current 404 0.2980814s  
+      298ms
+       
+LOGID1704108828266 "2024-01-01 11:33:48.266Z" ::1 GET /v1/school/theme/current 404 0.0975535s  
+      97ms
+       
+LOGID1704108830759 "2024-01-01 11:33:50.759Z" ::1 GET /term/get/current 304 0.0212078s  
+      22ms
+       
+LOGID1704108834203 "2024-01-01 11:33:54.203Z" ::1 GET /term/get/current 304 0.0430242s  
+      43ms
+       
+LOGID1704108834344 "2024-01-01 11:33:54.344Z" ::1 GET /v1/school/theme/current 404 0.1788367s  
+      179ms
+       
+LOGID1704108834373 "2024-01-01 11:33:54.373Z" ::1 GET /v1/school/get/gradepoint 400 0.2081051s  
+      208ms
+       
+LOGID1704108834829 "2024-01-01 11:33:54.829Z" ::1 GET /paystack/get/bank 400 0.3963607s  
+      397ms
+       
+LOGID1704108834844 "2024-01-01 11:33:54.844Z" ::1 GET /v1/school/theme/current 404 0.4930267s  
+      493ms
+       
+LOGID1704108834893 "2024-01-01 11:33:54.893Z" ::1 GET /v1/school/get/gradepoint 400 0.4972338s  
+      497ms
+       
+LOGID1704108834906 "2024-01-01 11:33:54.906Z" ::1 GET /school/get/gradestyle 200 0.4717203s  
+      472ms
+       
+LOGID1704109286314 "2024-01-01 11:41:26.314Z" ::1 GET /term/get/current 304 0.0734764s  
+      73ms
+       
+LOGID1704109286366 "2024-01-01 11:41:26.366Z" ::1 GET /admin/get/admin 200 0.1312907s  
+      131ms
+       
+LOGID1704109289107 "2024-01-01 11:41:29.107Z" ::1 GET /term/get/current 304 0.0642695s  
+      65ms
+       
+LOGID1704109289238 "2024-01-01 11:41:29.237Z" ::1 GET /school/theme/current 200 0.1760513s  
+      176ms
+       
+LOGID1704109289275 "2024-01-01 11:41:29.275Z" ::1 GET /school/get/gradepoint 200 0.2086325s  
+      209ms
+       
+LOGID1704109289720 "2024-01-01 11:41:29.720Z" ::1 GET /school/theme/current 304 0.4623553s  
+      463ms
+       
+LOGID1704109289731 "2024-01-01 11:41:29.731Z" ::1 GET /paystack/get/bank 400 0.4231451s  
+      423ms
+       
+LOGID1704109289735 "2024-01-01 11:41:29.735Z" ::1 GET /school/get/gradestyle 304 0.4401011s  
+      440ms
+       
+LOGID1704109289741 "2024-01-01 11:41:29.741Z" ::1 GET /school/get/gradepoint 304 0.4472199s  
+      447ms
+       
+LOGID1704109289962 "2024-01-01 11:41:29.962Z" ::1 GET /school/get/gradestyle 304 0.2117368s  
+      211ms
+       
+LOGID1704109289968 "2024-01-01 11:41:29.967Z" ::1 GET /school/theme/current 304 0.2175506s  
+      217ms
+       
+LOGID1704109290059 "2024-01-01 11:41:30.059Z" ::1 GET /school/theme/current 304 0.0873746s  
+      88ms
+       
+LOGID1704109307340 "2024-01-01 11:41:47.340Z" ::1 GET /term/get/current 304 0.0427365s  
+      43ms
+       
+LOGID1704109307425 "2024-01-01 11:41:47.425Z" ::1 GET /admin/class/get/all 200 0.116582s  
+      117ms
+       
+LOGID1704109307487 "2024-01-01 11:41:47.487Z" ::1 GET /v1/school/theme/current 404 0.1848141s  
+      185ms
+       
+LOGID1704109307613 "2024-01-01 11:41:47.613Z" ::1 GET /admin/class/get/all 200 0.1754087s  
+      175ms
+       
+LOGID1704109307683 "2024-01-01 11:41:47.683Z" ::1 GET /v1/school/theme/current 404 0.1829303s  
+      183ms
+       
+LOGID1704109307854 "2024-01-01 11:41:47.854Z" ::1 GET /v1/school/theme/current 404 0.1648531s  
+      165ms
+       
+LOGID1704109307947 "2024-01-01 11:41:47.947Z" ::1 GET /v1/school/theme/current 404 0.0906873s  
+      91ms
+       
+LOGID1704109318288 "2024-01-01 11:41:58.288Z" ::1 GET /term/get/current 304 0.0423526s  
+      42ms
+       
+LOGID1704109318375 "2024-01-01 11:41:58.375Z" ::1 GET /v1/school/theme/current 404 0.1369456s  
+      137ms
+       
+LOGID1704109318384 "2024-01-01 11:41:58.382Z" ::1 GET /v1/school/get/gradepoint 400 0.1431385s  
+      143ms
+       
+LOGID1704109318676 "2024-01-01 11:41:58.676Z" ::1 GET /v1/school/get/gradepoint 400 0.2793991s  
+      279ms
+       
+LOGID1704109318695 "2024-01-01 11:41:58.695Z" ::1 GET /v1/school/theme/current 404 0.3139647s  
+      314ms
+       
+LOGID1704109319061 "2024-01-01 11:41:59.061Z" ::1 GET /paystack/get/bank 400 0.3304069s  
+      331ms
+       
+LOGID1704109319068 "2024-01-01 11:41:59.068Z" ::1 GET /v1/school/theme/current 404 0.3623386s  
+      363ms
+       
+LOGID1704109319111 "2024-01-01 11:41:59.111Z" ::1 GET /school/get/gradestyle 304 0.3826514s  
+      383ms
+       
+LOGID1704109319248 "2024-01-01 11:41:59.248Z" ::1 GET /school/theme/current 200 0.1574582s  
+      157ms
+       
+LOGID1704109319268 "2024-01-01 11:41:59.268Z" ::1 GET /school/get/gradestyle 304 0.1412s  
+      142ms
+       
+LOGID1704109332911 "2024-01-01 11:42:12.911Z" ::1 PUT /school/set/gradestyle 200 0.0847228s  
+      85ms
+       
+LOGID1704109333185 "2024-01-01 11:42:13.185Z" ::1 GET /school/get/gradestyle 200 0.2404731s  
+      241ms
+       
+LOGID1704109333201 "2024-01-01 11:42:13.201Z" ::1 GET /paystack/get/bank 400 0.2451339s  
+      245ms
+       
+LOGID1704109333215 "2024-01-01 11:42:13.215Z" ::1 GET /school/get/gradepoint 200 0.2569014s  
+      257ms
+       
+LOGID1704109333330 "2024-01-01 11:42:13.330Z" ::1 GET /school/get/gradestyle 304 0.1344355s  
+      135ms
+       
+LOGID1704128573210 "2024-01-01 17:02:53.210Z" ::1 POST /auth/signin 401 0.0096404s  
+      10ms
+       
+LOGID1704128574139 "2024-01-01 17:02:54.139Z" ::1 POST /auth/signin 401 0.0051266s  
+      5ms
+       
+LOGID1704128574150 "2024-01-01 17:02:54.150Z" ::1 POST /auth/signin 401 0.0014572s  
+      2ms
+       
+LOGID1704128589467 "2024-01-01 17:03:09.467Z" ::1 POST /auth/signin 200 0.2496977s  
+      249ms
+       
+LOGID1704128591117 "2024-01-01 17:03:11.117Z" ::1 GET /term/get/current 304 0.2609099s  
+      261ms
+       
+LOGID1704128591145 "2024-01-01 17:03:11.145Z" ::1 GET /year/get/current 304 0.287541s  
+      288ms
+       
+LOGID1704128591751 "2024-01-01 17:03:11.751Z" ::1 GET /transaction/monthly 304 0.8926789s  
+      893ms
+       
+LOGID1704128591986 "2024-01-01 17:03:11.986Z" ::1 GET /admin/gender/divide 304 0.8205765s  
+      820ms
+       
+LOGID1704128592053 "2024-01-01 17:03:12.053Z" ::1 GET /admin/get/count/teachers 304 0.8849728s  
+      885ms
+       
+LOGID1704128592090 "2024-01-01 17:03:12.090Z" ::1 GET /school/theme/current 304 1000000.2463691s  
+      1246ms
+       
+LOGID1704128592151 "2024-01-01 17:03:12.151Z" ::1 GET /school/logo/theme/get 200 1000000.3059959s  
+      1306ms
+       
+LOGID1704128592333 "2024-01-01 17:03:12.333Z" ::1 GET /expense/monthly 304 1000000.4709708s  
+      1471ms
+       
+LOGID1704128592918 "2024-01-01 17:03:12.918Z" ::1 GET /admin/gender/divide 304 0.7862225s  
+      786ms
+       
+LOGID1704128592987 "2024-01-01 17:03:12.987Z" ::1 GET /transaction/monthly 304 0.8897034s  
+      890ms
+       
+LOGID1704128593010 "2024-01-01 17:03:13.010Z" ::1 GET /transaction/ratio/earnings/expense 304 1000000.021032s  
+      1021ms
+       
+LOGID1704128593043 "2024-01-01 17:03:13.043Z" ::1 GET /transaction/get/total 304 1000000.0313963s  
+      1031ms
+       
+LOGID1704128593131 "2024-01-01 17:03:13.131Z" ::1 GET /term/get/current 304 0.1884481s  
+      188ms
+       
+LOGID1704128593158 "2024-01-01 17:03:13.158Z" ::1 GET /school/logo/theme/get 304 0.8124025s  
+      812ms
+       
+LOGID1704128593172 "2024-01-01 17:03:13.172Z" ::1 GET /school/theme/current 304 0.9540797s  
+      954ms
+       
+LOGID1704128593462 "2024-01-01 17:03:13.458Z" ::1 GET /expense/monthly 304 0.4329022s  
+      433ms
+       
+LOGID1704128593489 "2024-01-01 17:03:13.489Z" ::1 GET /school/logo/theme/get 304 0.3139082s  
+      313ms
+       
+LOGID1704128593498 "2024-01-01 17:03:13.498Z" ::1 GET /school/theme/current 304 0.3198246s  
+      320ms
+       
+LOGID1704128593626 "2024-01-01 17:03:13.626Z" ::1 GET /term/get/current 304 0.1174067s  
+      118ms
+       
+LOGID1704128593776 "2024-01-01 17:03:13.776Z" ::1 GET /school/theme/current 304 0.2743483s  
+      275ms
+       
+LOGID1704128593817 "2024-01-01 17:03:13.817Z" ::1 GET /school/logo/theme/get 304 0.3049978s  
+      305ms
+       
+LOGID1704128593904 "2024-01-01 17:03:13.904Z" ::1 GET /school/theme/current 304 0.1126351s  
+      113ms
+       
+LOGID1704128594022 "2024-01-01 17:03:14.022Z" ::1 GET /school/theme/current 304 0.1152215s  
+      115ms
+       
+LOGID1704128605736 "2024-01-01 17:03:25.736Z" ::1 GET /term/get/current 304 0.0824608s  
+      82ms
+       
+LOGID1704128605794 "2024-01-01 17:03:25.794Z" ::1 GET /subject/get/all 200 0.1278796s  
+      128ms
+       
+LOGID1704128605858 "2024-01-01 17:03:25.858Z" ::1 GET /admin/class/get/all 200 0.193212s  
+      193ms
+       
+LOGID1704128606032 "2024-01-01 17:03:26.031Z" ::1 GET /school/theme/current 304 0.151828s  
+      151ms
+       
+LOGID1704128606134 "2024-01-01 17:03:26.134Z" ::1 GET /school/theme/current 304 0.0972631s  
+      97ms
+       
+LOGID1704128610772 "2024-01-01 17:03:30.772Z" ::1 GET /term/get/current 304 0.0824679s  
+      82ms
+       
+LOGID1704128610919 "2024-01-01 17:03:30.919Z" ::1 GET /school/theme/current 304 0.2365802s  
+      236ms
+       
+LOGID1704128610989 "2024-01-01 17:03:30.988Z" ::1 GET /school/get/gradepoint 304 0.2879309s  
+      288ms
+       
+LOGID1704128611674 "2024-01-01 17:03:31.674Z" ::1 GET /paystack/get/bank 400 0.6058652s  
+      606ms
+       
+LOGID1704128611685 "2024-01-01 17:03:31.685Z" ::1 GET /school/theme/current 304 0.7468154s  
+      746ms
+       
+LOGID1704128611691 "2024-01-01 17:03:31.691Z" ::1 GET /school/get/gradestyle 304 0.623898s  
+      624ms
+       
+LOGID1704128611712 "2024-01-01 17:03:31.712Z" ::1 GET /school/get/gradepoint 304 0.7041929s  
+      704ms
+       
+LOGID1704128611934 "2024-01-01 17:03:31.934Z" ::1 GET /school/get/gradestyle 304 0.2168319s  
+      217ms
+       
+LOGID1704128611945 "2024-01-01 17:03:31.945Z" ::1 GET /school/theme/current 304 0.2306618s  
+      231ms
+       
+LOGID1704128612041 "2024-01-01 17:03:32.041Z" ::1 GET /school/theme/current 304 0.093488s  
+      93ms
+       
+LOGID1704134287936 "2024-01-01 18:38:07.936Z" ::1 GET /year/get/current 304 0.1786695s  
+      178ms
+       
+LOGID1704134287965 "2024-01-01 18:38:07.965Z" ::1 GET /term/get/current 304 0.2100912s  
+      210ms
+       
+LOGID1704134288329 "2024-01-01 18:38:08.329Z" ::1 GET /school/theme/current 304 0.5943924s  
+      594ms
+       
+LOGID1704134288366 "2024-01-01 18:38:08.366Z" ::1 GET /admin/gender/divide 304 0.6079552s  
+      607ms
+       
+LOGID1704134288467 "2024-01-01 18:38:08.467Z" ::1 GET /admin/get/count/teachers 200 0.4558524s  
+      456ms
+       
+LOGID1704134288482 "2024-01-01 18:38:08.482Z" ::1 GET /school/logo/theme/get 304 0.7263136s  
+      727ms
+       
+LOGID1704134288590 "2024-01-01 18:38:08.590Z" ::1 GET /transaction/get/total 200 0.5574542s  
+      558ms
+       
+LOGID1704134288669 "2024-01-01 18:38:08.669Z" ::1 GET /expense/monthly 304 0.6362569s  
+      636ms
+       
+LOGID1704134288799 "2024-01-01 18:38:08.799Z" ::1 GET /transaction/ratio/earnings/expense 304 0.4474444s  
+      447ms
+       
+LOGID1704134288803 "2024-01-01 18:38:08.803Z" ::1 GET /term/get/current 304 0.1112316s  
+      111ms
+       
+LOGID1704134288844 "2024-01-01 18:38:08.844Z" ::1 GET /transaction/monthly 304 0.4601736s  
+      460ms
+       
+LOGID1704134288886 "2024-01-01 18:38:08.886Z" ::1 GET /admin/gender/divide 304 0.3914433s  
+      392ms
+       
+LOGID1704134288964 "2024-01-01 18:38:08.964Z" ::1 GET /school/theme/current 304 0.4760114s  
+      476ms
+       
+LOGID1704134289025 "2024-01-01 18:38:09.025Z" ::1 GET /school/logo/theme/get 304 0.4140939s  
+      414ms
+       
+LOGID1704134289156 "2024-01-01 18:38:09.156Z" ::1 GET /transaction/monthly 304 0.2909315s  
+      291ms
+       
+LOGID1704134289220 "2024-01-01 18:38:09.220Z" ::1 GET /expense/monthly 304 0.4021812s  
+      403ms
+       
+LOGID1704134289250 "2024-01-01 18:38:09.250Z" ::1 GET /school/theme/current 304 0.2739421s  
+      274ms
+       
+LOGID1704134289280 "2024-01-01 18:38:09.280Z" ::1 GET /school/logo/theme/get 304 0.2500533s  
+      250ms
+       
+LOGID1704134289338 "2024-01-01 18:38:09.338Z" ::1 GET /term/get/current 304 0.0384785s  
+      39ms
+       
+LOGID1704134289384 "2024-01-01 18:38:09.384Z" ::1 GET /school/theme/current 304 0.131182s  
+      131ms
+       
+LOGID1704134289419 "2024-01-01 18:38:09.419Z" ::1 GET /school/logo/theme/get 304 0.1285274s  
+      129ms
+       
+LOGID1704134289469 "2024-01-01 18:38:09.469Z" ::1 GET /school/theme/current 304 0.0778389s  
+      78ms
+       
+LOGID1704134289532 "2024-01-01 18:38:09.532Z" ::1 GET /school/theme/current 304 0.0611657s  
+      61ms
+       

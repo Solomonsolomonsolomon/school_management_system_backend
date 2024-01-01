@@ -1,7 +1,7 @@
 import { Router } from "express";
 import SchoolController from "../../controller/school.controller";
 const router: Router = Router();
-import asyncErrorHandler from "../../middleware/globalErrorHandler";
+import asyncErrorHandler from "../../utils/globalErrorHandler";
 
 let school = new SchoolController();
 router.get("/school/theme/current", asyncErrorHandler(school.getCurrentTheme));

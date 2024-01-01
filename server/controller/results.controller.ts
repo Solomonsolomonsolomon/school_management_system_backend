@@ -14,8 +14,8 @@ import { CustomError } from "../middleware/decorators";
 import { previewClassResults } from "./teacher.controller";
 import student from "./student.controller";
 import { ISchool } from "../model/others/School";
-import { event } from "../utils/helper";
 
+let instance: any = null;
 class ResultController {
   constructor() {
     this.DeleteResult = this.DeleteResult.bind(this);
@@ -26,9 +26,11 @@ class ResultController {
     this.calcResultAndCummulative = this.calcResultAndCummulative.bind(this);
     this.calcResultAndCummulativeAndAutoPromote =
       this.calcResultAndCummulativeAndAutoPromote.bind(this);
+    if (instance) return instance;
+    instance = this;
   }
 
-  public async calcResult(
+  private async calcResult(
     groupedData: Dictionary<any>,
     school: string,
     schoolId: string
@@ -36,7 +38,7 @@ class ResultController {
     let _school = await School.findOne({ school, schoolId });
     _school?.toObject({ getters: true, virtuals: false });
     if (!_school) throw new Error("school details not on record");
-    let bulkPushOperations: any = [];
+    let bulkPushOperations: any[] = [];
 
     for (const className in groupedData) {
       const students = groupedData[className];
@@ -74,8 +76,6 @@ class ResultController {
         // }
 
         let overallGrade = this.calculateOverallGrade(averageMarks, _school);
-
-        console.log("overall grade", overallGrade);
         student.totalMarks = totalMarks;
         student.averageMarks = averageMarks;
         student.overallGrade = overallGrade;
@@ -273,21 +273,6 @@ class ResultController {
 
         const averageMarks = validGrades ? totalMarks / validGrades : -1;
 
-        // let overallGrade = "";
-        // if (averageMarks === -1) {
-        //   overallGrade = "N/A";
-        // }
-        // if (averageMarks >= (_school?.gradePoints?.A || 75)) {
-        //   overallGrade = "A";
-        // } else if (averageMarks >= (_school?.gradePoints?.B || 60)) {
-        //   overallGrade = "B";
-        // } else if (averageMarks >= (_school?.gradePoints?.C || 50)) {
-        //   overallGrade = "C";
-        // } else if (averageMarks >= (_school?.gradePoints?.D || 40)) {
-        //   overallGrade = "D";
-        // } else {
-        //   overallGrade = "F";
-        // }
         let overallGrade = this.calculateOverallGrade(averageMarks, _school);
         student.totalMarks = totalMarks;
         student.averageMarks = averageMarks;
@@ -372,8 +357,6 @@ class ResultController {
       (p: P, c) => {
         const { totalScore, studentId, name, totalTerms, average } = c;
         const i = p.tracker.get(studentId);
-
-        console.log("/", average);
         if (totalScore) {
           let count = 1;
           if (i) {
@@ -383,7 +366,7 @@ class ResultController {
             p.student[i].average += average;
           } else {
             p.tracker.set(studentId, p.student.length);
-            console.log(totalTerms);
+
             p.student.push({
               studentId,
               totalScore,
@@ -414,13 +397,18 @@ class ResultController {
     cummulativeScore.shift();
 
     cummulativeScore.map((student) => {
-      console.log(student.average);
       student.average = student.average / student.totalTerms;
-      console.log(student.average, student.name);
-      if (student.average >= (_school?.gradePoints?.D || 40)) {
+
+      if (
+        student.average >=
+        (_school?.gradePoints?.D ||
+          _school?.gradePoints?.E8 ||
+          _school?.gradePoints.E_m ||
+          40)
+      ) {
         let currentClassIndex = promotionClasses.findIndex(
           (currentClass) => currentClass === teacher.formTeacher.substr(0, 4)
-        );
+        ); 
 
         currentClassIndex > -1 &&
           studentBulkOperations.push({
@@ -443,7 +431,6 @@ class ResultController {
       }
       return student;
     });
-    console.log(cummulativeScore);
     await Student.bulkWrite(studentBulkOperations);
     return { groupedData, cummulativeScore };
   }
@@ -452,13 +439,13 @@ class ResultController {
     if (averageMarks === -1) {
       overallGrade = "N/A";
     }
-    //sorting by scores
+    //sorting by scores ireespect
     for (let grade of Object.entries(
       (school.gradePoints as any).toObject()
     ).sort((a: any[], b: any[]) => b[1] - a[1])) {
       if (averageMarks >= (grade[1] as number)) {
         overallGrade = grade[0];
-        console.log(overallGrade);
+
         return overallGrade;
       }
     }
@@ -665,7 +652,7 @@ class ResultController {
         return e.name?.substr(0, 4);
       }
     );
-    console.log(registeredClasses);
+
     let allClassesAvailable = [
       "NUR1",
       "NUR2",
@@ -689,7 +676,7 @@ class ResultController {
         promotionClasses.push(allClassesAvailable[i]);
       }
     }
-    console.log(promotionClasses);
+
     return promotionClasses;
   }
   // async function pushResultsToStudents(results: any, year: any, term: any) {

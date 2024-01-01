@@ -2,7 +2,7 @@ import { Router } from "express";
 
 const router: Router = Router();
 import { attendance } from "../../controller/attendance.controller";
-import asyncErrorHandler from "../../middleware/globalErrorHandler";
+import asyncErrorHandler from "../../utils/globalErrorHandler";
 router.get(
   "/attendance/get/:id/:className",
   asyncErrorHandler(attendance.getAttendanceDetails)

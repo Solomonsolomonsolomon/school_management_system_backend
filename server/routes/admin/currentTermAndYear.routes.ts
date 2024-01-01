@@ -1,7 +1,7 @@
 import AcademicTermController from "../../controller/academicterm.controller";
 import AcademicYearController from "../../controller/academicyear.controller";
 import { Router } from "express";
-import asyncErrorHandler from "../../middleware/globalErrorHandler";
+import asyncErrorHandler from "../../utils/globalErrorHandler";
 const router: Router = Router();
 let term = new AcademicTermController();
 let year = new AcademicYearController();

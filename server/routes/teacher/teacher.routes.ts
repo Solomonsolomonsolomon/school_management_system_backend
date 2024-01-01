@@ -11,7 +11,7 @@ import {
   managedStudents,
   getStudentsTaught,
 } from "../../controller/teacher.controller";
-import asyncErrorHandler from "../../middleware/globalErrorHandler";
+import asyncErrorHandler from "../../utils/globalErrorHandler";
 teacherRouter.get(
   "/teacher/:_id/get/students",
   asyncErrorHandler(managedStudents)

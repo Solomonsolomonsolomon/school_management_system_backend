@@ -11,7 +11,7 @@ import currentTermAndYear from "./../admin/currentTermAndYear.routes";
 import classlevel from "./../admin/classLevel.routes";
 import asyncErrorHandler, {
   ErrorHandler,
-} from "../../middleware/globalErrorHandler";
+} from "../../utils/globalErrorHandler";
 import paymentRouter from "../payment/payment.routes";
 import transactionRouter from "../payment/transactions.routes";
 import schoolRouter from "../school/school.route";

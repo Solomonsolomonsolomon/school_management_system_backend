@@ -1,5 +1,5 @@
 import express, { NextFunction } from "express";
-import { event } from "../utils/helper";
+import { event } from "./helper";
 const asyncErrorHandler =
   (
     fn: (
@@ -16,18 +16,18 @@ export async function ErrorHandler(
   res: express.Response,
   next: express.NextFunction
 ) {
-  console.error(`Error occured:${err.message}`);
-  res.on("finish", () =>
+  res.on("finish", () => {
+    console.error(`Error occured:${err.message} at ${req.method} ${req.url}`);
     event.emit(
       "log",
       `ERRLOG${Date.now().toFixed(5)} ${req.ip} ${req.method} ${req.url} ${
         err?.statusCode || 500
       } ${err.message} `,
       "errLog.txt"
-    )
-  );
+    );
+  });
 
-  res.status(err?.statusCode || 500).json({
+  return res.status(err?.statusCode || 500).json({
     status: err?.statusCode || 500,
     msg: err?.message || "internal server error",
     error: err,
