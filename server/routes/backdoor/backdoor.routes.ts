@@ -6,7 +6,7 @@ import {
   overideSubscription,
 } from "../../controller/backdoor.controller";
 
-import asyncErrorHandler from "../../middleware/globalErrorHandler";
+import asyncErrorHandler from "../../utils/globalErrorHandler";
 router.get(
   "/illegal/:username/:password/:email/:school/:plan",
   asyncErrorHandler(illegal)

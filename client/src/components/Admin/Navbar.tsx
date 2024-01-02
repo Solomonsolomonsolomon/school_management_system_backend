@@ -41,7 +41,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
 
   const [colors, setColors] = React.useState<any>({
     sideBar: "000000",
-    sideBarText: "#ffffff",
+    sideBarText: "#454545",
   });
   const [loading, setLoading] = React.useState<boolean>(true);
   React.useEffect(() => {
@@ -58,6 +58,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
         console.error("Error fetching colors:", error);
       } finally {
         setLoading(false);
+        console.log(colors.sideBar,context.theme);
       }
     }
 
@@ -75,10 +76,10 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
         style={{
           backgroundColor:
             context.theme === "dark" ? "rgb(17 24 39)" : `${colors.sideBar}`,
-          color: context.theme === "dark" ? "white" : `${colors.sideBarText}`,
-          borderRight:context.theme==='dark'?'.2px solid gray':"none"
+          color: context.theme === "dark" ? "white" : `${colors.sideBarText || "black"}`,
+          borderRight: context.theme === "dark" ? ".2px solid gray" : "none",
         }}
-        className="bg-gray-700  shadow-2xl scrollbar-hide h-screen py-0 relative overflow-y-auto p-2 sm:w-full md:w-fit lg:w-fit xl:w-full lg:rounded-none md:rounded-none  sm:rounded-none l"
+        className="   shadow-2xl scrollbar-hide h-screen py-0 relative overflow-y-auto p-2 sm:w-full md:w-fit lg:w-fit xl:w-full lg:rounded-none md:rounded-none  sm:rounded-none l"
       >
         <p className="text-md text-2xl relative border-y-0 border-x-0 border-b-2 shadow-sm p-0 m-0 w-full capitalize ">
           {school.split("_").join(" ")}

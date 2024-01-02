@@ -9,7 +9,7 @@ import {
   ClassLevel,
   AcademicTerm,
 } from "./../model/database";
-import helper from "../helpers/helper";
+import helper from "../utils/helper";
 const { paginate } = helper;
 import { NextFunction, Request, Response } from "express";
 import student from "./student.controller";
@@ -269,13 +269,14 @@ export async function getAllStudents(req: Request, res: Response) {
 
     const page = parseInt(req.query.page as string) || 1;
     const pageSize = parseInt(req.query.pageSize as string) || 10;
+
     const skip = (page - 1) * pageSize;
     const totalPages = Math.ceil(totalStudents / pageSize);
     let result = await paginate(
       Student,
       totalStudents,
       { school: req.user?.school, schoolId },
-      {name:1},
+      { name: 1 },
       pageSize,
       page,
       null,
@@ -315,16 +316,9 @@ export async function getAllStudents(req: Request, res: Response) {
 export async function searchStudent(req: Request, res: Response) {
   try {
     let schoolId = req.user?.schoolId;
-    const totalStudents = await Student.countDocuments({
-      school: req.user?.school,
-      schoolId,
-    });
-    const page = parseInt(req.query.page as string) || 1;
-    const pageSize = parseInt(req.query.pageSize as string) || 10;
-    const skip = (page - 1) * pageSize;
     const { searchParams } = req.params;
-    const totalPages = Math.ceil(totalStudents / pageSize);
-    await Student.find({
+
+    let query = {
       school: req.user?.school,
       schoolId,
       $or: [
@@ -333,20 +327,54 @@ export async function searchStudent(req: Request, res: Response) {
         { className: { $regex: new RegExp(searchParams, "i") } },
         { studentId: { $regex: new RegExp(searchParams, "i") } },
       ],
-    })
-      .sort({ name: 1 })
-      .skip(skip)
-      .limit(pageSize)
-      .then((student) => {
-        if (student.length < 1) throw new Error("No student found");
-        res.status(200).json({
-          status: 200,
-          msg: "all students fetched successfully",
-          student,
-          page,
-          totalPages,
-        });
-      });
+    };
+    const totalStudents = await Student.countDocuments(query);
+    const page = parseInt(req.query.page as string) || 1;
+    const pageSize = parseInt(req.query.pageSize as string) || 10;
+
+    console.log(page, pageSize);
+    let sort = { name: 1 };
+    let result = await paginate(
+      Student,
+      totalStudents,
+      query,
+      sort,
+      pageSize,
+      page,
+      null,
+      null
+    );
+    console.log(result);
+    return res.json({
+      status: 200,
+      msg: "all students fetched successfully",
+      student: result?.model,
+      page: result?.page,
+      totalPages: result?.totalPages,
+    });
+    // await Student.find({
+    //   school: req.user?.school,
+    //   schoolId,
+    //   $or: [
+    //     { name: { $regex: new RegExp(searchParams, "i") } }, // 'i' for case-insensitive search
+    //     { email: { $regex: new RegExp(searchParams, "i") } },
+    //     { className: { $regex: new RegExp(searchParams, "i") } },
+    //     { studentId: { $regex: new RegExp(searchParams, "i") } },
+    //   ],
+    // })
+    //   .sort({ name: 1 })
+    //   .skip(skip)
+    //   .limit(pageSize)
+    //   .then((student) => {
+    //     if (student.length < 1) throw new Error("No student found");
+    //     res.status(200).json({
+    //       status: 200,
+    //       msg: "all students fetched successfully",
+    //       student,
+    //       page,
+    //       totalPages,
+    //     });
+    //   });
   } catch (error: any) {
     res.status(500).json({
       status: 500,

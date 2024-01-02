@@ -53,3 +53,5 @@ export {
 export { ITeacher, IStudent, IYear, ITerm };
 
 export default connectDB;
+
+

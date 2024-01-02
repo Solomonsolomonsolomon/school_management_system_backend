@@ -2,13 +2,20 @@ import app from "./server";
 import cron from "node-cron";
 import global from "./global";
 import express from "express";
-import { Admin, Student, Teacher, AcademicYear, Bus, Transaction } from "./model/database";
+import {
+  Admin,
+  Student,
+  Teacher,
+  AcademicYear,
+  Bus,
+  Transaction,
+} from "./model/database";
 import { createServer } from "http";
 import apiv1 from "./routes/versions/v1";
 import path from "path";
 const server = createServer(app);
 const port: string | number = process.env.PORT || 2020;
-import { ErrorHandler } from "./middleware/globalErrorHandler";
+import { ErrorHandler } from "./utils/globalErrorHandler";
 //version 1 of api
 app.get("/", (req: express.Request, res) => {
   res.json({

@@ -7,7 +7,7 @@ import {
   AcademicYear,
   Result,
 } from "../model/database";
-import asyncErrorHandler from "../middleware/globalErrorHandler";
+import asyncErrorHandler from "../utils/globalErrorHandler";
 import { CustomError } from "../middleware/decorators";
 
 type GroupedStudents = {

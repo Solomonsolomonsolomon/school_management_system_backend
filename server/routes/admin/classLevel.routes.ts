@@ -1,4 +1,4 @@
-import asyncErrorHandler from "../../middleware/globalErrorHandler";
+import asyncErrorHandler from "../../utils/globalErrorHandler";
 import ClassLevelController from "../../controller/classLevel.controller";
 let classLevel = new ClassLevelController();
 let { createClassLevel } = classLevel;

@@ -6,7 +6,7 @@ import {
   getBank,
   payWebHook,
 } from "../../controller/payment.controller";
-import asyncErrorHandler from "../../middleware/globalErrorHandler";
+import asyncErrorHandler from "../../utils/globalErrorHandler";
 const paystackRouter: Router = Router();
 paystackRouter.post("/paystack/pay", initializeTransaction);
 paystackRouter.post("/paystack/verify", verifyPayment);

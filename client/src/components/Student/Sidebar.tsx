@@ -11,8 +11,8 @@ const Sidebar: React.FC<ProfileProps> = ({ setView }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const [colors, setColors] = React.useState<any>({
-    sideBar: "rgb(17 24 39)",
-    sideBarText: "#ffffff",
+    sideBar: "white",
+    sideBarText: "#454545",
   });
   const [loading, setLoading] = React.useState<boolean>(true);
   React.useEffect(() => {

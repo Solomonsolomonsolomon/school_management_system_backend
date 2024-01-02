@@ -3,7 +3,7 @@ const router: Router = Router();
 
 import bus from "./../../controller/bus.controller";
 
-import asyncErrorHandler from "../../middleware/globalErrorHandler";
+import asyncErrorHandler from "../../utils/globalErrorHandler";
 router.post("/bus/register/student", asyncErrorHandler(bus.registerForBus));
 router.post(
   "/bus/register/school",

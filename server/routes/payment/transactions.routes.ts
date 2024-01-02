@@ -1,6 +1,6 @@
 import { Router } from "express";
 import TransactionController from "../../controller/transactions.controller";
-import asyncErrorHandler from "../../middleware/globalErrorHandler";
+import asyncErrorHandler from "../../utils/globalErrorHandler";
 
 const transaction = new TransactionController();
 const transactionRouter: Router = Router();

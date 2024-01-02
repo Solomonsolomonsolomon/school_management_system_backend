@@ -7,6 +7,8 @@ import PaginationController from "../../utils/PaginationController";
 import EditStudent from "./EditStudent";
 import AllStudentsTable from "./AllStudentsTable";
 import AllStudentsSearch from "./AllStudentsSearch";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLongArrowAltLeft } from "@fortawesome/free-solid-svg-icons";
 
 const postUrl = "/admin";
 function AllStudents() {
@@ -20,13 +22,20 @@ function AllStudents() {
   const errRef = React.useRef<HTMLParagraphElement>(null);
   const [totalPages, setTotalPages] = React.useState<number>(1);
   const [filteredStudents, setFilteredStudents] = React.useState<any[]>([]);
-  const searchbarSubmit = async (searchParams: string) => {
+  let [clicked, setClicked] = React.useState<boolean>(false);
+  let [searchParams, setSearchParams] = React.useState<string>("");
+  const searchbarSubmit = async () => {
     try {
-      let res = await axios.get(`${postUrl}/search/student/${searchParams}`);
+      let res = await axios.get(
+        `${postUrl}/search/student/${searchParams}?pageSize=2&page=${page}`
+      );
       console.log(res);
       setFilteredStudents(res?.data?.student);
+      setTotalPages(res?.data?.totalPages);
+      console.log(res.data?.totalPages);
+      console.log(res.data);
     } catch (error) {
-      setFilteredStudents([]);
+      return;
     }
   };
   useEffect(() => {
@@ -34,8 +43,13 @@ function AllStudents() {
     async function fetchStudents() {
       try {
         setLoading(true);
+        console.log(page);
         const studentResponse = await axios.get(
-          `/admin/get/student?pageSize=2&page=${page}`,
+          `${
+            clicked
+              ? `${postUrl}/search/student/${searchParams}?pageSize=2&page=${page}`
+              : `/admin/get/student?pageSize=2&page=${page}`
+          }`,
           {
             signal: controller.signal,
           }
@@ -50,6 +64,7 @@ function AllStudents() {
         if (error.name === "AbortError" || error.name === "CanceledError")
           return;
         setLoading(false);
+        setStudents([]);
         errRef.current
           ? (errRef.current.textContent = error?.response?.data?.msg)
           : "";
@@ -59,7 +74,7 @@ function AllStudents() {
     return () => {
       controller.abort();
     };
-  }, [updateUI, page]);
+  }, [updateUI, page, clicked, searchParams]);
 
   // const filteredStudents = students.filter((student: any) => {
   //   console.log(student?.studentId);
@@ -112,6 +127,7 @@ function AllStudents() {
       }
     }
   };
+
   return (
     <>
       {students.length ? (
@@ -135,7 +151,10 @@ function AllStudents() {
             <AllStudentsSearch
               searchQuery={searchQuery}
               searchbarSubmit={searchbarSubmit}
+              setSearchParams={setSearchParams}
               setSearchQuery={setSearchQuery}
+              setClicked={setClicked}
+              setPage={setPage}
             />
             <p ref={errRef}></p>
             {/* Table */}
@@ -156,9 +175,18 @@ function AllStudents() {
           </div>
         </div>
       ) : (
-        <NotFoundComponent>
-          {errRef.current?.textContent || "No students found"}
-        </NotFoundComponent>
+        <>
+          <div className="text-white p-3 bg-blue-500 rounded w-fit">
+            <FontAwesomeIcon
+              icon={faLongArrowAltLeft}
+              onClick={() => setClicked(false)}
+            />
+          </div>
+
+          <NotFoundComponent>
+            {errRef.current?.textContent || "No students found"}
+          </NotFoundComponent>
+        </>
       )}
     </>
   );

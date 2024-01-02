@@ -17,7 +17,7 @@ class StudentController {
       studentId: student.studentId,
     }).populate("year term");
     if (!allResults.length)
-      throw new CustomError({}, "no result details found", 404);
+      throw new CustomError({}, "no result details found ", 404);
     let years = [];
     for (let i in allResults) {
       years.push({

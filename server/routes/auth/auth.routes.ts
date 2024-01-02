@@ -4,7 +4,7 @@ import {
   changePassword,
 } from "../../controller/auth.controller";
 import { Router } from "express";
-import asyncErrorHandler from "../../middleware/globalErrorHandler";
+import asyncErrorHandler from "../../utils/globalErrorHandler";
 const router: Router = Router();
 router.post("/auth/signin", signIn);
 router.get("/auth/logout/:role/:email", signOut);

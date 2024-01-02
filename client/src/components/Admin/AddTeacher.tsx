@@ -255,7 +255,7 @@ const AddTeacher: React.FC<{
                 }
               : handleSubmit(onSubmit)
           }
-          className="dark:bg-gray-900 grid justify-items justify-between border border-gray-300 p-3 gap-4 w-fit items-center place-content-between"
+          className="dark:bg-gray-900 grid justify-items justify-between border border-gray-300 shadow-lg shadow-blue-600 box-border  gap-4 w-fit items-center place-content-between rounded-lg p-4"
         >
           <div className="dark:bg-gray-900 form-group grid ">
             <label htmlFor="name">Full Name</label>

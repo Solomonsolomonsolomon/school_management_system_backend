@@ -27,7 +27,7 @@ class TransactionController {
             const transaction = new database_1.Transaction({
                 payerId,
                 amountPaid: amount,
-                status: "pending",
+                status: "pending", // Set the initial status to "pending"
                 school,
                 schoolId,
             });

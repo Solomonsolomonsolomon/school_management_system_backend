@@ -1,0 +1,125 @@
+LOGID1703708981914 "2023-12-27 20:29:41.914Z" ERRLOG1703708981913.00000 ::1 GET /v1/school/theme/current 500 subscription expired..renew  
+LOGID1703708982015 "2023-12-27 20:29:42.015Z" ERRLOG1703708982015.00000 ::1 GET /v1/school/logo/theme/get 500 subscription expired..renew  
+LOGID1703708982044 "2023-12-27 20:29:42.044Z" ERRLOG1703708982044.00000 ::1 GET /v1/admin/gender/divide 500 subscription expired..renew  
+LOGID1703708982120 "2023-12-27 20:29:42.120Z" ERRLOG1703708982120.00000 ::1 GET /v1/school/theme/current 500 subscription expired..renew  
+LOGID1703708982138 "2023-12-27 20:29:42.138Z" ERRLOG1703708982138.00000 ::1 GET /v1/admin/get/count/teachers 500 subscription expired..renew  
+LOGID1703708982142 "2023-12-27 20:29:42.141Z" ERRLOG1703708982141.00000 ::1 GET /v1/transaction/get/total 500 subscription expired..renew  
+LOGID1703708982144 "2023-12-27 20:29:42.144Z" ERRLOG1703708982144.00000 ::1 GET /v1/transaction/monthly 500 subscription expired..renew  
+LOGID1703708982157 "2023-12-27 20:29:42.157Z" ERRLOG1703708982157.00000 ::1 GET /v1/expense/monthly 500 subscription expired..renew  
+LOGID1703708982236 "2023-12-27 20:29:42.236Z" ERRLOG1703708982236.00000 ::1 GET /v1/transaction/ratio/earnings/expense 500 subscription expired..renew  
+LOGID1703708983057 "2023-12-27 20:29:43.057Z" ERRLOG1703708983057.00000 ::1 GET /v1/school/theme/current 500 subscription expired..renew  
+LOGID1703708983155 "2023-12-27 20:29:43.155Z" ERRLOG1703708983155.00000 ::1 GET /v1/school/logo/theme/get 500 subscription expired..renew  
+LOGID1703708983195 "2023-12-27 20:29:43.195Z" ERRLOG1703708983195.00000 ::1 GET /v1/admin/gender/divide 500 subscription expired..renew  
+LOGID1703708983256 "2023-12-27 20:29:43.256Z" ERRLOG1703708983256.00000 ::1 GET /v1/transaction/monthly 500 subscription expired..renew  
+LOGID1703708983377 "2023-12-27 20:29:43.377Z" ERRLOG1703708983377.00000 ::1 GET /v1/expense/monthly 500 subscription expired..renew  
+LOGID1703708983647 "2023-12-27 20:29:43.647Z" ERRLOG1703708983647.00000 ::1 GET /v1/school/theme/current 500 subscription expired..renew  
+LOGID1703708983723 "2023-12-27 20:29:43.723Z" ERRLOG1703708983723.00000 ::1 GET /v1/school/logo/theme/get 500 subscription expired..renew  
+LOGID1703708983775 "2023-12-27 20:29:43.775Z" ERRLOG1703708983775.00000 ::1 GET /v1/school/logo/theme/get 500 subscription expired..renew  
+LOGID1703708983782 "2023-12-27 20:29:43.782Z" ERRLOG1703708983782.00000 ::1 GET /v1/school/theme/current 500 subscription expired..renew  
+LOGID1703708983801 "2023-12-27 20:29:43.801Z" ERRLOG1703708983801.00000 ::1 GET /v1/school/theme/current 500 subscription expired..renew  
+LOGID1703708984500 "2023-12-27 20:29:44.500Z" ERRLOG1703708984500.00000 ::1 GET /v1/school/theme/current 500 subscription expired..renew  
+LOGID1703708984513 "2023-12-27 20:29:44.513Z" ERRLOG1703708984513.00000 ::1 GET /v1/school/get/gradepoint 500 subscription expired..renew  
+LOGID1703708984553 "2023-12-27 20:29:44.553Z" ERRLOG1703708984553.00000 ::1 GET /v1/school/get/gradepoint 500 subscription expired..renew  
+LOGID1703708984576 "2023-12-27 20:29:44.576Z" ERRLOG1703708984576.00000 ::1 GET /v1/school/theme/current 500 subscription expired..renew  
+LOGID1703708984617 "2023-12-27 20:29:44.617Z" ERRLOG1703708984617.00000 ::1 GET /v1/paystack/get/bank 500 subscription expired..renew  
+LOGID1703708984623 "2023-12-27 20:29:44.623Z" ERRLOG1703708984622.00000 ::1 GET /v1/school/theme/current 500 subscription expired..renew  
+LOGID1703708984657 "2023-12-27 20:29:44.657Z" ERRLOG1703708984657.00000 ::1 GET /v1/school/theme/current 500 subscription expired..renew  
+LOGID1704019920806 "2023-12-31 10:52:00.805Z" ERRLOG1704019920799.00000 ::ffff:127.0.0.1 GET /v1/school/theme/current 500 subscription expired..renew  
+LOGID1704019920825 "2023-12-31 10:52:00.825Z" ERRLOG1704019920825.00000 ::1 GET /v1/school/logo/theme/get 500 subscription expired..renew  
+LOGID1704019920840 "2023-12-31 10:52:00.839Z" ERRLOG1704019920839.00000 ::1 GET /v1/admin/gender/divide 500 subscription expired..renew  
+LOGID1704019920949 "2023-12-31 10:52:00.949Z" ERRLOG1704019920948.00000 ::1 GET /v1/admin/get/count/teachers 500 subscription expired..renew  
+LOGID1704019920953 "2023-12-31 10:52:00.953Z" ERRLOG1704019920952.00000 ::1 GET /v1/transaction/get/total 500 subscription expired..renew  
+LOGID1704019920955 "2023-12-31 10:52:00.955Z" ERRLOG1704019920955.00000 ::ffff:127.0.0.1 GET /v1/transaction/monthly 500 subscription expired..renew  
+LOGID1704019920959 "2023-12-31 10:52:00.959Z" ERRLOG1704019920959.00000 ::1 GET /v1/expense/monthly 500 subscription expired..renew  
+LOGID1704019920975 "2023-12-31 10:52:00.975Z" ERRLOG1704019920975.00000 ::1 GET /v1/transaction/ratio/earnings/expense 500 subscription expired..renew  
+LOGID1704019921048 "2023-12-31 10:52:01.048Z" ERRLOG1704019921048.00000 ::1 GET /v1/school/theme/current 500 subscription expired..renew  
+LOGID1704019921114 "2023-12-31 10:52:01.114Z" ERRLOG1704019921114.00000 ::1 GET /v1/school/logo/theme/get 500 subscription expired..renew  
+LOGID1704019921125 "2023-12-31 10:52:01.125Z" ERRLOG1704019921125.00000 ::1 GET /v1/admin/gender/divide 500 subscription expired..renew  
+LOGID1704019921128 "2023-12-31 10:52:01.128Z" ERRLOG1704019921128.00000 ::ffff:127.0.0.1 GET /v1/transaction/monthly 500 subscription expired..renew  
+LOGID1704019921147 "2023-12-31 10:52:01.147Z" ERRLOG1704019921147.00000 ::1 GET /v1/expense/monthly 500 subscription expired..renew  
+LOGID1704019921169 "2023-12-31 10:52:01.169Z" ERRLOG1704019921169.00000 ::1 GET /v1/school/theme/current 500 subscription expired..renew  
+LOGID1704019921198 "2023-12-31 10:52:01.198Z" ERRLOG1704019921198.00000 ::1 GET /v1/school/logo/theme/get 500 subscription expired..renew  
+LOGID1704019921222 "2023-12-31 10:52:01.222Z" ERRLOG1704019921221.00000 ::1 GET /v1/school/theme/current 500 subscription expired..renew  
+LOGID1704019921248 "2023-12-31 10:52:01.248Z" ERRLOG1704019921248.00000 ::1 GET /v1/school/logo/theme/get 500 subscription expired..renew  
+LOGID1704019921261 "2023-12-31 10:52:01.261Z" ERRLOG1704019921260.00000 ::1 GET /v1/school/theme/current 500 subscription expired..renew  
+LOGID1704019921282 "2023-12-31 10:52:01.282Z" ERRLOG1704019921282.00000 ::1 GET /v1/school/theme/current 500 subscription expired..renew  
+LOGID1704019924984 "2023-12-31 10:52:04.984Z" ERRLOG1704019924984.00000 ::1 GET /v1/school/theme/current 500 subscription expired..renew  
+LOGID1704019924999 "2023-12-31 10:52:04.999Z" ERRLOG1704019924999.00000 ::1 GET /v1/school/get/gradepoint 500 subscription expired..renew  
+LOGID1704019925083 "2023-12-31 10:52:05.083Z" ERRLOG1704019925083.00000 ::1 GET /v1/school/theme/current 500 subscription expired..renew  
+LOGID1704019925086 "2023-12-31 10:52:05.086Z" ERRLOG1704019925086.00000 ::1 GET /v1/school/get/gradepoint 500 subscription expired..renew  
+LOGID1704019925102 "2023-12-31 10:52:05.102Z" ERRLOG1704019925102.00000 ::ffff:127.0.0.1 GET /v1/school/get/gradestyle 500 subscription expired..renew  
+LOGID1704019925104 "2023-12-31 10:52:05.104Z" ERRLOG1704019925104.00000 ::1 GET /v1/paystack/get/bank 500 subscription expired..renew  
+LOGID1704019925149 "2023-12-31 10:52:05.149Z" ERRLOG1704019925149.00000 ::1 GET /v1/school/theme/current 500 subscription expired..renew  
+LOGID1704019925163 "2023-12-31 10:52:05.163Z" ERRLOG1704019925163.00000 ::1 GET /v1/school/get/gradestyle 500 subscription expired..renew  
+LOGID1704019925184 "2023-12-31 10:52:05.184Z" ERRLOG1704019925184.00000 ::1 GET /v1/school/theme/current 500 subscription expired..renew  
+LOGID1704023766338 "2023-12-31 11:56:06.338Z" ERRLOG1704023766338.00000 ::1 GET /v1/results/generate 500 subscription expired..renew  
+LOGID1704023767534 "2023-12-31 11:56:07.534Z" ERRLOG1704023767534.00000 ::1 GET /v1/paystack/get/bank 500 subscription expired..renew  
+LOGID1704023767540 "2023-12-31 11:56:07.540Z" ERRLOG1704023767540.00000 ::1 GET /v1/school/get/gradestyle 500 subscription expired..renew  
+LOGID1704023767594 "2023-12-31 11:56:07.594Z" ERRLOG1704023767594.00000 ::1 GET /v1/school/get/gradestyle 500 subscription expired..renew  
+LOGID1704054055530 "2023-12-31 20:20:55.530Z" ERRLOG1704054055528.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704054055713 "2023-12-31 20:20:55.713Z" ERRLOG1704054055712.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704054064127 "2023-12-31 20:21:04.127Z" ERRLOG1704054064126.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704054064131 "2023-12-31 20:21:04.131Z" ERRLOG1704054064131.00000 ::1 GET /v1/school/logo/theme/get 404 school details not found  
+LOGID1704054064613 "2023-12-31 20:21:04.613Z" ERRLOG1704054064612.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704054064820 "2023-12-31 20:21:04.820Z" ERRLOG1704054064820.00000 ::1 GET /v1/school/logo/theme/get 404 school details not found  
+LOGID1704054065047 "2023-12-31 20:21:05.047Z" ERRLOG1704054065047.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704054065274 "2023-12-31 20:21:05.274Z" ERRLOG1704054065274.00000 ::1 GET /v1/school/logo/theme/get 404 school details not found  
+LOGID1704054065438 "2023-12-31 20:21:05.438Z" ERRLOG1704054065438.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704054065609 "2023-12-31 20:21:05.609Z" ERRLOG1704054065608.00000 ::1 GET /v1/school/logo/theme/get 404 school details not found  
+LOGID1704054065728 "2023-12-31 20:21:05.728Z" ERRLOG1704054065728.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704054065866 "2023-12-31 20:21:05.866Z" ERRLOG1704054065866.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704054084070 "2023-12-31 20:21:24.070Z" ERRLOG1704054084070.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704054084085 "2023-12-31 20:21:24.085Z" ERRLOG1704054084085.00000 ::1 GET /v1/school/get/gradepoint 400 grade points not found  
+LOGID1704054084352 "2023-12-31 20:21:24.352Z" ERRLOG1704054084352.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704054084357 "2023-12-31 20:21:24.357Z" ERRLOG1704054084357.00000 ::1 GET /v1/school/get/gradepoint 400 grade points not found  
+LOGID1704054084664 "2023-12-31 20:21:24.664Z" ERRLOG1704054084664.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704054312836 "2023-12-31 20:25:12.835Z" ERRLOG1704054312835.00000 ::1 GET /v1/school/logo/theme/get 404 school details not found  
+LOGID1704054312963 "2023-12-31 20:25:12.963Z" ERRLOG1704054312963.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704054313526 "2023-12-31 20:25:13.526Z" ERRLOG1704054313525.00000 ::1 GET /v1/school/logo/theme/get 404 school details not found  
+LOGID1704054313664 "2023-12-31 20:25:13.664Z" ERRLOG1704054313664.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704054313910 "2023-12-31 20:25:13.910Z" ERRLOG1704054313910.00000 ::1 GET /v1/school/logo/theme/get 404 school details not found  
+LOGID1704054314056 "2023-12-31 20:25:14.056Z" ERRLOG1704054314056.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704054314224 "2023-12-31 20:25:14.224Z" ERRLOG1704054314224.00000 ::1 GET /v1/school/logo/theme/get 404 school details not found  
+LOGID1704054314270 "2023-12-31 20:25:14.270Z" ERRLOG1704054314270.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704054314435 "2023-12-31 20:25:14.435Z" ERRLOG1704054314434.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704054314541 "2023-12-31 20:25:14.541Z" ERRLOG1704054314541.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704054321794 "2023-12-31 20:25:21.794Z" ERRLOG1704054321793.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704054321809 "2023-12-31 20:25:21.809Z" ERRLOG1704054321809.00000 ::1 GET /v1/school/get/gradepoint 400 grade points not found  
+LOGID1704054322169 "2023-12-31 20:25:22.169Z" ERRLOG1704054322169.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704054322207 "2023-12-31 20:25:22.207Z" ERRLOG1704054322207.00000 ::1 GET /v1/school/get/gradepoint 400 grade points not found  
+LOGID1704054768699 "2023-12-31 20:32:48.699Z" ERRLOG1704054768699.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704054768787 "2023-12-31 20:32:48.787Z" ERRLOG1704054768787.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704054780244 "2023-12-31 20:33:00.244Z" ERRLOG1704054780244.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704054780279 "2023-12-31 20:33:00.279Z" ERRLOG1704054780278.00000 ::1 GET /v1/school/get/gradepoint 400 grade points not found  
+LOGID1704108568609 "2024-01-01 11:29:28.609Z" ERRLOG1704108568608.00000 ::1 GET /v1/school/logo/theme/get 404 school details not found  
+LOGID1704108568648 "2024-01-01 11:29:28.648Z" ERRLOG1704108568648.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704108569298 "2024-01-01 11:29:29.298Z" ERRLOG1704108569298.00000 ::1 GET /v1/school/logo/theme/get 404 school details not found  
+LOGID1704108569396 "2024-01-01 11:29:29.396Z" ERRLOG1704108569396.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704108569650 "2024-01-01 11:29:29.650Z" ERRLOG1704108569650.00000 ::1 GET /v1/school/logo/theme/get 404 school details not found  
+LOGID1704108569710 "2024-01-01 11:29:29.710Z" ERRLOG1704108569710.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704108569853 "2024-01-01 11:29:29.853Z" ERRLOG1704108569853.00000 ::1 GET /v1/school/logo/theme/get 404 school details not found  
+LOGID1704108569897 "2024-01-01 11:29:29.897Z" ERRLOG1704108569896.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704108570030 "2024-01-01 11:29:30.030Z" ERRLOG1704108570030.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704108570192 "2024-01-01 11:29:30.192Z" ERRLOG1704108570192.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704108571523 "2024-01-01 11:29:31.523Z" ERRLOG1704108571522.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704108571600 "2024-01-01 11:29:31.600Z" ERRLOG1704108571600.00000 ::1 GET /v1/school/get/gradepoint 400 grade points not found  
+LOGID1704108793537 "2024-01-01 11:33:13.537Z" ERRLOG1704108793537.00000 ::1 GET /v1/school/get/gradepoint 400 grade points not found  
+LOGID1704108793578 "2024-01-01 11:33:13.568Z" ERRLOG1704108793568.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704108793731 "2024-01-01 11:33:13.731Z" ERRLOG1704108793731.00000 ::1 GET /v1/school/get/gradepoint 400 grade points not found  
+LOGID1704108793770 "2024-01-01 11:33:13.770Z" ERRLOG1704108793770.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704108794223 "2024-01-01 11:33:14.223Z" ERRLOG1704108794223.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704108828167 "2024-01-01 11:33:48.167Z" ERRLOG1704108828167.00000 ::ffff:127.0.0.1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704108828268 "2024-01-01 11:33:48.268Z" ERRLOG1704108828267.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704108834347 "2024-01-01 11:33:54.347Z" ERRLOG1704108834346.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704108834374 "2024-01-01 11:33:54.374Z" ERRLOG1704108834374.00000 ::1 GET /v1/school/get/gradepoint 400 grade points not found  
+LOGID1704108834845 "2024-01-01 11:33:54.845Z" ERRLOG1704108834845.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704108834896 "2024-01-01 11:33:54.895Z" ERRLOG1704108834895.00000 ::1 GET /v1/school/get/gradepoint 400 grade points not found  
+LOGID1704109307496 "2024-01-01 11:41:47.496Z" ERRLOG1704109307496.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704109307687 "2024-01-01 11:41:47.687Z" ERRLOG1704109307687.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704109307855 "2024-01-01 11:41:47.855Z" ERRLOG1704109307855.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704109307948 "2024-01-01 11:41:47.948Z" ERRLOG1704109307948.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704109318378 "2024-01-01 11:41:58.378Z" ERRLOG1704109318378.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704109318385 "2024-01-01 11:41:58.385Z" ERRLOG1704109318385.00000 ::1 GET /v1/school/get/gradepoint 400 grade points not found  
+LOGID1704109318683 "2024-01-01 11:41:58.682Z" ERRLOG1704109318682.00000 ::1 GET /v1/school/get/gradepoint 400 grade points not found  
+LOGID1704109318696 "2024-01-01 11:41:58.696Z" ERRLOG1704109318696.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704109319070 "2024-01-01 11:41:59.070Z" ERRLOG1704109319070.00000 ::1 GET /v1/school/theme/current 404 school details not found  

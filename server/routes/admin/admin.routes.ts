@@ -1,7 +1,7 @@
 import express, { Router, Request, Response } from "express";
 const adminRouter: Router = Router();
 const app = express();
-import asyncErrorHandler from "../../middleware/globalErrorHandler";
+import asyncErrorHandler from "../../utils/globalErrorHandler";
 import AcademicTermController from "../../controller/academicterm.controller";
 import AcademicYearController from "../../controller/academicyear.controller";
 import ClassLevelController from "../../controller/classLevel.controller";

@@ -317,7 +317,7 @@ function searchStudent(req, res) {
                 school: (_c = req.user) === null || _c === void 0 ? void 0 : _c.school,
                 schoolId,
                 $or: [
-                    { name: { $regex: new RegExp(searchParams, "i") } },
+                    { name: { $regex: new RegExp(searchParams, "i") } }, // 'i' for case-insensitive search
                     { email: { $regex: new RegExp(searchParams, "i") } },
                     { className: { $regex: new RegExp(searchParams, "i") } },
                     { studentId: { $regex: new RegExp(searchParams, "i") } },

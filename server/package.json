@@ -4,10 +4,11 @@
   "description": "",
   "main": "server.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --watchall",
     "dev": "nodemon app",
     "prod": "node ./dist/app",
     "build:css": "tailwind build view/index.css -o view/style.css &&nodemon app"
+  
   },
   "dependencies": {
     "@types/amqplib": "^0.10.1",
