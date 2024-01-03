@@ -1,6 +1,6 @@
 import mongoose, { Schema, Types, model, Document } from "mongoose";
 import { School } from "../database";
-import { CustomError } from "../../middleware/decorators";
+import { CustomError } from "../../utils/globalErrorHandler";
 
 interface INestedgrades extends Document {
   subjectId: Types.ObjectId;

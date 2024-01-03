@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { CustomError } from "../middleware/decorators";
+import { CustomError } from "../utils/globalErrorHandler";
 import { Transaction, Student, AcademicTerm } from "../model/database";
 import { Expense } from "../model/others/Expense";
 

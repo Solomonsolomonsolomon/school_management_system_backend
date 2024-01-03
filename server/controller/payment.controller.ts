@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import paystack from "../middleware/paystack.config";
 import { School, ClassLevel } from "../model/database";
-import { CustomError } from "../middleware/decorators";
+import { CustomError } from "../utils/globalErrorHandler";
+
 //# initialize transaction
 const initializeTransaction = async (req: Request, res: Response) => {
   try {

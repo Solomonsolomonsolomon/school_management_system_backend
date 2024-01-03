@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { Subscription } from "../model/database";
-import { CustomError } from "./decorators";
+import { CustomError } from "./../utils/globalErrorHandler";
 export default async function getPlan(req: Request, res: Response) {
   let subscription = await Subscription.findOne({
     school: req.user?.school,

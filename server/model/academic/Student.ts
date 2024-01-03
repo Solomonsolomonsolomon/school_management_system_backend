@@ -9,7 +9,7 @@ import mongoose, {
 import { AcademicTerm } from "./AcademicTerm";
 import { AcademicYear } from "./AcademicYear";
 import { ISubject, Subject } from "./Subject";
-import { CustomError } from "../../middleware/decorators";
+import { CustomError } from "../../utils/globalErrorHandler";
 import { ClassLevel } from "./ClassLevel";
 import { Transaction } from "../database";
 

@@ -1,4 +1,4 @@
-import { CustomError } from "../middleware/decorators";
+import { CustomError } from "../utils/globalErrorHandler";
 import cron from "node-cron";
 import express from "express";
 import { AcademicYear } from "../model/database";

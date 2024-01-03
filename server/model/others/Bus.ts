@@ -2,7 +2,7 @@ import { Schema, model, Types } from "mongoose";
 import { Transaction } from "./Transacton";
 import { AcademicTerm, AcademicYear, Student } from "../database";
 import { schoolBus } from "./SchoolBus";
-import { CustomError } from "../../middleware/decorators";
+import { CustomError } from "../../utils/globalErrorHandler";
 
 interface IBus {
   studentId: string;

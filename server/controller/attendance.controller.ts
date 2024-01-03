@@ -1,4 +1,4 @@
-import { CustomError } from "../middleware/decorators";
+import { CustomError } from "../utils/globalErrorHandler";
 import Attendance from "../model/academic/Attendance";
 import express from "express";
 import { AcademicYear, AcademicTerm } from "../model/database";

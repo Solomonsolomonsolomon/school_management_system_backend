@@ -1,8 +1,9 @@
-import { CustomError } from "../middleware/decorators";
+
 import { AcademicTerm, AcademicYear } from "../model/database";
 import { Expense } from "../model/others/Expense";
 import { Request as Req, Response as Res } from "express";
 import helper from "../utils/helper";
+import { CustomError } from "../utils/globalErrorHandler";
 const { paginate } = helper;
 class ExpenseController {
   public async addExpense(req: Req, res: Res) {

@@ -7,8 +7,7 @@ import {
   AcademicYear,
   Result,
 } from "../model/database";
-import asyncErrorHandler from "../utils/globalErrorHandler";
-import { CustomError } from "../middleware/decorators";
+import asyncErrorHandler, { CustomError } from "../utils/globalErrorHandler";
 
 type GroupedStudents = {
   [className: string]: any[]; // The key is a class name, and the value is an array of students

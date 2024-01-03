@@ -1,9 +1,10 @@
 import mongoose, { MongooseError, Types } from "mongoose";
 import { Subject } from "../model/academic/Subject";
 import { Response, Request, NextFunction } from "express";
-import { CustomError, setErrorStatusCode } from "../middleware/decorators";
+import { CustomError } from "../utils/globalErrorHandler";
 import { Student } from "../model/database";
 import { set } from "lodash";
+import { setErrorStatusCode } from "../middleware/decorators";
 //setErrorStatusCode is a decorator that sets the status Code on error
 // export async function addSubject(req: Request, res: Response) {
 //   try {

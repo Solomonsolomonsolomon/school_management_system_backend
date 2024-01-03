@@ -123,3 +123,5 @@ LOGID1704109318385 "2024-01-01 11:41:58.385Z" ERRLOG1704109318385.00000 ::1 GET 
 LOGID1704109318683 "2024-01-01 11:41:58.682Z" ERRLOG1704109318682.00000 ::1 GET /v1/school/get/gradepoint 400 grade points not found  
 LOGID1704109318696 "2024-01-01 11:41:58.696Z" ERRLOG1704109318696.00000 ::1 GET /v1/school/theme/current 404 school details not found  
 LOGID1704109319070 "2024-01-01 11:41:59.070Z" ERRLOG1704109319070.00000 ::1 GET /v1/school/theme/current 404 school details not found  
+LOGID1704205762687 "2024-01-02 14:29:22.687Z" ERRLOG1704205762687.00000 ::1 GET /v1/expense/school?month=true&term=true&year=true&pageSize=2&page=1 500 Not found  
+LOGID1704205762806 "2024-01-02 14:29:22.806Z" ERRLOG1704205762806.00000 ::1 GET /v1/expense/school?month=true&term=true&year=true&pageSize=2&page=1 500 Not found  

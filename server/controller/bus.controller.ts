@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Bus, School, Student } from "../model/database";
-import { CustomError } from "../middleware/decorators";
+import { CustomError } from "../utils/globalErrorHandler";
 import { schoolBus } from "../model/others/SchoolBus";
 import getPlan from "../middleware/getPlan";
 CustomError;

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { Subscription } from "../model/others/Subscription";
-import { CustomError } from "../middleware/decorators";
 import { Admin, Student } from "../model/database";
+import { CustomError } from "../utils/globalErrorHandler";
 let instance: any;
 class SubscriptionController {
   constructor() {

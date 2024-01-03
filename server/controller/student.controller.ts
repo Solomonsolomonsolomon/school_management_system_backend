@@ -1,6 +1,6 @@
 import express from "express";
 import { Result, Student } from "../model/database";
-import { CustomError } from "../middleware/decorators";
+import { CustomError } from "../utils/globalErrorHandler";
 let instance: any;
 class StudentController {
   constructor() {

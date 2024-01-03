@@ -1,6 +1,6 @@
 import express from "express";
 import { School } from "../model/database";
-import { CustomError } from "../middleware/decorators";
+import { CustomError } from "../utils/globalErrorHandler";
 let oldThemes = {
   button: "#4B5563",
   header: "#4a5568",

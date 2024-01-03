@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt, { Secret } from "jsonwebtoken";
-import { CustomError } from "../middleware/decorators";
+import { CustomError } from "../utils/globalErrorHandler";
 import {
   Admin,
   Student,

@@ -14503,3 +14503,474 @@ LOGID1704134289469 "2024-01-01 18:38:09.469Z" ::1 GET /school/theme/current 304 
 LOGID1704134289532 "2024-01-01 18:38:09.532Z" ::1 GET /school/theme/current 304 0.0611657s  
       61ms
        
+LOGID1704205675577 "2024-01-02 14:27:55.577Z" ::1 POST /auth/signin 200 0.1450287s  
+      145ms
+       
+LOGID1704205678225 "2024-01-02 14:27:58.225Z" ::1 GET /term/get/current 304 0.2392079s  
+      239ms
+       
+LOGID1704205678256 "2024-01-02 14:27:58.256Z" ::1 GET /year/get/current 304 0.2634857s  
+      263ms
+       
+LOGID1704205678495 "2024-01-02 14:27:58.495Z" ::1 GET /admin/gender/divide 304 0.4977617s  
+      498ms
+       
+LOGID1704205678590 "2024-01-02 14:27:58.590Z" ::1 GET /admin/get/count/teachers 200 0.3417163s  
+      342ms
+       
+LOGID1704205678602 "2024-01-02 14:27:58.602Z" ::1 GET /school/theme/current 304 0.679847s  
+      680ms
+       
+LOGID1704205678611 "2024-01-02 14:27:58.611Z" ::1 GET /school/logo/theme/get 304 0.6238578s  
+      624ms
+       
+LOGID1704205678713 "2024-01-02 14:27:58.713Z" ::1 GET /transaction/get/total 200 0.4467177s  
+      447ms
+       
+LOGID1704205678762 "2024-01-02 14:27:58.762Z" ::1 GET /transaction/monthly 304 0.490911s  
+      491ms
+       
+LOGID1704205678965 "2024-01-02 14:27:58.965Z" ::1 GET /term/get/current 304 0.1065482s  
+      106ms
+       
+LOGID1704205679105 "2024-01-02 14:27:59.105Z" ::1 GET /admin/gender/divide 304 0.4581646s  
+      458ms
+       
+LOGID1704205679231 "2024-01-02 14:27:59.231Z" ::1 GET /expense/monthly 304 0.7225616s  
+      722ms
+       
+LOGID1704205679333 "2024-01-02 14:27:59.333Z" ::1 GET /transaction/ratio/earnings/expense 304 0.6902885s  
+      690ms
+       
+LOGID1704205679360 "2024-01-02 14:27:59.360Z" ::1 GET /school/theme/current 304 0.7115102s  
+      711ms
+       
+LOGID1704205679414 "2024-01-02 14:27:59.414Z" ::1 GET /school/logo/theme/get 304 0.6820393s  
+      682ms
+       
+LOGID1704205679520 "2024-01-02 14:27:59.520Z" ::1 GET /transaction/monthly 304 0.5364275s  
+      536ms
+       
+LOGID1704205679665 "2024-01-02 14:27:59.665Z" ::1 GET /expense/monthly 304 0.3305154s  
+      330ms
+       
+LOGID1704205679669 "2024-01-02 14:27:59.669Z" ::1 GET /school/theme/current 304 0.2871148s  
+      287ms
+       
+LOGID1704205679675 "2024-01-02 14:27:59.675Z" ::1 GET /school/logo/theme/get 304 0.2525263s  
+      252ms
+       
+LOGID1704205679883 "2024-01-02 14:27:59.883Z" ::1 GET /school/logo/theme/get 304 0.1999189s  
+      200ms
+       
+LOGID1704205679899 "2024-01-02 14:27:59.899Z" ::1 GET /school/theme/current 304 0.2169734s  
+      217ms
+       
+LOGID1704205679934 "2024-01-02 14:27:59.934Z" ::1 GET /term/get/current 304 0.0324188s  
+      32ms
+       
+LOGID1704205679987 "2024-01-02 14:27:59.987Z" ::1 GET /school/theme/current 304 0.0847964s  
+      85ms
+       
+LOGID1704205680087 "2024-01-02 14:28:00.087Z" ::1 GET /school/theme/current 304 0.0905839s  
+      91ms
+       
+LOGID1704205757988 "2024-01-02 14:29:17.988Z" ::1 GET /term/get/current 304 0.0347673s  
+      35ms
+       
+LOGID1704205758061 "2024-01-02 14:29:18.061Z" ::1 GET /school/theme/current 304 0.1081622s  
+      108ms
+       
+LOGID1704205758151 "2024-01-02 14:29:18.151Z" ::1 GET /school/theme/current 304 0.0884864s  
+      89ms
+       
+LOGID1704205759059 "2024-01-02 14:29:19.059Z" ::1 GET /term/get/current 304 0.0269083s  
+      27ms
+       
+LOGID1704205759117 "2024-01-02 14:29:19.117Z" ::1 GET /admin/get/student?pageSize=2&page=1 304 0.0788438s  
+      79ms
+       
+LOGID1704205759204 "2024-01-02 14:29:19.204Z" ::1 GET /school/theme/current 304 0.0755518s  
+      75ms
+       
+LOGID1704205759278 "2024-01-02 14:29:19.278Z" ::1 GET /school/theme/current 304 0.0733803s  
+      73ms
+       
+LOGID1704205762510 "2024-01-02 14:29:22.510Z" ::1 GET /term/get/current 304 0.0568962s  
+      57ms
+       
+LOGID1704205762620 "2024-01-02 14:29:22.620Z" ::1 GET /school/theme/current 304 0.1661417s  
+      166ms
+       
+LOGID1704205762686 "2024-01-02 14:29:22.686Z" ::1 GET /v1/expense/school?month=true&term=true&year=true&pageSize=2&page=1 500 0.2246492s  
+      224ms
+       
+LOGID1704205762758 "2024-01-02 14:29:22.758Z" ::1 GET /school/theme/current 304 0.1262419s  
+      126ms
+       
+LOGID1704205762805 "2024-01-02 14:29:22.805Z" ::1 GET /v1/expense/school?month=true&term=true&year=true&pageSize=2&page=1 500 0.114567s  
+      114ms
+       
+LOGID1704205771108 "2024-01-02 14:29:31.108Z" ::1 POST /expense/new 201 0.0928539s  
+      93ms
+       
+LOGID1704205771221 "2024-01-02 14:29:31.221Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=1 200 0.1041372s  
+      104ms
+       
+LOGID1704205776244 "2024-01-02 14:29:36.244Z" ::1 POST /expense/new 201 0.0836169s  
+      84ms
+       
+LOGID1704205776351 "2024-01-02 14:29:36.351Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=1 200 0.0977908s  
+      98ms
+       
+LOGID1704205781799 "2024-01-02 14:29:41.799Z" ::1 POST /expense/new 201 0.0811061s  
+      82ms
+       
+LOGID1704205781892 "2024-01-02 14:29:41.892Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=1 200 0.0864017s  
+      86ms
+       
+LOGID1704205789377 "2024-01-02 14:29:49.377Z" ::1 POST /expense/new 201 0.080918s  
+      81ms
+       
+LOGID1704205789466 "2024-01-02 14:29:49.466Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=1 304 0.0808874s  
+      81ms
+       
+LOGID1704205797046 "2024-01-02 14:29:57.046Z" ::1 POST /expense/new 201 0.0812553s  
+      82ms
+       
+LOGID1704205797139 "2024-01-02 14:29:57.139Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=1 200 0.0856759s  
+      86ms
+       
+LOGID1704205804952 "2024-01-02 14:30:04.952Z" ::1 POST /expense/new 201 0.079851s  
+      79ms
+       
+LOGID1704205805041 "2024-01-02 14:30:05.041Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=1 304 0.0808246s  
+      81ms
+       
+LOGID1704205815777 "2024-01-02 14:30:15.776Z" ::1 POST /expense/new 201 0.0776858s  
+      77ms
+       
+LOGID1704205815867 "2024-01-02 14:30:15.867Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=1 200 0.0824463s  
+      82ms
+       
+LOGID1704205854909 "2024-01-02 14:30:54.909Z" ::1 POST /expense/new 201 0.0775024s  
+      77ms
+       
+LOGID1704205854994 "2024-01-02 14:30:54.994Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=1 304 0.0765554s  
+      77ms
+       
+LOGID1704205861256 "2024-01-02 14:31:01.256Z" ::1 POST /expense/new 201 0.0726908s  
+      73ms
+       
+LOGID1704205861358 "2024-01-02 14:31:01.358Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=1 200 0.0946043s  
+      94ms
+       
+LOGID1704205872783 "2024-01-02 14:31:12.783Z" ::1 POST /expense/new 201 0.0769944s  
+      77ms
+       
+LOGID1704205872877 "2024-01-02 14:31:12.877Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=1 304 0.0835955s  
+      83ms
+       
+LOGID1704205880730 "2024-01-02 14:31:20.730Z" ::1 POST /expense/new 201 0.073776s  
+      73ms
+       
+LOGID1704205880818 "2024-01-02 14:31:20.818Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=1 200 0.0773374s  
+      77ms
+       
+LOGID1704205890974 "2024-01-02 14:31:30.974Z" ::1 POST /expense/new 201 0.0753559s  
+      75ms
+       
+LOGID1704205891060 "2024-01-02 14:31:31.060Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=1 304 0.079578s  
+      79ms
+       
+LOGID1704205940748 "2024-01-02 14:32:20.748Z" ::1 POST /expense/new 201 0.0714113s  
+      71ms
+       
+LOGID1704205940839 "2024-01-02 14:32:20.839Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=1 200 0.081352s  
+      81ms
+       
+LOGID1704205943081 "2024-01-02 14:32:23.081Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=7 200 0.0883502s  
+      89ms
+       
+LOGID1704205944671 "2024-01-02 14:32:24.671Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=5 200 0.0779032s  
+      78ms
+       
+LOGID1704205945812 "2024-01-02 14:32:25.812Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=1 304 0.0749086s  
+      75ms
+       
+LOGID1704205961773 "2024-01-02 14:32:41.773Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=4 200 0.081242s  
+      81ms
+       
+LOGID1704205968654 "2024-01-02 14:32:48.654Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=6 200 0.086723s  
+      87ms
+       
+LOGID1704205970314 "2024-01-02 14:32:50.314Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=4 304 0.0769138s  
+      77ms
+       
+LOGID1704205971357 "2024-01-02 14:32:51.357Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=1 304 0.0801366s  
+      80ms
+       
+LOGID1704205973044 "2024-01-02 14:32:53.044Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=3 200 0.0802612s  
+      80ms
+       
+LOGID1704205974319 "2024-01-02 14:32:54.319Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=5 304 0.0781956s  
+      78ms
+       
+LOGID1704205975260 "2024-01-02 14:32:55.260Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=7 304 0.0790212s  
+      79ms
+       
+LOGID1704205977833 "2024-01-02 14:32:57.832Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=5 304 0.0777528s  
+      77ms
+       
+LOGID1704205978912 "2024-01-02 14:32:58.912Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=4 304 0.0705336s  
+      70ms
+       
+LOGID1704205979975 "2024-01-02 14:32:59.975Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=3 304 0.0711991s  
+      71ms
+       
+LOGID1704205981057 "2024-01-02 14:33:01.057Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=2 200 0.0717701s  
+      72ms
+       
+LOGID1704205983660 "2024-01-02 14:33:03.660Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=4 304 0.0721143s  
+      73ms
+       
+LOGID1704205984511 "2024-01-02 14:33:04.511Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=6 304 0.0699679s  
+      70ms
+       
+LOGID1704205985367 "2024-01-02 14:33:05.367Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=7 304 0.0703573s  
+      71ms
+       
+LOGID1704206927630 "2024-01-02 14:48:47.630Z" ::1 GET /term/get/current 304 0.0751472s  
+      75ms
+       
+LOGID1704206927926 "2024-01-02 14:48:47.926Z" ::1 GET /admin/gender/divide 304 0.3701089s  
+      370ms
+       
+LOGID1704206928048 "2024-01-02 14:48:48.048Z" ::1 GET /admin/get/count/teachers 200 0.3991479s  
+      399ms
+       
+LOGID1704206928127 "2024-01-02 14:48:48.127Z" ::1 GET /transaction/monthly 304 0.4699744s  
+      470ms
+       
+LOGID1704206928152 "2024-01-02 14:48:48.152Z" ::1 GET /transaction/get/total 200 0.502328s  
+      502ms
+       
+LOGID1704206928233 "2024-01-02 14:48:48.233Z" ::1 GET /transaction/ratio/earnings/expense 200 0.5747826s  
+      575ms
+       
+LOGID1704206928298 "2024-01-02 14:48:48.297Z" ::1 GET /expense/monthly 200 0.6470051s  
+      647ms
+       
+LOGID1704206928339 "2024-01-02 14:48:48.339Z" ::1 GET /admin/gender/divide 304 0.398615s  
+      398ms
+       
+LOGID1704206928451 "2024-01-02 14:48:48.451Z" ::1 GET /transaction/monthly 304 0.2966342s  
+      297ms
+       
+LOGID1704206928507 "2024-01-02 14:48:48.507Z" ::1 GET /expense/monthly 304 0.2050882s  
+      205ms
+       
+LOGID1704210849857 "2024-01-02 15:54:09.857Z" ::1 GET /year/get/current 304 0.1611508s  
+      161ms
+       
+LOGID1704210849862 "2024-01-02 15:54:09.862Z" ::1 GET /term/get/current 304 0.1645816s  
+      164ms
+       
+LOGID1704210850405 "2024-01-02 15:54:10.405Z" ::1 GET /school/theme/current 304 0.7323654s  
+      733ms
+       
+LOGID1704210850441 "2024-01-02 15:54:10.441Z" ::1 GET /admin/gender/divide 304 0.7199425s  
+      720ms
+       
+LOGID1704210850522 "2024-01-02 15:54:10.522Z" ::1 GET /school/logo/theme/get 304 0.8340037s  
+      834ms
+       
+LOGID1704210850906 "2024-01-02 15:54:10.906Z" ::1 GET /admin/gender/divide 304 0.4166513s  
+      416ms
+       
+LOGID1704210850910 "2024-01-02 15:54:10.910Z" ::1 GET /admin/get/count/teachers 200 0.3993045s  
+      400ms
+       
+LOGID1704210850941 "2024-01-02 15:54:10.941Z" ::1 GET /transaction/monthly 304 0.4538148s  
+      454ms
+       
+LOGID1704210850953 "2024-01-02 15:54:10.953Z" ::1 GET /school/theme/current 304 0.5391687s  
+      539ms
+       
+LOGID1704210850980 "2024-01-02 15:54:10.980Z" ::1 GET /transaction/get/total 200 0.465144s  
+      465ms
+       
+LOGID1704210851046 "2024-01-02 15:54:11.045Z" ::1 GET /term/get/current 304 0.0946317s  
+      94ms
+       
+LOGID1704210851112 "2024-01-02 15:54:11.112Z" ::1 GET /expense/monthly 304 0.5706615s  
+      570ms
+       
+LOGID1704210851263 "2024-01-02 15:54:11.263Z" ::1 GET /transaction/ratio/earnings/expense 304 0.3440465s  
+      344ms
+       
+LOGID1704210851303 "2024-01-02 15:54:11.303Z" ::1 GET /transaction/monthly 304 0.3349981s  
+      335ms
+       
+LOGID1704210851359 "2024-01-02 15:54:11.359Z" ::1 GET /school/logo/theme/get 304 0.4366768s  
+      437ms
+       
+LOGID1704210851627 "2024-01-02 15:54:11.627Z" ::1 GET /school/theme/current 304 0.6347159s  
+      635ms
+       
+LOGID1704210851964 "2024-01-02 15:54:11.964Z" ::1 GET /expense/monthly 304 0.834889s  
+      835ms
+       
+LOGID1704210852057 "2024-01-02 15:54:12.057Z" ::1 GET /school/logo/theme/get 304 0.6375946s  
+      637ms
+       
+LOGID1704210852099 "2024-01-02 15:54:12.099Z" ::1 GET /school/theme/current 304 0.4354322s  
+      435ms
+       
+LOGID1704210852488 "2024-01-02 15:54:12.488Z" ::1 GET /school/logo/theme/get 304 0.4248334s  
+      425ms
+       
+LOGID1704210852546 "2024-01-02 15:54:12.546Z" ::1 GET /school/theme/current 304 0.4277468s  
+      427ms
+       
+LOGID1704210853037 "2024-01-02 15:54:13.036Z" ::1 GET /school/theme/current 304 0.4823639s  
+      482ms
+       
+LOGID1704210853950 "2024-01-02 15:54:13.950Z" ::1 GET /term/get/current 304 0.0186501s  
+      18ms
+       
+LOGID1704229421710 "2024-01-02 21:03:41.710Z" ::1 POST /auth/signin 200 0.1684185s  
+      168ms
+       
+LOGID1704229423796 "2024-01-02 21:03:43.796Z" ::1 GET /term/get/current 304 0.1399992s  
+      140ms
+       
+LOGID1704229423803 "2024-01-02 21:03:43.803Z" ::1 GET /year/get/current 304 0.1463267s  
+      147ms
+       
+LOGID1704229424027 "2024-01-02 21:03:44.027Z" ::1 GET /admin/gender/divide 304 0.371925s  
+      372ms
+       
+LOGID1704229424138 "2024-01-02 21:03:44.138Z" ::1 GET /school/theme/current 304 0.5069079s  
+      507ms
+       
+LOGID1704229424150 "2024-01-02 21:03:44.149Z" ::1 GET /school/logo/theme/get 304 0.4955164s  
+      495ms
+       
+LOGID1704229424180 "2024-01-02 21:03:44.180Z" ::1 GET /admin/get/count/teachers 200 0.363477s  
+      363ms
+       
+LOGID1704229424333 "2024-01-02 21:03:44.333Z" ::1 GET /transaction/get/total 200 0.5112021s  
+      512ms
+       
+LOGID1704229424382 "2024-01-02 21:03:44.382Z" ::1 GET /transaction/monthly 304 0.5581193s  
+      558ms
+       
+LOGID1704229424556 "2024-01-02 21:03:44.556Z" ::1 GET /term/get/current 304 0.1116354s  
+      111ms
+       
+LOGID1704229424697 "2024-01-02 21:03:44.697Z" ::1 GET /admin/gender/divide 304 0.5232195s  
+      524ms
+       
+LOGID1704229424773 "2024-01-02 21:03:44.773Z" ::1 GET /expense/monthly 304 0.7214467s  
+      722ms
+       
+LOGID1704229424817 "2024-01-02 21:03:44.817Z" ::1 GET /transaction/ratio/earnings/expense 304 0.6446431s  
+      644ms
+       
+LOGID1704229424840 "2024-01-02 21:03:44.840Z" ::1 GET /school/theme/current 304 0.6413276s  
+      641ms
+       
+LOGID1704229424907 "2024-01-02 21:03:44.907Z" ::1 GET /school/logo/theme/get 304 0.5205589s  
+      521ms
+       
+LOGID1704229425025 "2024-01-02 21:03:45.025Z" ::1 GET /transaction/monthly 304 0.4519877s  
+      452ms
+       
+LOGID1704229425198 "2024-01-02 21:03:45.198Z" ::1 GET /school/theme/current 304 0.3411845s  
+      341ms
+       
+LOGID1704229425219 "2024-01-02 21:03:45.219Z" ::1 GET /expense/monthly 304 0.4246583s  
+      425ms
+       
+LOGID1704229425261 "2024-01-02 21:03:45.261Z" ::1 GET /school/logo/theme/get 304 0.3197953s  
+      320ms
+       
+LOGID1704229425320 "2024-01-02 21:03:45.320Z" ::1 GET /term/get/current 304 0.0416984s  
+      42ms
+       
+LOGID1704229425399 "2024-01-02 21:03:45.399Z" ::1 GET /school/theme/current 304 0.176435s  
+      177ms
+       
+LOGID1704229425420 "2024-01-02 21:03:45.420Z" ::1 GET /school/logo/theme/get 304 0.1560902s  
+      156ms
+       
+LOGID1704229425493 "2024-01-02 21:03:45.493Z" ::1 GET /school/theme/current 304 0.0916221s  
+      92ms
+       
+LOGID1704229425589 "2024-01-02 21:03:45.589Z" ::1 GET /school/theme/current 304 0.0906354s  
+      90ms
+       
+LOGID1704229427479 "2024-01-02 21:03:47.479Z" ::1 GET /term/get/current 304 0.0434682s  
+      44ms
+       
+LOGID1704229427567 "2024-01-02 21:03:47.567Z" ::1 GET /school/theme/current 304 0.1312426s  
+      131ms
+       
+LOGID1704229427648 "2024-01-02 21:03:47.648Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=1 200 0.2043352s  
+      204ms
+       
+LOGID1704229427713 "2024-01-02 21:03:47.713Z" ::1 GET /school/theme/current 304 0.1414143s  
+      141ms
+       
+LOGID1704229427774 "2024-01-02 21:03:47.774Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=1 304 0.1236578s  
+      124ms
+       
+LOGID1704229429882 "2024-01-02 21:03:49.882Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=2 200 0.1014965s  
+      102ms
+       
+LOGID1704229433355 "2024-01-02 21:03:53.355Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=3 200 0.0963569s  
+      97ms
+       
+LOGID1704229434902 "2024-01-02 21:03:54.902Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=4 200 0.0972602s  
+      97ms
+       
+LOGID1704229436967 "2024-01-02 21:03:56.967Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=2 304 0.0858833s  
+      86ms
+       
+LOGID1704229438797 "2024-01-02 21:03:58.797Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=1 304 0.101753s  
+      102ms
+       
+LOGID1704229441861 "2024-01-02 21:04:01.861Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=5 200 0.0857513s  
+      86ms
+       
+LOGID1704229449962 "2024-01-02 21:04:09.962Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=7 200 0.2116136s  
+      211ms
+       
+LOGID1704229452428 "2024-01-02 21:04:12.428Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=5 304 0.3051223s  
+      305ms
+       
+LOGID1704229453724 "2024-01-02 21:04:13.724Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=6 200 0.0946054s  
+      94ms
+       
+LOGID1704229669033 "2024-01-02 21:07:49.033Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=4 304 0.0977669s  
+      98ms
+       
+LOGID1704229670361 "2024-01-02 21:07:50.361Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=2 304 0.0967212s  
+      96ms
+       
+LOGID1704229672179 "2024-01-02 21:07:52.179Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=4 304 0.098165s  
+      98ms
+       
+LOGID1704229788232 "2024-01-02 21:09:48.232Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=2 304 0.0960337s  
+      96ms
+       
+LOGID1704229788857 "2024-01-02 21:09:48.857Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=1 304 0.0973542s  
+      97ms
+       
+LOGID1704229838588 "2024-01-02 21:10:38.587Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=5 304 0.0840073s  
+      84ms
+       
+LOGID1704229842983 "2024-01-02 21:10:42.983Z" ::1 GET /expense/school?month=true&term=true&year=true&pageSize=2&page=7 304 0.0840548s  
+      84ms
+       

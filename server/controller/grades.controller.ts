@@ -7,7 +7,7 @@ import {
   AcademicYear,
 } from "../model/database";
 import { Types } from "mongoose";
-import { CustomError } from "../middleware/decorators";
+import { CustomError } from "../utils/globalErrorHandler";
 let instance: any;
 class GradeController {
   constructor() {
