@@ -143,7 +143,7 @@ const Profile = () => {
         backgroundColor:
           context.theme === "dark"
             ? "bg-gray-900"
-            : themeandlogo.theme?.header || "#4a5568",
+            : themeandlogo.theme?.header || "#edf2f7",
         color:
           context.theme === "dark"
             ? "text-white"
@@ -198,13 +198,19 @@ const Profile = () => {
             </span>
           </li>
           <li>
-            <FontAwesomeIcon icon={faGear} className="mt-3  mr-2  dark:text-white text-gray-900" />
+            <FontAwesomeIcon
+              icon={faGear}
+              className="mt-3  mr-2  dark:text-white text-gray-900"
+            />
             <span className="text-xl  font-bold hover:text-blue-800 dark:text-white text-gray-900">
               Settings
             </span>
           </li>
           <li>
-            <FontAwesomeIcon icon={faUserPlus} className="mt-3  mr-2  dark:text-white text-gray-900 " />
+            <FontAwesomeIcon
+              icon={faUserPlus}
+              className="mt-3  mr-2  dark:text-white text-gray-900 "
+            />
             <Link
               to="/change-password"
               className="text-xl e font-bold hover:text-blue-800 dark:text-white text-gray-900"

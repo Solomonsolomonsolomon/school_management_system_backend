@@ -131,7 +131,7 @@ const AddColors: React.FC<IAddColors> = ({
           </label>
           <input
             type="color"
-            defaultValue={themeData.header || "#4a5568"}
+            defaultValue={themeData.header || "#edf2f7"}
             {...register("header")}
             className="dark:bg-gray-900 border"
           />

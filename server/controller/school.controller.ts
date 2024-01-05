@@ -3,7 +3,7 @@ import { School } from "../model/database";
 import { CustomError } from "../utils/globalErrorHandler";
 let oldThemes = {
   button: "#4B5563",
-  header: "#4a5568",
+  header: "#edf2f7",
   text: "#000000",
   sideBar: "#4a5568",
   sideBarText: "#ffffff",
@@ -56,7 +56,7 @@ class SchoolController {
       msg: "default theme settings",
       default: {
         button: "#4B5563",
-        header: "#4a5568",
+        header: "#edf2f7",
         text: "#000000",
         sideBar: "#4a5568",
         sideBarText: "#ffffff",

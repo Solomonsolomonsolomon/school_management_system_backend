@@ -122,7 +122,7 @@ const schoolSchema = new mongoose.Schema<ISchool>({
     type: themeSchema,
     default: {
       button: "#4B5563",
-      header: "#4a5568",
+      header: "#edf2f7",
       text: "#000000",
       sideBar: "#ffffff",
       sideBarText: "#404040",
