@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.ts",
-  "type": "module",
-  "scripts": {
+    "scripts": {
     "test": "jest --watchAll",
     "dev": "nodemon app",
     "prod": "node ./dist/app",

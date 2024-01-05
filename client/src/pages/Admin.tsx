@@ -1,6 +1,6 @@
 import Navbar from "../components/Admin/Navbar";
 import Profile from "../components/Admin/Profile";
-import SubAdmin from "../components/Admin/SubAdmin";
+import SubAdmin from "../components/Admin/Dashboard";
 import React from "react";
 import AddStudent from "../components/Admin/AddStudent";
 import AllStudents from "../components/Admin/AllStudents";

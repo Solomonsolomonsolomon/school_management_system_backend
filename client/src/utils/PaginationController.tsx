@@ -21,7 +21,7 @@ const PaginationController: React.FC<PaginationProps> = ({
     if (last > totalPages) {
       last = totalPages;
     }
-    console.log(first, last);
+;
     let el = [];
     // i=1 i<=totalPages
     for (let i = first; i <= last; i++) {
