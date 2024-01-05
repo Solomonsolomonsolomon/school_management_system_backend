@@ -26,8 +26,9 @@ const SubAdmin: React.FC = () => {
     let controller = new AbortController();
     inner();
     async function inner() {
-      setIsLoading(true);
+     
       try {
+         setIsLoading(true);
         let genderDivideResponse = await axios.get(
           `${POST_URL}/gender/divide`,
           {
@@ -42,7 +43,7 @@ const SubAdmin: React.FC = () => {
         console.error(error);
         setStudentsNumber(0);
       } finally {
-        setIsLoading(false);
+       setIsLoading(false);
       }
     }
     return () => {
@@ -53,8 +54,9 @@ const SubAdmin: React.FC = () => {
     let controller1 = new AbortController();
     getTeachersNumber();
     async function getTeachersNumber() {
-      setIsLoading(true);
+      
       try {
+        setIsLoading(true);
         let teachers = await axios.get(`${POST_URL}/get/count/teachers`, {
           signal: controller1.signal,
         });
@@ -71,7 +73,7 @@ const SubAdmin: React.FC = () => {
     return () => {
       controller1.abort();
     };
-  });
+  },[]);
   //get earnings data
   useEffect(() => {
     let controller = new AbortController();
@@ -93,11 +95,12 @@ const SubAdmin: React.FC = () => {
     return () => {
       controller.abort();
     };
-  });
+  },[]);
   //check subscription status
   React.useEffect(() => {
     (async () => {
       try {
+        setIsLoading(true);
         await axios.get(`${subscrptionUrl}/check/active`);
         return;
       } catch (error: any) {
@@ -105,6 +108,8 @@ const SubAdmin: React.FC = () => {
           if (subscriptionRef.current)
             subscriptionRef.current.textContent = "SUBSCRIPTION EXPIRED";
         }
+      } finally {
+      //  setIsLoading(false);
       }
     })();
   }, []);
@@ -159,30 +164,30 @@ const SubAdmin: React.FC = () => {
     <div className="lg:p-10  md:p-2 sm:p-1  border-slate-200 shadow-2xl box-border grid gap-10 w-full ">
       <h1 className="text-2xl ">Admin Dashboard</h1>
       <p ref={subscriptionRef} className="text-red-800"></p>
+
       <HeroSection />
       <section className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-3 mt-0 h-auto  ">
         {dashboarditems.map((item: any) => {
           return (
-            <>
-              <Card key={item.icon.name + item.icon.className}>
-                <CardIcon
-                  icon={item.icon.name}
-                  className={item.icon.className}
-                  size="xl"
-                />
-                <div>
-                  {" "}
-                  {item.content.map((content: any) => (
-                    <CardContent
-                      content={content.text}
-                      className={content.className}
-                    />
-                  ))}
-                </div>
+            <Card key={item.icon.name + item.icon.className}>
+              <CardIcon
+                icon={item.icon.name}
+                className={item.icon.className}
+                size="xl"
+              />
+              <div>
+                {" "}
+                {item.content.map((content: any, index: number) => (
+                  <CardContent
+                    key={content.text + index}
+                    content={content.text}
+                    className={content.className}
+                  />
+                ))}
+              </div>
 
-                {/* <CardContent content={noOfStudents}/> */}
-              </Card>
-            </>
+              {/* <CardContent content={noOfStudents}/> */}
+            </Card>
           );
         })}
         <Card>
