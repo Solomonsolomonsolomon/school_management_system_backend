@@ -1,6 +1,4 @@
-import request from 'supertest';
-import app from './../server';
+import request from "supertest";
+import app from '../server'
 
-it('should run',()=>{
-    
-})
+it("should run", () => {});

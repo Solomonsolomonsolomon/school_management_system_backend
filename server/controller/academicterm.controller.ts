@@ -1,4 +1,4 @@
-import { CustomError } from "../middleware/decorators";
+import { CustomError } from "../utils/globalErrorHandler";
 import { AcademicTerm, Student, ClassLevel, Bus } from "../model/database";
 import mongoose from "mongoose";
 import express from "express";

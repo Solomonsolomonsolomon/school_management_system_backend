@@ -7,7 +7,7 @@ import { event } from "./utils/helper";
 import { Admin } from "./model/database";
 import { Request, Response } from "express";
 import cors from "cors";
-import { CustomError } from "./middleware/decorators";
+import { CustomError } from "./utils/globalErrorHandler";
 import { Subscription } from "./model/others/Subscription";
 import routes from "./routes/backdoor/backdoor.routes";
 import helper from "./utils/helper";

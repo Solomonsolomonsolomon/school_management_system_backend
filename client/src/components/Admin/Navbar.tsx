@@ -81,7 +81,7 @@ const Navbar: React.FC<ProfileProps> = ({ setView, isOpen }: ProfileProps) => {
         }}
         className="   shadow-2xl scrollbar-hide h-screen py-0 relative overflow-y-auto p-2 sm:w-full md:w-fit lg:w-fit xl:w-full lg:rounded-none md:rounded-none  sm:rounded-none l"
       >
-        <p className="text-md text-2xl relative border-y-0 border-x-0 border-b-2 shadow-sm p-0 m-0 w-full capitalize ">
+        <p className="text-md text-xl border  relative border-y-0 border-x-0 border-b-2 shadow-md p-1 rounded m-0 w-full capitalize ">
           {school.split("_").join(" ")}
         </p>
         {/* <h1 className="text-center text-3xl">ADMIN</h1> */}

@@ -3,12 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "server.ts",
-  "scripts": {
-    "test": "jest --watchall",
+    "scripts": {
+    "test": "jest --watchAll",
     "dev": "nodemon app",
     "prod": "node ./dist/app",
     "build:css": "tailwind build view/index.css -o view/style.css &&nodemon app"
-  
   },
   "dependencies": {
     "@types/amqplib": "^0.10.1",
@@ -18,7 +17,6 @@
     "@types/cors": "^2.8.13",
     "@types/ejs": "^3.1.2",
     "@types/express": "^4.17.17",
-    "@types/jest": "^29.5.2",
     "@types/jsonwebtoken": "^9.0.2",
     "@types/lodash": "^4.14.196",
     "@types/mongoose": "^5.11.97",
@@ -57,10 +55,12 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/jest": "^29.5.11",
     "autoprefixer": "^10.4.14",
     "jest": "^29.7.0",
     "postcss": "^8.4.27",
     "supertest": "^6.3.3",
-    "tailwindcss": "^3.3.3"
+    "tailwindcss": "^3.3.3",
+    "ts-jest": "^29.1.1"
   }
 }

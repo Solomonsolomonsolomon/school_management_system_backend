@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "frontend": "cd client && npm run dev",
     "server": "cd server && npm run dev",
-    "both": "concurrently \"npm run frontend\" \"npm run server\"  "
+    "server_tdd": "cd server && npm run test",
+    "both": "concurrently \"npm run frontend\" \"npm run server\"  ",
+    "test": "concurrently  \"npm run frontend\" \"npm run server_tdd\" "
   },
   "repository": {
     "type": "git",

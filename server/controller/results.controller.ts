@@ -10,7 +10,7 @@ import {
 } from "../model/database";
 import { Request, Response } from "express";
 import _, { Dictionary, result } from "lodash";
-import { CustomError } from "../middleware/decorators";
+import { CustomError } from "../utils/globalErrorHandler";
 import { previewClassResults } from "./teacher.controller";
 import student from "./student.controller";
 import { ISchool } from "../model/others/School";
@@ -37,7 +37,8 @@ class ResultController {
   ) {
     let _school = await School.findOne({ school, schoolId });
     _school?.toObject({ getters: true, virtuals: false });
-    if (!_school) throw new Error("school details not on record");
+    if (!_school)
+      throw new CustomError({}, "school details not on record", 404);
     let bulkPushOperations: any[] = [];
 
     for (const className in groupedData) {
@@ -97,7 +98,10 @@ class ResultController {
           overallGrade: students[i].overallGrade,
           average: students[i].averageMarks,
           grades: students[i].grades,
-          status: students[i].overallGrade == "F" ? "failed" : "passed",
+          status:
+            students[i].overallGrade == "F" || "F9" || "F_m"
+              ? "failed"
+              : "passed",
         };
 
         bulkPushOperations.push({
@@ -408,7 +412,7 @@ class ResultController {
       ) {
         let currentClassIndex = promotionClasses.findIndex(
           (currentClass) => currentClass === teacher.formTeacher.substr(0, 4)
-        ); 
+        );
 
         currentClassIndex > -1 &&
           studentBulkOperations.push({
@@ -439,12 +443,12 @@ class ResultController {
     if (averageMarks === -1) {
       overallGrade = "N/A";
     }
-    //sorting by scores ireespect
-    for (let grade of Object.entries(
+
+    for (let [grade, gradeValue] of Object.entries(
       (school.gradePoints as any).toObject()
-    ).sort((a: any[], b: any[]) => b[1] - a[1])) {
-      if (averageMarks >= (grade[1] as number)) {
-        overallGrade = grade[0];
+    ).sort((a: Array<any>, b: Array<any>) => b[1] - a[1])) {
+      if (averageMarks >= (gradeValue as number)) {
+        overallGrade = grade;
 
         return overallGrade;
       }

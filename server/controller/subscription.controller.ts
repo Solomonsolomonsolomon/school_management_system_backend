@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { Subscription } from "../model/others/Subscription";
-import { CustomError } from "../middleware/decorators";
 import { Admin, Student } from "../model/database";
+import { CustomError } from "../utils/globalErrorHandler";
 let instance: any;
 class SubscriptionController {
   constructor() {
@@ -51,6 +51,25 @@ class SubscriptionController {
     subscription.isActive = true;
     subscription.__v = v;
     await subscription.save();
+  }
+  public async isSubscriptionActive(req: Request, res: Response) {
+    let subscription = await Subscription.findOne({
+      school: req.user?.school,
+      schoolId: req.user?.schoolId,
+    });
+
+    if (!subscription)
+      throw new CustomError({}, "You are not on a subscription plan", 404);
+    let v = subscription.__v;
+    if (subscription.expiresAt <= Date.now() / 1000) {
+      // subscription.isActive = false;
+      // await subscription.save();
+      throw new CustomError({}, "false", 400);
+    }
+    // subscription.isActive = true;
+    // subscription.__v = v;
+    // await subscription.save();
+    return res.status(200).send(true);
   }
 
   public async manualRenewal(req: Request, res: Response) {

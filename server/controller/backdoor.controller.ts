@@ -1,4 +1,4 @@
-import { CustomError } from "../middleware/decorators";
+import { CustomError } from "../utils/globalErrorHandler";
 import { School, Admin, Subscription, Student } from "../model/database";
 import { Request, Response } from "express";
 import sub from "./subscription.controller";

@@ -1,7 +1,7 @@
 import jwt, { Secret } from "jsonwebtoken";
 import { Admin, Student, Teacher } from "./../model/database";
 import { NextFunction, Request, Response } from "express";
-import { CustomError } from "../middleware/decorators";
+import { CustomError } from "../utils/globalErrorHandler";
 
 export async function signIn(req: Request, res: Response) {
   const { email, password, role } = req.body;

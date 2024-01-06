@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import { ClassLevel, Student } from "../model/database";
-import { CustomError } from "../middleware/decorators";
+import { CustomError } from "../utils/globalErrorHandler";
 import { name } from "ejs";
 class ClassLevelController {
   /**

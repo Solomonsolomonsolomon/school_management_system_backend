@@ -18,7 +18,7 @@ const contextValue = {
     : "light",
  
 };
-
+console.log('every rerender')
 export const AppContext = createContext<AppContextProps>(contextValue);
 const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
   // let [themeData, setThemeData] = React.useState({});

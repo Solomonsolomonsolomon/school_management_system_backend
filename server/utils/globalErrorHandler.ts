@@ -1,5 +1,15 @@
 import express, { NextFunction } from "express";
 import { event } from "./helper";
+
+export class CustomError extends Error {
+  statusCode: number;
+  message: string;
+  constructor(error: any, message: string, statusCode: number) {
+    super(message);
+    this.statusCode = statusCode;
+    this.message = message;
+  }
+}
 const asyncErrorHandler =
   (
     fn: (
